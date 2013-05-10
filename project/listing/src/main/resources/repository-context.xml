@@ -1,0 +1,85 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/data/jpa
+	    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="muConfiguration" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+            <array>
+                <value>classpath:database.properties</value>
+             </array>
+        </property>
+    </bean>
+    
+	<bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
+    
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSourceMarketing" />
+        <property name="packagesToScan">
+            <list>
+                <value>com.kesho.listing.entity</value>
+            </list>
+        </property>
+        <property name="jpaVendorAdapter" ref="hibernateAdapter" />
+        <property name="jpaProperties" ref="hibernateProperties" />
+    </bean>
+	<bean id="hibernateProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<bean id="dataSourceMarketing" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<!-- Connection properties -->
+		<property name="driverClass" value="${db.driver}" />
+		<property name="jdbcUrl" value="${db.connection.url}" />
+		<property name="user" value="${db.connection.username}" />
+		<property name="password" value="${db.connection.password}" />
+		<!-- Pool properties -->
+		<property name="acquireIncrement" value="${db.c3p0.acquireIncrement}" />
+		<property name="acquireRetryAttempts" value="${db.c3p0.acquireRetryAttempts}" />
+		<property name="acquireRetryDelay" value="${db.c3p0.acquireRetryDelay}" />
+		<property name="checkoutTimeout" value="${db.c3p0.checkoutTimeout}" />
+		<property name="idleConnectionTestPeriod"
+			value="${db.c3p0.idleConnectionTestPeriod}" />
+		<property name="initialPoolSize" value="${db.c3p0.initialPoolSize}" />
+		<property name="maxConnectionAge" value="${db.c3p0.maxConnectionAge}" />
+		<property name="maxIdleTimeExcessConnections"
+			value="${db.c3p0.maxIdleTimeExcessConnections}" />
+		<property name="maxIdleTime" value="${db.c3p0.maxIdleTime}" />
+		<property name="maxPoolSize" value="${db.c3p0.maxPoolSize}" />
+		<property name="maxStatementsPerConnection"
+			value="${db.c3p0.maxStatementsPerConnection}" />
+		<property name="maxStatements" value="${db.c3p0.maxStatements}" />
+		<property name="minPoolSize" value="${db.c3p0.minPoolSize}" />
+		<property name="numHelperThreads" value="${db.c3p0.numHelperThreads}" />
+        <!-- Experimental to remove deadlock, see http://bugs.mysql.com/bug.php?id=64700  -->
+        <property name="preferredTestQuery" value="SELECT 1"/>
+	</bean>
+
+	<tx:annotation-driven />
+<!-- 	<jpa:repositories base-package="com.kesho.listing.repository"
+		transaction-manager-ref="transactionManager" />
+ -->
+</beans>
