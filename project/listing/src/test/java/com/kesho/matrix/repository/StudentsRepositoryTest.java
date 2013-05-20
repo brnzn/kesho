@@ -56,7 +56,7 @@ public class StudentsRepositoryTest {
 	}
 	
 	@Test
-	public void shuoldCascadeInsert() throws DataSetException, SQLException {
+	public void shuoldCascadeInsertLog() throws DataSetException, SQLException {
 		Student student = new Student();
 		StudentLog log = new StudentLog();
 		log.setComment("test log");
@@ -89,7 +89,7 @@ public class StudentsRepositoryTest {
 	}
 
 	@Test
-	public void shouldDeleteLogs() throws DataSetException, SQLException {
+	public void shouldDeleteLogsOnUpdate() throws DataSetException, SQLException {
 		Student student = new Student();
 		StudentLog log = new StudentLog();
 		log.setComment("test log");
@@ -116,7 +116,7 @@ public class StudentsRepositoryTest {
 	}
 	
 	@Test
-	public void shouldCascadeUpdate() throws DataSetException, SQLException {
+	public void shouldCascadeUpdateLog() throws DataSetException, SQLException {
 		Student student = new Student();
 		StudentLog log = new StudentLog();
 		log.setComment("test log");
@@ -140,7 +140,7 @@ public class StudentsRepositoryTest {
 		eh.setLevel("Level1");
 		eh.setPredictedEndDate(LocalDate.now());
 		eh.setPredictedEndDate(LocalDate.now().plusYears(1));
-		eh.setStudentId(student.getId());
+		//eh.setStudentId(student.getId());
 		eh.setSchool(school);
 		
 		EducationHistory eh1 = new EducationHistory();
@@ -148,11 +148,11 @@ public class StudentsRepositoryTest {
 		eh1.setLevel("Level2");
 		eh1.setPredictedEndDate(LocalDate.now());
 		eh1.setPredictedEndDate(LocalDate.now().plusYears(1));
-		eh1.setStudentId(student.getId());
+		//eh1.setStudentId(student.getId());
 		eh1.setSchool(school);
 		
-		student.addEducationHistory(eh);
-		student.addEducationHistory(eh1);
+		student.addToEducationHistory(eh);
+		student.addToEducationHistory(eh1);
 		student = repo.save(student);
 
 		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createQueryTable("EDUCATION_HISTORY", String.format("select * from EDUCATION_HISTORY where student_id=%d order by level asc", student.getId())).getValue(0, "level").toString(), is("Level1"));
@@ -174,10 +174,10 @@ public class StudentsRepositoryTest {
 		eh.setLevel("Level1");
 		eh.setPredictedEndDate(LocalDate.now());
 		eh.setPredictedEndDate(LocalDate.now().plusYears(1));
-		eh.setStudentId(student.getId());
+		//eh.setStudentId(student.getId());
 		eh.setSchool(school);
 		
-		student.addEducationHistory(eh);
+		student.addToEducationHistory(eh);
 		student = repo.save(student);
 
 		repo.delete(student.getId());
@@ -196,9 +196,9 @@ public class StudentsRepositoryTest {
 		eh.setLevel("Level1");
 		eh.setPredictedEndDate(LocalDate.now());
 		eh.setPredictedEndDate(LocalDate.now().plusYears(1));
-		eh.setStudentId(student.getId());
+		//eh.setStudentId(student.getId());
 		eh.setSchool(school);
-		student.addEducationHistory(eh);
+		student.addToEducationHistory(eh);
 		student = repo.save(student);
 
 		repo.delete(student.getId());
@@ -219,9 +219,9 @@ public class StudentsRepositoryTest {
 		eh.setLevel("Level1");
 		eh.setPredictedEndDate(LocalDate.now());
 		eh.setPredictedEndDate(LocalDate.now().plusYears(1));
-		eh.setStudentId(student.getId());
+		//eh.setStudentId(student.getId());
 		eh.setSchool(school);
-		student.addEducationHistory(eh);
+		student.addToEducationHistory(eh);
 		student = repo.save(student);
 	}
 	

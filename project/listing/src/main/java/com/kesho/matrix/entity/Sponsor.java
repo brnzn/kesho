@@ -3,7 +3,6 @@ package com.kesho.matrix.entity;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +18,8 @@ import javax.persistence.Table;
 
 //TODO: batch insert
 @Entity
-@Table(name = "STUDENTS")
-public class Student {
+@Table(name = "SPONSORS")
+public class Sponsor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -28,16 +27,45 @@ public class Student {
     
     @Column(name = "FIRST_NAME")
     private String firstName;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private List<StudentLog> logs = newArrayList();
-
-// unidirectional   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(updatable = false, name="STUDENT_ID", referencedColumnName="ID")    
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private Set<EducationHistory> educationHistory = newHashSet();    
     
-	public Long getId() {
+    @Column(name = "SURNAME")
+    private String surname;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
+    private List<SponsorLog> logs = newArrayList();
+
+    @Column(name = "TITLE")
+    private String title;
+  
+    //TODO: can we have multiple addresses??
+    @Column(name="ADDRESS_LINE_1")
+    private String addressLin1;
+
+    @Column(name="ADDRESS_LINE_2")
+    private String addressLin2;
+    
+    @Column(name="ADDRESS_LINE_3")
+    private String addressLin3;
+    
+    @Column(name="COUNTY")
+    private String county;
+  
+    @Column(name="POSTCODE")
+    private String postcode;
+    
+    @Column(name="COUNTRY")
+    private String country;
+
+    @Column(name="PHONE")
+    private String phone;
+
+    @Column(name="EMAIL")
+    private String email;
+    
+    @Column(name="GIFT_AID", columnDefinition = "BIT")
+    private Boolean giftAid;
+    
+    public Long getId() {
 		return id;
 	}
 
@@ -53,21 +81,12 @@ public class Student {
 		this.firstName = firstName;
 	}
 
-	public void addLog(StudentLog log) {
-		log.setStudent(this);
-		this.logs.add(log);
-	}
-
-	public void addToEducationHistory(EducationHistory educationHistory) {
-		educationHistory.setStudent(this);
-		this.educationHistory.add(educationHistory);
-	}
-	
-	public List<StudentLog> getLogs() {
-		return logs;
-	}
-
-	public Set<EducationHistory> getEducationHistory() {
-		return Collections.unmodifiableSet(educationHistory);
-	}
+//	public void addLog(StudentLog log) {
+//		log.setStudent(this);
+//		this.logs.add(log);
+//	}
+//
+//	public List<StudentLog> getLogs() {
+//		return logs;
+//	}
 }

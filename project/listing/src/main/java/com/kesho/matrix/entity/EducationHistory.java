@@ -28,8 +28,11 @@ public class EducationHistory {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "STUDENT_ID", nullable=false)
-    private Long studentId;
+    @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "STUDENT_ID" , insertable = true, updatable = false, nullable = false)
+    private Student student;    
+//    unidirectional @Column(name = "STUDENT_ID", nullable=false) 
+//    private Long studentId;
     
     //TODO:enum
     @Column(name = "LEVEL")
@@ -98,8 +101,8 @@ public class EducationHistory {
 		this.term = term;
 	}
 
-	public void setStudentId(Long id2) {
-		this.studentId = id2;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	public void setSchool(School school) {

@@ -13,17 +13,17 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
-
+//TODO: use embeded with student log
 @Entity
-@Table(name = "STUDENT_LOG")
-public class StudentLog {
+@Table(name = "SPONSOR_LOG")
+public class SponsorLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "STUDENT_ID" , insertable = true, updatable = false, nullable = false)
+    @JoinColumn(name = "SPONSOR_ID" , insertable = true, updatable = false, nullable = false)
     private Student student;
 
     @Column(name="CREATED_DATE")
@@ -52,5 +52,6 @@ public class StudentLog {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}	
+
 
 }
