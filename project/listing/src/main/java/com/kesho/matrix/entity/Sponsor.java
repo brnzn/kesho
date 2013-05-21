@@ -1,10 +1,8 @@
 package com.kesho.matrix.entity;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -81,6 +79,103 @@ public class Sponsor {
 		this.firstName = firstName;
 	}
 
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public List<SponsorLog> getLogs() {
+		return logs;
+	}
+
+	public void setLogs(List<SponsorLog> logs) {
+		this.logs = logs;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAddressLin1() {
+		return addressLin1;
+	}
+
+	public void setAddressLin1(String addressLin1) {
+		this.addressLin1 = addressLin1;
+	}
+
+	public String getAddressLin2() {
+		return addressLin2;
+	}
+
+	public void setAddressLin2(String addressLin2) {
+		this.addressLin2 = addressLin2;
+	}
+
+	public String getAddressLin3() {
+		return addressLin3;
+	}
+
+	public void setAddressLin3(String addressLin3) {
+		this.addressLin3 = addressLin3;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Boolean getGiftAid() {
+		return giftAid;
+	}
+
+	public void setGiftAid(Boolean giftAid) {
+		this.giftAid = giftAid;
+	}
+
+	
 //	public void addLog(StudentLog log) {
 //		log.setStudent(this);
 //		this.logs.add(log);
