@@ -18,14 +18,9 @@ public class MyMain extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private ClassPathXmlApplicationContext ctx;
-//	private ObservableList<Person> personData = FXCollections.observableArrayList();
 
 	public MyMain() {
 	}
-
-//	public ObservableList<Person> getPersonData() {
-//		return personData;
-//	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -34,6 +29,8 @@ public class MyMain extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("AddressApp");
 
+		WindowsUtil.getInstance().setPrimaryStage(primaryStage);
+		
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
@@ -66,7 +63,7 @@ public class MyMain extends Application {
 		try {
 			// Load the fxml file and set into the center of the main layout
 			FXMLLoader loader = new FXMLLoader(
-					MyMain.class.getResource("view/PersonOverview.fxml"));
+					MyMain.class.getResource("view/StudentOverview.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
 

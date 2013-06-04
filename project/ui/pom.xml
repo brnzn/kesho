@@ -17,6 +17,13 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>javafx</groupId>
+			<artifactId>dialogs</artifactId>
+			<scope>system</scope>
+			<version>0.0.1</version>
+			<systemPath>C:\Users\oren\Documents\GitHub\kesho\project\ui\lib\javafx-dialogs-0.0.1.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>com.kesho</groupId>
 			<artifactId>kesho-matrix</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

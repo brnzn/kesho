@@ -9,6 +9,7 @@ import java.util.Calendar;
  */
 public class Person {
 
+	private  Long personId;
 	private String firstName;
 	private String lastName;
 	private String street;
@@ -28,10 +29,9 @@ public class Person {
 	 * @param firstName
 	 * @param lastName
 	 */
-	public Person(String firstName, String lastName) {
+	public Person(String firstName, Long id) {
 		this.firstName = firstName;
-		this.lastName = lastName;
-		
+		this.personId = id;
 		// some initial dummy data
 		this.street = "some street";
 		this.postalCode = 1234;
@@ -85,5 +85,13 @@ public class Person {
 
 	public void setBirthday(Calendar birthday) {
 		this.birthday = birthday;
+	}
+	
+	public Long getPersonId() {
+		return this.personId;
+	}
+	
+	public void setPersonId(Long id) {
+		this.personId = id;
 	}
 }
