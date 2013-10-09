@@ -3,7 +3,7 @@
   <groupId>fxmvn</groupId>
   <artifactId>fxmvn</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+  <name>fx_mvn</name>
   <properties>
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
 </properties>
@@ -14,7 +14,7 @@
 	    <artifactId>javafx-runtime</artifactId>
 	    <scope>system</scope>
 	    <version>2.2.21</version>
-	    <systemPath>C:/java/jdk1.7_u21/jre/lib/jfxrt.jar</systemPath>
+	    <systemPath>/usr/java/jdk1.7.0_40/jre/lib/jfxrt.jar</systemPath>
 	</dependency>  
 	
 <dependency>
@@ -40,7 +40,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.1</version>
 					<configuration>
 						<source>1.7</source>
 						<target>1.7</target>

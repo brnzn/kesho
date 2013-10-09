@@ -46,7 +46,7 @@ public class MyMain extends Application {
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
-					MyMain.class.getResource("view/RootLayout.fxml"));
+					MyMain.class.getResource("/view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -75,7 +75,7 @@ public class MyMain extends Application {
 		try {
 			// Load the fxml file and set into the center of the main layout
 			FXMLLoader loader = new FXMLLoader(
-					MyMain.class.getResource("view/PersonOverview.fxml"));
+					MyMain.class.getResource("/view/PersonOverview.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
 

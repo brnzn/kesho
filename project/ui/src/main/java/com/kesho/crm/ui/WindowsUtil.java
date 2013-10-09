@@ -1,7 +1,9 @@
-package com.kesho.matrix.ui;
+package com.kesho.crm.ui;
 
 import java.io.IOException;
 
+import com.kesho.crm.dto.StudentDto;
+import com.kesho.crm.ui.controller.PersonEditDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -27,13 +29,13 @@ public class WindowsUtil {
 		this.primaryStage = primaryStage;
 	}
 	
-	public boolean showPersonEditDialog(Person person) {
+	public boolean showPersonEditDialog(StudentDto person) {
 		try {
 			// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("view/PersonEditDialog.fxml"));
+			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/PersonEditDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit Person");
+			dialogStage.setTitle("Edit StudentDto");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);

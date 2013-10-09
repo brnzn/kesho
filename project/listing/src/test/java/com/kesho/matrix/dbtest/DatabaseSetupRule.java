@@ -46,8 +46,8 @@ public final class DatabaseSetupRule extends ExternalResource {
 
     private static final String CONNECTION_URL = "jdbc:mysql://localhost/%s";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
-    private static final String PASSWORD = "admin";
-    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "bobbins";
+    private static final String USERNAME = "dev";
 
     private final String databaseName;
     private final String dataFileName;

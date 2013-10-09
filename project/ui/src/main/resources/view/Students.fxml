@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="599.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.crm.ui.controller.StudentsController">
+  <children>
+    <BorderPane prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <TabPane prefHeight="300.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+          <tabs>
+            <Tab text="Main">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <SplitPane dividerPositions="0.5029585798816568" focusTraversable="true" orientation="VERTICAL" prefHeight="191.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                          <children>
+                            <TableView fx:id="personTable" prefHeight="92.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <columns>
+                                  <TableColumn prefWidth="120.0" text="First Name" fx:id="firstNameColumn" />
+                                  <TableColumn prefWidth="120.0" text="ID" fx:id="personIdColumn" />
+                              </columns>
+                            </TableView>
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                      </items>
+                    </SplitPane>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Untitled Tab 2">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+          </tabs>
+          <BorderPane.margin>
+            <Insets bottom="20.0" right="20.0" />
+          </BorderPane.margin>
+        </TabPane>
+      </center>
+      <left>
+        <AnchorPane prefHeight="227.0" prefWidth="123.0" BorderPane.alignment="TOP_CENTER">
+          <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <children>
+                <Button mnemonicParsing="false" prefWidth="78.0" text="New...">
+                  <VBox.margin>
+                    <Insets top="10.0" fx:id="x1" />
+                  </VBox.margin>
+                </Button>
+                <Button minWidth="78.0" mnemonicParsing="false" text="Find..." VBox.margin="$x1" />
+                <Button mnemonicParsing="false" text="Show All" VBox.margin="$x1" />
+              </children>
+            </VBox>
+          </children>
+        </AnchorPane>
+      </left>
+      <top>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+          <children>
+            <Label layoutX="29.0" layoutY="21.0" prefHeight="38.0" prefWidth="115.0" text="Students">
+              <font>
+                <Font name="System Bold" size="20.0" />
+              </font>
+            </Label>
+          </children>
+        </Pane>
+      </top>
+    </BorderPane>
+  </children>
+</AnchorPane>

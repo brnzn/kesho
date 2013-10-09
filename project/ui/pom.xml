@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jfxrt>C:/java/jdk1.7_u21/jre/lib/jfxrt.jar</jfxrt>
+		<jfxrt>/usr/java/jdk1.7.0_40/jre/lib/jfxrt.jar</jfxrt>
 		<org.springframework.version>3.2.2.RELEASE</org.springframework.version>
 	</properties>
 
@@ -21,7 +21,7 @@
 			<artifactId>dialogs</artifactId>
 			<scope>system</scope>
 			<version>0.0.1</version>
-			<systemPath>C:\Users\oren\Documents\GitHub\kesho\project\ui\lib\javafx-dialogs-0.0.1.jar</systemPath>
+			<systemPath>/home/orenberenson/kesho/project/ui/lib/javafx-dialogs-0.0.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.kesho</groupId>

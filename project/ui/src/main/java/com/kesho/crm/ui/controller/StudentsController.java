@@ -1,25 +1,21 @@
-package com.kesho.matrix.ui;
+package com.kesho.crm.ui.controller;
 
-import java.io.IOException;
 import java.util.List;
 
+import com.kesho.crm.dto.StudentDto;
+import com.kesho.crm.ui.WindowsUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import com.kesho.matrix.entity.Student;
 import com.kesho.matrix.repository.StudentsRepository;
@@ -29,20 +25,20 @@ import com.kesho.matrix.repository.StudentsRepository;
  * 
  * @author Marco Jakob
  */
-public class PersonOverviewController {
+public class StudentsController {
 	private StudentsRepository repo;
 	
 	@FXML
-	private TableView<Person> personTable;
+	private TableView<StudentDto> personTable;
 	@FXML
-	private TableColumn<Person, String> firstNameColumn;
+	private TableColumn<StudentDto, String> firstNameColumn;
 	@FXML
-	private TableColumn<Person, Long> personIdColumn;
+	private TableColumn<StudentDto, Long> personIdColumn;
 
-	@FXML
-	private Label firstNameLabel;
-	@FXML
-	private Label idLabel;
+//	@FXML
+//	private Label firstNameLabel;
+//	@FXML
+//	private Label idLabel;
 
 
     @FXML
@@ -51,14 +47,14 @@ public class PersonOverviewController {
     private Button saveButton;
     
 	// Reference to the main application
-	//private MyMain mainApp;
-	private ObservableList<Person> personData = FXCollections.observableArrayList();
+	//private KeshoApp mainApp;
+	private ObservableList<StudentDto> personData = FXCollections.observableArrayList();
 	
 	public void setRepo(StudentsRepository repo) {
 		this.repo = repo;
 		List<Student> students = repo.findAll();
 		for(Student student:students) {
-			personData.add(new Person(student.getFirstName(), student.getId()));
+			personData.add(new StudentDto().withName(student.getFirstName()).withId(student.getId()));
 		}		
 
 		
@@ -67,12 +63,12 @@ public class PersonOverviewController {
 	 * The constructor. The constructor is called before the initialize()
 	 * method.
 	 */
-	public PersonOverviewController() {
+	public StudentsController() {
 	}
 
 	@FXML
 	private void add() {
-		personData.add(new Person("hello", Long.MAX_VALUE));
+		personData.add(new StudentDto().withName("hello").withId(Long.MAX_VALUE));
 	}
 
 	/**
@@ -83,39 +79,43 @@ public class PersonOverviewController {
 	private void initialize() {
 		// Initialize the person table
 		firstNameColumn.setCellValueFactory(
-				new PropertyValueFactory<Person, String>("firstName"));
+				new PropertyValueFactory<StudentDto, String>("firstName"));
 		personIdColumn.setCellValueFactory(
-				new PropertyValueFactory<Person, Long>("personId"));
-		
+				new PropertyValueFactory<StudentDto, Long>("personId"));
+//
 		personTable.setItems(personData);
-
-		//update form when selecting table row
-		personTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
+//
+//		//update form when selecting table row
+		personTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
 			@Override
-			public void changed(ObservableValue<? extends Person> observable,
-					Person oldValue, Person newValue) {
+			public void changed(ObservableValue<? extends StudentDto> observable,
+					StudentDto oldValue, StudentDto newValue) {
 				showPersonDetails(newValue);
 			}
 		});
+
+        personData.add(new StudentDto().withName("hello").withId(1L));
 	}
 
-	private void showPersonDetails(Person person) {
-		if (person != null) {
-			firstNameLabel.setText(person.getFirstName());
-			idLabel.setText(String.valueOf(person.getPersonId()));
-		} else {
-			firstNameLabel.setText("");
-			idLabel.setText("");
-		}
+	private void showPersonDetails(StudentDto person) {
+//		if (person != null) {
+//			firstNameLabel.setText(person.getFirstName());
+//			idLabel.setText(String.valueOf(person.getPersonId()));
+//		} else {
+//			firstNameLabel.setText("");
+//			idLabel.setText("");
+//		}
 	}
 	
 	@FXML
 	private void handleNewPerson() {
-//		Person tempPerson = new Person();
-//		boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
-//		if (okClicked) {
-//			mainApp.getPersonData().add(tempPerson);
-//		}
+        System.out.println("handleNewPerson.........");
+		StudentDto tempPerson = new StudentDto();
+
+        boolean okClicked = WindowsUtil.getInstance().showPersonEditDialog(tempPerson);
+        if (okClicked) {
+            personData.add(tempPerson);
+        }
 	}
 	
 	@FXML
@@ -127,19 +127,19 @@ public class PersonOverviewController {
 //			// Nothing selected
 //			Dialogs.showWarningDialog(mainApp.getPrimaryStage(),
 //					"Please select a person in the table.",
-//					"No Person Selected", "No Selection");
+//					"No StudentDto Selected", "No Selection");
 //		}
 	}
 	
 	@FXML
 	private void handleEditPerson() {
-		Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+		StudentDto selectedPerson = personTable.getSelectionModel().getSelectedItem();
 		if (selectedPerson != null) {
 			boolean okClicked = WindowsUtil.getInstance().showPersonEditDialog(selectedPerson);
 			if (okClicked) {
 				Student s = new Student();
-				s.setId(selectedPerson.getPersonId());
-				s.setFirstName(selectedPerson.getFirstName());
+//				s.setId(selectedPerson.getPersonId());
+//				s.setFirstName(selectedPerson.getFirstName());
 				repo.save(s);
 				refreshPersonTable();
 				showPersonDetails(selectedPerson);
@@ -149,7 +149,7 @@ public class PersonOverviewController {
 			// Nothing selected
 			Dialogs.showWarningDialog(WindowsUtil.getInstance().getPrimaryStage(),
 					"Please select a person in the table.",
-					"No Person Selected", "No Selection");
+					"No StudentDto Selected", "No Selection");
 		}
 	}	
 	
@@ -171,14 +171,14 @@ public class PersonOverviewController {
 //    	s.setFirstName(firstNameLabel.getText());
 //    	s = repo.save(s);
 //    	
-//    	personData.add(new Person(s.getFirstName(), String.valueOf(s.getId())));
+//    	personData.add(new StudentDto(s.getFirstName(), String.valueOf(s.getId())));
     }	
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
 	 * @param mainApp
 	 */
-//	public void setMainApp(MyMain mainApp) {
+//	public void setMainApp(KeshoApp mainApp) {
 //		this.mainApp = mainApp;
 //
 //		// Add observable list data to the table

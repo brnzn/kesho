@@ -1,5 +1,6 @@
-package com.kesho.matrix.ui;
+package com.kesho.crm.ui.controller;
 
+import com.kesho.crm.dto.StudentDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
@@ -27,7 +28,7 @@ public class PersonEditDialogController {
 	
 	
 	private Stage dialogStage;
-	private Person person;
+	private StudentDto person;
 	private boolean okClicked = false;
 	
 	/**
@@ -52,14 +53,14 @@ public class PersonEditDialogController {
 	 * 
 	 * @param person
 	 */
-	public void setPerson(Person person) {
+	public void setPerson(StudentDto person) {
 		this.person = person;
 		
-		firstNameField.setText(person.getFirstName());
-		lastNameField.setText(person.getLastName());
-		streetField.setText(person.getStreet());
-		postalCodeField.setText(Integer.toString(person.getPostalCode()));
-		cityField.setText(person.getCity());
+//		firstNameField.setText(person.getFirstName());
+//		lastNameField.setText(person.getLastName());
+//		streetField.setText(person.getStreet());
+//		postalCodeField.setText(Integer.toString(person.getPostalCode()));
+//		cityField.setText(person.getCity());
 	}
 	
 	/**
@@ -76,11 +77,11 @@ public class PersonEditDialogController {
 	@FXML
 	private void handleOk() {
 //		if (isInputValid()) {
-			person.setFirstName(firstNameField.getText());
-			person.setLastName(lastNameField.getText());
-			person.setStreet(streetField.getText());
-			person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
-			person.setCity(cityField.getText());
+//			person.setFirstName(firstNameField.getText());
+//			person.setLastName(lastNameField.getText());
+//			person.setStreet(streetField.getText());
+//			person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+//			person.setCity(cityField.getText());
 			
 			okClicked = true;
 			dialogStage.close();

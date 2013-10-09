@@ -1,9 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>fxmvn</groupId>
-	<artifactId>fxmvn</artifactId>
+	<groupId>fxmvnhibernate</groupId>
+	<artifactId>fxmvnhibernate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+      <name>fx_mvn_hibernate</name>
 
 	<properties>
 		<org.springframework.version>3.2.2.RELEASE</org.springframework.version>
@@ -20,7 +21,7 @@
 			<artifactId>javafx-runtime</artifactId>
 			<scope>system</scope>
 			<version>2.2.21</version>
-			<systemPath>C:/java/jdk1.7_u21/jre/lib/jfxrt.jar</systemPath>
+			<systemPath>/usr/java/jdk1.7.0_40/jre/lib/jfxrt.jar</systemPath>
 		</dependency>
 
 		<dependency>

@@ -1,7 +1,9 @@
-package com.kesho.matrix.ui;
+package com.kesho.crm;
 
 import java.io.IOException;
 
+import com.kesho.crm.ui.controller.StudentsController;
+import com.kesho.crm.ui.WindowsUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,13 +15,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.kesho.matrix.repository.StudentsRepository;
 
-public class MyMain extends Application {
+public class KeshoApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private ClassPathXmlApplicationContext ctx;
 
-	public MyMain() {
+	public KeshoApp() {
 	}
 
 	@Override
@@ -33,9 +35,8 @@ public class MyMain extends Application {
 		
 		try {
 			// Load the root layout from the fxml file
-			FXMLLoader loader = new FXMLLoader(
-					MyMain.class.getResource("view/RootLayout.fxml"));
-			rootLayout = (BorderPane) loader.load();
+			FXMLLoader loader = new FXMLLoader();
+			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/RootLayout.fxml"));
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -63,11 +64,11 @@ public class MyMain extends Application {
 		try {
 			// Load the fxml file and set into the center of the main layout
 			FXMLLoader loader = new FXMLLoader(
-					MyMain.class.getResource("view/StudentOverview.fxml"));
+					KeshoApp.class.getResource("/view/Students1.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
 
-			PersonOverviewController controller = loader.getController();
+			StudentsController controller = loader.getController();
 			StudentsRepository repo = ctx.getBean(StudentsRepository.class);
 			controller.setRepo(repo);
 			//controller.setMainApp(this);
