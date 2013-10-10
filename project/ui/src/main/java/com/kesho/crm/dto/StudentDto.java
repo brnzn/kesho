@@ -32,6 +32,14 @@ public class StudentDto {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
     public String getFamilyName() {
         return familyName;
     }
@@ -63,6 +71,11 @@ public class StudentDto {
 
     public StudentDto withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public StudentDto withFamilyName(String name) {
+        this.familyName = name;
         return this;
     }
 }

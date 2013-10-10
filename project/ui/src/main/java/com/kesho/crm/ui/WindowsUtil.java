@@ -40,15 +40,15 @@ public class WindowsUtil {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			
+
 			// Set the person into the controller
 			PersonEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setPerson(person);
-			
+
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-			
+
 			return controller.isOkClicked();
 			
 		} catch (IOException e) {

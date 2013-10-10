@@ -77,8 +77,8 @@ public class PersonEditDialogController {
 	@FXML
 	private void handleOk() {
 //		if (isInputValid()) {
-//			person.setFirstName(firstNameField.getText());
-//			person.setLastName(lastNameField.getText());
+			person.setName(firstNameField.getText());
+			person.setFamilyName(lastNameField.getText());
 //			person.setStreet(streetField.getText());
 //			person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
 //			person.setCity(cityField.getText());

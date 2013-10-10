@@ -33,12 +33,12 @@ public class StudentsController {
 	@FXML
 	private TableColumn<StudentDto, String> firstNameColumn;
 	@FXML
-	private TableColumn<StudentDto, Long> personIdColumn;
+	private TableColumn<StudentDto, String> familyNameColumn;
 
-//	@FXML
-//	private Label firstNameLabel;
-//	@FXML
-//	private Label idLabel;
+	@FXML
+	private Label nameLabel;
+	@FXML
+	private Label familyNameLabel;
 
 
     @FXML
@@ -66,10 +66,10 @@ public class StudentsController {
 	public StudentsController() {
 	}
 
-	@FXML
-	private void add() {
-		personData.add(new StudentDto().withName("hello").withId(Long.MAX_VALUE));
-	}
+//	@FXML
+//	private void add() {
+//		personData.add(new StudentDto().withName("new name").withFamilyName("new family").withId(Long.MAX_VALUE));
+//	}
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -79,9 +79,9 @@ public class StudentsController {
 	private void initialize() {
 		// Initialize the person table
 		firstNameColumn.setCellValueFactory(
-				new PropertyValueFactory<StudentDto, String>("firstName"));
-		personIdColumn.setCellValueFactory(
-				new PropertyValueFactory<StudentDto, Long>("personId"));
+				new PropertyValueFactory<StudentDto, String>("name"));
+        familyNameColumn.setCellValueFactory(
+				new PropertyValueFactory<StudentDto, String>("familyName"));
 //
 		personTable.setItems(personData);
 //
@@ -90,26 +90,25 @@ public class StudentsController {
 			@Override
 			public void changed(ObservableValue<? extends StudentDto> observable,
 					StudentDto oldValue, StudentDto newValue) {
-				showPersonDetails(newValue);
+                showPersonDetails(newValue);
 			}
 		});
 
-        personData.add(new StudentDto().withName("hello").withId(1L));
+        personData.add(new StudentDto().withName("name").withFamilyName("familyName").withId(1L));
 	}
 
 	private void showPersonDetails(StudentDto person) {
-//		if (person != null) {
-//			firstNameLabel.setText(person.getFirstName());
-//			idLabel.setText(String.valueOf(person.getPersonId()));
+		if (person != null) {
+			nameLabel.setText(person.getName());
+			familyNameLabel.setText(String.valueOf(person.getFamilyName()));
 //		} else {
 //			firstNameLabel.setText("");
 //			idLabel.setText("");
-//		}
+		}
 	}
 	
 	@FXML
 	private void handleNewPerson() {
-        System.out.println("handleNewPerson.........");
 		StudentDto tempPerson = new StudentDto();
 
         boolean okClicked = WindowsUtil.getInstance().showPersonEditDialog(tempPerson);
