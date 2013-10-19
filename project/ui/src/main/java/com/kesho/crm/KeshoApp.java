@@ -2,6 +2,7 @@ package com.kesho.crm;
 
 import java.io.IOException;
 
+import com.kesho.crm.ui.controller.NewStudentController;
 import com.kesho.crm.ui.controller.StudentsController;
 import com.kesho.crm.ui.WindowsUtil;
 import javafx.application.Application;
@@ -64,13 +65,19 @@ public class KeshoApp extends Application {
 		try {
 			// Load the fxml file and set into the center of the main layout
 			FXMLLoader loader = new FXMLLoader(
-					KeshoApp.class.getResource("/view/Students1.fxml"));
+					KeshoApp.class.getResource("/view/Students2.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
 
-			StudentsController controller = loader.getController();
-			StudentsRepository repo = ctx.getBean(StudentsRepository.class);
-			controller.setRepo(repo);
+            WindowsUtil.getInstance().showStudentsTable();
+//            BorderPane pane = (BorderPane)rootLayout.lookup("#contentLayout");
+//            FXMLLoader loader1 = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
+//            AnchorPane page = (AnchorPane) loader1.load();
+//            pane.setCenter(page);
+
+//			StudentsController controller = loader.getController();
+//			StudentsRepository repo = ctx.getBean(StudentsRepository.class);
+//			controller.setRepo(repo);
 			//controller.setMainApp(this);
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded

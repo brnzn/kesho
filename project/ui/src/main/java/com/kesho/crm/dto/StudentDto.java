@@ -1,6 +1,7 @@
 package com.kesho.crm.dto;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Model class for a StudentDto.
@@ -16,8 +17,9 @@ public class StudentDto {
     private String mobileNumber;
     private String homeLocation;
     private boolean isActiveStudent;
-
-
+    private boolean hasDisability;
+    private boolean isSponsored;
+    private Date startDate;
     /**
 	 * Default constructor.
 	 */
@@ -30,14 +32,6 @@ public class StudentDto {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
     }
 
     public String getFamilyName() {
@@ -64,6 +58,59 @@ public class StudentDto {
         return isActiveStudent;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
+    public void setHomeLocation(String homeLocation) {
+        this.homeLocation = homeLocation;
+    }
+
+    public void setActiveStudent(boolean activeStudent) {
+        isActiveStudent = activeStudent;
+    }
+
+    public void setGender(String gender) {
+
+        this.gender = gender;
+    }
+
+    public void setYearOfBirth(String yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public boolean isHasDisability() {
+        return hasDisability;
+    }
+
+    public void setHasDisability(boolean hasDisability) {
+        this.hasDisability = hasDisability;
+    }
+
+    public boolean isSponsored() {
+        return isSponsored;
+    }
+
+    public void setSponsored(boolean sponsored) {
+        isSponsored = sponsored;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
     public StudentDto withId(Long id) {
         this.id = id;
         return this;
@@ -76,6 +123,46 @@ public class StudentDto {
 
     public StudentDto withFamilyName(String name) {
         this.familyName = name;
+        return this;
+    }
+
+    public StudentDto withGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public StudentDto withYearOfBirth(String yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+        return this;
+    }
+
+    public StudentDto withMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+        return this;
+    }
+
+    public StudentDto withHomeLocation(String homeLocation) {
+        this.homeLocation = homeLocation;
+        return this;
+    }
+
+    public StudentDto isActiveStudent(boolean isActive) {
+        this.isActiveStudent = isActive;
+        return this;
+    }
+
+    public StudentDto hasDisability(boolean hasDisability) {
+        this.hasDisability = hasDisability;
+        return this;
+    }
+
+    public StudentDto isSponsored(boolean sponsored) {
+        this.isSponsored = sponsored;
+        return this;
+    }
+
+    public StudentDto withStartDate(Date startDate) {
+        this.startDate = startDate;
         return this;
     }
 }
