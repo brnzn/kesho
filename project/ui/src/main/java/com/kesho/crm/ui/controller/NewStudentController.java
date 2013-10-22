@@ -4,7 +4,10 @@ import com.kesho.crm.dto.StudentDto;
 import com.kesho.crm.ui.WindowsUtil;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 
@@ -28,9 +31,25 @@ public class NewStudentController {
     private TextField contactNumber;
     @FXML
     private TextField homeLocation;
+    @FXML
+    private ToggleGroup currentStudentGroup;
+    @FXML
+    private ComboBox<String> comboBox;
+
+
+    @FXML
+    private void initialize() {
+        comboBox.getItems().clear();
+        comboBox.getItems().addAll("Yes", "No");
+        currentStudentGroup.getToggles().get(0).setSelected(true);
+//        yes.setUserData("yes");
+//        no.setUserData("no");
+    }
 
     @FXML
     private void save() {
+        System.out.println(comboBox.getSelectionModel().getSelectedItem());
+        System.out.println(currentStudentGroup.getSelectedToggle());
         StudentDto student = new StudentDto();
         student.setName(firstName.getText());
         student.setFamilyName(familyName.getText());

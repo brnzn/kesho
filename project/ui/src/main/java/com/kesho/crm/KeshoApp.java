@@ -30,7 +30,7 @@ public class KeshoApp extends Application {
 		ctx = new ClassPathXmlApplicationContext("repository-context.xml");
 
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("AddressApp");
+		this.primaryStage.setTitle("Kesho StS");
 
 		WindowsUtil.getInstance().setPrimaryStage(primaryStage);
 		

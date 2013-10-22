@@ -89,11 +89,6 @@ public class StudentsController {
 	 */
 	@FXML
 	private void initialize() {
-//       StudentsController c =  WindowsUtil.getInstance().getControllers().getStudentsController();
-//        if(c != null) {
-//            studentsModel = c.getDataModel();
-//        }
-
 		// Initialize the students table
 		firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
@@ -113,26 +108,13 @@ public class StudentsController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        System.out.println("Double clicked");
+                    if (mouseEvent.getClickCount() == 2 && studentsTable.getSelectionModel().getSelectedItem() != null) {
+                        //TODO:pass selected student to initialise form
+                        WindowsUtil.getInstance().showNewStudentDetails();
                     }
                 }
             }
-        });;
-
-         //TODO: code for test
-//        studentsModel.add(new StudentDto().
-//                withName("name").
-//                withFamilyName("familyName").
-//                withGender("gender").
-//                withYearOfBirth("1990").
-//                withMobileNumber("01234 567 890").
-//                withHomeLocation("Kilif").
-//                isActiveStudent(true).
-//                hasDisability(false).
-//                isSponsored(true).
-//                withStartDate(new Date()).
-//                withId(1L));
+        });
 	}
 
 	private void showStudentDetails(StudentDto person) {
@@ -149,11 +131,6 @@ public class StudentsController {
             startDateLbl.setText(CalendarUtil.format(person.getStartDate()));
 		}
 	}
-	
-//	@FXML
-//	private void handleNewStudent() {
-//        WindowsUtil.getInstance().showNewStudentDetails(studentsModel);
-//	}
 
     //TODO: demo code. delete
     public void add(StudentDto student) {
