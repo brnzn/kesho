@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane id="rootLayout" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.crm.ui.controller.RootController">
+  <top>
+    <AnchorPane prefHeight="-1.0" prefWidth="-1.0">
+      <children>
+        <BorderPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <center>
+            <Pane prefHeight="64.0" prefWidth="386.0" BorderPane.alignment="CENTER">
+              <children>
+                <Label fx:id="mainLbl" contentDisplay="LEFT" layoutX="35.0" layoutY="16.0" text="Title">
+                  <font>
+                    <Font name="System Bold" size="20.0" />
+                  </font>
+                </Label>
+              </children>
+            </Pane>
+          </center>
+          <top>
+            <MenuBar prefWidth="386.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Kesho">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#openStudents" text="Students" />
+                    <MenuItem mnemonicParsing="false" text="Sponsors" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+          </top>
+        </BorderPane>
+      </children>
+    </AnchorPane>
+  </top>
+</BorderPane>

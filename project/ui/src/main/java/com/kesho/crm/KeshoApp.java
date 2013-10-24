@@ -3,6 +3,7 @@ package com.kesho.crm;
 import java.io.IOException;
 
 import com.kesho.crm.ui.controller.NewStudentController;
+import com.kesho.crm.ui.controller.RootController;
 import com.kesho.crm.ui.controller.StudentsController;
 import com.kesho.crm.ui.WindowsUtil;
 import javafx.application.Application;
@@ -37,7 +38,9 @@ public class KeshoApp extends Application {
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader();
-			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/RootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/newRootLayout.fxml"));
+            RootController rootController = loader.getController();
+            WindowsUtil.getInstance().getControllers().setRootController(rootController);
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -46,7 +49,7 @@ public class KeshoApp extends Application {
 			e.printStackTrace();
 		}
 
-		showPersonOverview();
+        showHomePage();
 	}
 
 	/**
@@ -61,14 +64,12 @@ public class KeshoApp extends Application {
 	/**
 	 * Shows the person overview scene.
 	 */
-	public void showPersonOverview() {
+	public void showHomePage() {
 		try {
 			// Load the fxml file and set into the center of the main layout
-			FXMLLoader loader = new FXMLLoader(
-					KeshoApp.class.getResource("/view/Students2.fxml"));
+			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/Students.fxml"));
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			rootLayout.setCenter(overviewPage);
-
             WindowsUtil.getInstance().showStudentsTable();
 //            BorderPane pane = (BorderPane)rootLayout.lookup("#contentLayout");
 //            FXMLLoader loader1 = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));

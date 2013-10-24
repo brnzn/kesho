@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.kesho.crm.dto.StudentDto;
 import com.kesho.crm.ui.controller.NewStudentController;
 import com.kesho.crm.ui.controller.PersonEditDialogController;
+import com.kesho.crm.ui.controller.RootController;
 import com.kesho.crm.ui.controller.StudentsController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -63,10 +64,10 @@ public class WindowsUtil {
         }
 
         AnchorPane page = (AnchorPane) loader.load();
-//        StudentsController sc = loader.getController();
-//        WindowsUtil.getInstance().getControllers().setStudentsController(sc);
-
+        controllers.getRootController().setTtile("Students List");
         pane.setCenter(page);
+        primaryStage.sizeToScene();
+
     }
 
     public void showNewStudentDetails() {
@@ -74,8 +75,9 @@ public class WindowsUtil {
             BorderPane pane = (BorderPane)getRoot().lookup("#contentLayout");
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
-  //          NewStudentController controller = loader.getController();
+            controllers.getRootController().setTtile("New Student");
             pane.setCenter(page);
+            primaryStage.sizeToScene();
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -119,6 +121,7 @@ public class WindowsUtil {
     //TODO: demo code. delete once connected to db
     public class Controllers {
         private StudentsController studentsController;
+        private RootController rootController;
 
         public StudentsController getStudentsController() {
             return studentsController;
@@ -127,6 +130,14 @@ public class WindowsUtil {
 
         public void setStudentsController(StudentsController studentsController) {
             this.studentsController = studentsController;
+        }
+
+        public void setRootController(RootController rootController) {
+            this.rootController = rootController;
+        }
+
+        public RootController getRootController() {
+            return rootController;
         }
     }
 
