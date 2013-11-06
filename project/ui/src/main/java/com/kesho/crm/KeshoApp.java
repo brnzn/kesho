@@ -21,14 +21,14 @@ public class KeshoApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private ClassPathXmlApplicationContext ctx;
+//	private ClassPathXmlApplicationContext ctx;
 
 	public KeshoApp() {
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		ctx = new ClassPathXmlApplicationContext("repository-context.xml");
+//		ctx = new ClassPathXmlApplicationContext("repository-context.xml");
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Kesho StS");
