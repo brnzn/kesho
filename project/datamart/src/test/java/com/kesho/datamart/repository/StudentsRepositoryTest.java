@@ -37,7 +37,7 @@ public class StudentsRepositoryTest {
 		Student s = repo.save(new Student());
 		assertNotNull("Student should have an id", s.getId());
 		
-		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("students", String.format("select * from students where id=%d", s.getId())).getRowCount(), is(1));
+		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("students", String.format("select * from STUDENTS where id=%d", s.getId())).getRowCount(), is(1));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class StudentsRepositoryTest {
 	@Test
 	public void shouldDeleteStudent() throws DataSetException, SQLException {
 		repo.delete(2L);
-		assertThat("Expected no rows", dbSetup.getConnection().createQueryTable("students", "select * from students where id=2").getRowCount(), is(0));
+		assertThat("Expected no rows", dbSetup.getConnection().createQueryTable("students", "select * from STUDENTS where id=2").getRowCount(), is(0));
 	}
 	
 	@Test
@@ -62,9 +62,9 @@ public class StudentsRepositoryTest {
 		Student s = repo.save(student);
 		assertNotNull("Student should have an id", s.getId());
 		assertThat("Student should have one log", s.getLogs().size(), is(1));
-		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from student_log where student_id=%d", s.getId())).getRowCount(), is(1));
+		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("STUDENT_LOG", String.format("select * from STUDENT_LOG where student_id=%d", s.getId())).getRowCount(), is(1));
 		
-		Object logComment = dbSetup.getConnection().createQueryTable("student_log", String.format("select * from student_log where student_id=%d", s.getId())).getValue(0, "LOG");
+		Object logComment = dbSetup.getConnection().createQueryTable("student_log", String.format("select * from STUDENT_LOG where student_id=%d", s.getId())).getValue(0, "LOG");
 		assertThat("Expected comment", log.getComment(), is(logComment));
 	}
 
@@ -83,7 +83,7 @@ public class StudentsRepositoryTest {
 		assertNotNull("Student should have an id", s.getId());
 		assertThat("Student should have 2 logs", s.getLogs().size(), is(2));
 
-		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from student_log where student_id=%d", s.getId())).getRowCount(), is(2));
+		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from STUDENT_LOG where student_id=%d", s.getId())).getRowCount(), is(2));
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class StudentsRepositoryTest {
 		s.getLogs().remove(0);
 		s = repo.save(s);
 		
-		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from student_log where student_id=%d", s.getId())).getRowCount(), is(0));
+		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from STUDENT_LOG where student_id=%d", s.getId())).getRowCount(), is(0));
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class StudentsRepositoryTest {
 		
 		repo.delete(s.getId());
 		
-		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from student_log where student_id=%d", s.getId())).getRowCount(), is(0));
+		assertThat("Expected student log row", dbSetup.getConnection().createQueryTable("student_log", String.format("select * from STUDENT_LOG where student_id=%d", s.getId())).getRowCount(), is(0));
 	}
 	
 	@Test
@@ -124,7 +124,7 @@ public class StudentsRepositoryTest {
 		s.getLogs().get(0).setComment("new comment");
 		s = repo.save(s);
 		
-		assertThat("Expected comment", dbSetup.getConnection().createQueryTable("student_log", String.format("select LOG from student_log where student_id=%d", s.getId())).getValue(0, "LOG").toString(), is("new comment"));
+		assertThat("Expected comment", dbSetup.getConnection().createQueryTable("student_log", String.format("select LOG from STUDENT_LOG where student_id=%d", s.getId())).getValue(0, "LOG").toString(), is("new comment"));
 	}
 	
 	@Test

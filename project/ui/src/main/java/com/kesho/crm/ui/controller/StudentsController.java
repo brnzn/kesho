@@ -1,10 +1,12 @@
 package com.kesho.crm.ui.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import com.kesho.crm.dto.StudentDto;
 import com.kesho.crm.ui.WindowsUtil;
 import com.kesho.crm.ui.util.CalendarUtil;
+import com.kesho.datamart.entity.Student;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,16 +19,20 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import com.kesho.matrix.repository.StudentsRepository;
+import com.kesho.datamart.repository.StudentsRepository;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.inject.Named;
 
 /**
  * The controller for the overview with address table and details view.
- * 
- * @author Marco Jakob
+ *
  */
+@Named
 public class StudentsController {
+    @Autowired
 	private StudentsRepository repo;
 	
 	@FXML
@@ -93,7 +99,12 @@ public class StudentsController {
 		firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
 
-		studentsTable.setItems(studentsModel);
+        List<Student> students = repo.findAll();
+		for(Student student:students) {
+			studentsModel.add(new StudentDto().withName(student.getFirstName()).withId(student.getId()));
+        }
+
+        studentsTable.setItems(studentsModel);
 
 //		//update form when selecting table row
 		studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {

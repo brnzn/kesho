@@ -15,12 +15,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class WindowsUtil {
 
 	private static WindowsUtil instance = new WindowsUtil();
 	private Stage primaryStage;
     private Controllers controllers = new Controllers();
+    private ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SampleAppFactory.class);
 
     private WindowsUtil(){}
 	
@@ -55,13 +58,13 @@ public class WindowsUtil {
     public void showStudentsTable() throws IOException {
         BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
-        if(controllers.getStudentsController() != null) {
+//        if(controllers.getStudentsController() != null) {
             loader.setController(controllers.getStudentsController());
-        } else {
-            StudentsController sc = new StudentsController();
-            loader.setController(sc);
-            WindowsUtil.getInstance().getControllers().setStudentsController(sc);
-        }
+//        } else {
+//            StudentsController sc = new StudentsController();
+//            loader.setController(sc);
+//            WindowsUtil.getInstance().getControllers().setStudentsController(sc);
+//        }
 
         AnchorPane page = (AnchorPane) loader.load();
         controllers.getRootController().setTtile("Students List");
@@ -124,7 +127,7 @@ public class WindowsUtil {
         private RootController rootController;
 
         public StudentsController getStudentsController() {
-            return studentsController;
+            return applicationContext.getBean(StudentsController.class);
         }
 
 

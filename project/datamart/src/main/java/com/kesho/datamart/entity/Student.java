@@ -26,7 +26,7 @@ public class Student {
     @Column(name = "ID", nullable = false)
     private Long id;
     
-    @Column(name = "FIRST_NAME")
+    @Column(name = "NAME")
     private String firstName;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")

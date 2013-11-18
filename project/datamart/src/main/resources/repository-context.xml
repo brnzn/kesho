@@ -25,7 +25,7 @@
 		<property name="dataSource" ref="dataSourceMarketing" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.kesho.matrix.entity</value>
+				<value>com.kesho.datamart.entity</value>
 			</list>
 		</property>
 		<property name="jpaVendorAdapter" ref="hibernateAdapter" />
@@ -77,5 +77,5 @@
 	</bean>
 
 	<tx:annotation-driven />
-	<jpa:repositories base-package="com.kesho.matrix.repository" transaction-manager-ref="transactionManager" />
+	<jpa:repositories base-package="com.kesho.datamart.repository" transaction-manager-ref="transactionManager" />
 </beans>

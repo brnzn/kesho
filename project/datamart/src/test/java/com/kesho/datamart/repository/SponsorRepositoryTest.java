@@ -33,7 +33,7 @@ public class SponsorRepositoryTest {
 		Sponsor s = repo.save(new Sponsor());
 		assertNotNull("Sponsor should have an id", s.getId());
 		
-		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("sponsors", String.format("select * from sponsors where id=%d", s.getId())).getRowCount(), is(1));
+		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("sponsors", String.format("select * from SPONSORS where id=%d", s.getId())).getRowCount(), is(1));
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class SponsorRepositoryTest {
 	@Test
 	public void shouldDeleteSponsor() throws DataSetException, SQLException {
 		repo.delete(999L);
-		assertThat("Expected no rows", dbSetup.getConnection().createQueryTable("sponsors", "select * from sponsors where id=999").getRowCount(), is(0));
+		assertThat("Expected no rows", dbSetup.getConnection().createQueryTable("sponsors", "select * from SPONSORS where id=999").getRowCount(), is(0));
 	}
 //	
 //	@Test

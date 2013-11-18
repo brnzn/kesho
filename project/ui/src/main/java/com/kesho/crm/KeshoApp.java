@@ -1,34 +1,30 @@
 package com.kesho.crm;
 
-import java.io.IOException;
-
-import com.kesho.crm.ui.controller.NewStudentController;
-import com.kesho.crm.ui.controller.RootController;
-import com.kesho.crm.ui.controller.StudentsController;
 import com.kesho.crm.ui.WindowsUtil;
+import com.kesho.crm.ui.controller.RootController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.kesho.matrix.repository.StudentsRepository;
+import java.io.IOException;
+
 
 public class KeshoApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-//	private ClassPathXmlApplicationContext ctx;
+	private ClassPathXmlApplicationContext ctx;
 
 	public KeshoApp() {
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-//		ctx = new ClassPathXmlApplicationContext("repository-context.xml");
+		ctx = new ClassPathXmlApplicationContext("repository-context.xml");
 
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Kesho StS");
@@ -51,15 +47,6 @@ public class KeshoApp extends Application {
 
         showHomePage();
 	}
-
-	/**
-	 * Returns the main stage.
-	 * 
-	 * @return
-	 */
-	// public Stage getPrimaryStage() {
-	// return primaryStage;
-	// }
 
 	/**
 	 * Shows the person overview scene.
