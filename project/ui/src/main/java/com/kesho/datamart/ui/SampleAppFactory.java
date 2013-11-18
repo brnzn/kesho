@@ -1,7 +1,6 @@
-package com.kesho.crm.ui;
+package com.kesho.datamart.ui;
 
-import com.kesho.crm.ui.controller.StudentsController;
-import com.kesho.datamart.repository.StudentsRepository;
+import com.kesho.datamart.ui.controller.StudentsController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

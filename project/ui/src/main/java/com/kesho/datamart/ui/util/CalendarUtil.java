@@ -1,4 +1,4 @@
-package com.kesho.crm.ui.util;
+package com.kesho.datamart.ui.util;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +9,6 @@ package com.kesho.crm.ui.util;
  */
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<BorderPane id="rootLayout" prefHeight="497.0" prefWidth="621.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.crm.ui.controller.RootController">
+<BorderPane id="rootLayout" prefHeight="497.0" prefWidth="621.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.RootController">
   <top>
     <MenuBar prefWidth="386.0">
       <menus>

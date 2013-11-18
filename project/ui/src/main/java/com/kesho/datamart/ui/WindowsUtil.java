@@ -1,19 +1,13 @@
-package com.kesho.crm.ui;
+package com.kesho.datamart.ui;
 
 import java.io.IOException;
 
-import com.kesho.crm.dto.StudentDto;
-import com.kesho.crm.ui.controller.NewStudentController;
-import com.kesho.crm.ui.controller.PersonEditDialogController;
-import com.kesho.crm.ui.controller.RootController;
-import com.kesho.crm.ui.controller.StudentsController;
-import javafx.collections.ObservableList;
+import com.kesho.datamart.ui.controller.RootController;
+import com.kesho.datamart.ui.controller.StudentsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

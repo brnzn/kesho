@@ -1,7 +1,7 @@
-package com.kesho.crm;
+package com.kesho.datamart;
 
-import com.kesho.crm.ui.WindowsUtil;
-import com.kesho.crm.ui.controller.RootController;
+import com.kesho.datamart.ui.WindowsUtil;
+import com.kesho.datamart.ui.controller.RootController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.crm.ui.controller.StudentsController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.StudentsController">
   <!-- TODO Add Nodes -->
   <children>
     <SplitPane dividerPositions="0.46153846153846156" focusTraversable="true" prefHeight="285.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

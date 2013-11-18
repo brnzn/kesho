@@ -1,6 +1,5 @@
-package com.kesho.crm.dto;
+package com.kesho.datamart.dto;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**

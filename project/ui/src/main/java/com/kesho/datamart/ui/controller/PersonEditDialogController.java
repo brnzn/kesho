@@ -1,6 +1,6 @@
-package com.kesho.crm.ui.controller;
+package com.kesho.datamart.ui.controller;
 
-import com.kesho.crm.dto.StudentDto;
+import com.kesho.datamart.dto.StudentDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
