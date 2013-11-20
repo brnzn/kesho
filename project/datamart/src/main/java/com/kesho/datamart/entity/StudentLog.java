@@ -23,8 +23,8 @@ public class StudentLog {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "STUDENT_ID" , insertable = true, updatable = false, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "STUDENT_ID" , nullable = false)
     private Student student;
 
     @Column(name="CREATED_DATE")

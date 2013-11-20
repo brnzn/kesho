@@ -1,11 +1,10 @@
 package com.kesho.datamart.ui.controller;
 
-import java.util.List;
-
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.entity.Student;
+import com.kesho.datamart.repository.StudentsRepository;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.util.CalendarUtil;
-import com.kesho.datamart.entity.Student;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,13 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import com.kesho.datamart.repository.StudentsRepository;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * The controller for the overview with address table and details view.
@@ -94,7 +92,8 @@ public class StudentsController {
 	 */
 	@FXML
 	private void initialize() {
-		// Initialize the students table
+
+        // Initialize the students table
 		firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
 
@@ -131,14 +130,14 @@ public class StudentsController {
 		if (person != null) {
 			nameLbl.setText(person.getName());
 			familyNameLbl.setText(person.getFamilyName());
-            genderLbl.setText(person.getGender());
-            yearOfBirthLbl.setText(person.getYearOfBirth());
+            genderLbl.setText(person.getGender().name());
+            yearOfBirthLbl.setText(String.valueOf(person.getYearOfBirth()));
             contactNumLbl.setText(person.getMobileNumber());
             homeLocationLbl.setText(person.getHomeLocation());
             currentStudentLbl.setText(String.valueOf(person.isActiveStudent()));
-            hasDisabilityLbl.setText(String.valueOf(person.isHasDisability()));
+            hasDisabilityLbl.setText(String.valueOf(person.hasDisability()));
             sponsoredLbl.setText(String.valueOf(person.isSponsored()));
-            startDateLbl.setText(CalendarUtil.format(person.getStartDate()));
+            startDateLbl.setText(CalendarUtil.format(person.getStartDate().toDate()));
 		}
 	}
 

@@ -53,7 +53,7 @@
                             <Label text="Date child started with Kesho:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                             <Label text="Year of Birth:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                             <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                            <TextField fx:id="familyName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <TextField fx:id="gender" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <TextField fx:id="contactNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />

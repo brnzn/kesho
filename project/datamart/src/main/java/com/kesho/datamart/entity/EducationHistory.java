@@ -17,8 +17,8 @@ public class EducationHistory {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "STUDENT_ID" , insertable = true, updatable = false, nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "STUDENT_ID" , nullable = false)
     private Student student;
 //    unidirectional @Column(name = "STUDENT_ID", nullable=false) 
 //    private Long studentId;

@@ -20,7 +20,7 @@ public class NewStudentController {
     @FXML
     private TextField firstName;
     @FXML
-    private TextField familyName;
+    private TextField surname;
     @FXML
     private TextField gender;
     @FXML
@@ -49,8 +49,7 @@ public class NewStudentController {
         System.out.println(comboBox.getSelectionModel().getSelectedItem());
         System.out.println(currentStudentGroup.getSelectedToggle());
         StudentDto student = new StudentDto();
-        student.setName(firstName.getText());
-        student.setFamilyName(familyName.getText());
+        student.withName(firstName.getText()).withFamilyName(surname.getText());
         WindowsUtil.getInstance().getControllers().getStudentsController().add(student);
 
         try {

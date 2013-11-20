@@ -2,6 +2,7 @@ package com.kesho.datamart.repository;
 
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.CLASS;
+import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.School;
 import com.kesho.datamart.entity.Student;
@@ -12,8 +13,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
@@ -31,12 +38,54 @@ public class StudentsRepositoryTest {
 
 	@Inject
 	private StudentsRepository repo;
+
+    @Inject
+    JpaTransactionManager transactionManager;
+
 	
 	@Test
 	public void shouldSaveStudent() throws DataSetException, SQLException {
-		Student s = repo.save(new Student());
+        LocalDate startDate = LocalDate.now();
+        Student student = new Student();
+        student.setFirstName("s1");
+        student.setSurname("f1");
+        student.setActive(true);
+        student.setGender(Gender.M);
+        student.setHasDisability(true);
+        student.setHomeLocation("s1home");
+        student.setContactNumber("12345");
+        student.setStartDate(startDate);
+        student.setSponsored(true);
+        student.setYearOfBirth(2000);
+
+		final Student s = repo.save(student);
 		assertNotNull("Student should have an id", s.getId());
-		
+
+        TransactionCallback<Student> callback = new TransactionCallback<Student>() {
+            @Override
+            public Student doInTransaction(TransactionStatus status) {
+                return repo.findOne(s.getId());
+            }
+        };
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        //TODO: import jpa dialect
+//        txTemplate.setIsolationLevel(Isolation.READ_COMMITTED.value());
+
+        Student saved = txTemplate.execute(callback);
+
+        assertThat(saved.getFirstName(), is("s1"));
+        assertThat(saved.getSurname(), is("f1"));
+        assertThat(saved.isActive(), is(true));
+        assertThat(saved.getGender(), is(Gender.M));
+        assertThat(saved.hasDisability(), is(true));
+        assertThat(saved.getHomeLocation(), is("s1home"));
+        assertThat(saved.getContactNumber(), is("12345"));
+        assertThat(saved.getStartDate(), is(startDate));
+        assertThat(saved.isSponsored(), is(true));
+        assertThat(saved.getYearOfBirth(), is(2000));
+
 		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("students", String.format("select * from STUDENTS where id=%d", s.getId())).getRowCount(), is(1));
 	}
 
@@ -129,7 +178,7 @@ public class StudentsRepositoryTest {
 	
 	@Test
 	public void shouldCascadeInsertEducationHistory() throws DataSetException, SQLException {
-		Student student = repo.findOne(2L);
+		Student student = repo.findwithJoin(2L);
 		School school = new School();
 		school.setId(1L);
 		
@@ -163,7 +212,7 @@ public class StudentsRepositoryTest {
 	
 	@Test
 	public void shouldCascadeDeleteEducationHistory() throws DataSetException, SQLException {
-		Student student = repo.findOne(2L);
+		Student student = repo.findwithJoin(2L);
 		School school = new School();
 		school.setId(1L);
 		
@@ -178,14 +227,14 @@ public class StudentsRepositoryTest {
 		student.addToEducationHistory(eh);
 		student = repo.save(student);
 
-		repo.delete(student.getId());
+		repo.delete(student);
 		
 		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createQueryTable("EDUCATION_HISTORY", String.format("select * from EDUCATION_HISTORY where student_id=%d", student.getId())).getRowCount(), is(0));
 	}
 	
 	@Test
 	public void shouldNotCascadeDeleteEducationHistoryToSchool() throws DataSetException, SQLException {
-		Student student = repo.findOne(2L);
+		Student student = repo.findwithJoin(2L);
 		School school = new School();
 		school.setId(1L);
 		
@@ -199,7 +248,7 @@ public class StudentsRepositoryTest {
 		student.addToEducationHistory(eh);
 		student = repo.save(student);
 
-		repo.delete(student.getId());
+		repo.delete(student);
 		
 		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createQueryTable("EDUCATION_HISTORY", String.format("select * from EDUCATION_HISTORY where student_id=%d", student.getId())).getRowCount(), is(0));
 		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createTable("SCHOOLS").getRowCount(), is(1));
@@ -208,7 +257,7 @@ public class StudentsRepositoryTest {
 	
 	@Test(expected = JpaObjectRetrievalFailureException.class)
 	public void shouldNotCascadeInsertEducationHistoryToSchool() throws DataSetException, SQLException {
-		Student student = repo.findOne(2L);
+		Student student = repo.findwithJoin(2L);
 		School school = new School();
 		school.setId(Long.MAX_VALUE);
 		
@@ -217,7 +266,6 @@ public class StudentsRepositoryTest {
 		eh.setLevel("Level1");
 		eh.setPredictedEndDate(LocalDate.now());
 		eh.setPredictedEndDate(LocalDate.now().plusYears(1));
-		//eh.setStudentId(student.getId());
 		eh.setSchool(school);
 		student.addToEducationHistory(eh);
 		student = repo.save(student);
