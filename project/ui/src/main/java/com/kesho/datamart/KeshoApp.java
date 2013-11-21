@@ -64,7 +64,7 @@ public class KeshoApp extends Application {
 //            pane.setCenter(page);
 
 //			StudentsController controller = loader.getController();
-//			StudentsRepository repo = ctx.getBean(StudentsRepository.class);
+//			StudentsDAO repo = ctx.getBean(StudentsDAO.class);
 //			controller.setRepo(repo);
 			//controller.setMainApp(this);
 		} catch (IOException e) {

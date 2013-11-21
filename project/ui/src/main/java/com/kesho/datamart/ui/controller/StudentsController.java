@@ -1,8 +1,10 @@
 package com.kesho.datamart.ui.controller;
 
+import com.google.common.collect.Lists;
+import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
-import com.kesho.datamart.repository.StudentsRepository;
+import com.kesho.datamart.repository.StudentsDAO;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.util.CalendarUtil;
 import javafx.beans.value.ChangeListener;
@@ -11,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -30,7 +29,7 @@ import java.util.List;
 @Named
 public class StudentsController {
     @Autowired
-	private StudentsRepository repo;
+	private StudentsDAO repo;
 	
 	@FXML
 	private TableView<StudentDto> studentsTable;
@@ -64,16 +63,11 @@ public class StudentsController {
     private Button newButton;
     @FXML
     private Button saveButton;
+    @FXML
+    Pagination pagination;
 
 	private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
-	
-//	public void setRepo(StudentsRepository repo) {
-//		this.repo = repo;
-//		List<Student> students = repo.findAll();
-//		for(Student student:students) {
-//			studentsModel.add(new StudentDto().withName(student.getFirstName()).withId(student.getId()));
-//		}
-//	}
+
 	/**
 	 * The constructor. The constructor is called before the initialize()
 	 * method.
@@ -86,12 +80,40 @@ public class StudentsController {
     public ObservableList<StudentDto> getDataModel() {
         return studentsModel;
     }
+
+    private Page<StudentDto> getPage(final int page, final int pageSize) {
+        Page<StudentDto> p = new Page<StudentDto>() {
+            @Override
+            public int getTotalPages() {
+                return 10;
+            }
+
+            @Override
+            public List<StudentDto> getContent() {
+                return Lists.newArrayList(new StudentDto().withFamilyName(String.valueOf(page)));
+            }
+        };
+        return p;
+    }
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
 	private void initialize() {
+        Page p = getPage(0, 10);
+
+        pagination.setPageCount(p.getTotalPages());
+        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("Pagination Changed from " + oldValue + " , to " + newValue);
+                Page<StudentDto> p = getPage(newValue.intValue(), 10);
+                pagination.setPageCount(pagination.getPageCount());
+                studentsModel.clear();
+                studentsModel.addAll(p.getContent());
+            }
+        });
 
         // Initialize the students table
 		firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));

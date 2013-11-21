@@ -18,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -32,12 +31,12 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(locations = {
         "classpath:repository-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class StudentsRepositoryTest {
+public class StudentsDAOTest {
     @Rule
     public final DatabaseSetupRule dbSetup = DatabaseSetupRule.setUpDataFor("kesho", "students-it-data.xml");
 
 	@Inject
-	private StudentsRepository repo;
+	private StudentsDAO repo;
 
     @Inject
     JpaTransactionManager transactionManager;

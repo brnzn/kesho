@@ -1,0 +1,43 @@
+<dataset>
+	<STUDENTS ID="1"
+              NAME="fn"
+              SURNAME="sn1"
+              GENDER="M"
+              YEAR_OF_BIRTH="2000"
+              DISABILITY="1"
+              CONTACT_NUMBER="11111"
+              EMAIL="email1"
+              FACEBOOK="fb1"
+              HOME_LOCATION="h1"
+              CURRENT_STUDENT="1"
+              STUDENT_STATUS="s1s"
+              SPONSORED="1"
+              SPONSORSHIP_STATUS="sp1"
+              START_DATE="2013-03-28 00:00:00.0"
+              LEVEL_OF_SUPPORT="los1"
+              TOPUP_NEEDED="1"
+              SHORTFALL="100"
+              ALUMNI_MEMBER="111" />
+
+    <STUDENTS ID="2"
+              NAME="fn2"
+              SURNAME="sn2"
+              GENDER="F"
+              YEAR_OF_BIRTH="2002"
+              DISABILITY="1"
+              CONTACT_NUMBER="2222"
+              EMAIL="email2"
+              FACEBOOK="fb2"
+              HOME_LOCATION="h2"
+              CURRENT_STUDENT="1"
+              STUDENT_STATUS="s2s"
+              SPONSORED="1"
+              SPONSORSHIP_STATUS="sp2"
+              START_DATE="2013-03-28 00:00:00.0"
+              LEVEL_OF_SUPPORT="1"
+              TOPUP_NEEDED="1"
+              SHORTFALL="200"
+              ALUMNI_MEMBER="222" />
+</dataset>
+
+

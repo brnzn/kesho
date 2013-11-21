@@ -33,7 +33,7 @@ public class StudentsPagingTest {
 			"kesho", "students-paging-it-data.xml");
 
 	@Inject
-	private StudentsRepository repo;
+	private StudentsDAO repo;
 
 	@Test
 	public void shouldSaveStudent() throws DataSetException, SQLException {

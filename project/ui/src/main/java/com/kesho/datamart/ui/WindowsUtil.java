@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
@@ -53,23 +54,7 @@ public class WindowsUtil {
 //    }
 
     public void showStudentsTable() throws IOException {
-        Pagination pagination = new Pagination((10), 0);
-        //   pagination = new Pagination(20 , 0);
-        pagination.setStyle("-fx-border-color:red;");
-        pagination.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer pageIndex) {
-                System.out.println("======== page " + pageIndex);
-                return null;
-            }
-        });
 
-        AnchorPane anchor = new AnchorPane();
-        AnchorPane.setTopAnchor(pagination, 10.0);
-        AnchorPane.setRightAnchor(pagination, 10.0);
-        AnchorPane.setBottomAnchor(pagination, 10.0);
-        AnchorPane.setLeftAnchor(pagination, 10.0);
-        anchor.getChildren().addAll(pagination);
 
         BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
@@ -81,12 +66,12 @@ public class WindowsUtil {
 //            WindowsUtil.getInstance().getControllers().setStudentsController(sc);
 //        }
 
+
+        //controllers.getStudentsController().initPager((VBox)getRoot().lookup("#tableContainer"));
         AnchorPane page = (AnchorPane) loader.load();
         controllers.getRootController().setTtile("Students List");
         pane.setCenter(page);
         primaryStage.sizeToScene();
-        pane.setBottom(anchor);
-
     }
 
     public void showNewStudentDetails() {

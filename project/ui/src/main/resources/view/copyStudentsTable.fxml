@@ -53,17 +53,12 @@
             </GridPane>
           </center>
           <top>
-            <VBox id="tableContainer" prefHeight="200.0" prefWidth="100.0">
-              <children>
-                <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-1.0" minWidth="200.0" prefHeight="185.0" prefWidth="643.0">
-                  <columns>
-                    <TableColumn prefWidth="120.0" text="First Name" fx:id="firstNameColumn" />
-                    <TableColumn prefWidth="120.0" text="Family Name" fx:id="familyNameColumn" />
-                  </columns>
-                </TableView>
-              </children>
-                <Pagination fx:id="pagination" layoutX="110.0" layoutY="274.0" prefHeight="65.0" prefWidth="334.0" />
-            </VBox>
+            <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-1.0" minWidth="200.0" prefHeight="185.0" prefWidth="643.0">
+              <columns>
+                <TableColumn prefWidth="120.0" text="First Name" fx:id="firstNameColumn" />
+                <TableColumn prefWidth="120.0" text="Family Name" fx:id="familyNameColumn" />
+              </columns>
+            </TableView>
           </top>
         </BorderPane>
       </center>
