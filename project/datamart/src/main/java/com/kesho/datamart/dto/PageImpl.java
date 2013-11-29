@@ -2,6 +2,7 @@ package com.kesho.datamart.dto;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ import java.util.List;
 public class PageImpl<T> implements Page <T> {
     private int totalPages;
     private List<T> content;
-    private String err = null;
+    private List<String> errors;
+    private int size;
 
     @Override
     public int getTotalPages() {
@@ -27,17 +29,46 @@ public class PageImpl<T> implements Page <T> {
     }
 
     @Override
-    public boolean hasError() {
-        return StringUtils.isNotBlank(err);
+    public boolean isError() {
+        return errors != null && !errors.isEmpty();
     }
 
     @Override
-    public String getErrorMessage() {
-        return err;
+    public List<String> getErrors() {
+        return errors;
     }
 
-    public PageImpl withErrorMessage(String msg) {
-        this.err = msg;
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    public PageImpl<T> withErrors(List<String> errors) {
+        this.errors = errors;
+        return this;
+    }
+
+    public PageImpl<T> withContent(List<T> content) {
+        this.content = content;
+        return this;
+    }
+
+    public PageImpl<T> withTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+        return this;
+    }
+
+    public PageImpl<T> withPageSize(int size) {
+        this.size = size;
+        return this;
+    }
+
+    public PageImpl<T> withError(String error) {
+        if(errors == null) {
+            errors = new ArrayList<String>();
+        }
+
+        errors.add(error);
         return this;
     }
 }

@@ -2,6 +2,8 @@ package com.kesho.datamart.ui;
 
 import java.io.IOException;
 
+import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.controller.NewStudentController;
 import com.kesho.datamart.ui.controller.RootController;
 import com.kesho.datamart.ui.controller.StudentsController;
 import javafx.fxml.FXMLLoader;
@@ -15,13 +17,14 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class WindowsUtil {
 
 	private static WindowsUtil instance = new WindowsUtil();
 	private Stage primaryStage;
     private Controllers controllers = new Controllers();
-    private ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SampleAppFactory.class);
+    private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/ui-context.xml");
 
     private WindowsUtil(){}
 	
@@ -41,31 +44,10 @@ public class WindowsUtil {
 		this.primaryStage = primaryStage;
 	}
 
-//    public void showNewStudentDetails(ObservableList<StudentDto> studentsModel) {
-//        try {
-//            BorderPane pane = (BorderPane)primaryStage.getScene().getRoot().lookup("#contentLayout");
-//            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
-//            AnchorPane page = (AnchorPane) loader.load();
-//            NewStudentController controller = loader.getController();
-//            pane.setCenter(page);
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
-//    }
-
     public void showStudentsTable() throws IOException {
-
-
         BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
-//        if(controllers.getStudentsController() != null) {
-            loader.setController(controllers.getStudentsController());
-//        } else {
-//            StudentsController sc = new StudentsController();
-//            loader.setController(sc);
-//            WindowsUtil.getInstance().getControllers().setStudentsController(sc);
-//        }
-
+        loader.setController(controllers.getStudentsController());
 
         //controllers.getStudentsController().initPager((VBox)getRoot().lookup("#tableContainer"));
         AnchorPane page = (AnchorPane) loader.load();
@@ -74,11 +56,15 @@ public class WindowsUtil {
         primaryStage.sizeToScene();
     }
 
-    public void showNewStudentDetails() {
+    public void showNewStudentDetails(StudentDto student) {
         try {
             BorderPane pane = (BorderPane)getRoot().lookup("#contentLayout");
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
+            NewStudentController controller = controllers.getNewStudentController();
+            loader.setController(controller);
+
             AnchorPane page = (AnchorPane) loader.load();
+            controller.setSelectedStudent(student);
             controllers.getRootController().setTtile("New Student");
             pane.setCenter(page);
             primaryStage.sizeToScene();
@@ -132,16 +118,16 @@ public class WindowsUtil {
         }
 
 
-        public void setStudentsController(StudentsController studentsController) {
-            this.studentsController = studentsController;
-        }
-
         public void setRootController(RootController rootController) {
             this.rootController = rootController;
         }
 
         public RootController getRootController() {
             return rootController;
+        }
+
+        public NewStudentController getNewStudentController() {
+            return applicationContext.getBean(NewStudentController.class);
         }
     }
 

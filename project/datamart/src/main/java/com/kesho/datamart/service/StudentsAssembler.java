@@ -48,4 +48,29 @@ public class StudentsAssembler {
 
         return dto;
     }
+
+    //TODO: properties names should be the same
+    public Student toStudent(StudentDto dto) {
+        Student student = new Student();
+        student.setId(dto.getId());
+        student.setFirstName(dto.getName());
+        student.setSurname(dto.getFamilyName());
+        student.setGender(dto.getGender());
+        student.setHasDisability(dto.hasDisability());
+        student.setHomeLocation(dto.getHomeLocation());
+        student.setStartDate(dto.getStartDate())       ;
+        student.setContactNumber(dto.getMobileNumber());
+        student.setYearOfBirth(dto.getYearOfBirth());
+        student.setActive(dto.isActiveStudent());
+        student.setSponsored(dto.isSponsored());
+        student.setEmail(dto.getEmail());
+        student.setFacebookAddress(dto.getFacebookAddress());
+        student.setStatus(dto.getStatus());
+        student.setSponsorshipStatus(dto.getSponsorshipStatus());
+        student.setLevelOfSupport(dto.getLevelOfSupport());
+        student.setTopupNeeded(dto.isTopupNeeded());
+        student.setShortfall(dto.getShortfall());
+        student.setAlumniNumber(dto.getAlumniNumber());
+        return student;
+    }
 }

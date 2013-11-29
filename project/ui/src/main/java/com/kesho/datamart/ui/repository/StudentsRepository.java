@@ -14,4 +14,6 @@ public interface StudentsRepository {
 //    public List<StudentDto> findAll();
 
     Page<StudentDto> getPage(Integer pageNumber, Integer pageSize);
+
+    StudentDto save(StudentDto dto);
 }

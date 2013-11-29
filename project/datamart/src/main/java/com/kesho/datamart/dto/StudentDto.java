@@ -25,7 +25,7 @@ public class StudentDto {
     private String status;
     private String sponsorshipStatus;
     private String levelOfSupport;
-    private boolean topupNeeded;
+    private Boolean topupNeeded;
     private Integer shortfall;
     private Integer alumniNumber;
 
@@ -99,7 +99,7 @@ public class StudentDto {
         return levelOfSupport;
     }
 
-    public boolean isTopupNeeded() {
+    public Boolean isTopupNeeded() {
         return topupNeeded;
     }
 

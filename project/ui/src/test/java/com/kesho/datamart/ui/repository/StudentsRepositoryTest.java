@@ -3,7 +3,7 @@ package com.kesho.datamart.ui.repository;
 import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.paging.PageRequest;
+import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.StudentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +25,29 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class StudentsRepositoryTest {
     @InjectMocks
-    private StudentsRepositoryImpl studentsService;
+    private StudentsRepositoryImpl studentsRepository;
     @Mock
     private StudentService studentService;
     @Mock
     private Page<StudentDto> page;
 
     @Test
+    public void shouldSaveStudent() {
+        StudentDto dto = new StudentDto();
+        when(studentService.save(dto)).thenReturn(new StudentDto().withId(1L));
+
+        StudentDto result = studentsRepository.save(dto);
+        assertThat(result.getId(), is(1L));
+
+    }
+
+    @Test
     public void shouldGetPage1() {
         when(page.getContent()).thenReturn(Lists.newArrayList(new StudentDto().withId(1L), new StudentDto().withId(2L)));
         when(page.getTotalPages()).thenReturn(1);
-        when(studentService.getPage(new PageRequest(0, 10))).thenReturn(page);
+        when(studentService.getPage(new Request(0, 10))).thenReturn(page);
 
-        Page<StudentDto> page = studentsService.getPage(0, 10);
+        Page<StudentDto> page = studentsRepository.getPage(0, 10);
 
         assertThat(page.getTotalPages(), is(1));
     }
@@ -46,8 +56,8 @@ public class StudentsRepositoryTest {
 //    public  void shouldReturnListOfStudents() {
 //        List<StudentDto> studentDtos = Lists.newArrayList(mock(StudentDto.class), mock(StudentDto.class));
 //
-//        when(studentsService.findAll()).thenReturn(studentDtos);
-//        List<StudentDto> result = studentsService.findAll();
+//        when(studentsRepository.findAll()).thenReturn(studentDtos);
+//        List<StudentDto> result = studentsRepository.findAll();
 //        assertThat(studentDtos.size(), is(2));
 //    }
 }

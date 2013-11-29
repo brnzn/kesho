@@ -2,7 +2,7 @@ package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.paging.PageRequest;
+import com.kesho.datamart.paging.Request;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,5 +16,7 @@ public interface StudentService {
 
     StudentDto get(Long id);
 
-    Page<StudentDto> getPage(PageRequest request);
+    Page<StudentDto> getPage(Request request);
+
+    StudentDto save(StudentDto dto);
 }

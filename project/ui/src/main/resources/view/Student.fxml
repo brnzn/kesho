@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="287.0" prefWidth="562.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.NewStudentController">
+<AnchorPane prefHeight="287.0" prefWidth="562.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <bottom>
@@ -54,7 +54,7 @@
                             <Label text="Year of Birth:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                             <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <TextField fx:id="gender" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <ComboBox fx:id="gender" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <TextField fx:id="contactNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             <TextField fx:id="homeLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -69,13 +69,13 @@
                               </children>
                             </HBox>
                             <ComboBox fx:id="comboBox" prefHeight="24.999908447265625" prefWidth="99.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                              <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                  <String fx:value="Item 1" />
-                                  <String fx:value="Item 2" />
-                                  <String fx:value="Item 3" />
-                                </FXCollections>
-                              </items>
+                              <!--<items>-->
+                                <!--<FXCollections fx:factory="observableArrayList">-->
+                                  <!--<String fx:value="Item 1" />-->
+                                  <!--<String fx:value="Item 2" />-->
+                                  <!--<String fx:value="Item 3" />-->
+                                <!--</FXCollections>-->
+                              <!--</items>-->
                             </ComboBox>
                           </children>
                           <columnConstraints>

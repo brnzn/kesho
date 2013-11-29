@@ -39,7 +39,7 @@ public class StudentsDAOTest {
 	private StudentsDAO repo;
 
     @Inject
-    JpaTransactionManager transactionManager;
+    private JpaTransactionManager transactionManager;
 
 	
 	@Test

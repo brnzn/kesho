@@ -6,6 +6,7 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.StudentsDAO;
 import com.kesho.datamart.ui.WindowsUtil;
+import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.CalendarUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The controller for the overview with address table and details view.
@@ -29,7 +31,7 @@ import java.util.List;
 @Named
 public class StudentsController {
     @Autowired
-	private StudentsDAO repo;
+	private StudentsRepository repo;
 	
 	@FXML
 	private TableView<StudentDto> studentsTable;
@@ -64,7 +66,7 @@ public class StudentsController {
     @FXML
     private Button saveButton;
     @FXML
-    Pagination pagination;
+    private Pagination pagination;
 
 	private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
 
@@ -76,98 +78,103 @@ public class StudentsController {
         System.out.println("=======================");
     }
 
-    //TODO: demo code
-    public ObservableList<StudentDto> getDataModel() {
-        return studentsModel;
-    }
-
     private Page<StudentDto> getPage(final int page, final int pageSize) {
-        Page<StudentDto> p = new Page<StudentDto>() {
-            @Override
-            public int getTotalPages() {
-                return 10;
-            }
-
-            @Override
-            public List<StudentDto> getContent() {
-                return Lists.newArrayList(new StudentDto().withFamilyName(String.valueOf(page)));
-            }
-        };
-        return p;
+        return repo.getPage(page, pageSize);
     }
+
+    //TODO: what should happen after adding student? Should we go back to last page, or last selected page? what happen if students were deleted by someone else or if we had order
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
 	private void initialize() {
-        Page p = getPage(0, 10);
+        initTable();
+        initPagination();
+	}
 
-        pagination.setPageCount(p.getTotalPages());
-        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("Pagination Changed from " + oldValue + " , to " + newValue);
-                Page<StudentDto> p = getPage(newValue.intValue(), 10);
-                pagination.setPageCount(pagination.getPageCount());
-                studentsModel.clear();
-                studentsModel.addAll(p.getContent());
-            }
-        });
-
-        // Initialize the students table
-		firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
-
-        List<Student> students = repo.findAll();
-		for(Student student:students) {
-			studentsModel.add(new StudentDto().withName(student.getFirstName()).withId(student.getId()));
-        }
+    private void initTable() {
+        studentsModel.clear();
 
         studentsTable.setItems(studentsModel);
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
+        familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
 
 //		//update form when selecting table row
-		studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
-			@Override
-			public void changed(ObservableValue<? extends StudentDto> observable,
-					StudentDto oldValue, StudentDto newValue) {
+        studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
+            @Override
+            public void changed(ObservableValue<? extends StudentDto> observable,
+                                StudentDto oldValue, StudentDto newValue) {
                 showStudentDetails(newValue);
-			}
-		});
+            }
+        });
 
         studentsTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2 && studentsTable.getSelectionModel().getSelectedItem() != null) {
+                    StudentDto selected = studentsTable.getSelectionModel().getSelectedItem();
+                    if (mouseEvent.getClickCount() == 2 && selected != null) {
                         //TODO:pass selected student to initialise form
-                        WindowsUtil.getInstance().showNewStudentDetails();
+                        WindowsUtil.getInstance().showNewStudentDetails(selected);
                     }
                 }
             }
         });
-	}
+    }
 
+    private void initPagination() {
+        Page p = getPage(0, 2);
+        if(p != null) {
+            studentsModel.addAll(p.getContent());
+            pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
+        }
+
+        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Page<StudentDto> p = getPage(newValue.intValue(), 2);
+                pagination.setPageCount(p.getTotalPages());
+                studentsModel.clear();
+                studentsModel.addAll(p.getContent());
+            }
+        });
+    }
+    //TODO: default values
 	private void showStudentDetails(StudentDto person) {
 		if (person != null) {
 			nameLbl.setText(person.getName());
 			familyNameLbl.setText(person.getFamilyName());
-            genderLbl.setText(person.getGender().name());
+            if(person.getGender() != null) {
+                genderLbl.setText(person.getGender().toString());
+            }
+
             yearOfBirthLbl.setText(String.valueOf(person.getYearOfBirth()));
             contactNumLbl.setText(person.getMobileNumber());
             homeLocationLbl.setText(person.getHomeLocation());
-            currentStudentLbl.setText(String.valueOf(person.isActiveStudent()));
-            hasDisabilityLbl.setText(String.valueOf(person.hasDisability()));
-            sponsoredLbl.setText(String.valueOf(person.isSponsored()));
-            startDateLbl.setText(CalendarUtil.format(person.getStartDate().toDate()));
+
+            if(person.isActiveStudent() != null) {
+                currentStudentLbl.setText(String.valueOf(person.isActiveStudent()));
+            }
+
+            if (person.hasDisability() != null) {
+                hasDisabilityLbl.setText(String.valueOf(person.hasDisability()));
+            }
+
+            if(person.isSponsored() != null) {
+                sponsoredLbl.setText(String.valueOf(person.isSponsored()));
+            }
+
+            if(person.getStartDate() != null) {
+                startDateLbl.setText(CalendarUtil.format(person.getStartDate().toDate()));
+            }
 		}
 	}
 
     //TODO: demo code. delete
-    public void add(StudentDto student) {
-        studentsModel.add(student);
-        //To change body of created methods use File | Settings | File Templates.
-    }
+//    public void add(StudentDto student) {
+//        studentsModel.add(student);
+//    }
 
 //	@FXML
 //	private void handleDeletePerson() {

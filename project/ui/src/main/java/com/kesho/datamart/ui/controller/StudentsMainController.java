@@ -10,9 +10,9 @@ import javafx.fxml.FXML;
  * Time: 2:46 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DummyCpontroller {
+public class StudentsMainController {
     @FXML
     private void handleNewStudent() {
-        WindowsUtil.getInstance().showNewStudentDetails();
+        WindowsUtil.getInstance().showNewStudentDetails(null);
     }
 }

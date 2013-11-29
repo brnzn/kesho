@@ -4,12 +4,20 @@ import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.entity.Student;
+import com.kesho.datamart.repository.StudentsDAO;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -33,6 +41,13 @@ public class StudentServiceIT {
 
     @Inject
     private StudentService studentService;
+
+    @Inject
+    private StudentsDAO dao;
+
+    @Inject
+    private JpaTransactionManager transactionManager;
+
 
     @Test
     public void shouldFindStudent() {
@@ -60,6 +75,65 @@ public class StudentServiceIT {
         assertThat("shortfall 100", s1.getShortfall(), is(100));
         assertThat("alumni number 111", s1.getAlumniNumber(), is(111));
     }
+
+    @Test
+    public void shouldSaveStudent() {
+        LocalDate startDate = LocalDate.now();
+        StudentDto dto = new StudentDto();
+        dto.withName("name")
+                .withFamilyName("fn")
+                .withGender(Gender.M)
+                .withHasDisability(true)
+                .withHomeLocation("hl")
+                .withStartDate(startDate)
+                .withYearOfBirth(2000)
+                .activeStudent(true)
+                .sponsored(true)
+                .withEmail("email")
+                .withFacebookAddress("fb")
+                .withStatus("status")
+                .withSponsorStatus("sps")
+                .withLevelOfSupport("los")
+                .withTopupNeeded(true)
+                .withShortfall(1)
+                .withAlumniNumber(1)
+                .withMobileNumber("123");
+        final StudentDto resultDto = studentService.save(dto);
+
+        assertNotNull(resultDto.getId());
+
+        TransactionCallback<Student> callback = new TransactionCallback<Student>() {
+            @Override
+            public Student doInTransaction(TransactionStatus status) {
+                return dao.findOne(resultDto.getId());
+            }
+        };
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        Student saved = txTemplate.execute(callback);
+
+        assertNotNull(saved);
+        assertThat(saved.getFirstName(), is("name"));
+        assertThat(saved.getSurname(), is("fn"));
+        assertThat(saved.getGender(), is(Gender.M));
+        assertThat(saved.hasDisability(), is(true));
+        assertThat(saved.getHomeLocation(), is("hl"));
+        assertThat(saved.getStartDate(), is(startDate));
+        assertThat(saved.getYearOfBirth(), is(2000));
+        assertThat(saved.isActive(), is(true));
+        assertThat(saved.isSponsored(), is(true));
+        assertThat(saved.getEmail(), is("email"));
+        assertThat(saved.getFacebookAddress(), is("fb"));
+        assertThat(saved.getStatus(), is("status"));
+        assertThat(saved.getSponsorshipStatus(), is("sps"));
+        assertThat(saved.getLevelOfSupport(), is("los"));
+        assertThat(saved.isTopupNeeded(), is(true));
+        assertThat(saved.getShortfall(), is(1));
+        assertThat(saved.getAlumniNumber(), is(1));
+    }
+
 //    @Test
 //    public void shouldGetStudents() {
 //        LocalDate startDate = LocalDate.parse("2013-03-28");

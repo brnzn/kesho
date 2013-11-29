@@ -111,11 +111,11 @@ public class Student {
         return surname;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
@@ -127,11 +127,11 @@ public class Student {
         return gender;
     }
 
-    public void setHasDisability(boolean hasDisability) {
+    public void setHasDisability(Boolean hasDisability) {
         this.hasDisability = hasDisability;
     }
 
-    public boolean hasDisability() {
+    public Boolean hasDisability() {
         return hasDisability;
     }
 
@@ -159,11 +159,11 @@ public class Student {
         return startDate;
     }
 
-    public void setSponsored(boolean sponsored) {
+    public void setSponsored(Boolean sponsored) {
         this.sponsored = sponsored;
     }
 
-    public boolean isSponsored() {
+    public Boolean isSponsored() {
         return sponsored;
     }
 
@@ -217,10 +217,6 @@ public class Student {
     }
 
     public Boolean isTopupNeeded() {
-        return topupNeeded;
-    }
-
-    public Boolean getTopupNeeded() {
         return topupNeeded;
     }
 

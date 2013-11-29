@@ -11,13 +11,14 @@ public enum Gender {
     M("Male"),
     F("Female");
 
-    private final String disaply;
+    private final String display;
 
     private Gender(String display) {
-        this.disaply = display;
+        this.display = display;
     }
 
-    public String getDisaply() {
-        return disaply;
+    @Override
+    public String toString() {
+        return display;
     }
 }

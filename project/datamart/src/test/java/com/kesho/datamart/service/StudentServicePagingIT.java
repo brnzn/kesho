@@ -3,6 +3,7 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.paging.Request;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,12 +33,25 @@ public class StudentServicePagingIT {
 
     @Test
     public void shouldReturnErrorPageIfPageNumberIsNegative() {
-
+        Page<StudentDto> page = studentService.getPage(new Request(-1, 1));
+        assertThat("Expected error page",page.isError(), is(true));
+        assertThat(page.getErrors().get(0), is("Page number cannot be negative"));
     }
 
     @Test
-    public void shouldReturnLastPageIfExceededPages() {
+    public void shouldReturnEmptyPageIfExceededPages() {
+        Page<StudentDto> page = studentService.getPage(new Request(4, 3));
+        assertThat(page.getTotalPages(), is(4));
+        assertThat(page.getSize(), is(0));
+        assertThat("Expect error page", page.isError(), is(true));
+        assertThat(page.getErrors().get(0), is("Max pages is [4]"));
+    }
 
+    @Test
+    public void shouldReturnLastPage() {
+        Page<StudentDto> page = studentService.getPage(new Request(3, 3));
+        assertThat(page.getTotalPages(), is(4));
+        assertThat(page.getSize(), is(1));
     }
 
 }

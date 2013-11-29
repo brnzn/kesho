@@ -13,7 +13,9 @@ public interface Page<T> {
     int getTotalPages();
     List<T> getContent();
 
-    boolean hasError();
+    boolean isError();
 
-    String getErrorMessage();
+    List<String> getErrors();
+
+    int getSize();
 }

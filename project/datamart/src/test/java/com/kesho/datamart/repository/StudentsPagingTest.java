@@ -36,7 +36,7 @@ public class StudentsPagingTest {
 	private StudentsDAO repo;
 
 	@Test
-	public void shouldSaveStudent() throws DataSetException, SQLException {
+	public void shouldFindStudentsPage() throws DataSetException, SQLException {
 		Pageable pageSpecification = new PageRequest(0, 3, new Sort(
 				Sort.Direction.ASC, "firstName"));
 		
