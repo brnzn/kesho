@@ -9,7 +9,6 @@ import com.kesho.datamart.repository.StudentsDAO;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
@@ -57,7 +56,7 @@ public class StudentServiceIT {
 
         assertNotNull(s1);
         assertThat("name should be fn", s1.getName(), is("fn"));
-        assertThat("family name should be sn1", s1.getFamilyName(), is("sn1"));
+        assertThat("family name should be sn1", s1.getSurname(), is("sn1"));
         assertThat("should be active", s1.isActiveStudent(), is(true));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));
         assertThat("has disability true", s1.hasDisability(), is(true));

@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 public class StudentDto {
     private Long id;
     private String name;
-    private String familyName;
+    private String surname;
     private Gender gender;
     private Integer yearOfBirth;
     private String mobileNumber;
@@ -43,8 +43,8 @@ public class StudentDto {
         return name;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getSurname() {
+        return surname;
     }
 
     public Gender getGender() {
@@ -122,7 +122,7 @@ public class StudentDto {
     }
 
     public StudentDto withFamilyName(String name) {
-        this.familyName = name;
+        this.surname = name;
         return this;
     }
 

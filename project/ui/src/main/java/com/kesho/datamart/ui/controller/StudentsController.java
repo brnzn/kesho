@@ -1,10 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
-import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.entity.Student;
-import com.kesho.datamart.repository.StudentsDAO;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.CalendarUtil;
@@ -21,8 +18,6 @@ import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The controller for the overview with address table and details view.
@@ -144,7 +139,7 @@ public class StudentsController {
 	private void showStudentDetails(StudentDto person) {
 		if (person != null) {
 			nameLbl.setText(person.getName());
-			familyNameLbl.setText(person.getFamilyName());
+			familyNameLbl.setText(person.getSurname());
             if(person.getGender() != null) {
                 genderLbl.setText(person.getGender().toString());
             }

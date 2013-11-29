@@ -48,7 +48,7 @@
                             <Label text="Contact Number:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                             <Label text="Home Location:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                             <Label text="Current Student?" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                            <Label text="Has Disability?" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <Label minWidth="-Infinity" prefWidth="112.0" text="Has Disability?" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                             <Label text="Sponsored?" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             <Label text="Date child started with Kesho:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                             <Label text="Year of Birth:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -65,18 +65,28 @@
                                     <ToggleGroup fx:id="currentStudentGroup" />
                                   </toggleGroup>
                                 </RadioButton>
-                                <RadioButton fx:id="no" mnemonicParsing="false" text="No" toggleGroup="$currentStudentGroup" />
+                                <RadioButton fx:id="no" mnemonicParsing="false" text="No" toggleGroup="$currentStudentGroup" HBox.hgrow="NEVER" />
                               </children>
                             </HBox>
-                            <ComboBox fx:id="comboBox" prefHeight="24.999908447265625" prefWidth="99.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                              <!--<items>-->
-                                <!--<FXCollections fx:factory="observableArrayList">-->
-                                  <!--<String fx:value="Item 1" />-->
-                                  <!--<String fx:value="Item 2" />-->
-                                  <!--<String fx:value="Item 3" />-->
-                                <!--</FXCollections>-->
-                              <!--</items>-->
-                            </ComboBox>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                                <toggleGroup>
+                                  <ToggleGroup fx:id="hasDisability" />
+                                </toggleGroup>
+                                <HBox.margin>
+                                  <Insets />
+                                </HBox.margin>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="No" toggleGroup="$hasDisability" />
+                            </HBox>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" spacing="10.0" GridPane.valignment="CENTER">
+                                <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="sponsored"/>
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton mnemonicParsing="false" text="No" toggleGroup="$sponsored" />
+                            </HBox>
                           </children>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="120.0" prefWidth="109.0" />
@@ -85,12 +95,12 @@
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="340.0" minWidth="10.0" prefWidth="224.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <BorderPane.margin>
                             <Insets />

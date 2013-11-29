@@ -54,7 +54,7 @@ public class StudentsAssembler {
         Student student = new Student();
         student.setId(dto.getId());
         student.setFirstName(dto.getName());
-        student.setSurname(dto.getFamilyName());
+        student.setSurname(dto.getSurname());
         student.setGender(dto.getGender());
         student.setHasDisability(dto.hasDisability());
         student.setHomeLocation(dto.getHomeLocation());
