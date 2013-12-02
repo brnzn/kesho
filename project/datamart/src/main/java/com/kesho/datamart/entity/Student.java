@@ -56,7 +56,7 @@ public class Student {
     @Column(name = "FACEBOOK")
     private String facebookAddress;
     @Column(name = "STUDENT_STATUS")
-    private String status;
+    private String leaverStatus;
     @Column(name = "SPONSORSHIP_STATUS")
     private String sponsorshipStatus;
     @Column(name = "LEVEL_OF_SUPPORT")
@@ -191,12 +191,12 @@ public class Student {
         this.facebookAddress = facebookAddress;
     }
 
-    public String getStatus() {
-        return status;
+    public String getLeaverStatus() {
+        return leaverStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setLeaverStatus(String leaverStatus) {
+        this.leaverStatus = leaverStatus;
     }
 
     public String getSponsorshipStatus() {

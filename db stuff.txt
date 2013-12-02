@@ -7,7 +7,7 @@ create database kesho;
 grant all privileges on kesho.* to admin@localhost;
 
 
-CREATE TABLE STUDENTS (
+STUDENTS | CREATE TABLE STUDENTS (
   ID bigint(20) NOT NULL AUTO_INCREMENT,
   NAME varchar(20) DEFAULT NULL,
   SURNAME varchar(20) DEFAULT NULL,
@@ -15,18 +15,18 @@ CREATE TABLE STUDENTS (
   YEAR_OF_BIRTH smallint(6) unsigned DEFAULT NULL COMMENT 'YYYY',
   DISABILITY tinyint(1) unsigned DEFAULT NULL,
   CONTACT_NUMBER varchar(15) DEFAULT NULL,
-  EMAIL varchar(40) DEFAULT NULL,
-  FACEBOOK varchar(40) DEFAULT NULL,
   HOME_LOCATION varchar(20) DEFAULT NULL,
   CURRENT_STUDENT tinyint(1) unsigned DEFAULT NULL COMMENT 'YES/NO',
   STUDENT_STATUS varchar(10) DEFAULT NULL COMMENT 'Map codes to enum with text',
   SPONSORED tinyint(1) unsigned DEFAULT NULL COMMENT 'Yes / No / On hold',
   SPONSORSHIP_STATUS varchar(10) DEFAULT NULL,
-  START_DATE DATE DEFAULT NULL COMMENT 'Date child started with Kesho MM/YYYY',
+  EMAIL varchar(40) DEFAULT NULL,
+  FACEBOOK varchar(40) DEFAULT NULL,
+  START_DATE date DEFAULT NULL,
   LEVEL_OF_SUPPORT varchar(20) DEFAULT NULL COMMENT 'Kesho agreed level of Financial Support',
   TOPUP_NEEDED tinyint(1) unsigned DEFAULT NULL,
-  SHORTFALL int DEFAULT NULL COMMENT 'approximate shortfall',
-  ALUMNI_MEMBER tinyint(1) unsigned DEFAULT NULL,
+  SHORTFALL int(10) unsigned DEFAULT NULL,
+  ALUMNI_MEMBER int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (ID)
 )
 

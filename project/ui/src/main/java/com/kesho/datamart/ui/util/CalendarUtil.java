@@ -7,6 +7,8 @@ package com.kesho.datamart.ui.util;
  * Time: 4:31 PM
  * To change this template use File | Settings | File Templates.
  */
+import org.joda.time.LocalDate;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,11 +30,11 @@ public class CalendarUtil {
      * @param date date to be returned as a string
      * @return formatted string
      */
-    public static String format(Date date) {
+    public static String format(LocalDate date) {
         if (date == null) {
             return null;
         }
-        return DATE_FORMAT.format(date);
+        return DATE_FORMAT.format(date.toDate());
     }
 
     /**
@@ -43,9 +45,9 @@ public class CalendarUtil {
      * @param dateString the date as String
      * @return the date object or null if it could not be converted
      */
-    public static Date parse(String dateString) {
+    public static LocalDate parse(String dateString) {
         try {
-            return DATE_FORMAT.parse(dateString);
+            return LocalDate.fromDateFields(DATE_FORMAT.parse(dateString));
         } catch (ParseException e) {
             return null;
         }

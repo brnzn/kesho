@@ -39,7 +39,7 @@ public class StudentsAssembler {
                 .sponsored(student.isSponsored())
                 .withEmail(student.getEmail())
                 .withFacebookAddress(student.getFacebookAddress())
-                .withStatus(student.getStatus())
+                .withLeaverStatus(student.getLeaverStatus())
                 .withSponsorStatus(student.getSponsorshipStatus())
                 .withLevelOfSupport(student.getLevelOfSupport())
                 .withTopupNeeded(student.isTopupNeeded())
@@ -65,7 +65,7 @@ public class StudentsAssembler {
         student.setSponsored(dto.isSponsored());
         student.setEmail(dto.getEmail());
         student.setFacebookAddress(dto.getFacebookAddress());
-        student.setStatus(dto.getStatus());
+        student.setLeaverStatus(dto.getLeaverStatus());
         student.setSponsorshipStatus(dto.getSponsorshipStatus());
         student.setLevelOfSupport(dto.getLevelOfSupport());
         student.setTopupNeeded(dto.isTopupNeeded());

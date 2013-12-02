@@ -22,7 +22,7 @@ public class StudentDto {
     private LocalDate startDate;
     private String email;
     private String facebookAddress;
-    private String status;
+    private String leaverStatus;
     private String sponsorshipStatus;
     private String levelOfSupport;
     private Boolean topupNeeded;
@@ -87,8 +87,8 @@ public class StudentDto {
         return facebookAddress;
     }
 
-    public String getStatus() {
-        return status;
+    public String getLeaverStatus() {
+        return leaverStatus;
     }
 
     public String getSponsorshipStatus() {
@@ -176,8 +176,8 @@ public class StudentDto {
         return this;
     }
 
-    public StudentDto withStatus(String status) {
-        this.status = status;
+    public StudentDto withLeaverStatus(String leaverStatus) {
+        this.leaverStatus = leaverStatus;
         return this;
     }
 

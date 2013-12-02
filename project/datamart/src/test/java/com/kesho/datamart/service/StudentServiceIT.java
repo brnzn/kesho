@@ -67,7 +67,7 @@ public class StudentServiceIT {
         assertThat("year of birth 2000", s1.getYearOfBirth(), is(2000));
         assertThat("email email1 ", s1.getEmail(), is("email1"));
         assertThat("facebook fb1", s1.getFacebookAddress(), is("fb1"));
-        assertThat("student status s1s", s1.getStatus(), is("s1s"));
+        assertThat("student status s1s", s1.getLeaverStatus(), is("s1s"));
         assertThat("sponsor status sp1", s1.getSponsorshipStatus(), is("sp1"));
         assertThat("level of support los1", s1.getLevelOfSupport(), is("los1"));
         assertThat("topup needed true", s1.isTopupNeeded(), is(true));
@@ -90,7 +90,7 @@ public class StudentServiceIT {
                 .sponsored(true)
                 .withEmail("email")
                 .withFacebookAddress("fb")
-                .withStatus("status")
+                .withLeaverStatus("status")
                 .withSponsorStatus("sps")
                 .withLevelOfSupport("los")
                 .withTopupNeeded(true)
@@ -125,7 +125,7 @@ public class StudentServiceIT {
         assertThat(saved.isSponsored(), is(true));
         assertThat(saved.getEmail(), is("email"));
         assertThat(saved.getFacebookAddress(), is("fb"));
-        assertThat(saved.getStatus(), is("status"));
+        assertThat(saved.getLeaverStatus(), is("status"));
         assertThat(saved.getSponsorshipStatus(), is("sps"));
         assertThat(saved.getLevelOfSupport(), is("los"));
         assertThat(saved.isTopupNeeded(), is(true));

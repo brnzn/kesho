@@ -161,7 +161,7 @@ public class StudentsController {
             }
 
             if(person.getStartDate() != null) {
-                startDateLbl.setText(CalendarUtil.format(person.getStartDate().toDate()));
+                startDateLbl.setText(CalendarUtil.format(person.getStartDate()));
             }
 		}
 	}

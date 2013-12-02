@@ -38,7 +38,9 @@ public class KeshoApp extends Application {
             RootController rootController = loader.getController();
             WindowsUtil.getInstance().getControllers().setRootController(rootController);
 			Scene scene = new Scene(rootLayout);
-			primaryStage.setScene(scene);
+            scene.getStylesheets().add(KeshoApp.class.getResource("/style/calendar_styles.css").toExternalForm());
+
+            primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded

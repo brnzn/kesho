@@ -1,5 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
+import calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
@@ -8,7 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,15 +45,43 @@ public class NewStudentController {
 
     @FXML
     private ToggleGroup sponsored;
+    @FXML
+    private HBox dateControlBox;
+    private final FXCalendar calendar = new FXCalendar();
+
+    @FXML
+    private ComboBox<String> sponsorshipStatus;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField facebook;
+    @FXML
+    private ComboBox<String> levelOfSupport;
+    @FXML
+    private ToggleGroup topupNeeded;
+    @FXML
+    private TextField shortfall;
+    @FXML
+    private TextField alumniNumber;
+    @FXML
+    private ComboBox<String> leaverStatus;
 
     private Long currentId;
 
     @Inject
     private StudentsRepository studentsRepository;
 
+    public NewStudentController() {
+        calendar.setDateTextWidth(Double.valueOf(100));
+    }
+
     public void setSelectedStudent(StudentDto student) {
         if(student == null) {
             return;
+        }
+
+        if(student.getStartDate() != null) {
+            calendar.setValue(student.getStartDate().toDate());//new FXCalendarUtility().convertStringtoDate("02/02/2001");
         }
 
         currentId = student.getId();
@@ -93,10 +124,35 @@ public class NewStudentController {
             }
         }
 
+
+        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
+        email.setText(student.getEmail());
+        facebook.setText(student.getFacebookAddress());
+        if(student.isTopupNeeded() != null && student.isTopupNeeded()) {
+            topupNeeded.getToggles().get(0).setSelected(true);
+        } else {
+            topupNeeded.getToggles().get(1).setSelected(true);
+        }
+
+        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
+        if(student.getShortfall() != null) {
+            shortfall.setText(student.getShortfall().toString());
+        } else {
+            shortfall.setText("");
+        }
+
+        if(student.getAlumniNumber() != null) {
+           alumniNumber.setText(student.getAlumniNumber().toString());
+        } else {
+            alumniNumber.setText("");
+        }
+
+        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
     }
 
     @FXML
     private void initialize() {
+        dateControlBox.getChildren().add(calendar);
         currentId = null;
         gender.getItems().clear();
         gender.getItems().addAll(Gender.values());
@@ -112,13 +168,14 @@ public class NewStudentController {
         sponsored.getToggles().get(0).setUserData(Boolean.TRUE);
         sponsored.getToggles().get(1).setUserData(Boolean.FALSE);
         sponsored.getToggles().get(0).setSelected(true);
+
+        topupNeeded.getToggles().get(0).setUserData(Boolean.TRUE);
+        topupNeeded.getToggles().get(1).setUserData(Boolean.FALSE);
+        topupNeeded.getToggles().get(0).setSelected(true);
     }
 
     @FXML
     private void save() {
-//        System.out.println(comboBox.getSelectionModel().getSelectedItem());
-//        System.out.println("===> " + currentStudentGroup.getSelectedToggle().getUserData());
-//
         studentsRepository.save(buildDto());
 
         try {
@@ -137,13 +194,37 @@ public class NewStudentController {
                 .withHomeLocation(homeLocation.getText())
                 .activeStudent((Boolean) currentStudent.getSelectedToggle().getUserData())
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
-                .sponsored((Boolean)sponsored.getSelectedToggle().getUserData());
+                .sponsored((Boolean)sponsored.getSelectedToggle().getUserData())
+                .withEmail(email.getText())
+                .withFacebookAddress(facebook.getText())
+                .withTopupNeeded((Boolean)topupNeeded.getSelectedToggle().getUserData())
+                .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem());
+
+        if(shortfall.getText() != null) {
+            student.withShortfall(Integer.valueOf(shortfall.getText()));
+        }
+
+        student.withSponsorStatus(sponsorshipStatus.getSelectionModel().getSelectedItem());
+        student.withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem());
+
+        if(shortfall.getText() != null) {
+            student.withShortfall(Integer.valueOf(shortfall.getText()));
+        }
+
+        if(alumniNumber.getText() != null) {
+            student.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
+        }
+
+        if(calendar.getValue() != null) {
+            student.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
+        }
 
         student.withGender(gender.getSelectionModel().getSelectedItem() );
 
         if(StringUtils.isNotBlank(yearOfBirth.getText()) && StringUtils.isNumeric(yearOfBirth.getText())) {
             student.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
         }
+
 
         return student;
     }
