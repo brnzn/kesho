@@ -3,6 +3,7 @@ package com.kesho.datamart.service;
 import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.StudentsDAO;
@@ -67,7 +68,7 @@ public class StudentServiceIT {
         assertThat("year of birth 2000", s1.getYearOfBirth(), is(2000));
         assertThat("email email1 ", s1.getEmail(), is("email1"));
         assertThat("facebook fb1", s1.getFacebookAddress(), is("fb1"));
-        assertThat("student status s1s", s1.getLeaverStatus(), is("s1s"));
+        assertThat("student status s1s", s1.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
         assertThat("sponsor status sp1", s1.getSponsorshipStatus(), is("sp1"));
         assertThat("level of support los1", s1.getLevelOfSupport(), is("los1"));
         assertThat("topup needed true", s1.isTopupNeeded(), is(true));
@@ -90,7 +91,7 @@ public class StudentServiceIT {
                 .sponsored(true)
                 .withEmail("email")
                 .withFacebookAddress("fb")
-                .withLeaverStatus("status")
+                .withLeaverStatus(LeaverStatus.ALUMNI_NO_LONGER_NEEDED)
                 .withSponsorStatus("sps")
                 .withLevelOfSupport("los")
                 .withTopupNeeded(true)
@@ -125,7 +126,7 @@ public class StudentServiceIT {
         assertThat(saved.isSponsored(), is(true));
         assertThat(saved.getEmail(), is("email"));
         assertThat(saved.getFacebookAddress(), is("fb"));
-        assertThat(saved.getLeaverStatus(), is("status"));
+        assertThat(saved.getLeaverStatus(), is(LeaverStatus.ALUMNI_NO_LONGER_NEEDED));
         assertThat(saved.getSponsorshipStatus(), is("sps"));
         assertThat(saved.getLevelOfSupport(), is("los"));
         assertThat(saved.isTopupNeeded(), is(true));

@@ -67,16 +67,7 @@
                                       </items>
                                     </ComboBox>
                                     <Label text="Leaver Status:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <ComboBox fx:id="leaverStatus" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                      <items>
-                                        <FXCollections fx:factory="observableArrayList">
-                                          <String fx:value="Departed before completing" />
-                                          <String fx:value="Sponsorship ended more than 2 years ago" />
-                                          <String fx:value="Siblings no longer receiving support-eg moved away" />
-                                          <String fx:value="Alumni Member no longer in need of sponsorship" />
-                                        </FXCollections>
-                                      </items>
-                                    </ComboBox>
+                                    <ComboBox fx:id="leaverStatus" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
                                   </children>
                                   <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -152,13 +143,13 @@
                             </HBox>
                             <Label text="Sponsorship Status:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                             <ComboBox fx:id="sponsorshipStatus" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                <items>
-                                    <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="On review - fees suspended" />
-                                        <String fx:value="Recent Secondary School Leaver (Gap Year)" />
-                                        <String fx:value="Recent Primary school leaver" />
-                                    </FXCollections>
-                                </items>
+                              <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                  <String fx:value="On review - fees suspended" />
+                                  <String fx:value="Recent Secondary School Leaver (Gap Year)" />
+                                  <String fx:value="Recent Primary school leaver" />
+                                </FXCollections>
+                              </items>
                             </ComboBox>
                           </children>
                           <columnConstraints>

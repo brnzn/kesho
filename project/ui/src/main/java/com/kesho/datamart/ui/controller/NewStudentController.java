@@ -5,6 +5,8 @@ import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import com.kesho.datamart.domain.LeaverStatus;
+import custom.AutoCompleteComboBoxListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -64,7 +66,7 @@ public class NewStudentController {
     @FXML
     private TextField alumniNumber;
     @FXML
-    private ComboBox<String> leaverStatus;
+    private ComboBox<LeaverStatus> leaverStatus;
 
     private Long currentId;
 
@@ -156,6 +158,12 @@ public class NewStudentController {
         currentId = null;
         gender.getItems().clear();
         gender.getItems().addAll(Gender.values());
+
+        leaverStatus.getItems().clear();;
+        leaverStatus.getItems().addAll(LeaverStatus.values());
+
+        new AutoCompleteComboBoxListener(gender);
+        new AutoCompleteComboBoxListener(leaverStatus);
 
         currentStudent.getToggles().get(0).setUserData(Boolean.TRUE);
         currentStudent.getToggles().get(1).setUserData(Boolean.FALSE);

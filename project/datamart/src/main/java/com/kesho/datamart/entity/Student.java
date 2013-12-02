@@ -1,6 +1,7 @@
 package com.kesho.datamart.entity;
 
 import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LeaverStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -56,7 +57,8 @@ public class Student {
     @Column(name = "FACEBOOK")
     private String facebookAddress;
     @Column(name = "STUDENT_STATUS")
-    private String leaverStatus;
+    @Enumerated(EnumType.STRING)
+    private LeaverStatus leaverStatus;
     @Column(name = "SPONSORSHIP_STATUS")
     private String sponsorshipStatus;
     @Column(name = "LEVEL_OF_SUPPORT")
@@ -191,11 +193,11 @@ public class Student {
         this.facebookAddress = facebookAddress;
     }
 
-    public String getLeaverStatus() {
+    public LeaverStatus getLeaverStatus() {
         return leaverStatus;
     }
 
-    public void setLeaverStatus(String leaverStatus) {
+    public void setLeaverStatus(LeaverStatus leaverStatus) {
         this.leaverStatus = leaverStatus;
     }
 

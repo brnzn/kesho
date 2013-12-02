@@ -1,6 +1,7 @@
 package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LeaverStatus;
 import org.joda.time.LocalDate;
 
 /**
@@ -22,7 +23,7 @@ public class StudentDto {
     private LocalDate startDate;
     private String email;
     private String facebookAddress;
-    private String leaverStatus;
+    private LeaverStatus leaverStatus;
     private String sponsorshipStatus;
     private String levelOfSupport;
     private Boolean topupNeeded;
@@ -87,7 +88,7 @@ public class StudentDto {
         return facebookAddress;
     }
 
-    public String getLeaverStatus() {
+    public LeaverStatus getLeaverStatus() {
         return leaverStatus;
     }
 
@@ -176,7 +177,7 @@ public class StudentDto {
         return this;
     }
 
-    public StudentDto withLeaverStatus(String leaverStatus) {
+    public StudentDto withLeaverStatus(LeaverStatus leaverStatus) {
         this.leaverStatus = leaverStatus;
         return this;
     }

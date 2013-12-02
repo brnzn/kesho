@@ -4,7 +4,6 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import com.kesho.datamart.ui.util.CalendarUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -161,7 +160,7 @@ public class StudentsController {
             }
 
             if(person.getStartDate() != null) {
-                startDateLbl.setText(CalendarUtil.format(person.getStartDate()));
+                startDateLbl.setText(person.getStartDate().toString()); //TODO: format
             }
 		}
 	}
