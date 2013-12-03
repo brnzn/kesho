@@ -2,15 +2,19 @@ package com.kesho.datamart.ui.controller;
 
 import calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.domain.LeaverStatus;
-import custom.AutoCompleteComboBoxListener;
+import custom.NumericTextField;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -18,6 +22,8 @@ import org.joda.time.LocalDate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.EnumSet;
+import java.util.Enumeration;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,7 +41,7 @@ public class NewStudentController {
     @FXML
     private ComboBox<Gender> gender;
     @FXML
-    private TextField yearOfBirth;
+    private NumericTextField yearOfBirth;
     @FXML
     private TextField contactNumber;
     @FXML
@@ -52,19 +58,19 @@ public class NewStudentController {
     private final FXCalendar calendar = new FXCalendar();
 
     @FXML
-    private ComboBox<String> sponsorshipStatus;
+    private ComboBox<SponsorshipStatus> sponsorshipStatus;
     @FXML
     private TextField email;
     @FXML
     private TextField facebook;
     @FXML
-    private ComboBox<String> levelOfSupport;
+    private ComboBox<LevelOfSupport> levelOfSupport;
     @FXML
     private ToggleGroup topupNeeded;
     @FXML
-    private TextField shortfall;
+    private NumericTextField shortfall;
     @FXML
-    private TextField alumniNumber;
+    private NumericTextField alumniNumber;
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
 
@@ -82,104 +88,22 @@ public class NewStudentController {
             return;
         }
 
-        if(student.getStartDate() != null) {
-            calendar.setValue(student.getStartDate().toDate());//new FXCalendarUtility().convertStringtoDate("02/02/2001");
-        }
-
-        currentId = student.getId();
-        firstName.setText(student.getName());
-        surname.setText(student.getSurname());
-
-        if(student.getGender() != null) {
-            gender.getSelectionModel().select(student.getGender());
-        }
-
-        if(student.getYearOfBirth() != null) {
-            yearOfBirth.setText(student.getYearOfBirth().toString());
-        }
-
-        contactNumber.setText(student.getMobileNumber());
-
-        homeLocation.setText(student.getHomeLocation());
-
-        if(student.isActiveStudent() != null) {
-            if (student.isActiveStudent()) {
-                currentStudent.getToggles().get(0).setSelected(true);
-            } else {
-                currentStudent.getToggles().get(1).setSelected(true);
-            }
-        }
-
-        if(student.hasDisability() != null) {
-            if (student.hasDisability()) {
-                hasDisability.getToggles().get(0).setSelected(true);
-            } else {
-                hasDisability.getToggles().get(1).setSelected(true);
-            }
-        }
-
-        if(student.isSponsored() != null) {
-            if (student.isSponsored()) {
-                sponsored.getToggles().get(0).setSelected(true);
-            } else {
-                sponsored.getToggles().get(1).setSelected(true);
-            }
-        }
-
-
-        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
-        email.setText(student.getEmail());
-        facebook.setText(student.getFacebookAddress());
-        if(student.isTopupNeeded() != null && student.isTopupNeeded()) {
-            topupNeeded.getToggles().get(0).setSelected(true);
-        } else {
-            topupNeeded.getToggles().get(1).setSelected(true);
-        }
-
-        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
-        if(student.getShortfall() != null) {
-            shortfall.setText(student.getShortfall().toString());
-        } else {
-            shortfall.setText("");
-        }
-
-        if(student.getAlumniNumber() != null) {
-           alumniNumber.setText(student.getAlumniNumber().toString());
-        } else {
-            alumniNumber.setText("");
-        }
-
-        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
+        initializeForm(student);
     }
 
     @FXML
     private void initialize() {
         dateControlBox.getChildren().add(calendar);
         currentId = null;
-        gender.getItems().clear();
-        gender.getItems().addAll(Gender.values());
 
-        leaverStatus.getItems().clear();;
-        leaverStatus.getItems().addAll(LeaverStatus.values());
+        //TODO: numeric fields
 
-        new AutoCompleteComboBoxListener(gender);
-        new AutoCompleteComboBoxListener(leaverStatus);
+        initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
+        initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
+        initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
+        initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
 
-        currentStudent.getToggles().get(0).setUserData(Boolean.TRUE);
-        currentStudent.getToggles().get(1).setUserData(Boolean.FALSE);
-        currentStudent.getToggles().get(0).setSelected(true);
-
-        hasDisability.getToggles().get(0).setUserData(Boolean.TRUE);
-        hasDisability.getToggles().get(1).setUserData(Boolean.FALSE);
-        hasDisability.getToggles().get(0).setSelected(true);
-
-        sponsored.getToggles().get(0).setUserData(Boolean.TRUE);
-        sponsored.getToggles().get(1).setUserData(Boolean.FALSE);
-        sponsored.getToggles().get(0).setSelected(true);
-
-        topupNeeded.getToggles().get(0).setUserData(Boolean.TRUE);
-        topupNeeded.getToggles().get(1).setUserData(Boolean.FALSE);
-        topupNeeded.getToggles().get(0).setSelected(true);
+        initializeYesNoGroup(currentStudent, hasDisability, sponsored, topupNeeded);
     }
 
     @FXML
@@ -189,7 +113,8 @@ public class NewStudentController {
         try {
             WindowsUtil.getInstance().showStudentsTable();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            //TODO: error handling
+            e.printStackTrace();
         }
     }
 
@@ -206,20 +131,16 @@ public class NewStudentController {
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
                 .withTopupNeeded((Boolean)topupNeeded.getSelectedToggle().getUserData())
-                .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem());
+                .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
+                .withSponsorStatus(sponsorshipStatus.getSelectionModel().getSelectedItem())
+                .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
+                .withGender(gender.getSelectionModel().getSelectedItem());
 
-        if(shortfall.getText() != null) {
+        if(StringUtils.isNotBlank(shortfall.getText())) {
             student.withShortfall(Integer.valueOf(shortfall.getText()));
         }
 
-        student.withSponsorStatus(sponsorshipStatus.getSelectionModel().getSelectedItem());
-        student.withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem());
-
-        if(shortfall.getText() != null) {
-            student.withShortfall(Integer.valueOf(shortfall.getText()));
-        }
-
-        if(alumniNumber.getText() != null) {
+        if(StringUtils.isNotBlank(alumniNumber.getText())) {
             student.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
         }
 
@@ -227,12 +148,9 @@ public class NewStudentController {
             student.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
-        student.withGender(gender.getSelectionModel().getSelectedItem() );
-
-        if(StringUtils.isNotBlank(yearOfBirth.getText()) && StringUtils.isNumeric(yearOfBirth.getText())) {
+        if(StringUtils.isNotBlank(yearOfBirth.getText())) {
             student.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
         }
-
 
         return student;
     }
@@ -242,4 +160,61 @@ public class NewStudentController {
         WindowsUtil.getInstance().showStudentsTable();
     }
 
+    private void initializeForm(StudentDto student) {
+        if(student.getStartDate() != null) {
+            calendar.setValue(student.getStartDate().toDate());//new FXCalendarUtility().convertStringtoDate("02/02/2001");
+        }
+
+        currentId = student.getId();
+        firstName.setText(student.getName());
+        surname.setText(student.getSurname());
+        gender.getSelectionModel().select(student.getGender());
+
+        yearOfBirth.setText(safeToStringValue(student.getYearOfBirth(), null));
+
+        contactNumber.setText(student.getMobileNumber());
+        homeLocation.setText(student.getHomeLocation());
+
+        setState(currentStudent, student.isActiveStudent());
+        setState(hasDisability, student.hasDisability());
+        setState(sponsored, student.isSponsored());
+        setState(topupNeeded, student.isTopupNeeded());
+
+        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
+        email.setText(student.getEmail());
+        facebook.setText(student.getFacebookAddress());
+
+        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
+
+        shortfall.setText(safeToStringValue(student.getShortfall(), null));
+
+        alumniNumber.setText(safeToStringValue(student.getAlumniNumber(), null));
+
+        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
+    }
+
+    public String safeToStringValue(Object value, String defaultValue) {
+        return value != null ? value.toString() : (defaultValue != null ? defaultValue : "");
+    }
+
+    private <T extends Enum> void initializeComboBoxValues(ComboBox<T> target, EnumSet source) {
+        target.getItems().clear();
+        target.getItems().addAll(source);
+    }
+
+    private void initializeYesNoGroup(ToggleGroup ...groups) {
+        for (ToggleGroup group:groups) {
+            group.getToggles().get(0).setUserData(Boolean.TRUE);
+            group.getToggles().get(1).setUserData(Boolean.FALSE);
+            group.getToggles().get(0).setSelected(true);
+        }
+    }
+
+    private void setState(ToggleGroup group, boolean value) {
+        if(value) {
+            group.getToggles().get(0).setSelected(true);
+        } else {
+            group.getToggles().get(1).setSelected(true);
+        }
+    }
 }

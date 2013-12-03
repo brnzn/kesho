@@ -2,6 +2,8 @@ package com.kesho.datamart.entity;
 
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
+import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.SponsorshipStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -60,9 +62,11 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private LeaverStatus leaverStatus;
     @Column(name = "SPONSORSHIP_STATUS")
-    private String sponsorshipStatus;
+    @Enumerated(EnumType.STRING)
+    private SponsorshipStatus sponsorshipStatus;
     @Column(name = "LEVEL_OF_SUPPORT")
-    private String levelOfSupport;
+    @Enumerated(EnumType.STRING)
+    private LevelOfSupport levelOfSupport;
     @Column(name = "TOPUP_NEEDED", columnDefinition = "BIT")
     private Boolean topupNeeded;
     @Column(name = "SHORTFALL")
@@ -201,20 +205,20 @@ public class Student {
         this.leaverStatus = leaverStatus;
     }
 
-    public String getSponsorshipStatus() {
+    public SponsorshipStatus getSponsorshipStatus() {
         return sponsorshipStatus;
     }
 
-    public void setSponsorshipStatus(String sponsorshipStatus) {
+    public void setSponsorshipStatus(SponsorshipStatus sponsorshipStatus) {
         this.sponsorshipStatus = sponsorshipStatus;
     }
 
 
-    public String getLevelOfSupport() {
+    public LevelOfSupport getLevelOfSupport() {
         return levelOfSupport;
     }
 
-    public void setLevelOfSupport(String levelOfSupport) {
+    public void setLevelOfSupport(LevelOfSupport levelOfSupport) {
         this.levelOfSupport = levelOfSupport;
     }
 

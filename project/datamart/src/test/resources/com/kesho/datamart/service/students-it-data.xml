@@ -12,9 +12,9 @@
               CURRENT_STUDENT="1"
               STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
               SPONSORED="1"
-              SPONSORSHIP_STATUS="sp1"
+              SPONSORSHIP_STATUS="REVIEW"
               START_DATE="2013-03-28 00:00:00.0"
-              LEVEL_OF_SUPPORT="los1"
+              LEVEL_OF_SUPPORT="FULL"
               TOPUP_NEEDED="1"
               SHORTFALL="100"
               ALUMNI_MEMBER="111" />
@@ -32,9 +32,9 @@
               CURRENT_STUDENT="1"
               STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
               SPONSORED="1"
-              SPONSORSHIP_STATUS="sp2"
+              SPONSORSHIP_STATUS="REVIEW"
               START_DATE="2013-03-28 00:00:00.0"
-              LEVEL_OF_SUPPORT="1"
+              LEVEL_OF_SUPPORT="PART"
               TOPUP_NEEDED="1"
               SHORTFALL="200"
               ALUMNI_MEMBER="222" />

@@ -2,6 +2,8 @@ package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
+import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.SponsorshipStatus;
 import org.joda.time.LocalDate;
 
 /**
@@ -24,8 +26,8 @@ public class StudentDto {
     private String email;
     private String facebookAddress;
     private LeaverStatus leaverStatus;
-    private String sponsorshipStatus;
-    private String levelOfSupport;
+    private SponsorshipStatus sponsorshipStatus;
+    private LevelOfSupport levelOfSupport;
     private Boolean topupNeeded;
     private Integer shortfall;
     private Integer alumniNumber;
@@ -92,11 +94,11 @@ public class StudentDto {
         return leaverStatus;
     }
 
-    public String getSponsorshipStatus() {
+    public SponsorshipStatus getSponsorshipStatus() {
         return sponsorshipStatus;
     }
 
-    public String getLevelOfSupport() {
+    public LevelOfSupport getLevelOfSupport() {
         return levelOfSupport;
     }
 
@@ -182,12 +184,12 @@ public class StudentDto {
         return this;
     }
 
-    public StudentDto withSponsorStatus(String sponsorStatus) {
+    public StudentDto withSponsorStatus(SponsorshipStatus sponsorStatus) {
         this.sponsorshipStatus = sponsorStatus;
         return this;
     }
 
-    public StudentDto withLevelOfSupport(String levelOfSupport) {
+    public StudentDto withLevelOfSupport(LevelOfSupport levelOfSupport) {
         this.levelOfSupport = levelOfSupport;
         return this;
     }

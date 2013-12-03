@@ -4,6 +4,8 @@ import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
+import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.StudentsDAO;
@@ -69,8 +71,8 @@ public class StudentServiceIT {
         assertThat("email email1 ", s1.getEmail(), is("email1"));
         assertThat("facebook fb1", s1.getFacebookAddress(), is("fb1"));
         assertThat("student status s1s", s1.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
-        assertThat("sponsor status sp1", s1.getSponsorshipStatus(), is("sp1"));
-        assertThat("level of support los1", s1.getLevelOfSupport(), is("los1"));
+        assertThat("sponsor status sp1", s1.getSponsorshipStatus(), is(SponsorshipStatus.REVIEW));
+        assertThat("level of support full", s1.getLevelOfSupport(), is(LevelOfSupport.FULL));
         assertThat("topup needed true", s1.isTopupNeeded(), is(true));
         assertThat("shortfall 100", s1.getShortfall(), is(100));
         assertThat("alumni number 111", s1.getAlumniNumber(), is(111));
@@ -92,8 +94,8 @@ public class StudentServiceIT {
                 .withEmail("email")
                 .withFacebookAddress("fb")
                 .withLeaverStatus(LeaverStatus.ALUMNI_NO_LONGER_NEEDED)
-                .withSponsorStatus("sps")
-                .withLevelOfSupport("los")
+                .withSponsorStatus(SponsorshipStatus.RECENT_SECONDARY_LEAVER)
+                .withLevelOfSupport(LevelOfSupport.ON_HOLD)
                 .withTopupNeeded(true)
                 .withShortfall(1)
                 .withAlumniNumber(1)
@@ -127,8 +129,8 @@ public class StudentServiceIT {
         assertThat(saved.getEmail(), is("email"));
         assertThat(saved.getFacebookAddress(), is("fb"));
         assertThat(saved.getLeaverStatus(), is(LeaverStatus.ALUMNI_NO_LONGER_NEEDED));
-        assertThat(saved.getSponsorshipStatus(), is("sps"));
-        assertThat(saved.getLevelOfSupport(), is("los"));
+        assertThat(saved.getSponsorshipStatus(), is(SponsorshipStatus.RECENT_SECONDARY_LEAVER));
+        assertThat(saved.getLevelOfSupport(), is(LevelOfSupport.ON_HOLD));
         assertThat(saved.isTopupNeeded(), is(true));
         assertThat(saved.getShortfall(), is(1));
         assertThat(saved.getAlumniNumber(), is(1));

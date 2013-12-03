@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
+<?import custom.NumericTextField?>
 <AnchorPane prefHeight="484.0" prefWidth="682.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -55,17 +56,7 @@
                                     <Label text="Home Location:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <TextField fx:id="homeLocation" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                     <Label text="Level Of Support:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                    <ComboBox fx:id="levelOfSupport" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                      <items>
-                                        <FXCollections fx:factory="observableArrayList">
-                                          <String fx:value="Full" />
-                                          <String fx:value="Part" />
-                                          <String fx:value="One of donation" />
-                                          <String fx:value="On hold" />
-                                          <String fx:value="None" />
-                                        </FXCollections>
-                                      </items>
-                                    </ComboBox>
+                                    <ComboBox fx:id="levelOfSupport" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Leaver Status:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <ComboBox fx:id="leaverStatus" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
                                   </children>
@@ -99,7 +90,7 @@
                             <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <ComboBox fx:id="gender" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                            <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <NumericTextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                               <children>
                                 <RadioButton fx:id="yes" mnemonicParsing="false" selected="false" text="Yes">
@@ -129,8 +120,8 @@
                             <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
                             <HBox fx:id="dateControlBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             <Label text="Alumni Number:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                            <TextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                            <TextField fx:id="shortfall" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                            <NumericTextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            <NumericTextField fx:id="shortfall" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                             <Label text="Shortfall:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                             <Label text="Topup Needed?" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.valignment="CENTER">
@@ -142,15 +133,7 @@
                               <RadioButton mnemonicParsing="false" text="No" toggleGroup="$topupNeeded" />
                             </HBox>
                             <Label text="Sponsorship Status:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                            <ComboBox fx:id="sponsorshipStatus" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                              <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                  <String fx:value="On review - fees suspended" />
-                                  <String fx:value="Recent Secondary School Leaver (Gap Year)" />
-                                  <String fx:value="Recent Primary school leaver" />
-                                </FXCollections>
-                              </items>
-                            </ComboBox>
+                            <ComboBox fx:id="sponsorshipStatus" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                           </children>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="120.0" prefWidth="127.0" />

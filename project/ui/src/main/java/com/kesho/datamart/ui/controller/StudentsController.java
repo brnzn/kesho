@@ -165,11 +165,6 @@ public class StudentsController {
 		}
 	}
 
-    //TODO: demo code. delete
-//    public void add(StudentDto student) {
-//        studentsModel.add(student);
-//    }
-
 //	@FXML
 //	private void handleDeletePerson() {
 //		int selectedIndex = studentsTable.getSelectionModel().getSelectedIndex();
@@ -182,59 +177,4 @@ public class StudentsController {
 //					"No StudentDto Selected", "No Selection");
 //		}
 //	}
-	
-//	@FXML
-//	private void handleEditPerson() {
-//		StudentDto selectedPerson = studentsTable.getSelectionModel().getSelectedItem();
-//		if (selectedPerson != null) {
-//			boolean okClicked = WindowsUtil.getInstance().showPersonEditDialog(selectedPerson);
-//			if (okClicked) {
-//				Student s = new Student();
-////				s.setId(selectedPerson.getPersonId());
-////				s.setFirstName(selectedPerson.getFirstName());
-//				repo.save(s);
-//				refreshPersonTable();
-//				showPersonDetails(selectedPerson);
-//			}
-//
-//		} else {
-//			// Nothing selected
-//			Dialogs.showWarningDialog(WindowsUtil.getInstance().getPrimaryStage(),
-//					"Please select a person in the table.",
-//					"No StudentDto Selected", "No Selection");
-//		}
-//	}
-//
-//	private void refreshPersonTable() {
-//		int selectedIndex = studentsTable.getSelectionModel().getSelectedIndex();
-//		studentsTable.setItems(null);
-//		studentsTable.layout();
-//		studentsTable.setItems(studentsModel);
-//		// Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-//		studentsTable.getSelectionModel().select(selectedIndex);
-//	}
-	
-//	@FXML
-//    private void saveIssueFired(ActionEvent event) {
-//    	System.out.println("!!!!!!!!!!!!!" + firstNameLabel.getText() + " " + lastNameLabel.getText());
-//    	firstNameLabel.getText();
-//    	
-//    	Student s = new Student();
-//    	s.setFirstName(firstNameLabel.getText());
-//    	s = repo.save(s);
-//    	
-//    	studentsModel.add(new StudentDto(s.getFirstName(), String.valueOf(s.getId())));
-//    }
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
-//	public void setMainApp(KeshoApp mainApp) {
-//		this.mainApp = mainApp;
-//
-//		// Add observable list data to the table
-//		studentsTable.setItems(mainApp.getPersonData());
-//	}
-
 }
