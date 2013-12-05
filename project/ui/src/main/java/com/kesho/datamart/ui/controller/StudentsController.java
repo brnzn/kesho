@@ -4,12 +4,19 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -17,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
+import java.util.Set;
 
 /**
  * The controller for the overview with address table and details view.
@@ -64,6 +72,7 @@ public class StudentsController {
 
 	private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
 
+
 	/**
 	 * The constructor. The constructor is called before the initialize()
 	 * method.
@@ -85,7 +94,8 @@ public class StudentsController {
 	private void initialize() {
         initTable();
         initPagination();
-	}
+        firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
+    }
 
     private void initTable() {
         studentsModel.clear();
@@ -109,7 +119,6 @@ public class StudentsController {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     StudentDto selected = studentsTable.getSelectionModel().getSelectedItem();
                     if (mouseEvent.getClickCount() == 2 && selected != null) {
-                        //TODO:pass selected student to initialise form
                         WindowsUtil.getInstance().showNewStudentDetails(selected);
                     }
                 }
@@ -120,7 +129,7 @@ public class StudentsController {
     private void initPagination() {
         Page p = getPage(0, 2);
         if(p != null) {
-            studentsModel.addAll(p.getContent());
+            studentsModel.addAll(FXCollections.observableArrayList(p.getContent()));
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
         }
 
@@ -136,7 +145,9 @@ public class StudentsController {
     }
     //TODO: default values
 	private void showStudentDetails(StudentDto person) {
-		if (person != null) {
+ //       nameLbl.textProperty().bind(firstNameColumn.getCellObservableValue(studentsTable.getSelectionModel().getSelectedIndex()));
+
+        if (person != null) {
 			nameLbl.setText(person.getName());
 			familyNameLbl.setText(person.getSurname());
             if(person.getGender() != null) {
