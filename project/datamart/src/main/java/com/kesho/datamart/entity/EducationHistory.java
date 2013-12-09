@@ -1,12 +1,10 @@
 package com.kesho.datamart.entity;
 
-import com.kesho.datamart.domain.CLASS;
+import com.kesho.datamart.domain.EducationStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-
-import static javax.persistence.EnumType.STRING;
 
 
 @Entity
@@ -17,53 +15,88 @@ public class EducationHistory {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "STUDENT_ID" , nullable = false)
-    private Student student;
-//    unidirectional @Column(name = "STUDENT_ID", nullable=false) 
-//    private Long studentId;
+    //bidirectional
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "STUDENT_ID" , nullable = false)
+//    private Student student;
+//    unidirectional
+    @Column(name = "STUDENT_ID", nullable=false)
+    private Long studentId;
     
     //TODO:enum
     @Column(name = "LEVEL")
-	private String level;
+    @Enumerated(EnumType.STRING)
+    private EducationStatus educationStatus;
 
     @Column(name = "CLASS")
-    @Enumerated(STRING)    
-	private CLASS currentClass;
+	private Integer year;
 
     @Column(name = "START_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate startDate;
-    
-    @Column(name = "PREDICTED_END_DATE")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate predictedEndDate;
-    
-    @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "SCHOOL_ID" , insertable = false, updatable = false, nullable = false)
+
+    @Column(name = "COURSE")
+	private String course;
+
+    @Column(name = "SECONDARY_LEVEL_1")
+    private String secondaryLevel1;
+
+    @Column(name = "SECONDARY_LEVEL_2")
+    private String secondaryLevel2;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "SCHOOL_ID")
     private School school;
-   
-    @Column(name = "TERM", columnDefinition = "TINYINT")
-    private Integer term;
+
+//    @Column(name = "SCHOOL_ID", nullable=false)
+//    private Long schoolId;
+//
+//    public Long getSchoolId() {
+//        return schoolId;
+//    }
+
+//    public void setSchoolId(Long schoolId) {
+//        this.schoolId = schoolId;
+//    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
     	return id;
     }
     
-	public void setLevel(String level) {
-		this.level = level;
+	public void setEducationStatus(EducationStatus status) {
+		this.educationStatus = status;
 	}
 
-	public String getLevel() {
-		return level;
+	public EducationStatus getEducationStatus() {
+		return educationStatus;
 	}
 
-	public CLASS getCurrentClass() {
-		return currentClass;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setCurrentClass(CLASS currentClass) {
-		this.currentClass = currentClass;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 	public LocalDate getStartDate() {
@@ -74,25 +107,25 @@ public class EducationHistory {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getPredictedEndDate() {
-		return predictedEndDate;
-	}
+    public String getSecondaryLevel1() {
+        return secondaryLevel1;
+    }
 
-	public void setPredictedEndDate(LocalDate predictedEndDate) {
-		this.predictedEndDate = predictedEndDate;
-	}
+    public void setSecondaryLevel1(String secondaryLevel1) {
+        this.secondaryLevel1 = secondaryLevel1;
+    }
 
-	public Integer getTerm() {
-		return term;
-	}
+    public String getSecondaryLevel2() {
+        return secondaryLevel2;
+    }
 
-	public void setTerm(Integer term) {
-		this.term = term;
-	}
+    public void setSecondaryLevel2(String secondaryLevel2) {
+        this.secondaryLevel2 = secondaryLevel2;
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+    //	public void setStudent(Student student) {
+//		this.student = student;
+//	}
 
 	public void setSchool(School school) {
 		this.school = school;
@@ -100,6 +133,6 @@ public class EducationHistory {
 
 	public School getSchool() {
 		return school;
-	}	
+	}
 
 }

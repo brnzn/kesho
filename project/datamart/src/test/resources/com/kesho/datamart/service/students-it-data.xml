@@ -1,4 +1,6 @@
 <dataset>
+    <SCHOOLS ID="1" NAME="school"/>
+
 	<STUDENTS ID="1"
               NAME="fn"
               SURNAME="sn1"

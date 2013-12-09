@@ -15,6 +15,15 @@ public class School {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    public School() {
+        this(null, null);
+    }
+
+    public School(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Column(name="NAME", nullable=false)
     private String name;
     
@@ -34,5 +43,20 @@ public class School {
 		this.name = name;
 	}
 
-    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        School school = (School) o;
+
+        if (name != null ? !name.equals(school.name) : school.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 }

@@ -12,7 +12,8 @@
     <!--<appender name="springAppender" class="org.apache.log4j.RollingFileAppender">-->
         <!--<param name="file" value="C:/tomcatLogs/webApp/spring-details.log"/>-->
         <!--<param name="append" value="true"/>-->
-        <!--<layout class="org.apache.log4j.PatternLayout">-->
+        <!--<layout class="org.apache.log4j.PatternLayout"
+        >-->
             <!--<param name="ConversionPattern"-->
                    <!--value="%d{MM/dd/yyyy HH:mm:ss}  [%t]:%c{5}.%M()%L %m%n"/>-->
         <!--</layout>-->
@@ -21,6 +22,10 @@
     <category name="org.springframework">
         <priority value="debug"/>
     </category>
+
+    <!--<category name="org.hibernate">-->
+        <!--<priority value="TRACE"/>-->
+    <!--</category>-->
 
     <root>
         <priority value="INFO"/>

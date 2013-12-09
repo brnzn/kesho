@@ -21,7 +21,7 @@ public class RootController {
     }
 
     @FXML
-    private void openStudents() throws IOException {
-        WindowsUtil.getInstance().showStudentsTable();
+    private void openInstitutions() throws IOException {
+        WindowsUtil.getInstance().institutionsForm();
     }
 }

@@ -33,7 +33,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Kesho">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openStudents" text="Students" />
+                    <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Students" />
                     <MenuItem mnemonicParsing="false" text="Sponsors" />
                   </items>
                 </Menu>

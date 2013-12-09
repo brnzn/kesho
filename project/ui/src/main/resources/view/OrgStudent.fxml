@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import custom.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
@@ -8,17 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<!--<?import custom.NumericTextField?>-->
-<?scenebuilder-classpath-element ../../../../target/classes?>
-<?scenebuilder-classpath-element ../../java?>
 
 <AnchorPane prefHeight="484.0" prefWidth="682.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <bottom>
-        <AnchorPane prefHeight="57.0" prefWidth="682.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="84.0" prefWidth="226.0" BorderPane.alignment="CENTER">
           <children>
-            <FlowPane prefHeight="70.0" prefWidth="682.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <FlowPane prefHeight="84.0" prefWidth="682.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
                 <HBox prefHeight="-1.0" prefWidth="-1.0" spacing="5.0">
                   <children>
@@ -36,7 +32,7 @@
         </AnchorPane>
       </bottom>
       <center>
-        <TabPane fx:id="studentTab" prefHeight="519.0000999999975" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane prefHeight="519.0000999999975" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
           <tabs>
             <Tab text="Student Details">
               <content>
@@ -59,9 +55,28 @@
                                     <Label text="Home Location:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <TextField fx:id="homeLocation" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                     <Label text="Level Of Support:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                    <ComboBox fx:id="levelOfSupport" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="levelOfSupport" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                      <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                          <String fx:value="Full" />
+                                          <String fx:value="Part" />
+                                          <String fx:value="One of donation" />
+                                          <String fx:value="On hold" />
+                                          <String fx:value="None" />
+                                        </FXCollections>
+                                      </items>
+                                    </ComboBox>
                                     <Label text="Leaver Status:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <ComboBox fx:id="leaverStatus" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="leaverStatus" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                      <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                          <String fx:value="Departed before completing" />
+                                          <String fx:value="Sponsorship ended more than 2 years ago" />
+                                          <String fx:value="Siblings no longer receiving support-eg moved away" />
+                                          <String fx:value="Alumni Member no longer in need of sponsorship" />
+                                        </FXCollections>
+                                      </items>
+                                    </ComboBox>
                                   </children>
                                   <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -93,7 +108,7 @@
                             <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <ComboBox fx:id="gender" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                            <NumericTextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                               <children>
                                 <RadioButton fx:id="yes" mnemonicParsing="false" selected="false" text="Yes">
@@ -123,8 +138,8 @@
                             <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
                             <HBox fx:id="dateControlBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             <Label text="Alumni Number:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                            <NumericTextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                            <NumericTextField fx:id="shortfall" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                            <TextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            <TextField fx:id="shortfall" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                             <Label text="Shortfall:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                             <Label text="Topup Needed?" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.valignment="CENTER">
@@ -136,7 +151,15 @@
                               <RadioButton mnemonicParsing="false" text="No" toggleGroup="$topupNeeded" />
                             </HBox>
                             <Label text="Sponsorship Status:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                            <ComboBox fx:id="sponsorshipStatus" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                            <ComboBox fx:id="sponsorshipStatus" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="On review - fees suspended" />
+                                        <String fx:value="Recent Secondary School Leaver (Gap Year)" />
+                                        <String fx:value="Recent Primary school leaver" />
+                                    </FXCollections>
+                                </items>
+                            </ComboBox>
                           </children>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="120.0" prefWidth="127.0" />
@@ -162,74 +185,12 @@
                 </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="education" text="Education" id="ed">
+            <Tab text="Family">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                    <AnchorPane prefHeight="364.0" prefWidth="682.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <children>
-                        <VBox prefHeight="364.0" prefWidth="682.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <children>
-                            <TableView fx:id="educationTable" prefHeight="200.0" prefWidth="200.0">
-                              <columns>
-                                <TableColumn prefWidth="75.0" text="Date" fx:id="educationDateCol" />
-                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="138.0" text="Institution Name" fx:id="institutionCol" />
-                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="143.0" text="Educational level" fx:id="educationLevelCol" />
-                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="109.0" text="Class / Year" fx:id="yearCol" />
-                                <TableColumn prefWidth="75.0" text="Course" fx:id="courseCol" />
-                              </columns>
-                            </TableView>
-                            <GridPane prefWidth="583.0">
-                              <children>
-                                <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <Label text="Institution Name" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                <Label text="Class/Year" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <Label text="Course" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <TextField fx:id="educationDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                <TextField id="class" fx:id="educationYear" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField fx:id="institutionName" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                <TextField fx:id="course" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                <Label text="Educational Status" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                <ComboBox fx:id="educationalStatus" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="Comments" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <TextArea fx:id="comments" prefHeight="60.0" prefWidth="278.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="2" />
-                                <Label text="Secondary Status1" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                <Label text="Secondary Status2" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                <ComboBox id="secondary1Status" fx:id="secondaryStatus1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <ComboBox fx:id="secondaryStatus2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              </children>
-                              <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="141.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="115.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="148.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="278.0" />
-                              </columnConstraints>
-                              <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              </rowConstraints>
-                              <VBox.margin>
-                                <Insets />
-                              </VBox.margin>
-                            </GridPane>
-                            <FlowPane prefHeight="39.0" prefWidth="682.0">
-                              <children>
-                                <Button mnemonicParsing="false" onAction="#addEducation" text="Add" />
-                              </children>
-                            </FlowPane>
-                          </children>
-                        </VBox>
-                      </children>
-                    </AnchorPane>
-                  </children>
-                </AnchorPane>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Family">
+            <Tab text="Education">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>

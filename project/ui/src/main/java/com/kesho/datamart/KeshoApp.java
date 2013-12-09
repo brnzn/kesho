@@ -34,7 +34,7 @@ public class KeshoApp extends Application {
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader();
-			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/newRootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/RootLayout.fxml"));
             RootController rootController = loader.getController();
             WindowsUtil.getInstance().getControllers().setRootController(rootController);
 			Scene scene = new Scene(rootLayout);

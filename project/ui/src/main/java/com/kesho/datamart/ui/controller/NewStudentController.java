@@ -2,19 +2,22 @@ package com.kesho.datamart.ui.controller;
 
 import calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import com.kesho.datamart.domain.LeaverStatus;
+import com.kesho.datamart.ui.util.Util;
 import custom.NumericTextField;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -23,7 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.EnumSet;
-import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,6 +61,9 @@ public class NewStudentController {
     private final FXCalendar calendar = new FXCalendar();
 
     @FXML
+    private TabPane studentTab;
+
+    @FXML
     private ComboBox<SponsorshipStatus> sponsorshipStatus;
     @FXML
     private TextField email;
@@ -73,6 +79,39 @@ public class NewStudentController {
     private NumericTextField alumniNumber;
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
+
+    //education
+    @FXML
+    private TableColumn<EducationDto, String> institutionCol;
+    @FXML
+    private TableColumn<EducationDto, LocalDate> educationDateCol;
+    @FXML
+    private TableColumn<EducationDto, String> educationLevelCol;
+    @FXML
+    private TableColumn<EducationDto, String> yearCol;
+    @FXML
+    private TableColumn<EducationDto, String> courseCol;
+    @FXML
+    private TextField educationDate;
+    @FXML
+    private TextField institutionName;
+    @FXML
+    private TextField educationYear;
+    @FXML
+    private TextField course;
+    @FXML
+    private ComboBox<String> educationalStatus;
+    @FXML
+    private ComboBox<String> secondaryStatus1;
+    @FXML
+    private ComboBox<String> secondaryStatus2;
+
+    private ObservableList<EducationDto> educationModel = FXCollections.observableArrayList();
+
+    private EducationDto selected;
+
+    @FXML
+    private TableView<EducationDto> educationTable;
 
     private Long currentId;
 
@@ -93,17 +132,105 @@ public class NewStudentController {
 
     @FXML
     private void initialize() {
+        selected = null;
+        educationModel.clear();
+        educationTable.setItems(educationModel);
+
         dateControlBox.getChildren().add(calendar);
         currentId = null;
 
-        //TODO: numeric fields
+        institutionCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("institutionName"));
+        educationDateCol.setCellValueFactory(new PropertyValueFactory<EducationDto, LocalDate>("date"));
+        educationLevelCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("educationalStatus"));
+        yearCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("year"));
+        courseCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("course"));
 
-        initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
-        initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
-        initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
-        initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
+        Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
+        Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
+        Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
+        Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
 
         initializeYesNoGroup(currentStudent, hasDisability, sponsored, topupNeeded);
+
+        studentTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
+                educationModel.addAll(studentsRepository.getEducationHistory(currentId));
+            }
+        });
+
+        educationTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationDto>() {
+            @Override
+            public void changed(ObservableValue<? extends EducationDto> observable,
+                                EducationDto oldValue, EducationDto newValue) {
+                updateEducationForm(newValue);
+            }
+        });
+    }
+
+
+    private void updateEducationForm(EducationDto dto) {
+        if(dto == null)
+            return;
+
+        selected = dto;
+        educationYear.setText(Util.safeToStringValue(dto.getYear(), ""));
+        institutionName.setText(dto.getInstitutionName());
+    }
+
+    @FXML
+    private void addEducation() throws IOException {
+        EducationDto dto = new EducationDto();
+        boolean isOK = WindowsUtil.getInstance().educationForm(dto);
+
+        if(isOK) {
+            studentsRepository.addEducationHistory(dto.withStudentId(currentId));
+            educationModel.clear();
+            educationModel.addAll(studentsRepository.getEducationHistory(currentId));
+            refreshEducationTable();
+            updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
+        }
+    }
+//    @FXML
+//    private void saveEducation() {
+//
+//        //       educationModel.clear();;
+//        if(selected != null)  {
+//            int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
+//            educationTable.setItems(null);
+//            educationTable.layout();
+//            educationTable.setItems(educationModel);
+//            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+//            educationTable.getSelectionModel().select(selectedIndex);
+//            educationTable.requestFocus();
+//            educationTable.focusModelProperty().get().focus(new TablePosition(educationTable, 0, educationDateCol));
+//            educationTable.focusModelProperty().get().focusBelowCell();
+////code starts from there
+//            if(educationTable.getItems().size()>0)
+//                educationTable.getSelectionModel().select(0);
+//
+//            educationTable.layout();
+//            return;
+//        }
+//
+//        EducationDto dto = new EducationDto();
+//        educationModel.add(dto);
+//
+//        educationTable.getSelectionModel().select(dto);
+//        System.out.println(educationTable.getSelectionModel().getSelectedIndex());
+//    }
+
+    private void refreshEducationTable() {
+        List<EducationDto> dtos = studentsRepository.getEducationHistory(currentId);
+        educationModel.clear();
+        educationModel.addAll(dtos);
+        int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
+        educationTable.setItems(null);
+        educationTable.layout();
+        educationTable.setItems(educationModel);
+        // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+        educationTable.getSelectionModel().select(selectedIndex);
+
     }
 
     @FXML
@@ -197,10 +324,10 @@ public class NewStudentController {
         return value != null ? value.toString() : (defaultValue != null ? defaultValue : "");
     }
 
-    private <T extends Enum> void initializeComboBoxValues(ComboBox<T> target, EnumSet source) {
-        target.getItems().clear();
-        target.getItems().addAll(source);
-    }
+//    private <T extends Enum> void initializeComboBoxValues(ComboBox<T> target, EnumSet source) {
+//        target.getItems().clear();
+//        target.getItems().addAll(source);
+//    }
 
     private void initializeYesNoGroup(ToggleGroup ...groups) {
         for (ToggleGroup group:groups) {

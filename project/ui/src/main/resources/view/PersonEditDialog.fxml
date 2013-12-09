@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="224.0" prefWidth="321.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.PersonEditDialogController">
+<AnchorPane prefHeight="224.0" prefWidth="321.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.EducationDialogController">
   <children>
     <GridPane prefHeight="164.0" prefWidth="301.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <children>

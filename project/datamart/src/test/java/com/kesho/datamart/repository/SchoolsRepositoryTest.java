@@ -17,7 +17,7 @@ public class SchoolsRepositoryTest {
 			"kesho", "schools-it-data.xml");
 
 	@Inject
-	private SchoolsRepository repo;
+	private SchoolsDAO repo;
 
 	@Test
 	public void shouldFindSchool() {

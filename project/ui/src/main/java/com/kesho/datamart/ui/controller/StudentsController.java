@@ -95,6 +95,13 @@ public class StudentsController {
         initTable();
         initPagination();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
+
+        studentsTable.getSelectionModel().select(0);
+        studentsTable.focusModelProperty().get().focus(0, firstNameColumn);
+        studentsTable.requestFocus();
+
+
+        studentsTable.layout();
     }
 
     private void initTable() {
@@ -129,7 +136,7 @@ public class StudentsController {
     private void initPagination() {
         Page p = getPage(0, 2);
         if(p != null) {
-            studentsModel.addAll(FXCollections.observableArrayList(p.getContent()));
+            studentsModel.addAll(p.getContent());    //
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
         }
 

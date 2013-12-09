@@ -2,17 +2,19 @@ package com.kesho.datamart.service;
 
 import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
-import com.kesho.datamart.domain.Gender;
-import com.kesho.datamart.domain.LeaverStatus;
-import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.SponsorshipStatus;
+import com.kesho.datamart.domain.*;
+import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
+import com.kesho.datamart.repository.EducationHistoryDAO;
 import com.kesho.datamart.repository.StudentsDAO;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,10 +49,46 @@ public class StudentServiceIT {
 
     @Inject
     private StudentsDAO dao;
+    @Inject
+    private EducationHistoryDAO educationHistoryDAO;
 
     @Inject
     private JpaTransactionManager transactionManager;
 
+    @Test
+    public void shouldAddEducationHistory() {
+        LocalDate date = LocalDate.now();
+        EducationDto dto = new EducationDto()
+                .withYear(1)
+                .withInstitution(new InstitutionDto(1L, "school"))
+                .withCourse("course")
+                .withEducationDate(date)
+                .withEducationalStatus(EducationStatus.Secondary)
+                .withSecondaryStatus1("National")
+                .withSecondaryStatus2("sec2")
+                .withStudentId(1L)
+                ;
+
+
+        EducationDto result = studentService.addEducationHistory(dto);
+        assertThat(result.getInstitution().getName(), is("school"));
+        assertThat(result.getEducationalStatus(), is(EducationStatus.Secondary));
+        assertThat(result.getSecondaryEducationStatus1(), is("National"));
+        assertThat(result.getSecondaryEducationStatus2(), is("sec2"));
+        assertThat(result.getId(), notNullValue());
+        assertThat(result.getCourse(), is("course"));
+        assertThat(result.getYear(), is(1));
+        assertThat(result.getDate(), is(date));
+        assertThat(result.getEducationLevel(), is("Secondary (National)"));
+        assertThat(result.getStudentId(), is(1L));
+        assertThat(result.getInstitution().getId(), is(1L));
+
+        EducationHistory saved = findOne(EducationHistory.class, educationHistoryDAO, result.getId());
+
+        assertThat(saved.getSchool().getId(), is(1L));
+
+
+    }
 
     @Test
     public void shouldFindStudent() {
@@ -104,17 +143,7 @@ public class StudentServiceIT {
 
         assertNotNull(resultDto.getId());
 
-        TransactionCallback<Student> callback = new TransactionCallback<Student>() {
-            @Override
-            public Student doInTransaction(TransactionStatus status) {
-                return dao.findOne(resultDto.getId());
-            }
-        };
-
-        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
-        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-
-        Student saved = txTemplate.execute(callback);
+        Student saved = findOne(Student.class, dao, resultDto.getId());
 
         assertNotNull(saved);
         assertThat(saved.getFirstName(), is("name"));
@@ -155,5 +184,19 @@ public class StudentServiceIT {
                 return studentDto.getId() == id;
             }
         };
+    }
+
+    private <T> T findOne(Class<T> entity, final JpaRepository<T, Long> dao, final Long id) {
+        TransactionCallback<T> callback = new TransactionCallback<T>() {
+            @Override
+            public T doInTransaction(TransactionStatus status) {
+                return dao.findOne(id);
+            }
+        };
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        return txTemplate.execute(callback);
     }
 }

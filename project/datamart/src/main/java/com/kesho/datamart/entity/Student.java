@@ -9,10 +9,8 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
 //TODO: batch insert, validations
@@ -47,13 +45,15 @@ public class Student {
     @Column(name = "YEAR_OF_BIRTH", columnDefinition = "SMALLINT")
     private Integer yearOfBirth;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private List<StudentLog> logs = newArrayList();
-
-// unidirectional   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(updatable = false, name="STUDENT_ID", referencedColumnName="ID")    
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private Set<EducationHistory> educationHistory = newHashSet();
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
+//    private List<StudentLog> logs = newArrayList();
+//
+// unidirectional
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="STUDENT_ID", referencedColumnName="ID")
+    //// bidirectional
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
+    private Set<EducationHistory> educationHistory = newHashSet(); // TODO: change to list
     @Column(name= "EMAIL")
     private String email;
     @Column(name = "FACEBOOK")
@@ -91,19 +91,20 @@ public class Student {
 		this.firstName = firstName;
 	}
 
-	public void addLog(StudentLog log) {
-		log.setStudent(this);
-		this.logs.add(log);
-	}
+//	public void addLog(StudentLog log) {
+//		log.setStudent(this);
+//		this.logs.add(log);
+//	}
 
 	public void addToEducationHistory(EducationHistory educationHistory) {
-		educationHistory.setStudent(this);
+        //bidirectional
+//		educationHistory.setStudent(this);
 		this.educationHistory.add(educationHistory);
 	}
 	
-	public List<StudentLog> getLogs() {
-		return logs;
-	}
+//	public List<StudentLog> getLogs() {
+//		return logs;
+//	}
 
 	public Set<EducationHistory> getEducationHistory() {
 		return Collections.unmodifiableSet(educationHistory);

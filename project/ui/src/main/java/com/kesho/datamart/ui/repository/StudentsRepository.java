@@ -1,7 +1,10 @@
 package com.kesho.datamart.ui.repository;
 
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,4 +19,8 @@ public interface StudentsRepository {
     Page<StudentDto> getPage(Integer pageNumber, Integer pageSize);
 
     StudentDto save(StudentDto dto);
+
+    EducationDto addEducationHistory(EducationDto dto);
+
+    List<EducationDto> getEducationHistory(Long studentId);
 }

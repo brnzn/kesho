@@ -1,14 +1,17 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PageImpl;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
+import com.kesho.datamart.repository.EducationHistoryDAO;
+import com.kesho.datamart.repository.SchoolsDAO;
 import com.kesho.datamart.repository.StudentsDAO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -31,7 +34,14 @@ import java.util.Set;
 public class StudentServiceImpl implements StudentService {
     @Inject
     private StudentsDAO studentsRepository;
+    @Inject
+    private SchoolsDAO schoolsRepository;
+
+    @Inject
+    private EducationHistoryDAO educationHistoryDAO;
+
     private StudentsAssembler assembler = new StudentsAssembler();
+    private EducationAssembler educationAssembler = new EducationAssembler();
 
     private Validator validator;
 
@@ -65,6 +75,19 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto save(StudentDto dto) {
         Student student = assembler.toStudent(dto);
         return assembler.toDto(studentsRepository.save(student));
+    }
+
+    @Override
+    public EducationDto addEducationHistory(EducationDto dto) {
+        EducationHistory log = educationAssembler.toLog(dto);
+        log.setSchool(schoolsRepository.findOne(dto.getInstitution().getId()));
+        log = educationHistoryDAO.save(log);
+        return educationAssembler.toDto(log);
+    }
+
+    @Override
+    public List<EducationDto> getEducationHistory(Long studentId) {
+        return educationAssembler.toDto(educationHistoryDAO.findByStudentId(studentId));
     }
 
     private Page<StudentDto> toPageResult(final org.springframework.data.domain.Page<Student> page, final Request request) {

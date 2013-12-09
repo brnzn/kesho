@@ -2,21 +2,17 @@ package com.kesho.datamart.ui;
 
 import java.io.IOException;
 
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.controller.NewStudentController;
-import com.kesho.datamart.ui.controller.RootController;
-import com.kesho.datamart.ui.controller.StudentsController;
+import com.kesho.datamart.ui.controller.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Pagination;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class WindowsUtil {
@@ -77,40 +73,52 @@ public class WindowsUtil {
         return primaryStage.getScene().getRoot();
     }
 
+    public boolean educationForm(EducationDto dto) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/EducationForm.fxml"));
+        loader.setController(controllers.getEducationDialogController());
+        AnchorPane page = (AnchorPane) loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("New Education Log");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(page);
+        scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
 
+        dialogStage.setScene(scene);
 
-//	public boolean showPersonEditDialog(StudentDto person) {
-//		try {
-//			// Load the fxml file and create a new stage for the popup
-//			FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/PersonEditDialog.fxml"));
-//			AnchorPane page = (AnchorPane) loader.load();
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Edit StudentDto");
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.initOwner(primaryStage);
-//			Scene scene = new Scene(page);
-//			dialogStage.setScene(scene);
-//
-//			// Set the person into the controller
-//			PersonEditDialogController controller = loader.getController();
-//			controller.setDialogStage(dialogStage);
-//			controller.setPerson(person);
-//
-//			// Show the dialog and wait until the user closes it
-//			dialogStage.showAndWait();
-//
-//			return controller.isOkClicked();
-//
-//		} catch (IOException e) {
-//			// Exception gets thrown if the fxml file could not be loaded
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
+        // Set the person into the controller
+        EducationDialogController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setPerson(dto);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        return controller.isOkClicked();
+
+    }
+
+    public void institutionsForm() throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/InstitutionForm.fxml"));
+        InstitutionController controller = controllers.getInstitutionController();
+        loader.setController(controller);
+        AnchorPane page = (AnchorPane) loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("New Institution");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        // Set the person into the controller
+        controller.setDialogStage(dialogStage);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+    }
 
     //TODO: demo code. delete once connected to db
     public class Controllers {
-        private StudentsController studentsController;
         private RootController rootController;
 
         public StudentsController getStudentsController() {
@@ -128,6 +136,14 @@ public class WindowsUtil {
 
         public NewStudentController getNewStudentController() {
             return applicationContext.getBean(NewStudentController.class);
+        }
+
+        public EducationDialogController getEducationDialogController() {
+            return applicationContext.getBean(EducationDialogController.class);
+        }
+
+        public InstitutionController getInstitutionController() {
+            return applicationContext.getBean(InstitutionController.class);
         }
     }
 
