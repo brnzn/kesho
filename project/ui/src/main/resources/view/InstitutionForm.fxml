@@ -2,31 +2,53 @@
 
 <?import java.lang.*?>
 <?import javafx.collections.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="101.0" prefWidth="318.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="300.0" prefWidth="320.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <GridPane prefHeight="41.0" prefWidth="308.0" vgap="2.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-      <children>
-        <Label text="Institution Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="institutionName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-      </children>
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="169.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-    </GridPane>
-    <HBox id="HBox" alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
-      <children>
-        <Button mnemonicParsing="false" onAction="#handleOk" prefWidth="80.0" text="OK" />
-        <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="80.0" text="Cancel" />
-      </children>
-    </HBox>
+    <BorderPane prefHeight="174.0" prefWidth="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <bottom>
+        <HBox id="HBox" alignment="CENTER" spacing="5.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#addInstitution" prefWidth="80.0" text="Add" />
+          </children>
+          <padding>
+            <Insets bottom="5.0" />
+          </padding>
+        </HBox>
+      </bottom>
+      <center>
+        <GridPane prefHeight="41.0" prefWidth="308.0" vgap="2.0">
+          <children>
+            <Label text="Institution Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="institutionName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="169.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <BorderPane.margin>
+            <Insets left="5.0" right="5.0" top="20.0" />
+          </BorderPane.margin>
+        </GridPane>
+      </center>
+      <top>
+        <TableView id="institutions" fx:id="institutionsTable" prefHeight="211.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+          <columns>
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="308.0" text="Institution Name" fx:id="institutionNameCol" />
+          </columns>
+          <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+          </BorderPane.margin>
+        </TableView>
+      </top>
+    </BorderPane>
   </children>
 </AnchorPane>

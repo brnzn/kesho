@@ -36,7 +36,8 @@ public class EducationAssembler {
                 .withInstitution(new InstitutionDto(log.getSchool().getId(), log.getSchool().getName()))
                 .withEducationalStatus(log.getEducationStatus())
                 .withYear(log.getYear())
-                .withEducationDate(log.getStartDate());
+                .withEducationDate(log.getStartDate())
+                .withComments(log.getComments());
         return dto;
     }
 
@@ -51,6 +52,7 @@ public class EducationAssembler {
         log.setSecondaryLevel1(dto.getSecondaryEducationStatus1());
         log.setSecondaryLevel2(dto.getSecondaryEducationStatus2());
         log.setYear(dto.getYear());
+        log.setComments(dto.getComments());
         return log;
     }
 }

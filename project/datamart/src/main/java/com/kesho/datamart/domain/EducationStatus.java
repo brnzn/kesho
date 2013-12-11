@@ -1,5 +1,7 @@
 package com.kesho.datamart.domain;
 
+import java.util.EnumSet;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -8,11 +10,56 @@ package com.kesho.datamart.domain;
  * To change this template use File | Settings | File Templates.
  */
 public enum EducationStatus {
-    Nursery,
-    Primary,
-    Secondary,
-    Gap_School_Leaver,
-    College,
-    University,
-    Gap_After_Tertiary
+    Nursery {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EMPTY_SET;
+        }
+    },
+    Primary {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EnumSet.of(SubEducationStatus.Boarding,
+                    SubEducationStatus.Day);
+        }
+    },
+    Secondary {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EnumSet.of(SubEducationStatus.District,
+                    SubEducationStatus.Provincial,
+                    SubEducationStatus.National);
+        }
+    },
+    GapSchoolLeaver {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EMPTY_SET;
+        }
+    },
+    College {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EnumSet.of(SubEducationStatus.Diploma,
+                    SubEducationStatus.Certifcate,
+                    SubEducationStatus.Bridging,
+                    SubEducationStatus.ShortTermCourse);
+        }
+    },
+    University {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EMPTY_SET;
+        }
+    },
+    GapAfterTertiary {
+        @Override
+        public EnumSet<SubEducationStatus> getChildren() {
+            return EMPTY_SET;
+        }
+    };
+
+    private static EnumSet<SubEducationStatus> EMPTY_SET = EnumSet.noneOf(SubEducationStatus.class);
+
+    public abstract EnumSet<SubEducationStatus> getChildren();
 }

@@ -26,6 +26,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import java.util.List;
+
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -56,6 +58,19 @@ public class StudentServiceIT {
     private JpaTransactionManager transactionManager;
 
     @Test
+    public void shouldGetEducationHistory() {
+        List<EducationDto> educationHistory = studentService.getEducationHistory(2L);
+        assertThat(educationHistory.size(), is(2));
+
+        assertThat(educationHistory.get(0).getDate().getYear(), is(2013));
+        assertThat(educationHistory.get(0).getDate().getMonthOfYear(), is(3));
+        assertThat(educationHistory.get(0).getDate().getDayOfMonth(), is(28));
+
+        assertThat(educationHistory.get(1).getDate().getYear(), is(2013));
+        assertThat(educationHistory.get(1).getDate().getMonthOfYear(), is(4));
+        assertThat(educationHistory.get(1).getDate().getDayOfMonth(), is(28));
+    }
+    @Test
     public void shouldAddEducationHistory() {
         LocalDate date = LocalDate.now();
         EducationDto dto = new EducationDto()
@@ -64,17 +79,18 @@ public class StudentServiceIT {
                 .withCourse("course")
                 .withEducationDate(date)
                 .withEducationalStatus(EducationStatus.Secondary)
-                .withSecondaryStatus1("National")
-                .withSecondaryStatus2("sec2")
+                .withSecondaryStatus1(SubEducationStatus.National)
+                .withSecondaryStatus2(SubEducationStatus.Day)
                 .withStudentId(1L)
+                .withComments("comments")
                 ;
 
 
         EducationDto result = studentService.addEducationHistory(dto);
         assertThat(result.getInstitution().getName(), is("school"));
         assertThat(result.getEducationalStatus(), is(EducationStatus.Secondary));
-        assertThat(result.getSecondaryEducationStatus1(), is("National"));
-        assertThat(result.getSecondaryEducationStatus2(), is("sec2"));
+        assertThat(result.getSecondaryEducationStatus1(), is(SubEducationStatus.National));
+        assertThat(result.getSecondaryEducationStatus2(), is(SubEducationStatus.Day));
         assertThat(result.getId(), notNullValue());
         assertThat(result.getCourse(), is("course"));
         assertThat(result.getYear(), is(1));
@@ -82,12 +98,11 @@ public class StudentServiceIT {
         assertThat(result.getEducationLevel(), is("Secondary (National)"));
         assertThat(result.getStudentId(), is(1L));
         assertThat(result.getInstitution().getId(), is(1L));
+        assertThat(result.getComments(), is("comments"));
 
         EducationHistory saved = findOne(EducationHistory.class, educationHistoryDAO, result.getId());
 
         assertThat(saved.getSchool().getId(), is(1L));
-
-
     }
 
     @Test

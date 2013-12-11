@@ -1,6 +1,7 @@
 package com.kesho.datamart.entity;
 
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.SubEducationStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -39,14 +40,19 @@ public class EducationHistory {
 	private String course;
 
     @Column(name = "SECONDARY_LEVEL_1")
-    private String secondaryLevel1;
+    @Enumerated(EnumType.STRING)
+    private SubEducationStatus secondaryLevel1;
 
     @Column(name = "SECONDARY_LEVEL_2")
-    private String secondaryLevel2;
+    @Enumerated(EnumType.STRING)
+    private SubEducationStatus secondaryLevel2;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "SCHOOL_ID")
     private School school;
+
+    @Column(name = "COMMENTS")
+    private String comments;
 
 //    @Column(name = "SCHOOL_ID", nullable=false)
 //    private Long schoolId;
@@ -107,19 +113,19 @@ public class EducationHistory {
 		this.startDate = startDate;
 	}
 
-    public String getSecondaryLevel1() {
+    public SubEducationStatus getSecondaryLevel1() {
         return secondaryLevel1;
     }
 
-    public void setSecondaryLevel1(String secondaryLevel1) {
+    public void setSecondaryLevel1(SubEducationStatus secondaryLevel1) {
         this.secondaryLevel1 = secondaryLevel1;
     }
 
-    public String getSecondaryLevel2() {
+    public SubEducationStatus getSecondaryLevel2() {
         return secondaryLevel2;
     }
 
-    public void setSecondaryLevel2(String secondaryLevel2) {
+    public void setSecondaryLevel2(SubEducationStatus secondaryLevel2) {
         this.secondaryLevel2 = secondaryLevel2;
     }
 
@@ -135,4 +141,11 @@ public class EducationHistory {
 		return school;
 	}
 
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getComments() {
+        return comments;
+    }
 }

@@ -6,6 +6,7 @@ import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -15,6 +16,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -99,6 +102,7 @@ public class NewStudentController {
     private TextField educationYear;
     @FXML
     private TextField course;
+
     @FXML
     private ComboBox<String> educationalStatus;
     @FXML
@@ -155,7 +159,9 @@ public class NewStudentController {
         studentTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-                educationModel.addAll(studentsRepository.getEducationHistory(currentId));
+                if("educationTab".equals(tab2.getId())) {
+                    loadEducationHistory();
+                }
             }
         });
 
@@ -169,6 +175,21 @@ public class NewStudentController {
     }
 
 
+    private void loadEducationHistory() {
+        new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        educationModel.addAll(studentsRepository.getEducationHistory(currentId));
+                        return null;
+                    }
+                };
+            }
+        }.start();
+    }
+
     private void updateEducationForm(EducationDto dto) {
         if(dto == null)
             return;
@@ -176,6 +197,8 @@ public class NewStudentController {
         selected = dto;
         educationYear.setText(Util.safeToStringValue(dto.getYear(), ""));
         institutionName.setText(dto.getInstitutionName());
+        educationDate.setText(dto.getDate().toString());
+        course.setText(dto.getCourse());
     }
 
     @FXML
@@ -191,34 +214,6 @@ public class NewStudentController {
             updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
         }
     }
-//    @FXML
-//    private void saveEducation() {
-//
-//        //       educationModel.clear();;
-//        if(selected != null)  {
-//            int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
-//            educationTable.setItems(null);
-//            educationTable.layout();
-//            educationTable.setItems(educationModel);
-//            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-//            educationTable.getSelectionModel().select(selectedIndex);
-//            educationTable.requestFocus();
-//            educationTable.focusModelProperty().get().focus(new TablePosition(educationTable, 0, educationDateCol));
-//            educationTable.focusModelProperty().get().focusBelowCell();
-////code starts from there
-//            if(educationTable.getItems().size()>0)
-//                educationTable.getSelectionModel().select(0);
-//
-//            educationTable.layout();
-//            return;
-//        }
-//
-//        EducationDto dto = new EducationDto();
-//        educationModel.add(dto);
-//
-//        educationTable.getSelectionModel().select(dto);
-//        System.out.println(educationTable.getSelectionModel().getSelectedIndex());
-//    }
 
     private void refreshEducationTable() {
         List<EducationDto> dtos = studentsRepository.getEducationHistory(currentId);
@@ -230,7 +225,6 @@ public class NewStudentController {
         educationTable.setItems(educationModel);
         // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
         educationTable.getSelectionModel().select(selectedIndex);
-
     }
 
     @FXML

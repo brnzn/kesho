@@ -104,7 +104,7 @@ public class WindowsUtil {
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("New Institution");
+        dialogStage.setTitle("Institutions List");
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(primaryStage);
         Scene scene = new Scene(page);

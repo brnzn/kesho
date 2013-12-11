@@ -2,16 +2,20 @@ package com.kesho.datamart.ui.controller;
 
 import calendar.FXCalendar;
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.util.Util;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -39,9 +43,11 @@ public class EducationDialogController {
     @FXML
     private ComboBox<EducationStatus> educationalStatus;
     @FXML
-    private ComboBox<String> secondaryStatus1;
+    private ComboBox<SubEducationStatus> secondaryStatus1;
     @FXML
-    private ComboBox<String> secondaryStatus2;
+    private ComboBox<SubEducationStatus> secondaryStatus2;
+    @FXML
+    private TextArea comments;
 
 	private Stage dialogStage;
 	private EducationDto dto;
@@ -61,6 +67,13 @@ public class EducationDialogController {
 	private void initialize() {
         dateControlBox.getChildren().add(calendar);
         Util.initializeComboBoxValues(educationalStatus, EnumSet.allOf(EducationStatus.class));
+        educationalStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationStatus>() {
+            @Override
+            public void changed(ObservableValue<? extends EducationStatus> observableValue, EducationStatus s, EducationStatus s2) {
+                secondaryStatus1.getItems().clear();
+                secondaryStatus1.getItems().addAll(s2.getChildren());
+            }
+        });
 	}
 	
 	/**
@@ -72,7 +85,7 @@ public class EducationDialogController {
 	}
 
 	public void setPerson(EducationDto dto) {
-        populateInstitutions();
+        populateInstitutions(dto);
 
         this.dto = dto;
         if(dto.getDate() != null) {
@@ -81,6 +94,7 @@ public class EducationDialogController {
 
         educationYear.setText(Util.safeToStringValue(dto.getYear(), null));
         course.setText(dto.getCourse());
+        comments.setText(dto.getComments());
         secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
         secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
 
@@ -89,7 +103,7 @@ public class EducationDialogController {
         }
 	}
 
-    private void populateInstitutions() {
+    private void populateInstitutions(final EducationDto dto) {
         new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -98,7 +112,7 @@ public class EducationDialogController {
                     protected Void call() throws Exception {
                         institutions.getItems().clear();
                         institutions.getItems().addAll(institutionRepository.getInstitutions());
-                        institutions.getSelectionModel().select(new InstitutionDto(8L, "school1"));
+                        institutions.getSelectionModel().select(dto.getInstitution());
                         return null;
                     }
                 };
@@ -124,7 +138,8 @@ public class EducationDialogController {
                .withCourse(course.getText())
                .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
                .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
-                .withInstitution(institutions.getSelectionModel().getSelectedItem());
+                .withInstitution(institutions.getSelectionModel().getSelectedItem())
+                .withComments(comments.getText());
 
             if(calendar.getValue() != null) {
                 dto.withEducationDate(LocalDate.fromDateFields(calendar.getValue()));

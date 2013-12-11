@@ -22,15 +22,9 @@
         <ComboBox fx:id="secondaryStatus1" minWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <ComboBox fx:id="educationalStatus" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <ComboBox fx:id="secondaryStatus2" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <ComboBox id="institutionsCombobox" fx:id="institutions" GridPane.columnIndex="1" GridPane.rowIndex="1">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
-            </FXCollections>
-          </items>
-        </ComboBox>
+        <ComboBox id="institutionsCombobox" fx:id="institutions" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Comments" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <TextArea fx:id="comments" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />

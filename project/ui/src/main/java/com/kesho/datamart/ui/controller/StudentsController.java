@@ -4,19 +4,12 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -24,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
-import java.util.Set;
 
 /**
  * The controller for the overview with address table and details view.
@@ -182,17 +174,4 @@ public class StudentsController {
             }
 		}
 	}
-
-//	@FXML
-//	private void handleDeletePerson() {
-//		int selectedIndex = studentsTable.getSelectionModel().getSelectedIndex();
-//		if (selectedIndex >= 0) {
-//			studentsTable.getItems().remove(selectedIndex);
-//		} else {
-//			// Nothing selected
-//			Dialogs.showWarningDialog(mainApp.getPrimaryStage(),
-//					"Please select a person in the table.",
-//					"No StudentDto Selected", "No Selection");
-//		}
-//	}
 }

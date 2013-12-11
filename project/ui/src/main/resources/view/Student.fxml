@@ -8,9 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<!--<?import custom.NumericTextField?>-->
-<?scenebuilder-classpath-element ../../../../target/classes?>
 <?scenebuilder-classpath-element ../../java?>
+<?scenebuilder-classpath-element ../../../../target/classes?>
 
 <AnchorPane prefHeight="484.0" prefWidth="682.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
@@ -162,7 +161,7 @@
                 </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="education" text="Education" id="ed">
+            <Tab id="educationTab" fx:id="education" text="Education">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>

@@ -1,6 +1,7 @@
 package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.SubEducationStatus;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
@@ -17,18 +18,15 @@ public class EducationDto {
     private Integer year;
     private String course;
     private EducationStatus educationalStatus;
-    private String secondaryEducationStatus1;
-    private String secondaryEducationStatus2;
+    private SubEducationStatus secondaryEducationStatus1;
+    private SubEducationStatus secondaryEducationStatus2;
     private Long id;
     private Long studentId;
+    private String comments;
 
     public Long getStudentId() {
         return  studentId;
     }
-
-//    public Long getInstitutionId() {
-//        return institutionId;
-//    }
 
     public EducationDto withId(Long id) {
         this.id = id;
@@ -59,7 +57,7 @@ public class EducationDto {
 
     private String formEducationLevel() {
         String level = "%s (%s)";
-        if (educationalStatus != null && StringUtils.isNotBlank(secondaryEducationStatus1)) {
+        if (educationalStatus != null && secondaryEducationStatus1 != null) {
             return String.format(level, educationalStatus, secondaryEducationStatus1);
         } else if (educationalStatus != null) {
             return educationalStatus.name();
@@ -80,16 +78,20 @@ public class EducationDto {
         return educationalStatus;
     }
 
-    public String getSecondaryEducationStatus1() {
+    public SubEducationStatus getSecondaryEducationStatus1() {
         return secondaryEducationStatus1;
     }
 
-    public String getSecondaryEducationStatus2() {
+    public SubEducationStatus getSecondaryEducationStatus2() {
         return secondaryEducationStatus2;
     }
 
     public InstitutionDto getInstitution() {
         return institution;
+    }
+
+    public String getComments() {
+        return comments;
     }
 
     public EducationDto withEducationDate(LocalDate educationDate) {
@@ -107,12 +109,12 @@ public class EducationDto {
         return this;
     }
 
-    public EducationDto withSecondaryStatus1(String status) {
+    public EducationDto withSecondaryStatus1(SubEducationStatus status) {
         this.secondaryEducationStatus1 = status;
         return this;
     }
 
-    public EducationDto withSecondaryStatus2(String status) {
+    public EducationDto withSecondaryStatus2(SubEducationStatus status) {
         this.secondaryEducationStatus2 = status;
         return this;
     }
@@ -121,14 +123,13 @@ public class EducationDto {
         return id;
     }
 
-//    public EducationDto withInstitutionId(Long id) {
-//        this.institutionId = id;
-//        return this;
-//    }
-
     public EducationDto withStudentId(long id) {
         this.studentId = id;
         return this;
     }
 
+    public EducationDto withComments(String comments) {
+        this.comments = comments;
+        return this;
+    }
 }
