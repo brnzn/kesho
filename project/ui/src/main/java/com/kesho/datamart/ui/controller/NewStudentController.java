@@ -6,7 +6,6 @@ import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -123,7 +122,7 @@ public class NewStudentController {
     private StudentsRepository studentsRepository;
 
     public NewStudentController() {
-        calendar.setDateTextWidth(Double.valueOf(100));
+        calendar.setDateTextWidth(Double.valueOf(200));
     }
 
     public void setSelectedStudent(StudentDto student) {
@@ -134,6 +133,10 @@ public class NewStudentController {
         initializeForm(student);
     }
 
+    @FXML
+    private void print() {
+        System.out.println(studentTab.getSelectionModel().getSelectedItem().getId());
+    }
     @FXML
     private void initialize() {
         selected = null;

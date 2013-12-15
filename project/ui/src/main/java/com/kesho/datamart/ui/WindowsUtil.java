@@ -45,7 +45,6 @@ public class WindowsUtil {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
         loader.setController(controllers.getStudentsController());
 
-        //controllers.getStudentsController().initPager((VBox)getRoot().lookup("#tableContainer"));
         AnchorPane page = (AnchorPane) loader.load();
         controllers.getRootController().setTtile("Students List");
         pane.setCenter(page);
@@ -98,6 +97,10 @@ public class WindowsUtil {
 
     }
 
+    public void autowire(Object o) {
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(o);
+
+    }
     public void institutionsForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/InstitutionForm.fxml"));
         InstitutionController controller = controllers.getInstitutionController();
@@ -144,6 +147,10 @@ public class WindowsUtil {
 
         public InstitutionController getInstitutionController() {
             return applicationContext.getBean(InstitutionController.class);
+        }
+
+        public DetailsController detailsController() {
+            return applicationContext.getBean(DetailsController.class);
         }
     }
 

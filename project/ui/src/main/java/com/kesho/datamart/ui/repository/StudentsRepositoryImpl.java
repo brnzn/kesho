@@ -42,4 +42,14 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.getEducationHistory(studentId);
     }
 
+    @Override
+    public StudentDto findOne(Long id) {
+        return studentsService.get(id);
+    }
+
+    @Override
+    public EducationDto save(EducationDto dto) {
+        return studentsService.save(dto);
+    }
+
 }

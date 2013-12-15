@@ -49,8 +49,8 @@ public class Student {
 //    private List<StudentLog> logs = newArrayList();
 //
 // unidirectional
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="STUDENT_ID", referencedColumnName="ID")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name="STUDENT_ID", referencedColumnName="ID", updatable = false, insertable = false)
     //// bidirectional
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
     private Set<EducationHistory> educationHistory = newHashSet(); // TODO: change to list

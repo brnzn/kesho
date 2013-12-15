@@ -4,6 +4,7 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -123,6 +124,16 @@ public class StudentsController {
                 }
             }
         });
+
+        //select row
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                studentsTable.requestFocus();
+//                studentsTable.getSelectionModel().select(1);
+//                studentsTable.getFocusModel().focus(0);
+//            }
+//        });
     }
 
     private void initPagination() {

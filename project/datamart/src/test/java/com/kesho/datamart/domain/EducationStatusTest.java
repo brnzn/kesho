@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.hasSize;
  */
 public class EducationStatusTest {
     @Test
-    public void testSubStatuses() {
+    public void testEducationStatus() {
         assertThat(EducationStatus.Nursery.getChildren(), hasSize(0));
 
         assertThat(EducationStatus.Primary.getChildren(), containsInAnyOrder(SubEducationStatus.Boarding,
@@ -34,5 +34,19 @@ public class EducationStatusTest {
         assertThat(EducationStatus.University.getChildren(), hasSize(0));
 
         assertThat(EducationStatus.GapAfterTertiary.getChildren(), hasSize(0));
+    }
+
+    @Test
+    public void testSubStatuses() {
+        assertThat(SubEducationStatus.District.getChildren(), containsInAnyOrder(SubEducationStatus.Day, SubEducationStatus.Boarding));
+        assertThat(SubEducationStatus.Boarding.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.Bridging.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.Certifcate.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.Day.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.Diploma.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.National.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.Provincial.getChildren(), hasSize(0));
+        assertThat(SubEducationStatus.ShortTermCourse.getChildren(), hasSize(0));
+
     }
 }

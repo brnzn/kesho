@@ -48,6 +48,7 @@ public class KeshoApp extends Application {
 		}
 
         showHomePage();
+        primaryStage.sizeToScene();
 	}
 
 	/**
@@ -56,19 +57,13 @@ public class KeshoApp extends Application {
 	public void showHomePage() {
 		try {
 			// Load the fxml file and set into the center of the main layout
-			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/Students.fxml"));
-			AnchorPane overviewPage = (AnchorPane) loader.load();
-			rootLayout.setCenter(overviewPage);
-            WindowsUtil.getInstance().showStudentsTable();
-//            BorderPane pane = (BorderPane)rootLayout.lookup("#contentLayout");
-//            FXMLLoader loader1 = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
-//            AnchorPane page = (AnchorPane) loader1.load();
-//            pane.setCenter(page);
+			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/CopyStudentWithTable.fxml"));
 
-//			StudentsController controller = loader.getController();
-//			StudentsDAO repo = ctx.getBean(StudentsDAO.class);
-//			controller.setRepo(repo);
-			//controller.setMainApp(this);
+            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
+
+            AnchorPane overviewPage = (AnchorPane) loader.load();
+			rootLayout.setCenter(overviewPage);
+//            WindowsUtil.getInstance().showStudentsTable();
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
