@@ -60,9 +60,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <ToolBar id="toptoolbar" fx:id="tb">
+                <ToolBar fx:id="toptoolbar">
                     <items>
-                        <Button id="myb" fx:id="bb" mnemonicParsing="false" text="New..." />
+                        <Button mnemonicParsing="false" text="New..."  fx:id="myb"/>
                         <Button mnemonicParsing="false" text="Delete" />
                         <Button mnemonicParsing="false" text="Filter..." />
                         <Button mnemonicParsing="false" text="Show All" />

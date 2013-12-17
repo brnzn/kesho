@@ -10,12 +10,15 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Util;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,7 +36,7 @@ import java.util.List;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class EducationDetailsController {
+public class EducationDetailsController  {
     @FXML
     private HBox dateControlBox;
     private final FXCalendar calendar = new FXCalendar();
@@ -53,7 +56,6 @@ public class EducationDetailsController {
     private TextArea comments;
 
     private ObservableList<EducationDto> educationModel = FXCollections.observableArrayList();
-//    private EducationDto selected;
 
     @FXML
     private TableView<EducationDto> educationTable;
@@ -70,7 +72,6 @@ public class EducationDetailsController {
     private TableColumn<EducationDto, String> yearCol;
     @FXML
     private TableColumn<EducationDto, String> courseCol;
-
 
 //    private Stage dialogStage;
 //    private EducationDto dto;
@@ -92,7 +93,7 @@ public class EducationDetailsController {
             public void changed(ObservableValue<? extends StudentDto> observable,
                                 StudentDto oldValue, StudentDto newValue) {
                 if(educationTab.isSelected()) {
-                    loadEducationHistory();
+                    refreshEducationTable();
                 }
             }
         });
@@ -101,14 +102,38 @@ public class EducationDetailsController {
             @Override
             public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
                 if("educationTab".equals(tab2.getId())) {
-                    institutions.getItems().addAll(FXCollections.observableArrayList(institutionRepository.getInstitutions()));
-                    loadEducationHistory();
+                    loadInstitutions();
+                    refreshEducationTable();
                 }
             }
         });
 
-        calendar.setDateTextWidth(Double.valueOf(100));
+        calendar.setDateTextWidth(Double.valueOf(150));
     }
+
+    private void add() {
+        EducationDto dto = new EducationDto();
+        boolean isOK = WindowsUtil.getInstance().educationForm(dto);
+
+        if(isOK) {
+            studentsRepository.addEducationHistory(dto.withStudentId(selectedStudent.getSelectedItem().getId()));
+            refreshEducationTable();
+            updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    private void refreshEducationTable() {
+        List<EducationDto> dtos = studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId());
+        educationModel.clear();
+        educationModel.addAll(dtos);
+        int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
+        educationTable.setItems(null);
+        educationTable.layout();
+        educationTable.setItems(educationModel);
+        // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+        educationTable.getSelectionModel().select(selectedIndex);
+    }
+
 
     @FXML
     private void save() {
@@ -129,24 +154,39 @@ public class EducationDetailsController {
         studentsRepository.save(dto);
     }
 
-    private void loadEducationHistory() {
-        educationModel.clear();
-        educationTable.setItems(educationModel);
-
+    private void loadInstitutions() {
+        institutions.getItems().clear();
         new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        List<EducationDto> d = studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId());
-                        educationModel.addAll(studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId()));
+                        institutions.getItems().addAll(FXCollections.observableArrayList(institutionRepository.getInstitutions()));
                         return null;
                     }
                 };
             }
         }.start();
     }
+//    private void loadEducationHistory() {
+//        educationModel.clear();
+//        educationTable.setItems(educationModel);
+//
+//        new Service<Void>() {
+//            @Override
+//            protected Task<Void> createTask() {
+//                return new Task<Void>() {
+//                    @Override
+//                    protected Void call() throws Exception {
+//                        System.out.println("== current id:" + selectedStudent.getSelectedItem().getId());
+//                        educationModel.addAll(studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId()));
+//                        return null;
+//                    }
+//                };
+//            }
+//        }.start();
+//    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -184,6 +224,18 @@ public class EducationDetailsController {
                 }
             }
         });
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                WindowsUtil.getInstance().getControllers().detailsController().registerNewChangeListener("educationTab", new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        add();
+                    }
+                });
+            }
+        });
     }
 
     private void updateEducationForm(EducationDto dto) {
@@ -209,107 +261,4 @@ public class EducationDetailsController {
         institutions.getSelectionModel().clearSelection();
         institutions.valueProperty().setValue(null);
     }
-    /**
-     * Sets the stage of this dialog.
-     * @param
-     */
-//    public void setDialogStage(Stage dialogStage) {
-//        this.dialogStage = dialogStage;
-//    }
-
-//    public void setPerson(EducationDto dto) {
-//        populateInstitutions(dto);
-//
-//        this.dto = dto;
-//        if(dto.getDate() != null) {
-//            calendar.setValue(dto.getDate().toDate());
-//        }
-//
-//        educationYear.setText(Util.safeToStringValue(dto.getYear(), null));
-//        course.setText(dto.getCourse());
-//        comments.setText(dto.getComments());
-//        secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
-//        secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
-//
-//        if (dto.getEducationalStatus() != null) {
-//            educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
-//        }
-//    }
-
-//    private void populateInstitutions(final EducationDto dto) {
-//        new Service<Void>() {
-//            @Override
-//            protected Task<Void> createTask() {
-//                return new Task<Void>() {
-//                    @Override
-//                    protected Void call() throws Exception {
-//                        institutions.getItems().clear();
-//                        institutions.getSelectionModel().select(dto.getInstitution());
-//                        return null;
-//                    }
-//                };
-//            }
-//        }.start();
-//    }
-    /**
-     * Returns true if the user clicked OK, false otherwise.
-     * @return
-     */
-//    public boolean isOkClicked() {
-//        return okClicked;
-//    }
-
-    /**
-     * Called when the user clicks ok.
-     */
-//    @FXML
-//    private void handleOk() {
-//        if (isInputValid()) {
-//            dto.withYear(Util.safeToIntegerValue(educationYear.getText(), null))
-//                    .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
-//                    .withCourse(course.getText())
-//                    .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
-//                    .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
-//                    .withInstitution(institutions.getSelectionModel().getSelectedItem())
-//                    .withComments(comments.getText());
-//
-//            if(calendar.getValue() != null) {
-//                dto.withEducationDate(LocalDate.fromDateFields(calendar.getValue()));
-//            }
-//
-//            okClicked = true;
-//            dialogStage.close();
-//        }
-//    }
-
-    /**
-     * Called when the user clicks cancel.
-     */
-//    @FXML
-//    private void handleCancel() {
-//        dialogStage.close();
-//    }
-
-    /**
-     * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
-     */
-//    private boolean isInputValid() {
-//        String errorMessage = "";
-//
-//        if (institutions.getSelectionModel().isEmpty()) {
-//            errorMessage += "Institution Name!\n";
-//        }
-//
-//        if (errorMessage.length() == 0) {
-//            return true;
-//        } else {
-//            // Show the error message
-//            Dialogs.showErrorDialog(dialogStage, errorMessage,
-//                    "Please correct invalid fields", "Invalid Fields");
-//            return false;
-//        }
-//    }
-
 }

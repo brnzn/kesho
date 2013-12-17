@@ -1,10 +1,11 @@
 package com.kesho.datamart.ui;
 
-import java.io.IOException;
-
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.controller.*;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.io.IOException;
 
 public class WindowsUtil {
 
@@ -72,26 +75,70 @@ public class WindowsUtil {
         return primaryStage.getScene().getRoot();
     }
 
-    public boolean educationForm(EducationDto dto) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/EducationForm.fxml"));
-        loader.setController(controllers.getEducationDialogController());
-        AnchorPane page = (AnchorPane) loader.load();
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("New Education Log");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(primaryStage);
-        Scene scene = new Scene(page);
-        scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
+    public boolean studentForm(StudentDto dto) {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewStudentForm.fxml"));
 
-        dialogStage.setScene(scene);
+        try {
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Education Log");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
 
-        // Set the person into the controller
-        EducationDialogController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        controller.setPerson(dto);
+            dialogStage.setScene(scene);
+            // Set the person into the controller
+            StudentDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setDto(dto);
 
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            if(controller.isOkClicked()) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controllers.detailsController().refresh();
+                    }
+                });
+            }
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public boolean educationForm(EducationDto dto) {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewEducationForm.fxml"));
+        EducationDialogController controller = WindowsUtil.getInstance().controllers.getEducationDialogController();
+
+        loader.setController(controller);
+
+        try {
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Education Log");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller
+            controller.setDialogStage(dialogStage);
+            controller.setDto(dto);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return controller.isOkClicked();
 

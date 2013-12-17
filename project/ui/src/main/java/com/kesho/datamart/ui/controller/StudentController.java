@@ -5,13 +5,17 @@ import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Util;
 import custom.NumericTextField;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
@@ -102,6 +106,27 @@ public class StudentController {
                 initializeForm(studentsRepository.findOne(newValue.getId()));
             }
         });
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                WindowsUtil.getInstance().getControllers().detailsController().registerNewChangeListener("studentDetailsTab", new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        add();
+                    }
+                });
+            }
+        });
+    }
+
+    private void add() {
+        StudentDto dto = new StudentDto();
+        boolean isOK = WindowsUtil.getInstance().studentForm(dto);
+
+        if(isOK) {
+            studentsRepository.save(dto);
+        }
     }
 
     @FXML

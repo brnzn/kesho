@@ -57,7 +57,7 @@ public class KeshoApp extends Application {
 	public void showHomePage() {
 		try {
 			// Load the fxml file and set into the center of the main layout
-			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/CopyStudentWithTable.fxml"));
+			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/StudentWithTable.fxml"));
 
             loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
 

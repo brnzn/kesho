@@ -84,7 +84,7 @@ public class EducationDialogController {
 		this.dialogStage = dialogStage;
 	}
 
-	public void setPerson(EducationDto dto) {
+	public void setDto(EducationDto dto) {
         populateInstitutions(dto);
 
         this.dto = dto;

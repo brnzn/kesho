@@ -11,7 +11,7 @@
 <?scenebuilder-classpath-element ../../java?>
 <?scenebuilder-classpath-element ../../../../target/classes?>
 
-<Tab id="details" fx:id="details" text="Student Details" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.StudentController">
+<Tab id="studentDetailsTab" fx:id="studentDetailsTab" text="Student Details" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.StudentController">
   <content>
     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="601.0000999999975">
       <children>
