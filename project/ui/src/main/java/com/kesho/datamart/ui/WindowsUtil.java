@@ -3,9 +3,7 @@ package com.kesho.datamart.ui;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.controller.*;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.kesho.datamart.ui.util.EventBus;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +28,10 @@ public class WindowsUtil {
 	public static WindowsUtil getInstance() {
 		return instance;
 	}
+
+    public EventBus getEventBus() {
+        return applicationContext.getBean(EventBus.class);
+    }
 
     //TODO: delete
     public Controllers getControllers() {
@@ -96,14 +98,6 @@ public class WindowsUtil {
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-            if(controller.isOkClicked()) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        controllers.detailsController().refresh();
-                    }
-                });
-            }
             return controller.isOkClicked();
         } catch (IOException e) {
             e.printStackTrace();

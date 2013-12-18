@@ -9,6 +9,8 @@ import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import com.kesho.datamart.ui.util.Event;
+import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import custom.NumericTextField;
 import javafx.application.Platform;
@@ -84,6 +86,9 @@ public class StudentController {
     private ComboBox<LeaverStatus> leaverStatus;
     private Long currentId;
 
+    @Inject
+    private Selectable<StudentDto> selectedStudent;
+
     public StudentController() {
         calendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
@@ -99,13 +104,24 @@ public class StudentController {
         Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
 
-        WindowsUtil.getInstance().getControllers().detailsController().registerChangeListener(new ChangeListener<StudentDto>() {
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
             @Override
-            public void changed(ObservableValue<? extends StudentDto> observable,
-                                StudentDto oldValue, StudentDto newValue) {
-                initializeForm(studentsRepository.findOne(newValue.getId()));
+            public void handle() {
+          //      System.out.println("777777 " +selectedStudent.getSelectedItem().getId());
+                if(selectedStudent.getSelectedItem() != null) {
+                    initializeForm(studentsRepository.findOne(selectedStudent.getSelectedItem().getId()));
+                }
             }
         });
+//        WindowsUtil.getInstance().getControllers().detailsController().registerChangeListener(new ChangeListener<StudentDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends StudentDto> observable,
+//                                StudentDto oldValue, StudentDto newValue) {
+//                if(newValue != null) {
+//                    initializeForm(studentsRepository.findOne(newValue.getId()));
+//                }
+//            }
+//        });
 
         Platform.runLater(new Runnable() {
             @Override
@@ -126,6 +142,7 @@ public class StudentController {
 
         if(isOK) {
             studentsRepository.save(dto);
+            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
         }
     }
 

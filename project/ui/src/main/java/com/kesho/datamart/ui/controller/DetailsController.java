@@ -1,26 +1,24 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import com.kesho.datamart.ui.util.Event;
+import com.kesho.datamart.ui.util.SystemEventListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,14 +53,6 @@ public class DetailsController implements Selectable<StudentDto> {
         return studentsTable.getSelectionModel().getSelectedItem();
     }
 
-    public void registerChangeListener(ChangeListener<StudentDto> changeListener) {
-        studentsTable.getSelectionModel().selectedItemProperty().addListener(changeListener);
-    }
-
-    public void registerTabChangeListener(ChangeListener<Tab> listener) {
-        studentTab.getSelectionModel().selectedItemProperty().addListener(listener);
-    }
-
     public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
         newButtonHandlers.put(id, eventHandler);
     }
@@ -74,8 +64,7 @@ public class DetailsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
-        initTable();
-        initPagination();
+        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
 
         studentsTable.getSelectionModel().select(0);
@@ -101,29 +90,42 @@ public class DetailsController implements Selectable<StudentDto> {
                 }
             }
         });
+
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                refreshTable();
+            }
+        });
     }
-
-
 
     private void initTable() {
         studentsModel.clear();
 
         studentsTable.setItems(studentsModel);
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
+        familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("surname"));
+
+        studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
+            @Override
+            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
+            }
+        });
     }
 
     private void initPagination() {
-        Page p = getPage(0, 2);
+        Page p = getPage(0, 10);
         if(p != null) {
             studentsModel.addAll(p.getContent());    //
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
+            pagination.currentPageIndexProperty().setValue(0);
         }
 
         pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Page<StudentDto> p = getPage(newValue.intValue(), 2);
+                Page<StudentDto> p = getPage(newValue.intValue(), 10);
                 pagination.setPageCount(p.getTotalPages());
                 studentsModel.clear();
                 studentsModel.addAll(p.getContent());
@@ -135,7 +137,7 @@ public class DetailsController implements Selectable<StudentDto> {
         return studentsRepository.getPage(page, pageSize);
     }
 
-    public void refresh() {
+    private void refreshTable() {
         initTable();
         initPagination();
     }

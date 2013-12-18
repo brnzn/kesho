@@ -9,6 +9,8 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
+import com.kesho.datamart.ui.util.Event;
+import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -73,10 +75,6 @@ public class EducationDetailsController  {
     @FXML
     private TableColumn<EducationDto, String> courseCol;
 
-//    private Stage dialogStage;
-//    private EducationDto dto;
-//    private boolean okClicked = false;
-
     @Inject
     private InstitutionRepository institutionRepository;
     @Inject
@@ -87,27 +85,6 @@ public class EducationDetailsController  {
 
     public EducationDetailsController() {
         WindowsUtil.getInstance().autowire(this);
-
-        WindowsUtil.getInstance().getControllers().detailsController().registerChangeListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observable,
-                                StudentDto oldValue, StudentDto newValue) {
-                if(educationTab.isSelected()) {
-                    refreshEducationTable();
-                }
-            }
-        });
-
-        WindowsUtil.getInstance().getControllers().detailsController().registerTabChangeListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-                if("educationTab".equals(tab2.getId())) {
-                    loadInstitutions();
-                    refreshEducationTable();
-                }
-            }
-        });
-
         calendar.setDateTextWidth(Double.valueOf(150));
     }
 
@@ -194,6 +171,26 @@ public class EducationDetailsController  {
      */
     @FXML
     private void initialize() {
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                if (educationTab.isSelected()) {
+                    refreshEducationTable();
+                }
+            }
+        });
+
+
+        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+            @Override
+            public void handle(javafx.event.Event event) {
+                if (educationTab.isSelected()) {
+                    loadInstitutions();
+                    refreshEducationTable();
+                }
+            }
+        });
+
         institutionCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("institutionName"));
         educationDateCol.setCellValueFactory(new PropertyValueFactory<EducationDto, LocalDate>("date"));
         educationLevelCol.setCellValueFactory(new PropertyValueFactory<EducationDto, String>("educationalStatus"));

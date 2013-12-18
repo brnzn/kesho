@@ -134,10 +134,6 @@ public class NewStudentController {
     }
 
     @FXML
-    private void print() {
-        System.out.println(studentTab.getSelectionModel().getSelectedItem().getId());
-    }
-    @FXML
     private void initialize() {
         selected = null;
         educationModel.clear();

@@ -5,6 +5,7 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.StudentService;
+import javafx.scene.Node;
 
 import javax.inject.Inject;
 import javax.inject.Named;
