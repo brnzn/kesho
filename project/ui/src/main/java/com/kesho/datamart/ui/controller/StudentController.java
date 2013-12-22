@@ -5,25 +5,24 @@ import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
-import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
+import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import custom.NumericTextField;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,8 @@ public class StudentController {
     @FXML
     private TextField firstName;
     @FXML
-    private TextField surname;
+    private TextField family;
+
     @FXML
     private ComboBox<Gender> gender;
     @FXML
@@ -84,10 +84,13 @@ public class StudentController {
     private NumericTextField alumniNumber;
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
-    private Long currentId;
+
+    private StudentDto selected;
 
     @Inject
     private Selectable<StudentDto> selectedStudent;
+    @Inject
+    private FamilyRepository familyRepository;
 
     public StudentController() {
         calendar.setDateTextWidth(Double.valueOf(200));
@@ -96,7 +99,9 @@ public class StudentController {
 
     @FXML
     private void initialize() {
-        currentId = null;
+        selected = null;
+        family.setUserData(null);
+
         dateControlBox.getChildren().add(calendar);
 
         Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
@@ -107,21 +112,12 @@ public class StudentController {
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
             @Override
             public void handle() {
-          //      System.out.println("777777 " +selectedStudent.getSelectedItem().getId());
-                if(selectedStudent.getSelectedItem() != null) {
-                    initializeForm(studentsRepository.findOne(selectedStudent.getSelectedItem().getId()));
+                //      System.out.println("777777 " +selectedStudent.getSelectedItem().getId());
+                if (selectedStudent.getSelectedItem() != null) {
+                    initializeForm(selectedStudent.getSelectedItem());
                 }
             }
         });
-//        WindowsUtil.getInstance().getControllers().detailsController().registerChangeListener(new ChangeListener<StudentDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends StudentDto> observable,
-//                                StudentDto oldValue, StudentDto newValue) {
-//                if(newValue != null) {
-//                    initializeForm(studentsRepository.findOne(newValue.getId()));
-//                }
-//            }
-//        });
 
         Platform.runLater(new Runnable() {
             @Override
@@ -134,69 +130,84 @@ public class StudentController {
                 });
             }
         });
+
     }
 
     private void add() {
         StudentDto dto = new StudentDto();
         boolean isOK = WindowsUtil.getInstance().studentForm(dto);
 
-        if(isOK) {
+        if (isOK) {
             studentsRepository.save(dto);
             WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
         }
     }
 
     @FXML
+    private void selectFamily() {
+        FamilyDto dto = WindowsUtil.getInstance().familySelector();
+        if(dto != null) {
+            family.setUserData(dto);
+            family.setText(dto.getName());
+            selectedStudent.getSelectedItem().setFamily(dto);
+        }
+    }
+
+    @FXML
     private void save() {
-        studentsRepository.save(buildDto());
+        StudentDto dto = buildDto();
+        dto = studentsRepository.save(dto);
+        selected.withName(firstName.getText());
+        selectedStudent.refresh();
     }
 
     private StudentDto buildDto() {
-        StudentDto student = new StudentDto();
-        student.withId(currentId)
-                .withName(firstName.getText())
-                .withFamilyName(surname.getText())
+        selected.withName(firstName.getText())
+                .withFamily((FamilyDto)family.getUserData())
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
                 .activeStudent((Boolean) currentStudent.getSelectedToggle().getUserData())
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
-                .sponsored((Boolean)sponsored.getSelectedToggle().getUserData())
+                .sponsored((Boolean) sponsored.getSelectedToggle().getUserData())
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
-                .withTopupNeeded((Boolean)topupNeeded.getSelectedToggle().getUserData())
+                .withTopupNeeded((Boolean) topupNeeded.getSelectedToggle().getUserData())
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
                 .withSponsorStatus(sponsorshipStatus.getSelectionModel().getSelectedItem())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
                 .withGender(gender.getSelectionModel().getSelectedItem());
 
-        if(StringUtils.isNotBlank(shortfall.getText())) {
-            student.withShortfall(Integer.valueOf(shortfall.getText()));
+        if (StringUtils.isNotBlank(shortfall.getText())) {
+            selected.withShortfall(Integer.valueOf(shortfall.getText()));
         }
 
-        if(StringUtils.isNotBlank(alumniNumber.getText())) {
-            student.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
+        if (StringUtils.isNotBlank(alumniNumber.getText())) {
+            selected.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
         }
 
-        if(calendar.getValue() != null) {
-            student.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
+        if (calendar.getValue() != null) {
+            selected.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
-        if(StringUtils.isNotBlank(yearOfBirth.getText())) {
-            student.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
+        if (StringUtils.isNotBlank(yearOfBirth.getText())) {
+            selected.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
         }
 
-        return student;
+        return selected;
     }
 
     private void initializeForm(StudentDto student) {
-        currentId = student.getId();
+        selected = student;
 
-        if(student.getStartDate() != null) {
+        if (student.getStartDate() != null) {
             calendar.setValue(student.getStartDate().toDate());
         }
 
         firstName.setText(student.getName());
-        surname.setText(student.getSurname());
+
+        family.setText(student.getFamily().getName());
+        family.setUserData(student.getFamily());
+
         gender.getSelectionModel().select(student.getGender());
 
         yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
@@ -223,7 +234,7 @@ public class StudentController {
     }
 
     private void setState(ToggleGroup group, Boolean value) {
-        if(value == null ||  value) {
+        if (value == null || value) {
             group.getToggles().get(0).setSelected(true);
         } else {
             group.getToggles().get(1).setSelected(true);

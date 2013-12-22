@@ -7,14 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="270.0" prefWidth="328.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.StudentDialogController">
+<AnchorPane prefHeight="270.0" prefWidth="328.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <GridPane prefHeight="216.0" prefWidth="308.0" vgap="2.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <children>
         <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label text="Surname" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <ComboBox fx:id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />

@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui;
 
 import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.controller.*;
 import com.kesho.datamart.ui.util.EventBus;
@@ -37,9 +38,9 @@ public class WindowsUtil {
     public Controllers getControllers() {
         return controllers;
     }
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
+//	public Stage getPrimaryStage() {
+//		return primaryStage;
+//	}
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -142,6 +143,52 @@ public class WindowsUtil {
         applicationContext.getAutowireCapableBeanFactory().autowireBean(o);
 
     }
+
+    public FamilyDto familySelector() {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilySelector.fxml"));
+        FamilySelectorController controller = controllers.getFamilySelector();
+        loader.setController(controller);
+        AnchorPane page = null;
+        try {
+            page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Family Form");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller
+            controller.setDialogStage(dialogStage);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.getSelected();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return null;
+    }
+
+    public void familyForm() throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewFamilyForm.fxml"));
+        FamilyDialogController controller = controllers.getFamilyDialogController();
+        loader.setController(controller);
+        AnchorPane page = (AnchorPane) loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Family Form");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        // Set the person into the controller
+        controller.setDialogStage(dialogStage);
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+    }
+
     public void institutionsForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/InstitutionForm.fxml"));
         InstitutionController controller = controllers.getInstitutionController();
@@ -192,6 +239,14 @@ public class WindowsUtil {
 
         public DetailsController detailsController() {
             return applicationContext.getBean(DetailsController.class);
+        }
+
+        public FamilyDialogController getFamilyDialogController() {
+            return applicationContext.getBean(FamilyDialogController.class);
+        }
+
+        public FamilySelectorController getFamilySelector() {
+            return applicationContext.getBean(FamilySelectorController.class);
         }
     }
 

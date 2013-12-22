@@ -25,7 +25,7 @@ public class SponsorLog {
 
     @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "SPONSOR_ID" , insertable = true, updatable = false, nullable = false)
-    private Student student;
+    private Student student; //why student???
 
     @Column(name="CREATED_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")

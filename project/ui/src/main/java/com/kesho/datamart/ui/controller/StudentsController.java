@@ -159,7 +159,7 @@ public class StudentsController {
 
         if (person != null) {
 			nameLbl.setText(person.getName());
-			familyNameLbl.setText(person.getSurname());
+			familyNameLbl.setText(person.getFamily().getName());
             if(person.getGender() != null) {
                 genderLbl.setText(person.getGender().toString());
             }

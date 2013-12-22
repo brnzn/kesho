@@ -242,7 +242,7 @@ public class NewStudentController {
         StudentDto student = new StudentDto();
         student.withId(currentId)
                 .withName(firstName.getText())
-                .withFamilyName(surname.getText())
+//                .withFamily(fa)
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
                 .activeStudent((Boolean) currentStudent.getSelectedToggle().getUserData())
@@ -287,7 +287,7 @@ public class NewStudentController {
 
         currentId = student.getId();
         firstName.setText(student.getName());
-        surname.setText(student.getSurname());
+//        surname.setText(student.getSurname());
         gender.getSelectionModel().select(student.getGender());
 
         yearOfBirth.setText(safeToStringValue(student.getYearOfBirth(), null));

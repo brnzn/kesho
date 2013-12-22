@@ -1,5 +1,8 @@
 <dataset>
-    <STUDENTS ID="2" NAME="fn"/>
+    <FAMILY ID="1" FAMILY_NAME="a"/>
+
+    <STUDENTS ID="2" NAME="fn" FAMILY_ID="1"/>
+
     <SCHOOLS ID="1" NAME="school1"/>
 </dataset>
 

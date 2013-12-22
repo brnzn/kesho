@@ -8,6 +8,7 @@ import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.EducationHistoryDAO;
+import com.kesho.datamart.repository.FamilyDAO;
 import com.kesho.datamart.repository.SchoolsDAO;
 import com.kesho.datamart.repository.StudentsDAO;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,8 @@ public class StudentServiceImpl implements StudentService {
     private StudentsDAO studentsRepository;
     @Inject
     private SchoolsDAO schoolsRepository;
+    @Inject
+    private FamilyDAO familyDAO;
 
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
@@ -63,10 +66,11 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Pageable pageSpecification = new PageRequest(request.getPageNumber(), request.getPageSize());
+
 //                , new Sort(
 //                Sort.Direction.ASC, "firstName"));
 
-        return toPageResult(studentsRepository.findAll(pageSpecification), request);
+        return toPageResult(studentsRepository.findWithFamily(pageSpecification), request);
     }
 
     //TODO: validate
@@ -74,6 +78,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto save(StudentDto dto) {
         Student student = assembler.toStudent(dto);
+        student.setFamily(familyDAO.findOne(dto.getFamily().getId()));
         return assembler.toDto(studentsRepository.save(student));
     }
 

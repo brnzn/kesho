@@ -34,6 +34,7 @@
                 <Menu mnemonicParsing="false" text="Kesho">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Institutions" />
+                    <MenuItem mnemonicParsing="false" text="Add Family" onAction="#openFamilyDialog" />
                   </items>
                 </Menu>
               </menus>

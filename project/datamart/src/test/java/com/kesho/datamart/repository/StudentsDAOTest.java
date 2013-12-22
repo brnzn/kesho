@@ -3,10 +3,8 @@ package com.kesho.datamart.repository;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.CLASS;
 import com.kesho.datamart.domain.Gender;
-import com.kesho.datamart.entity.EducationHistory;
-import com.kesho.datamart.entity.School;
-import com.kesho.datamart.entity.Student;
-import com.kesho.datamart.entity.StudentLog;
+import com.kesho.datamart.entity.*;
+import com.kesho.datamart.service.DBUtil;
 import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
@@ -47,7 +45,10 @@ public class StudentsDAOTest {
         LocalDate startDate = LocalDate.now();
         Student student = new Student();
         student.setFirstName("s1");
-        student.setSurname("f1");
+        Family f = new Family();
+        f.setId(1L);
+        f.setName("name");
+        student.setFamily(f);
         student.setActive(true);
         student.setGender(Gender.M);
         student.setHasDisability(true);
@@ -75,7 +76,7 @@ public class StudentsDAOTest {
         Student saved = txTemplate.execute(callback);
 
         assertThat(saved.getFirstName(), is("s1"));
-        assertThat(saved.getSurname(), is("f1"));
+        assertThat(saved.getFamily().getName(), is("sn1"));
         assertThat(saved.isActive(), is(true));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));

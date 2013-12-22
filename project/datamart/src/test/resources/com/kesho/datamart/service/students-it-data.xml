@@ -1,9 +1,12 @@
 <dataset>
+    <FAMILY ID="1" FAMILY_NAME="sn1"/>
+    <FAMILY ID="2" FAMILY_NAME="sn2"/>
+
     <SCHOOLS ID="1" NAME="school"/>
 
 	<STUDENTS ID="1"
               NAME="fn"
-              SURNAME="sn1"
+              FAMILY_ID="1"
               GENDER="M"
               YEAR_OF_BIRTH="2000"
               DISABILITY="1"
@@ -23,7 +26,7 @@
 
     <STUDENTS ID="2"
               NAME="fn2"
-              SURNAME="sn2"
+              FAMILY_ID="1"
               GENDER="F"
               YEAR_OF_BIRTH="2002"
               DISABILITY="1"

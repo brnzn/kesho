@@ -1,5 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.dto.StudentDto;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -9,4 +11,6 @@ package com.kesho.datamart.ui.controller;
  */
 public interface Selectable<T> {
     T getSelectedItem();
+
+    void refresh();
 }

@@ -4,9 +4,11 @@ import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.*;
 import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.EducationHistory;
+import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.EducationHistoryDAO;
 import com.kesho.datamart.repository.StudentsDAO;
@@ -56,6 +58,19 @@ public class StudentServiceIT {
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+    @Test
+    public void shouldUpdateFamily() {
+        StudentDto dto = studentService.get(1L);
+        assertThat(dto.getFamily().getName(), is("sn1"));
+
+        StudentDto newFamily = dto.withFamily(new FamilyDto(2L, "sn2"));
+        studentService.save(newFamily);
+
+        Student saved = DBUtil.findOne(transactionManager, Student.class, dao, 1L);
+        assertThat(saved.getFamily().getName(), is("sn2"));
+
+    }
 
     @Test
     public void shouldGetEducationHistory() {
@@ -113,7 +128,7 @@ public class StudentServiceIT {
 
         assertNotNull(s1);
         assertThat("name should be fn", s1.getName(), is("fn"));
-        assertThat("family name should be sn1", s1.getSurname(), is("sn1"));
+        assertThat("family name should be sn1", s1.getFamily().getName(), is("sn1"));
         assertThat("should be active", s1.isActiveStudent(), is(true));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));
         assertThat("has disability true", s1.hasDisability(), is(true));
@@ -137,7 +152,7 @@ public class StudentServiceIT {
         LocalDate startDate = LocalDate.now();
         StudentDto dto = new StudentDto();
         dto.withName("name")
-                .withFamilyName("fn")
+                .withFamily(new FamilyDto(1L, "sn1"))
                 .withGender(Gender.M)
                 .withHasDisability(true)
                 .withHomeLocation("hl")
@@ -162,7 +177,7 @@ public class StudentServiceIT {
 
         assertNotNull(saved);
         assertThat(saved.getFirstName(), is("name"));
-        assertThat(saved.getSurname(), is("fn"));
+        assertThat(saved.getFamily().getName(), is("sn1"));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));
         assertThat(saved.getHomeLocation(), is("hl"));

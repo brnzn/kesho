@@ -9,5 +9,6 @@ package com.kesho.datamart.ui.util;
  */
 public enum Event {
     STUDENT_ADDED,
-    STUDENT_SELECTED;
+    STUDENT_SELECTED,
+    FAMILY_ADDED;
 }

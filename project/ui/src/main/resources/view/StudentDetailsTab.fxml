@@ -41,7 +41,6 @@
                         <NumericTextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label text="Year of Birth:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
                         <HBox fx:id="dateControlBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Current Student?" GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -53,6 +52,12 @@
                               </toggleGroup>
                             </RadioButton>
                             <RadioButton fx:id="no" mnemonicParsing="false" text="No" toggleGroup="$currentStudent" HBox.hgrow="NEVER" />
+                          </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <children>
+                            <TextField fx:id="family" disable="true" editable="false" prefWidth="200.0" />
+                            <Button mnemonicParsing="false" text="Button" onAction="#selectFamily"/>
                           </children>
                         </HBox>
                       </children>

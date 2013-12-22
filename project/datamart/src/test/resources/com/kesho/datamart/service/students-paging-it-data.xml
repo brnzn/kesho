@@ -1,14 +1,16 @@
 <dataset>
-	<STUDENTS ID="1" NAME="fn" />
-	<STUDENTS ID="2" NAME="ab" />
-	<STUDENTS ID="3" NAME="fnab" />
-	<STUDENTS ID="4" NAME="fnab1" />
-	<STUDENTS ID="5" NAME="fanb" />
-	<STUDENTS ID="6" NAME="fn6" />
-	<STUDENTS ID="7" NAME="fn7" />
-	<STUDENTS ID="8" NAME="8fn" />
-	<STUDENTS ID="9" NAME="fn9" />
-	<STUDENTS ID="10" NAME="fn10" />
+    <FAMILY ID="1" FAMILY_NAME="sn1"/>
+
+    <STUDENTS ID="1" NAME="fn" FAMILY_ID="1"/>
+	<STUDENTS ID="2" NAME="ab" FAMILY_ID="1"/>
+	<STUDENTS ID="3" NAME="fnab" FAMILY_ID="1"/>
+	<STUDENTS ID="4" NAME="fnab1" FAMILY_ID="1"/>
+	<STUDENTS ID="5" NAME="fanb" FAMILY_ID="1"/>
+	<STUDENTS ID="6" NAME="fn6" FAMILY_ID="1"/>
+	<STUDENTS ID="7" NAME="fn7" FAMILY_ID="1"/>
+	<STUDENTS ID="8" NAME="8fn" FAMILY_ID="1"/>
+	<STUDENTS ID="9" NAME="fn9" FAMILY_ID="1"/>
+	<STUDENTS ID="10" NAME="fn10" FAMILY_ID="1"/>
 </dataset>
 
 

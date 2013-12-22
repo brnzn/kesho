@@ -6,6 +6,8 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
@@ -51,6 +54,20 @@ public class DetailsController implements Selectable<StudentDto> {
     @Override
     public StudentDto getSelectedItem() {
         return studentsTable.getSelectionModel().getSelectedItem();
+    }
+
+    @Override
+    public void refresh() {
+        if(studentsTable.getSortOrder().isEmpty()) {
+            firstNameColumn.setVisible(false);
+            firstNameColumn.setVisible(true);
+        } else {
+            ObservableList<TableColumn<StudentDto, ?>> sort = studentsTable.getSortOrder();
+            ObservableList<TableColumn<StudentDto, ?>> sort1 = FXCollections.observableArrayList();
+            sort1.addAll(sort);
+            studentsTable.getSortOrder().removeAll(sort);
+            studentsTable.getSortOrder().addAll(sort1);
+        }
     }
 
     public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
@@ -104,7 +121,13 @@ public class DetailsController implements Selectable<StudentDto> {
 
         studentsTable.setItems(studentsModel);
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("surname"));
+        familyNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentDto, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<StudentDto, String> s) {
+                SimpleStringProperty sp = new SimpleStringProperty(s.getValue().getFamily().getName());
+                return sp;
+            }
+        });
 
         studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
             @Override

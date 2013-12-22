@@ -24,8 +24,11 @@ public class Student {
     
     @Column(name = "NAME")
     private String firstName;
-    @Column(name = "SURNAME")
-    private String surname;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "FAMILY_ID" , nullable = false, referencedColumnName = "ID")
+    private Family family;
+
     @Column(name = "CURRENT_STUDENT", columnDefinition = "BIT")
     private Boolean active;
     @Column(name = "GENDER", columnDefinition = "CHAR")
@@ -110,12 +113,12 @@ public class Student {
 		return Collections.unmodifiableSet(educationHistory);
 	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFamily(Family family) {
+        this.family = family;
     }
 
-    public String getSurname() {
-        return surname;
+    public Family getFamily() {
+        return family;
     }
 
     public void setActive(Boolean active) {

@@ -2,6 +2,7 @@ package com.kesho.datamart.service;
 
 import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class StudentsAssembler {
+    private FamilyAssembler assembler = new FamilyAssembler();
+
     //TODO: function
     public List<StudentDto> toDto(List<Student> students) {
         List<StudentDto> dtos = Lists.newArrayList();
@@ -28,7 +31,7 @@ public class StudentsAssembler {
         StudentDto dto = new StudentDto();
         dto.withName(student.getFirstName())
                 .withId(student.getId())
-                .withFamilyName(student.getSurname())
+                .withFamily(assembler.toDto(student.getFamily()))
                 .withGender(student.getGender())
                 .withHasDisability(student.hasDisability())
                 .withHomeLocation(student.getHomeLocation())
@@ -54,7 +57,6 @@ public class StudentsAssembler {
         Student student = new Student();
         student.setId(dto.getId());
         student.setFirstName(dto.getName());
-        student.setSurname(dto.getSurname());
         student.setGender(dto.getGender());
         student.setHasDisability(dto.hasDisability());
         student.setHomeLocation(dto.getHomeLocation());

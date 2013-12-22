@@ -14,7 +14,7 @@ import org.joda.time.LocalDate;
 public class StudentDto {
     private Long id;
     private String name;
-    private String surname;
+    private FamilyDto family;
     private Gender gender;
     private Integer yearOfBirth;
     private String mobileNumber;
@@ -46,8 +46,8 @@ public class StudentDto {
         return name;
     }
 
-    public String getSurname() {
-        return surname;
+    public FamilyDto getFamily() {
+        return family;
     }
 
     public Gender getGender() {
@@ -124,11 +124,6 @@ public class StudentDto {
         return this;
     }
 
-    public StudentDto withFamilyName(String name) {
-        this.surname = name;
-        return this;
-    }
-
     public StudentDto withGender(Gender gender) {
         this.gender = gender;
         return this;
@@ -199,6 +194,11 @@ public class StudentDto {
         return this;
     }
 
+    public StudentDto withFamily(FamilyDto family) {
+        this.family = family;
+        return this;
+    }
+
     public StudentDto withShortfall(Integer shortfall) {
         this.shortfall = shortfall;
         return this;
@@ -207,5 +207,9 @@ public class StudentDto {
     public StudentDto withAlumniNumber(Integer alumniNumber) {
         this.alumniNumber = alumniNumber;
         return this;
+    }
+
+    public void setFamily(FamilyDto family) {
+        this.family = family;
     }
 }

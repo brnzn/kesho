@@ -15,6 +15,9 @@ public class School {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @Column(name="NAME", nullable=false)
+    private String name;
+
     public School() {
         this(null, null);
     }
@@ -24,9 +27,6 @@ public class School {
         this.name = name;
     }
 
-    @Column(name="NAME", nullable=false)
-    private String name;
-    
     public Long getId() {
 		return id;
 	}

@@ -1,11 +1,15 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.WindowsUtil;
+import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialogs;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
@@ -18,14 +22,14 @@ public class StudentDialogController {
     @FXML
     private TextField firstName;
     @FXML
-    private TextField surname;
+    private ComboBox<FamilyDto> family;
 
 	private Stage dialogStage;
 	private StudentDto dto;
 	private boolean okClicked = false;
 
     @Inject
-    private InstitutionRepository institutionRepository;
+    private FamilyRepository familyRepository;
 
     public StudentDialogController() {
     }
@@ -35,6 +39,22 @@ public class StudentDialogController {
 	 */
 	@FXML
 	private void initialize() {
+        family.setButtonCell(new FamilyListCell());
+        family.setCellFactory(new Callback<ListView<FamilyDto>, ListCell<FamilyDto>>() {
+            @Override public ListCell<FamilyDto> call(ListView<FamilyDto> p) {
+                return new FamilyListCell();
+            }
+        });
+
+        WindowsUtil.getInstance().autowire(this);
+
+        Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        family.getItems().clear();
+                        family.getItems().addAll(familyRepository.getFamilies());
+                    }
+                });
 	}
 	
 	/**
@@ -49,7 +69,7 @@ public class StudentDialogController {
         this.dto = dto;
 
         firstName.setText(dto.getName());
-        surname.setText(dto.getSurname());
+        family.getSelectionModel().select(dto.getFamily());
 	}
 
 	/**
@@ -66,7 +86,8 @@ public class StudentDialogController {
 	@FXML
 	private void handleOk() {
         if (isInputValid()) {
-            dto.withFamilyName(surname.getText()).withName(firstName.getText());
+            dto.withFamily(family.getSelectionModel().getSelectedItem())
+               .withName(firstName.getText());
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -92,7 +113,7 @@ public class StudentDialogController {
 			errorMessage += "First Name!\n";
 		}
 
-        if (StringUtils.isBlank(surname.getText())) {
+        if (family.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Surname!\n";
         }
 
@@ -105,4 +126,14 @@ public class StudentDialogController {
 			return false;
 		}
 	}
+
+//    private class FamilyListCell extends ListCell<FamilyDto> {
+//        @Override
+//        protected void updateItem(FamilyDto item, boolean empty) {
+//            super.updateItem(item, empty);
+//            if (item != null) {
+//                setText(item.getName());
+//            }
+//        }
+//    }
 }
