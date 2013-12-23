@@ -39,7 +39,7 @@ public class StudentsServiceTest {
     @Test
     public void shouldReturnEmptyResultForPageZeroNoSearchResult() {
         Pageable pageSpecification = new PageRequest(0, 10);
-        when(dao.findAll(pageSpecification)).thenReturn(page);
+        when(dao.findWithFamily(pageSpecification)).thenReturn(page);
         when(page.getTotalPages()).thenReturn(0);
         Page<StudentDto> result = service.getPage(new Request(0, 10));
         assertThat(result.getTotalPages(), is(0));

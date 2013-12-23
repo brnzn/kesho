@@ -21,7 +21,7 @@
                   <children>
                     <VBox prefHeight="667.0" prefWidth="242.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <children>
-                        <TableView fx:id="studentsTable" prefHeight="600.0" prefWidth="200.0">
+                        <TableView fx:id="sponsorsTable" prefHeight="600.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="120.0" text="First Name" fx:id="firstNameColumn" />
                             <TableColumn prefWidth="120.0" text="Family Name" fx:id="familyNameColumn" />
@@ -34,7 +34,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
-                    <TabPane fx:id="studentTab" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    <TabPane fx:id="sponsorTabPane" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   </children>
                 </AnchorPane>
               </items>
@@ -45,7 +45,7 @@
       <top>
         <ToolBar id="toptoolbar" fx:id="tb">
           <items>
-            <Button id="myb" fx:id="bb" mnemonicParsing="false" text="New..." />
+            <Button fx:id="newSponsorBtn" mnemonicParsing="false" text="New..." />
             <Button mnemonicParsing="false" text="Delete" />
             <Button mnemonicParsing="false" text="Filter..." />
             <Button mnemonicParsing="false" text="Show All" />

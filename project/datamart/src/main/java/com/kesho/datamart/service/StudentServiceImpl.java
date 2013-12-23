@@ -17,12 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,9 +29,9 @@ import java.util.Set;
 @Named("StudentService")
 public class StudentServiceImpl implements StudentService {
     @Inject
-    private StudentsDAO studentsRepository;
+    private StudentsDAO studentsDao;
     @Inject
-    private SchoolsDAO schoolsRepository;
+    private SchoolsDAO schoolsDao;
     @Inject
     private FamilyDAO familyDAO;
 
@@ -46,20 +41,14 @@ public class StudentServiceImpl implements StudentService {
     private StudentsAssembler assembler = new StudentsAssembler();
     private EducationAssembler educationAssembler = new EducationAssembler();
 
-    private Validator validator;
-
-    public StudentServiceImpl() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
-    }
-
     @Override
     public StudentDto get(Long id) {
-        return assembler.toDto(studentsRepository.findOne(id));
+        return assembler.toDto(studentsDao.findOne(id));
     }
 
     @Override
     public Page<StudentDto> getPage(Request request) {
-        List<String> errors = validate(request);
+        List<String> errors = PageUtil.validate(request);
 
         if(errors != null) {
             return new PageImpl<StudentDto>().withErrors(errors);
@@ -70,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
 //                , new Sort(
 //                Sort.Direction.ASC, "firstName"));
 
-        return toPageResult(studentsRepository.findWithFamily(pageSpecification), request);
+        return toPageResult(studentsDao.findWithFamily(pageSpecification), request);
     }
 
     //TODO: validate
@@ -79,13 +68,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto save(StudentDto dto) {
         Student student = assembler.toStudent(dto);
         student.setFamily(familyDAO.findOne(dto.getFamily().getId()));
-        return assembler.toDto(studentsRepository.save(student));
+        return assembler.toDto(studentsDao.save(student));
     }
 
     @Override
     public EducationDto addEducationHistory(EducationDto dto) {
         EducationHistory log = educationAssembler.toLog(dto);
-        log.setSchool(schoolsRepository.findOne(dto.getInstitution().getId()));
+        log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
         log = educationHistoryDAO.save(log);
         return educationAssembler.toDto(log);
     }
@@ -106,22 +95,7 @@ public class StudentServiceImpl implements StudentService {
             return new PageImpl<StudentDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());
         }
 
-        StudentsAssembler assembler = new StudentsAssembler();
         Page<StudentDto> result = new PageImpl<StudentDto>().withContent(assembler.toDto(page.getContent())).withTotalPages(page.getTotalPages()).withPageSize(page.getNumberOfElements());
         return result;
-    }
-
-    private List<String> validate(Request request) {
-        Set<ConstraintViolation<Request>> violations = validator.validate(request);
-
-        List<String> errors = null;
-        if (!violations.isEmpty()) {
-            errors = new ArrayList<String>();
-            for (ConstraintViolation<Request> violation:violations) {
-                errors.add(violation.getMessage());
-            }
-        }
-
-        return errors;
     }
 }
