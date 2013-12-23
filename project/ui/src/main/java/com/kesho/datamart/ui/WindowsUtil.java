@@ -156,6 +156,7 @@ public class WindowsUtil {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add("/style/AutoFillTextBox.css");
             dialogStage.setScene(scene);
 
             // Set the person into the controller
