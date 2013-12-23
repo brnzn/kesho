@@ -119,7 +119,7 @@ public class StudentsController {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     StudentDto selected = studentsTable.getSelectionModel().getSelectedItem();
                     if (mouseEvent.getClickCount() == 2 && selected != null) {
-                        WindowsUtil.getInstance().showNewStudentDetails(selected);
+                   //     WindowsUtil.getInstance().showNewStudentDetails(selected);
                     }
                 }
             }

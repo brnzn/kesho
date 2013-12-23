@@ -13,6 +13,6 @@ import javafx.fxml.FXML;
 public class StudentsMainController {
     @FXML
     private void handleNewStudent() {
-        WindowsUtil.getInstance().showNewStudentDetails(null);
+      //  WindowsUtil.getInstance().showNewStudentDetails(null);
     }
 }

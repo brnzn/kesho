@@ -35,6 +35,7 @@ public class KeshoApp extends Application {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader();
 			rootLayout = (BorderPane) loader.load(KeshoApp.class.getResourceAsStream("/view/RootLayout.fxml"));
+            WindowsUtil.getInstance().setRootLayout(rootLayout);
             RootController rootController = loader.getController();
             WindowsUtil.getInstance().getControllers().setRootController(rootController);
 			Scene scene = new Scene(rootLayout);
@@ -47,28 +48,28 @@ public class KeshoApp extends Application {
 			e.printStackTrace();
 		}
 
-        showHomePage();
+        WindowsUtil.getInstance().students();
         primaryStage.sizeToScene();
 	}
 
 	/**
 	 * Shows the person overview scene.
 	 */
-	public void showHomePage() {
-		try {
-			// Load the fxml file and set into the center of the main layout
-			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/StudentWithTable.fxml"));
-
-            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
-
-            AnchorPane overviewPage = (AnchorPane) loader.load();
-			rootLayout.setCenter(overviewPage);
-//            WindowsUtil.getInstance().showStudentsTable();
-		} catch (IOException e) {
-			// Exception gets thrown if the fxml file could not be loaded
-			e.printStackTrace();
-		}
-	}
+//	public void showHomePage() {
+//		try {
+//			// Load the fxml file and set into the center of the main layout
+//			FXMLLoader loader = new FXMLLoader(KeshoApp.class.getResource("/view/StudentWithTable.fxml"));
+//
+//            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
+//
+//            AnchorPane overviewPage = (AnchorPane) loader.load();
+//			rootLayout.setCenter(overviewPage);
+////            WindowsUtil.getInstance().showStudentsTable();
+//		} catch (IOException e) {
+//			// Exception gets thrown if the fxml file could not be loaded
+//			e.printStackTrace();
+//		}
+//	}
 
 	public static void main(String[] args) {
 		launch(args);

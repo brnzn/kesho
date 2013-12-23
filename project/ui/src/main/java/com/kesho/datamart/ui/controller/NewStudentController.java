@@ -226,17 +226,17 @@ public class NewStudentController {
         educationTable.getSelectionModel().select(selectedIndex);
     }
 
-    @FXML
-    private void save() {
-        studentsRepository.save(buildDto());
-
-        try {
-            WindowsUtil.getInstance().showStudentsTable();
-        } catch (IOException e) {
-            //TODO: error handling
-            e.printStackTrace();
-        }
-    }
+//    @FXML
+//    private void save() {
+//        studentsRepository.save(buildDto());
+//
+//        try {
+//            WindowsUtil.getInstance().showStudentsTable();
+//        } catch (IOException e) {
+//            //TODO: error handling
+//            e.printStackTrace();
+//        }
+//    }
 
     private StudentDto buildDto() {
         StudentDto student = new StudentDto();
@@ -275,10 +275,10 @@ public class NewStudentController {
         return student;
     }
 
-    @FXML
-    private void cancel() throws IOException {
-        WindowsUtil.getInstance().showStudentsTable();
-    }
+//    @FXML
+//    private void cancel() throws IOException {
+//        WindowsUtil.getInstance().showStudentsTable();
+//    }
 
     private void initializeForm(StudentDto student) {
         if(student.getStartDate() != null) {

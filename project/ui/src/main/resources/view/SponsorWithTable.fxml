@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import custom.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+          <children>
+            <SplitPane dividerPositions="0.31273644388398486" focusTraversable="true" prefHeight="669.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                  <children>
+                    <VBox prefHeight="667.0" prefWidth="242.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <children>
+                        <TableView fx:id="studentsTable" prefHeight="600.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="120.0" text="First Name" fx:id="firstNameColumn" />
+                            <TableColumn prefWidth="120.0" text="Family Name" fx:id="familyNameColumn" />
+                          </columns>
+                        </TableView>
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="6" prefHeight="65.0" prefWidth="334.0" />
+                      </children>
+                    </VBox>
+                  </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                  <children>
+                    <TabPane fx:id="studentTab" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  </children>
+                </AnchorPane>
+              </items>
+            </SplitPane>
+          </children>
+        </AnchorPane>
+      </center>
+      <top>
+        <ToolBar id="toptoolbar" fx:id="tb">
+          <items>
+            <Button id="myb" fx:id="bb" mnemonicParsing="false" text="New..." />
+            <Button mnemonicParsing="false" text="Delete" />
+            <Button mnemonicParsing="false" text="Filter..." />
+            <Button mnemonicParsing="false" text="Show All" />
+          </items>
+        </ToolBar>
+      </top>
+    </BorderPane>
+  </children>
+</AnchorPane>

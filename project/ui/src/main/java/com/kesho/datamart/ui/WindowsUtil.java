@@ -20,6 +20,7 @@ import java.io.IOException;
 public class WindowsUtil {
 
 	private static WindowsUtil instance = new WindowsUtil();
+    private BorderPane rootLayout;
 	private Stage primaryStage;
     private Controllers controllers = new Controllers();
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/ui-context.xml");
@@ -38,41 +39,74 @@ public class WindowsUtil {
     public Controllers getControllers() {
         return controllers;
     }
-//	public Stage getPrimaryStage() {
-//		return primaryStage;
-//	}
-	
+
+    public void sponsors() {
+        try {
+            // Load the fxml file and set into the center of the main layout
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/SponsorWithTable.fxml"));
+
+            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
+
+            AnchorPane overviewPage = (AnchorPane) loader.load();
+            rootLayout.setCenter(overviewPage);
+            primaryStage.sizeToScene();
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+    }
+
+    public void students() {
+        try {
+            // Load the fxml file and set into the center of the main layout
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentWithTable.fxml"));
+
+            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
+
+            AnchorPane overviewPage = (AnchorPane) loader.load();
+            rootLayout.setCenter(overviewPage);
+            primaryStage.sizeToScene();
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+    }
+
+    public void setRootLayout(BorderPane rootLayout) {
+        this.rootLayout = rootLayout;
+    }
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
-    public void showStudentsTable() throws IOException {
-        BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
-        loader.setController(controllers.getStudentsController());
+//    public void showStudentsTable() throws IOException {
+//        BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
+//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
+//        loader.setController(controllers.getStudentsController());
+//
+//        AnchorPane page = (AnchorPane) loader.load();
+//        controllers.getRootController().setTtile("Students List");
+//        pane.setCenter(page);
+//        primaryStage.sizeToScene();
+//    }
 
-        AnchorPane page = (AnchorPane) loader.load();
-        controllers.getRootController().setTtile("Students List");
-        pane.setCenter(page);
-        primaryStage.sizeToScene();
-    }
-
-    public void showNewStudentDetails(StudentDto student) {
-        try {
-            BorderPane pane = (BorderPane)getRoot().lookup("#contentLayout");
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
-            NewStudentController controller = controllers.getNewStudentController();
-            loader.setController(controller);
-
-            AnchorPane page = (AnchorPane) loader.load();
-            controller.setSelectedStudent(student);
-            controllers.getRootController().setTtile("New Student");
-            pane.setCenter(page);
-            primaryStage.sizeToScene();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
+//    public void showNewStudentDetails(StudentDto student) {
+//        try {
+//            BorderPane pane = (BorderPane)getRoot().lookup("#contentLayout");
+//            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
+//            NewStudentController controller = controllers.getNewStudentController();
+//            loader.setController(controller);
+//
+//            AnchorPane page = (AnchorPane) loader.load();
+//            controller.setSelectedStudent(student);
+//            controllers.getRootController().setTtile("New Student");
+//            pane.setCenter(page);
+//            primaryStage.sizeToScene();
+//        } catch (IOException e) {
+//            System.out.println(e);
+//        }
+//    }
 
     private Parent getRoot() {
         return primaryStage.getScene().getRoot();

@@ -11,7 +11,7 @@
   <top>
     <AnchorPane prefHeight="-1.0" prefWidth="-1.0">
       <children>
-        <BorderPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane prefHeight="-1.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
           <center>
             <Pane prefHeight="64.0" prefWidth="386.0" BorderPane.alignment="CENTER">
               <children>
@@ -26,15 +26,16 @@
           <top>
             <MenuBar prefWidth="386.0">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Kesho">
                   <items>
+                    <MenuItem mnemonicParsing="false" onAction="#students" text="Students" />
+                    <MenuItem mnemonicParsing="false" text="Sponsors" onAction="#sponsors"/>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="System">
+                  <items>
                     <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Institutions" />
-                    <MenuItem mnemonicParsing="false" text="Add Family" onAction="#openFamilyDialog" />
+                    <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Add Family" />
                   </items>
                 </Menu>
               </menus>

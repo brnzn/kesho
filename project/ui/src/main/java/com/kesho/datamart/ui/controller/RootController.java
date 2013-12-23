@@ -29,4 +29,16 @@ public class RootController {
     public void openFamilyDialog() throws IOException {
         WindowsUtil.getInstance().familyForm();
     }
+
+    @FXML
+    public void students() {
+        mainLbl.setText("Students");
+        WindowsUtil.getInstance().students();
+    }
+
+    @FXML
+    public void sponsors() {
+        mainLbl.setText("Sponsors");
+        WindowsUtil.getInstance().sponsors();
+    }
 }
