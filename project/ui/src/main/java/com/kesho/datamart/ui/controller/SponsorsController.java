@@ -32,8 +32,8 @@ import java.util.Map;
  * Time: 5:11 PM
  * To change this template use File | Settings | File Templates.
  */
-@Named
-public class SponsorsController {
+@Named("SponsorsController")
+public class SponsorsController implements Selectable<SponsorDto> {
     @Autowired
     private SponsorsRepository sponsorsRepository;
     @FXML
@@ -52,28 +52,28 @@ public class SponsorsController {
     private ObservableList<SponsorDto> sponsorsModel = FXCollections.observableArrayList();
     private Map<String, EventHandler<ActionEvent>> newButtonHandlers = new HashMap<>();
 
-//    @Override
-//    public StudentDto getSelectedItem() {
-//        return studentsTable.getSelectionModel().getSelectedItem();
-//    }
+    @Override
+    public SponsorDto getSelectedItem() {
+        return sponsorsTable.getSelectionModel().getSelectedItem();
+    }
 
-//    @Override
-//    public void refresh() {
-//        if(studentsTable.getSortOrder().isEmpty()) {
-//            firstNameColumn.setVisible(false);
-//            firstNameColumn.setVisible(true);
-//        } else {
-//            ObservableList<TableColumn<StudentDto, ?>> sort = studentsTable.getSortOrder();
-//            ObservableList<TableColumn<StudentDto, ?>> sort1 = FXCollections.observableArrayList();
-//            sort1.addAll(sort);
-//            studentsTable.getSortOrder().removeAll(sort);
-//            studentsTable.getSortOrder().addAll(sort1);
-//        }
-//    }
+    @Override
+    public void refresh() {
+        if(sponsorsTable.getSortOrder().isEmpty()) {
+            firstNameColumn.setVisible(false);
+            firstNameColumn.setVisible(true);
+        } else {
+            ObservableList<TableColumn<SponsorDto, ?>> sort = sponsorsTable.getSortOrder();
+            ObservableList<TableColumn<SponsorDto, ?>> sort1 = FXCollections.observableArrayList();
+            sort1.addAll(sort);
+            sponsorsTable.getSortOrder().removeAll(sort);
+            sponsorsTable.getSortOrder().addAll(sort1);
+        }
+    }
 
-//    public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
-//        newButtonHandlers.put(id, eventHandler);
-//    }
+    public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
+        newButtonHandlers.put(id, eventHandler);
+    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -91,39 +91,40 @@ public class SponsorsController {
         newSponsorBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                add();
-                //newButtonHandlers.get(sponsorTabPane.getSelectionModel().getSelectedItem().getId()).handle(actionEvent);
+//                add();
+                newButtonHandlers.get(sponsorTabPane.getSelectionModel().getSelectedItem().getId()).handle(actionEvent);
             }
         });
 
-//        sponsorTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-//                if (newButtonHandlers.get(tab2.getId()) == null) {
-//                    newSponsorBtn.disableProperty().setValue(true);
-//                } else {
-//                    newSponsorBtn.disableProperty().setValue(false);
-//                }
-//            }
-//        });
+        sponsorTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
+                if (newButtonHandlers.get(tab2.getId()) == null) {
+                    newSponsorBtn.disableProperty().setValue(true);
+                } else {
+                    newSponsorBtn.disableProperty().setValue(false);
+                }
+            }
+        });
 
-//        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
-//            @Override
-//            public void handle() {
-//                refreshTable();
-//            }
-//        });
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_ADDED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                refreshTable();
+            }
+        });
     }
 
-    private void add() {
-        SponsorDto dto = new SponsorDto();
-        boolean isOK = WindowsUtil.getInstance().sponsorForm(dto);
-
-        if (isOK) {
-            sponsorsRepository.save(dto);
-            WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED);
-        }
-    }
+//    private void add() {
+//        SponsorDto dto = new SponsorDto();
+//        boolean isOK = WindowsUtil.getInstance().sponsorForm(dto);
+//
+//        if (isOK) {
+//            sponsorsRepository.save(dto);
+//            WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED);
+//            refreshTable();
+//        }
+//    }
 
     private void initTable() {
         sponsorsModel.clear();
@@ -132,12 +133,12 @@ public class SponsorsController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
 
-//        studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
-//                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
-//            }
-//        });
+        sponsorsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto1, SponsorDto dto2) {
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_SELECTED);
+            }
+        });
     }
 
     private void initPagination() {

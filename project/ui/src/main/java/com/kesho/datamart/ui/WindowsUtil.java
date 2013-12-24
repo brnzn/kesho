@@ -245,7 +245,7 @@ public class WindowsUtil {
     }
 
     public boolean sponsorForm(SponsorDto dto) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewSponsorForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/backup/NewSponsorForm.fxml"));
 
         try {
             AnchorPane page = (AnchorPane) loader.load();
@@ -278,8 +278,8 @@ public class WindowsUtil {
     public class Controllers {
         private RootController rootController;
 
-        public StudentsController getStudentsController() {
-            return applicationContext.getBean(StudentsController.class);
+        public backup.StudentsController getStudentsController() {
+            return applicationContext.getBean(backup.StudentsController.class);
         }
 
 
@@ -303,8 +303,8 @@ public class WindowsUtil {
             return applicationContext.getBean(InstitutionController.class);
         }
 
-        public DetailsController detailsController() {
-            return applicationContext.getBean(DetailsController.class);
+        public StudentsController detailsController() {
+            return applicationContext.getBean(StudentsController.class);
         }
 
         public FamilyDialogController getFamilyDialogController() {

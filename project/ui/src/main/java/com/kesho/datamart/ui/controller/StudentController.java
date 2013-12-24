@@ -26,6 +26,7 @@ import javafx.util.Callback;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
@@ -88,6 +89,7 @@ public class StudentController {
     private StudentDto selected;
 
     @Inject
+    @Qualifier("StudentsController")
     private Selectable<StudentDto> selectedStudent;
     @Inject
     private FamilyRepository familyRepository;
@@ -103,6 +105,7 @@ public class StudentController {
         family.setUserData(null);
 
         dateControlBox.getChildren().add(calendar);
+        Util.initializeYesNoGroup(hasDisability, sponsored, currentStudent);
 
         Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));

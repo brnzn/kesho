@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.util;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ToggleGroup;
 
 import java.util.EnumSet;
 
@@ -23,6 +24,14 @@ public class Util {
     public static <T extends Enum> void initializeComboBoxValues(ComboBox<T> target, EnumSet source) {
         target.getItems().clear();
         target.getItems().addAll(source);
+    }
+
+    public static void initializeYesNoGroup(ToggleGroup...groups) {
+        for (ToggleGroup group:groups) {
+            group.getToggles().get(0).setUserData(Boolean.TRUE);
+            group.getToggles().get(1).setUserData(Boolean.FALSE);
+            group.getToggles().get(0).setSelected(true);
+        }
     }
 
 }

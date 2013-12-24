@@ -5,12 +5,12 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
+import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -79,8 +79,9 @@ public class EducationDetailsController  {
     private InstitutionRepository institutionRepository;
     @Inject
     private StudentsRepository studentsRepository;
+
     @Inject
-    private Selectable<StudentDto> selectedStudent;
+    private StudentsController parentController;
 
 
     public EducationDetailsController() {
@@ -93,22 +94,24 @@ public class EducationDetailsController  {
         boolean isOK = WindowsUtil.getInstance().educationForm(dto);
 
         if(isOK) {
-            studentsRepository.addEducationHistory(dto.withStudentId(selectedStudent.getSelectedItem().getId()));
+            studentsRepository.addEducationHistory(dto.withStudentId(parentController.getSelectedItem().getId()));
             refreshEducationTable();
             updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
         }
     }
 
     private void refreshEducationTable() {
-        List<EducationDto> dtos = studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId());
         educationModel.clear();
-        educationModel.addAll(dtos);
-        int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
-        educationTable.setItems(null);
-        educationTable.layout();
-        educationTable.setItems(educationModel);
-        // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-        educationTable.getSelectionModel().select(selectedIndex);
+        if(parentController.getSelectedItem() != null) {
+            List<EducationDto> dtos = studentsRepository.getEducationHistory(parentController.getSelectedItem().getId());
+            educationModel.addAll(dtos);
+            int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
+            educationTable.setItems(null);
+            educationTable.layout();
+            educationTable.setItems(educationModel);
+            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+            educationTable.getSelectionModel().select(selectedIndex);
+        }
     }
 
 
@@ -187,6 +190,11 @@ public class EducationDetailsController  {
                 if (educationTab.isSelected()) {
                     loadInstitutions();
                     refreshEducationTable();
+                    if(parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
+                        parentController.disableButton(TabButton.NEW);
+                    } else {
+                        parentController.enableButton(TabButton.NEW);
+                    }
                 }
             }
         });

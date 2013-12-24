@@ -62,7 +62,7 @@
             <top>
                 <ToolBar id="toptoolbar" fx:id="tb">
                     <items>
-                        <Button id="myb" fx:id="bb" mnemonicParsing="false" text="New..." />
+                        <Button fx:id="newButton" mnemonicParsing="false" text="New..." />
                         <Button mnemonicParsing="false" text="Delete" />
                         <Button mnemonicParsing="false" text="Filter..." />
                         <Button mnemonicParsing="false" text="Show All" />
