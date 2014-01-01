@@ -1,12 +1,15 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.paging.Request;
+import com.kesho.datamart.service.PaymentArrangementService;
 import com.kesho.datamart.service.SponsorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,15 +21,27 @@ import javax.inject.Named;
 @Named("SponsorsRepositoryImpl")
 public class SponsorsRepositoryImpl implements SponsorsRepository {
     @Inject
-    private SponsorService service;
+    private SponsorService sponsorService;
+    @Inject
+    private PaymentArrangementService paymentArrangementService;
 
     @Override
     public Page<SponsorDto> getPage(Integer pageNumber, Integer pageSize) {
-        return service.getPage(new Request(pageNumber, pageSize));
+        return sponsorService.getPage(new Request(pageNumber, pageSize));
     }
 
     @Override
     public SponsorDto save(SponsorDto dto) {
-        return service.save(dto);
+        return sponsorService.save(dto);
+    }
+
+    @Override
+    public PaymentArrangementDto save(PaymentArrangementDto dto) {
+        return paymentArrangementService.save(dto);
+    }
+
+    @Override
+    public List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId) {
+        return paymentArrangementService.getPaymentArrangements(sponsorId);
     }
 }

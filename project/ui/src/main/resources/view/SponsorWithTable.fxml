@@ -37,6 +37,7 @@
                     <TabPane fx:id="sponsorTabPane" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
                         <tabs>
                             <fx:include source="/view/SponsorDetailsTab.fxml"/>
+                            <fx:include source="/view/PaymentArrangementTab.fxml"/>
                         </tabs>
                     </TabPane>
                   </children>

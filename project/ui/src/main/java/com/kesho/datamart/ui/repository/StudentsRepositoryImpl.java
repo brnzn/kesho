@@ -53,4 +53,9 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.save(dto);
     }
 
+    @Override
+    public List<StudentDto> getStudents() {
+        return studentsService.getStudents();
+    }
+
 }

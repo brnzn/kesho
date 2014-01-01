@@ -3,6 +3,8 @@ package com.kesho.datamart.ui.repository;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
+import javafx.beans.Observable;
+import javafx.util.Callback;
 
 import java.util.List;
 
@@ -14,8 +16,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface StudentsRepository {
-//    public List<StudentDto> findAll();
-
     Page<StudentDto> getPage(Integer pageNumber, Integer pageSize);
 
     StudentDto save(StudentDto dto);
@@ -27,4 +27,6 @@ public interface StudentsRepository {
     StudentDto findOne(Long id);
 
     EducationDto save(EducationDto dto);
+
+    List<StudentDto> getStudents();
 }

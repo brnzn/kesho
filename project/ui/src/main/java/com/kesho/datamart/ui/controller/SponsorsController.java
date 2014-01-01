@@ -8,6 +8,7 @@ import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
+import com.kesho.datamart.ui.util.TabButton;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -75,6 +76,21 @@ public class SponsorsController implements Selectable<SponsorDto> {
         newButtonHandlers.put(id, eventHandler);
     }
 
+    public void disableButton(TabButton... buttons) {
+        for (TabButton button:buttons) {
+            if(TabButton.NEW == button) {
+                newSponsorBtn.disableProperty().set(true);
+            }
+        }
+    }
+
+    public void enableButton(TabButton ...buttons) {
+        for (TabButton button:buttons) {
+            if(TabButton.NEW == button) {
+                newSponsorBtn.disableProperty().set(false);
+            }
+        }
+    }
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.

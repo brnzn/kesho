@@ -3,9 +3,13 @@ package com.kesho.datamart.ui.controller;
 import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.util.Event;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -18,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /**
  */
@@ -28,10 +33,12 @@ public class FamilySelectorController {
     private ObservableList<FamilyDto> data;
     @FXML
     private AutoFillTextBox<FamilyDto> family;
+    @FXML
+    private Button okButton;
 
     private boolean okClicked = false;
 	private Stage dialogStage;
-	private FamilyDto dto;
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
@@ -39,18 +46,42 @@ public class FamilySelectorController {
 	@FXML
 	private void initialize() {
         okClicked = false;
+        okButton.setDisable(true);
         data = FXCollections.observableArrayList(repository.getFamilies());
         family.setData(data);
 
-        family.getListview().getSelectionModel().getSelectedItems().addListener(new ListChangeListener() {
+        family.selected().addListener(new ChangeListener<FamilyDto>() {
             @Override
-            public void onChanged(Change change) {
-                if (!change.getList().isEmpty()) {
-                    dto = (FamilyDto)change.getList().get(0);
+            public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto familyDto, FamilyDto familyDto2) {
+                if(familyDto2 == null) {
+                    okButton.setDisable(true);
+                } else {
+                    okButton.setDisable(false);
                 }
             }
         });
-	}
+
+//        family.getListview().itemsProperty().addListener(new ChangeListener(){
+//            @Override
+//            public void changed(ObservableValue ov, Object t, Object t1) {
+//                System.out.println("My Changed:"+t1);
+//                if(family.getListview().getItems().size() == 0){
+//                    okButton.setDisable(true);
+//                } else {
+//                    okButton.setDisable(false);
+//                }
+//            }
+//        });
+//
+//        family.getTextbox().textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+//                if(StringUtils.isBlank(s2)) {
+//                    okButton.setDisable(true);
+//                }
+//            }
+//        });
+    }
 	
 	/**
 	 * Sets the stage of this dialog.
@@ -61,13 +92,17 @@ public class FamilySelectorController {
 	}
 
     public FamilyDto getSelected() {
-        return dto;
+        return family.getSelected();
     }
 	/**
 	 * Called when the user clicks ok.
 	 */
 	@FXML
 	private void handleOk() {
+//        if(!family.getSelected().getName().equals(family.getText())) {
+//            System.out.println("invalid..................");
+//            return;
+//        }
         okClicked = true;
         dialogStage.close();
 	}

@@ -28,4 +28,6 @@ public interface StudentService {
     List<EducationDto> getEducationHistory(Long studentId);
 
     EducationDto save(EducationDto dto);
+
+    List<StudentDto> getStudents();
 }

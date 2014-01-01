@@ -1,0 +1,15 @@
+<dataset>
+    <FAMILY ID="1" FAMILY_NAME="a"/>
+
+    <STUDENTS ID="1" NAME="s1" FAMILY_ID="1"/>
+    <STUDENTS ID="2" NAME="s2" FAMILY_ID="1"/>
+
+    <SPONSORS ID="1" NAME="fn" SURNAME="surname" ADDRESS_LINE_1="addline1" ADDRESS_LINE_2="addline2" ADDRESS_LINE_3="addline3" COUNTY="county" POSTCODE="postcode"
+              COUNTRY="country" PHONE="phone" EMAIL1="email"/>
+
+    <PAYMENT_ARRANGEMENTS ID="1" STUDENT_ID="1" SPONSOR_ID="1" START_DATE="2013-03-28 00:00:00.0" END_DATE="2014-03-28 00:00:00.0" TYPE="StandingOrder" AMOUNT="1"/>
+    <PAYMENT_ARRANGEMENTS ID="2" STUDENT_ID="2" SPONSOR_ID="1" START_DATE="2013-03-28 00:00:00.0" END_DATE="2014-02-28 00:00:00.0" TYPE="Annual" AMOUNT="12" />
+
+</dataset>
+
+

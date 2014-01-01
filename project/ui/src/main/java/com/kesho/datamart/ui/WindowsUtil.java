@@ -2,7 +2,6 @@ package com.kesho.datamart.ui;
 
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.controller.*;
 import com.kesho.datamart.ui.util.EventBus;
@@ -179,6 +178,34 @@ public class WindowsUtil {
 
     }
 
+    public StudentDto studentSelector() {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/studentSelector.fxml"));
+        StudentSelectorController controller = controllers.getStudentSelector();
+        loader.setController(controller);
+        AnchorPane page = null;
+        try {
+            page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Student Selector");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            scene.getStylesheets().add("/style/AutoFillTextBox.css");
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller
+            controller.setDialogStage(dialogStage);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.getSelected();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return null;
+    }
+
     public FamilyDto familySelector() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilySelector.fxml"));
         FamilySelectorController controller = controllers.getFamilySelector();
@@ -244,44 +271,38 @@ public class WindowsUtil {
         dialogStage.showAndWait();
     }
 
-    public boolean sponsorForm(SponsorDto dto) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/backup/NewSponsorForm.fxml"));
-
-        try {
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Sponsor");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-//            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
-
-            dialogStage.setScene(scene);
-            // Set the person into the controller
-            SponsorDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setDto(dto);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-
-    }
+//    public boolean sponsorForm(SponsorDto dto) {
+//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/backup/NewSponsorForm.fxml"));
+//
+//        try {
+//            AnchorPane page = (AnchorPane) loader.load();
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("New Sponsor");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(primaryStage);
+//            Scene scene = new Scene(page);
+//
+//            dialogStage.setScene(scene);
+//            // Set the person into the controller
+//            SponsorDialogController controller = loader.getController();
+//            controller.setDialogStage(dialogStage);
+//            controller.setDto(dto);
+//
+//            // Show the dialog and wait until the user closes it
+//            dialogStage.showAndWait();
+//
+//            return controller.isOkClicked();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return false;
+//
+//    }
 
     //TODO: demo code. delete once connected to db
     public class Controllers {
         private RootController rootController;
-
-        public backup.StudentsController getStudentsController() {
-            return applicationContext.getBean(backup.StudentsController.class);
-        }
-
 
         public void setRootController(RootController rootController) {
             this.rootController = rootController;
@@ -319,6 +340,9 @@ public class WindowsUtil {
             return applicationContext.getBean(SponsorsController.class);
         }
 
+        public StudentSelectorController getStudentSelector() {
+            return applicationContext.getBean(StudentSelectorController.class);
+        }
     }
 
 }

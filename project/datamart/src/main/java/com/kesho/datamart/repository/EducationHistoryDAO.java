@@ -11,4 +11,5 @@ public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Lon
 
     @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.studentId = :studentId")
     List<EducationHistory> findByStudentId(@Param("studentId")Long studentId);
+
 }

@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
  *
  * @author Marco Jakob
  */
-public class StudentDto {
+public class StudentDto implements Comparable {
     private Long id;
     private String name;
     private FamilyDto family;
@@ -211,5 +211,38 @@ public class StudentDto {
 
     public void setFamily(FamilyDto family) {
         this.family = family;
+    }
+
+    //For auto complete text
+    @Override
+    public String toString() {
+        return getDisplay();
+    }
+
+    //For auto complete text
+    @Override
+    public int compareTo(Object o) {
+        return this.getDisplay().compareTo(((StudentDto)o).getDisplay());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StudentDto that = (StudentDto) o;
+
+        if (!id.equals(that.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    private String getDisplay() {
+        return name + " " + family.getName();
     }
 }

@@ -91,7 +91,8 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
                     showPopup();
                 }    
                 // Hiding popup when no matches found
-                else{                 
+                else{
+                    autofillTextbox.setSelected(null);
                     hidePopup();
                 }     
             }
@@ -244,8 +245,10 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
     public void selectList(){
         Object i= listview.getSelectionModel().getSelectedItem();
         if(i!=null){
-            System.out.println("---" + ObjectUtils.identityToString(listview));
-            System.out.println("=========> " + i.toString());
+            System.out.println("=========> " + i.getClass().getCanonicalName() + " " + i.toString());
+
+            autofillTextbox.setSelected(listview.getSelectionModel().getSelectedItem());
+
             textbox.setText(listview.getSelectionModel().getSelectedItem().toString());
             listview.getItems().clear();              
             textbox.requestFocus();
@@ -405,7 +408,7 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
      * This function hides the popup containing listview
      */
     public void hidePopup(){
-       
+        System.out.println("hiding");
         popup.hide();
 
     }
@@ -427,7 +430,7 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
         
         if(ov.getValue().toString().length()>0){            
                     String txtdata = (textbox.getText()).trim();
-                    System.out.println("["+txtdata+"]");
+                    System.out.println("==> changed ["+txtdata+"]");
                     
                     //Limit of data cell to be shown in ListView 
                     int limit=0;
@@ -438,21 +441,29 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
                             String str = dat.toString().toLowerCase();
                             
                             if(str.startsWith(compare)){ 
-                                System.out.print("added one,");
+                                System.out.println("added " + dat);
                                 list.add(dat);                                
                                 limit++;
                             }
                             if(limit==autofillTextbox.getListLimit())   
                                 break;
                         }
-                        System.out.println();
-                        if(listview.getItems().containsAll(list) && 
-                                listview.getItems().size()== list.size() && listview.getItems()!=null)
+//                        if(list.size() > 0) {
+//                            System.out.println("!! setting " + list.get(0));
+//                            autofillTextbox.setSelected(list.get(0));
+//                        }
+
+                        if(listview.getItems().containsAll(list) &&
+                                listview.getItems().size()== list.size() && listview.getItems()!=null) {
+                            System.out.println("showPopup");
                             showPopup();
-                        else
+                        } else {
+                            System.out.println("setting items....");
                             listview.setItems(list);
+                        }
                        
-                    }else{
+                    }else{ //never get called...
+                        System.out.println("^^^^^^^");
                         //listview.getItems().clear(); 
                         if(autofillTextbox.getFilterMode())
                              listview.setItems(data);
@@ -479,6 +490,8 @@ public class AutoFillTextBoxSkin<T> extends SkinBase<AutoFillTextBox<T>,AutoFill
                 
             }
             else{
+                autofillTextbox.setSelected(null);
+                System.out.println("about to hide...");
                 hidePopup();
             }
         }

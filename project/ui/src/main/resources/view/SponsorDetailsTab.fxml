@@ -74,14 +74,14 @@
                   <children>
                     <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="148.9998779296875" prefWidth="588.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                       <children>
-                        <TextField id="email" fx:id="addressLine1" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <TextField id="facebook" fx:id="email1" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                        <TextField id="contactNumber" fx:id="addressLine2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="addressLine1" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField fx:id="email1" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <TextField fx:id="addressLine2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="postcode" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="homeLocation" fx:id="phone" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="phone" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Label text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <Label text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <Label text="Adrress:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label text="Postcode:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                         <Label text="County:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                         <Label text="Email2:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -119,9 +119,9 @@
                       <children>
                         <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <Label text="How sponsor found us:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <ComboBox id="sponsorshipStatus" fx:id="howFoundUs" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="howFoundUs" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Level Of Participation:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                        <ComboBox id="levelOfSupport" fx:id="participationLevel" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="participationLevel" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="602.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                           <children>
                             <Button mnemonicParsing="false" onAction="#save" text="Save" />
@@ -130,15 +130,7 @@
                             <Insets right="10.0" />
                           </padding>
                         </HBox>
-                        <ComboBox fx:id="payeeType" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="payeeType" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="164.0" />

@@ -2,7 +2,12 @@
 package np.com.ngopal.control;
 
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,6 +54,7 @@ public class AutoFillTextBox<T> extends Control implements AutoFillTextBoxFactor
     private ObservableList<T> data = FXCollections.observableArrayList();;   
     private boolean filterMode;
     private int limit;
+    private T selected;
 
     public AutoFillTextBox(ObservableList<T> data) {
         init();
@@ -69,6 +75,20 @@ public class AutoFillTextBox<T> extends Control implements AutoFillTextBoxFactor
         filterMode=false;
         
         listen();
+
+        o.addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                System.out.println("==> invalidated");
+            }
+        });
+
+        o.addListener(new ChangeListener<T>() {
+            @Override
+            public void changed(ObservableValue<? extends T> observableValue, T t, T t2) {
+                System.out.println("==> changed: " + t2);
+            }
+        });
         
     }
 
@@ -212,5 +232,21 @@ public class AutoFillTextBox<T> extends Control implements AutoFillTextBoxFactor
             
         }); 
     }
-    
+
+    public void setSelected(T selected) {
+        System.out.println("selected:" + selected);
+        this.selected = selected;
+        o.setValue(selected);
+
+    }
+
+    public T getSelected() {
+        return selected;
+    }
+
+    public SimpleObjectProperty<T> selected() {
+        return o;
+    }
+
+    private SimpleObjectProperty<T> o = new SimpleObjectProperty<T>();
 }

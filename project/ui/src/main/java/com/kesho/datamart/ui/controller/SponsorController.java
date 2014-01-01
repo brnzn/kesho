@@ -1,30 +1,28 @@
 package com.kesho.datamart.ui.controller;
 
 import calendar.FXCalendar;
-import com.kesho.datamart.domain.*;
+import com.kesho.datamart.domain.FoundUs;
+import com.kesho.datamart.domain.LevelOfParticipation;
+import com.kesho.datamart.domain.PayeeType;
 import com.kesho.datamart.dto.SponsorDto;
-import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
-import custom.NumericTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.EnumSet;
 
 /**
@@ -74,12 +72,14 @@ public class SponsorController {
     private ComboBox<FoundUs> howFoundUs;
     @FXML
     private ComboBox<LevelOfParticipation> participationLevel;
+    @FXML
+    private Tab sponsorDetailsTab;
+
 
     private SponsorDto selected;
 
     @Inject
-    @Qualifier("SponsorsController")
-    private Selectable<SponsorDto> selectedSponsor;
+    private SponsorsController parentController;
 
     public SponsorController() {
         startDateCalendar.setDateTextWidth(Double.valueOf(200));
@@ -104,8 +104,8 @@ public class SponsorController {
         WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_SELECTED, new SystemEventListener() {
             @Override
             public void handle() {
-                if (selectedSponsor.getSelectedItem() != null) {
-                    initializeForm(selectedSponsor.getSelectedItem());
+                if (sponsorDetailsTab.isSelected()) {
+                    initializeForm(parentController.getSelectedItem());
                 }
             }
         });
@@ -146,7 +146,10 @@ public class SponsorController {
         selected.setAnonymous((Boolean) anonymous.getSelectedToggle().getUserData());
         selected.setCountry(country.getText());
         selected.setCounty(county.getText());
-        selected.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
+        if(endDateCalendar.getValue() != null) {
+            selected.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
+        }
+
         selected.setPostcode(postcode.getText());
         selected.setPayeeType(payeeType.getValue());
         selected.setPhone(phone.getText());
@@ -160,6 +163,11 @@ public class SponsorController {
 
     private void initializeForm(SponsorDto dto) {
         selected = dto;
+
+        if(dto == null) {
+            resetForm();
+            return;
+        }
 
         firstName.setText(dto.getName());
         surname.setText(dto.getSurname());
@@ -190,6 +198,27 @@ public class SponsorController {
         howFoundUs.setValue(dto.getHowFoundUs());
         email1.setText(dto.getEmail1());
         email2.setText(dto.getEmail2());
+    }
+
+    private void resetForm() {
+        firstName.clear();
+        surname.clear();
+        anonymous.getSelectedToggle().setSelected(false);
+        startDateCalendar.clear();
+        active.getSelectedToggle().setSelected(false);
+        addressLine1.clear();
+        addressLine2.clear();
+        country.clear();
+        county.clear();
+        endDateCalendar.clear();
+
+        postcode.clear();
+        payeeType.setValue(null);
+        phone.clear();
+        participationLevel.setValue(null);
+        howFoundUs.setValue(null);
+        email1.clear();
+        email2.clear();
     }
 
     private void setState(ToggleGroup group, Boolean value) {
