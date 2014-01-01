@@ -100,4 +100,8 @@ public class PaymentArrangementDto {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    public String getStudentName() {
+        return studentName;
+    }
 }

@@ -44,7 +44,7 @@ public class WindowsUtil {
         try {
             // Load the fxml file and set into the center of the main layout
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/SponsorWithTable.fxml"));
-
+            controllers.getRootController().setTtile("Sponsors");
             loader.setController(WindowsUtil.getInstance().getControllers().sponsorsController());
 
             AnchorPane overviewPage = (AnchorPane) loader.load();
@@ -60,12 +60,32 @@ public class WindowsUtil {
         try {
             // Load the fxml file and set into the center of the main layout
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentWithTable.fxml"));
-
-            loader.setController(WindowsUtil.getInstance().getControllers().detailsController());
+            controllers.getRootController().setTtile("Students");
+            StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
+            loader.setController(sc);
 
             AnchorPane overviewPage = (AnchorPane) loader.load();
             rootLayout.setCenter(overviewPage);
             primaryStage.sizeToScene();
+            sc.init();
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+    }
+
+    public void students(Long studentId) {
+        try {
+            // Load the fxml file and set into the center of the main layout
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentWithTable.fxml"));
+            controllers.getRootController().setTtile("Students");
+            StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
+            loader.setController(sc);
+
+            AnchorPane overviewPage = (AnchorPane) loader.load();
+            rootLayout.setCenter(overviewPage);
+            primaryStage.sizeToScene();
+            sc.init(studentId);
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded
             e.printStackTrace();
@@ -324,7 +344,7 @@ public class WindowsUtil {
             return applicationContext.getBean(InstitutionController.class);
         }
 
-        public StudentsController detailsController() {
+        public StudentsController studentsController() {
             return applicationContext.getBean(StudentsController.class);
         }
 

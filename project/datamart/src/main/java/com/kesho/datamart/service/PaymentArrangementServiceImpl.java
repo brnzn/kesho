@@ -28,7 +28,6 @@ public class PaymentArrangementServiceImpl implements PaymentArrangementService 
 
     @Override
     public List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId) {
-        //return assembler.toDto(paymentArrangementDao.findBySponsorId(sponsorId));
-        return new ArrayList<PaymentArrangementDto>();
+        return paymentArrangementDao.findBySponsorId(sponsorId);
     }
 }

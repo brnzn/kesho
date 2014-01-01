@@ -32,13 +32,11 @@ public class RootController {
 
     @FXML
     public void students() {
-        mainLbl.setText("Students");
         WindowsUtil.getInstance().students();
     }
 
     @FXML
     public void sponsors() {
-        mainLbl.setText("Sponsors");
         WindowsUtil.getInstance().sponsors();
     }
 }

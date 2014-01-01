@@ -41,7 +41,8 @@
                         <TextField fx:id="educationLevel" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button mnemonicParsing="false" onAction="#openStudent" text="Button" />
                           </children>
                           <padding>
                             <Insets right="10.0" />
@@ -55,7 +56,7 @@
                         </HBox>
                         <HBox id="startDateControlBox" fx:id="startDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox id="endDateControlBox" fx:id="endDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="financialArrangement" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <ComboBox fx:id="financialArrangement" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField fx:id="totalAllocated" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                       </children>
                       <columnConstraints>

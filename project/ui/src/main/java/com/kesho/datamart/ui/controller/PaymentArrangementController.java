@@ -3,6 +3,7 @@ package com.kesho.datamart.ui.controller;
 import calendar.FXCalendar;
 import com.kesho.datamart.domain.FinancialArrangement;
 import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
@@ -60,6 +62,8 @@ public class PaymentArrangementController {
 
     @FXML
     private TableColumn<PaymentArrangementDto, LocalDate> startCol;
+    @FXML
+    private TableColumn<PaymentArrangementDto, String> studentNameCol;
 
     private PaymentArrangementDto selected;
 
@@ -67,6 +71,11 @@ public class PaymentArrangementController {
         startDateCalendar.setDateTextWidth(Double.valueOf(200));
         endDateCalendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
+    }
+
+    @FXML
+    private void openStudent() {
+        WindowsUtil.getInstance().students();
     }
 
     @FXML
@@ -86,10 +95,40 @@ public class PaymentArrangementController {
         endDateBox.getChildren().add(endDateCalendar);
 
         startCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, LocalDate>("startDate"));
+        studentNameCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, String>("studentName"));
+        studentNameCol.setCellFactory(new Callback<TableColumn<PaymentArrangementDto, String>, TableCell<PaymentArrangementDto, String>>() {
+            @Override
+            public TableCell<PaymentArrangementDto, String> call(TableColumn<PaymentArrangementDto, String> institutionDtoStringTableColumn) {
+                TableCell<PaymentArrangementDto, String> cell = new TableCell<PaymentArrangementDto, String>() {
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+
+                        if(item!=null){
+                            //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
+                            Hyperlink link = new Hyperlink(item);
+                            link.setUserData(((PaymentArrangementDto)getTableRow().getItem()).getStudentId());
+                            //link.setUserData();
+                            link.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent e) {
+                                    WindowsUtil.getInstance().students((Long)((Hyperlink)e.getSource()).getUserData());
+                                }
+                            });
+                            setGraphic(link);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        });
+
+
 
         Util.initializeComboBoxValues(financialArrangement, EnumSet.allOf(FinancialArrangement.class));
 
-        WindowsUtil.getInstance().getEventBus().registerListener(com.kesho.datamart.ui.util.Event.STUDENT_SELECTED, new SystemEventListener() {
+        WindowsUtil.getInstance().getEventBus().registerListener(com.kesho.datamart.ui.util.Event.SPONSOR_SELECTED, new SystemEventListener() {
             @Override
             public void handle() {
                 if (paymentArrangementTab.isSelected()) {
@@ -160,6 +199,10 @@ public class PaymentArrangementController {
     }
 
     private PaymentArrangementDto buildDto() {
+        if(selected == null) {
+            selected = new PaymentArrangementDto();
+        }
+
         if (endDateCalendar.getValue() != null) {
             selected.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
         }

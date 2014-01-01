@@ -3,9 +3,6 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.entity.PaymentArrangement;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -38,13 +35,4 @@ public class PaymentArrangementAssembler {
         return  dto;
     }
 
-    public List<PaymentArrangementDto> toDto(List<PaymentArrangement> arrangements) {
-        List<PaymentArrangementDto> dtos = new ArrayList<PaymentArrangementDto>(arrangements.size());
-
-        for (PaymentArrangement item:arrangements) {
-            dtos.add(toDto(item));
-        }
-
-        return dtos;
-    }
 }

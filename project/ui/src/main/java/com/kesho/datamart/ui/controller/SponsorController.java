@@ -203,9 +203,9 @@ public class SponsorController {
     private void resetForm() {
         firstName.clear();
         surname.clear();
-        anonymous.getSelectedToggle().setSelected(false);
+        anonymous.selectToggle(null);
         startDateCalendar.clear();
-        active.getSelectedToggle().setSelected(false);
+        active.selectToggle(null);
         addressLine1.clear();
         addressLine2.clear();
         country.clear();

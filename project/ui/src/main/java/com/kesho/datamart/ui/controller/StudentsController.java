@@ -82,7 +82,8 @@ public class StudentsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
-        refreshTable();
+        System.out.println("============================================");
+//        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
 
         studentsTable.getSelectionModel().select(0);
@@ -117,6 +118,17 @@ public class StudentsController implements Selectable<StudentDto> {
         });
     }
 
+    public void init() {
+        refreshTable();
+    }
+
+    public void init(Long studentId) {
+        initTable();
+        StudentDto dto = studentsRepository.findOne(studentId);
+        studentsModel.add(dto);
+        studentsTable.getSelectionModel().select(dto);
+
+    }
     private void initTable() {
         studentsModel.clear();
 

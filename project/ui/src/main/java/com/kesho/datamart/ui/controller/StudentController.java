@@ -125,7 +125,7 @@ public class StudentController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                WindowsUtil.getInstance().getControllers().detailsController().registerNewChangeListener("studentDetailsTab", new EventHandler<ActionEvent>() {
+                WindowsUtil.getInstance().getControllers().studentsController().registerNewChangeListener("studentDetailsTab", new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
                         add();
