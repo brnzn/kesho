@@ -1,29 +1,10 @@
 <dataset>
     <SCHOOLS ID="1" NAME="school"/>
-
-	<STUDENTS ID="1"
-              NAME="fn"
-              SURNAME="sn1"
-              GENDER="M"
-              YEAR_OF_BIRTH="2000"
-              DISABILITY="1"
-              CONTACT_NUMBER="11111"
-              EMAIL="email1"
-              FACEBOOK="fb1"
-              HOME_LOCATION="h1"
-              CURRENT_STUDENT="1"
-              STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
-              SPONSORED="1"
-              SPONSORSHIP_STATUS="REVIEW"
-              START_DATE="2013-03-28 00:00:00.0"
-              LEVEL_OF_SUPPORT="FULL"
-              TOPUP_NEEDED="1"
-              SHORTFALL="100"
-              ALUMNI_MEMBER="111" />
+    <FAMILY ID="1" FAMILY_NAME="a"/>
 
     <STUDENTS ID="2"
               NAME="fn2"
-              SURNAME="sn2"
+              FAMILY_ID="1"
               GENDER="F"
               YEAR_OF_BIRTH="2002"
               DISABILITY="1"
@@ -46,7 +27,17 @@
             STUDENT_ID="2"
             SCHOOL_ID="1"
             START_DATE="2013-03-28 00:00:00.0"
+            LEVEL="Nursery"
             />
+
+    <EDUCATION_HISTORY
+            ID="2"
+            STUDENT_ID="2"
+            SCHOOL_ID="1"
+            START_DATE="2013-04-28 00:00:00.0"
+            LEVEL="Primary"
+            />
+
 </dataset>
 
 

@@ -24,6 +24,13 @@ public class EducationDto {
     private Long studentId;
     private String comments;
 
+    public EducationDto(){}
+
+    public EducationDto(EducationStatus status, LocalDate date) {
+        this.educationalStatus = status;
+        this.date = date;
+    }
+
     public Long getStudentId() {
         return  studentId;
     }

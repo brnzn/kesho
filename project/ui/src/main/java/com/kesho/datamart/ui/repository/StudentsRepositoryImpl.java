@@ -58,4 +58,9 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.getStudents();
     }
 
+    @Override
+    public EducationDto findLatestEducation(Long studentId) {
+        return studentsService.findLatestEducation(studentId);
+    }
+
 }

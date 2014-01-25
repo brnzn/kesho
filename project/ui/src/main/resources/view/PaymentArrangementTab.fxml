@@ -38,11 +38,10 @@
                         <Label text="End of Education:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <Label text="Financial Arrangement:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                         <Label text="Total Allocated:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                        <TextField fx:id="educationLevel" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="educationLevel" editable="false" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                           <children>
                             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
-                            <Button mnemonicParsing="false" onAction="#openStudent" text="Button" />
                           </children>
                           <padding>
                             <Insets right="10.0" />
@@ -56,8 +55,9 @@
                         </HBox>
                         <HBox id="startDateControlBox" fx:id="startDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox id="endDateControlBox" fx:id="endDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="financialArrangement" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="totalAllocated" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="financialArrangement" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="totalAllocated" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="endOfEducation" editable="false" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="80.0" prefWidth="155.0" />

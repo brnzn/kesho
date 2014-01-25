@@ -95,6 +95,10 @@ public class StudentServiceImpl implements StudentService {
         return assembler.toDto(studentsDao.findAll());
     }
 
+    public EducationDto findLatestEducation(Long studentId) {
+        return educationHistoryDAO.findLatestEducation(studentId);
+    }
+
     private Page<StudentDto> toPageResult(final org.springframework.data.domain.Page<Student> page, final Request request) {
         if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {
             return new PageImpl<StudentDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());

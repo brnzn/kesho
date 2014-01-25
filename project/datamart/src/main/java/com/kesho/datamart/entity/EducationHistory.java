@@ -24,7 +24,6 @@ public class EducationHistory {
     @Column(name = "STUDENT_ID", nullable=false)
     private Long studentId;
     
-    //TODO:enum
     @Column(name = "LEVEL")
     @Enumerated(EnumType.STRING)
     private EducationStatus educationStatus;
@@ -47,7 +46,7 @@ public class EducationHistory {
     @Enumerated(EnumType.STRING)
     private SubEducationStatus secondaryLevel2;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID")
     private School school;
 

@@ -6,14 +6,19 @@ import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.service.StudentService;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -42,6 +47,9 @@ public class PaymentArrangementController {
     private SponsorsRepository sponsorsRepository;
     @Inject
     private SponsorsController parentController;
+    @Inject
+    private StudentService studentService;
+
     @FXML
     private HBox startDateBox;
     private final FXCalendar startDateCalendar = new FXCalendar();
@@ -64,6 +72,10 @@ public class PaymentArrangementController {
     private TableColumn<PaymentArrangementDto, LocalDate> startCol;
     @FXML
     private TableColumn<PaymentArrangementDto, String> studentNameCol;
+    @FXML
+    private TextField endOfEducation;  //TODO: how to work it out?
+    @FXML
+    private TextField educationLevel;
 
     private PaymentArrangementDto selected;
 
@@ -112,7 +124,7 @@ public class PaymentArrangementController {
                             link.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent e) {
-                                    WindowsUtil.getInstance().students((Long)((Hyperlink)e.getSource()).getUserData());
+                                    WindowsUtil.getInstance().students((Long) ((Hyperlink) e.getSource()).getUserData());
                                 }
                             });
                             setGraphic(link);
@@ -123,8 +135,6 @@ public class PaymentArrangementController {
                 return cell;
             }
         });
-
-
 
         Util.initializeComboBoxValues(financialArrangement, EnumSet.allOf(FinancialArrangement.class));
 
@@ -163,6 +173,29 @@ public class PaymentArrangementController {
             }
         });
 
+        paymentArrangementTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PaymentArrangementDto>() {
+            @Override
+            public void changed(ObservableValue<? extends PaymentArrangementDto> observable,
+                                PaymentArrangementDto oldValue, final PaymentArrangementDto newValue) {
+                new Service<Void>() {
+                    @Override
+                    protected Task<Void> createTask() {
+                        return new Task<Void>() {
+                            @Override
+                            protected Void call() throws Exception {
+                                EducationDto dto = studentService.findLatestEducation(newValue.getStudentId());
+                                educationLevel.setText(dto.getEducationLevel());
+                                return null;
+                            }
+                        };
+                    }
+                }.start();
+
+                initializeForm(newValue);
+            }
+        });
+
+
     }
 
     private void add() {
@@ -170,9 +203,25 @@ public class PaymentArrangementController {
         initializeForm(dto);
     }
 
+    private void clearForm() {
+        startDateCalendar.clear();
+        endDateCalendar.clear();
+        totalAllocated.clear();
+        financialArrangement.getSelectionModel().clearSelection();
+        financialArrangement.valueProperty().setValue(null);
+        endOfEducation.clear();
+        educationLevel.clear();
+        student.clear();
+    }
+
     private void initializeForm(PaymentArrangementDto dto) {
         selected = dto;
+        if(dto == null) {
+            clearForm();
+            return;
+        }
 
+        student.setText(dto.getStudentName());
         if(dto.getStartDate() != null) {
             startDateCalendar.setValue(dto.getStartDate().toDate());
         } else {
@@ -187,6 +236,7 @@ public class PaymentArrangementController {
 
         financialArrangement.setValue(dto.getFinancialArrangement());
         totalAllocated.setText(Util.safeToStringValue(dto.getAmount(), ""));
+
 //        student.setUserData(null);
     }
 

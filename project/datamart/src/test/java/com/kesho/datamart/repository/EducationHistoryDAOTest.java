@@ -1,6 +1,8 @@
 package com.kesho.datamart.repository;
 
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
+import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.entity.EducationHistory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +32,14 @@ public class EducationHistoryDAOTest {
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
 
+    @Test
+    public void shouldFindLatestEducation() {
+        EducationDto dto = educationHistoryDAO.findLatestEducation(2L);
+        assertThat(dto.getEducationalStatus(), is(EducationStatus.Primary));
+        assertThat(dto.getDate().getYear(), is(2013));
+        assertThat(dto.getDate().getMonthOfYear(), is(4));
+        assertThat(dto.getDate().getDayOfMonth(), is(28));
+    }
     @Test
     public void shouldGetEducationHistory() {
 //        educationHistoryDAO.findOne(1L);

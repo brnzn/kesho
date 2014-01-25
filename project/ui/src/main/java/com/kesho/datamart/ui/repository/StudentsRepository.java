@@ -29,4 +29,6 @@ public interface StudentsRepository {
     EducationDto save(EducationDto dto);
 
     List<StudentDto> getStudents();
+
+    EducationDto findLatestEducation(Long studentId);
 }
