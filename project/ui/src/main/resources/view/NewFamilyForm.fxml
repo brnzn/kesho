@@ -21,26 +21,26 @@
                     <GridPane alignment="TOP_CENTER" hgap="10.0" minHeight="167.0" prefHeight="167.0" prefWidth="628.0" vgap="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                       <children>
                         <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <TextField fx:id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField id="familyName" fx:id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label text="Num of Parents alive:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                         <Label text="Married?" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label text="Number of wives:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                         <Label text="Primary Caretaker:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                         <Label text="Relationship to Child:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <Label text="Family Profile:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextArea prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
-                        <TextField id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextArea fx:id="profile" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
+                        <TextField id="family" fx:id="numOfWives" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField id="family" fx:id="primaryCaretaker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="family" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <TextField id="family" fx:id="aliveParents" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                         <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="186.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                           <children>
                             <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
                               <toggleGroup>
-                                <ToggleGroup fx:id="anonymous" />
+                                <ToggleGroup fx:id="isMarried" />
                               </toggleGroup>
                             </RadioButton>
-                            <RadioButton mnemonicParsing="false" text="No" toggleGroup="$anonymous" />
+                            <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isMarried" />
                           </children>
                         </HBox>
                       </children>
@@ -71,14 +71,18 @@
                         <Label text="Main Contact Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <Label text="Mobile Number:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label text="Phone owner:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                        <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <TextField fx:id="mainContactName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField fx:id="mobileNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="phoneOwnerName" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                         <Label text="Is it their own phone:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                           <children>
-                            <RadioButton mnemonicParsing="false" text="Yes" />
-                            <RadioButton mnemonicParsing="false" text="No" />
+                            <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                              <toggleGroup>
+                                <ToggleGroup fx:id="isPhoneOwner" />
+                              </toggleGroup>
+                            </RadioButton>
+                            <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isPhoneOwner" />
                           </children>
                         </HBox>
                       </children>
@@ -106,9 +110,9 @@
                         <Label text="Home Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                         <Label text="Home Sub Location:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label text="Home Cluster ID:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                        <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                        <ComboBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <TextField fx:id="homeSubLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="homeClusterId" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <ComboBox fx:id="homeLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -147,19 +151,22 @@
                               </GridPane.margin>
                             </Label>
                             <Label text="No of adults in the household:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                            <TextField prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                            <TextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField id="numOfStudentsAtAddress" fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                           </children>
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="283.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="85.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="199.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="133.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="281.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="62.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                           </rowConstraints>
+                          <VBox.margin>
+                            <Insets right="5.0" />
+                          </VBox.margin>
                         </GridPane>
                       </children>
                     </VBox>

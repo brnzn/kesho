@@ -1,5 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
@@ -14,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.EnumSet;
 
 /**
  */
@@ -25,20 +27,33 @@ public class FamilyDialogController {
 
     @FXML
     private TextField familyName;
+    @FXML
     private ComboBox<Location> homeLocation;
+    @FXML
     private TextField homeSubLocation;
+    @FXML
     private TextField homeClusterId;
+    @FXML
     private Integer aliveParents;
+    @FXML
     private ToggleGroup isMarried;
+    @FXML
     private TextField numNonKeshoStudents;
+    @FXML
     private TextField numOfWives;
+    @FXML
     private TextField primaryCaretaker;
+    @FXML
     private TextField mainContactName;
+    @FXML
     private TextField mobileNumber;
+    @FXML
     private ToggleGroup isPhoneOwner;
+    @FXML
     private TextField phoneOwnerName;
-    private TextField numOfStudentsAtAddress;
+    @FXML
     private TextArea profile;
+    @FXML
     private TextField numOfAdultsAtAddress;
 
 
@@ -51,7 +66,8 @@ public class FamilyDialogController {
 	@FXML
 	private void initialize() {
         Util.initializeYesNoGroup(isMarried, isPhoneOwner);
-	}
+        Util.initializeComboBoxValues(homeLocation, EnumSet.allOf(Location.class));
+    }
 	
 	/**
 	 * Sets the stage of this dialog.
