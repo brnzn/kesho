@@ -63,9 +63,6 @@ public class Family {
     @Column(name="PHONE_OWNER_NAME", nullable=true)
     private String phoneOwnerName;
 
-    @Column(name="NUM_KESHO_STUDENTS_AT_ADDRS", columnDefinition = "BIT", nullable=true)
-    private Integer numOfStudentsAtAddress;
-
     @Column(name="FAMILY_PROFILE", nullable=true, length = 65535,columnDefinition="Text")
     private String profile;
 
@@ -185,14 +182,6 @@ public class Family {
 
     public void setPhoneOwnerName(String phoneOwnerName) {
         this.phoneOwnerName = phoneOwnerName;
-    }
-
-    public Integer getNumOfStudentsAtAddress() {
-        return numOfStudentsAtAddress;
-    }
-
-    public void setNumOfStudentsAtAddress(Integer numOfStudentsAtAddress) {
-        this.numOfStudentsAtAddress = numOfStudentsAtAddress;
     }
 
     public String getProfile() {

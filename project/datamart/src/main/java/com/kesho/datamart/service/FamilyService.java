@@ -1,7 +1,9 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.paging.Request;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ public interface FamilyService {
     FamilyDto save(FamilyDto family);
 
     List<FamilyDto> getFamilies();
+
+    Page<FamilyDto> getPage(Request request);
 }

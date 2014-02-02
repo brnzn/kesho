@@ -1,8 +1,12 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.entity.Family;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,20 @@ import java.util.List;
 public class FamilyAssembler {
     FamilyDto toDto(Family family) {
         FamilyDto dto = new FamilyDto(family.getId(), family.getName());
+        dto.setHomeLocation(family.getHomeLocation());
+        dto.setHomeSubLocation(family.getHomeSubLocation());
+        dto.setHomeClusterId(family.getHomeClusterId());
+        dto.setAliveParents(family.getAliveParents());
+        dto.setMarried(family.isMarried());
+        dto.setNumNonKeshoStudents(family.getNumNonKeshoStudents());
+        dto.setNumOfWives(family.getNumOfWives());
+        dto.setPrimaryCaretaker(family.getPrimaryCaretaker());
+        dto.setMainContactName(family.getMainContactName());
+        dto.setMobileNumber(family.getMobileNumber());
+        dto.setPhoneOwner(family.isPhoneOwner());
+        dto.setPhoneOwnerName(family.getPhoneOwnerName());
+        dto.setProfile(family.getProfile());
+        dto.setNumOfAdultsAtAddress(family.getNumOfAdultsAtAddress());
         return dto;
     }
 
@@ -23,7 +41,20 @@ public class FamilyAssembler {
         Family family = new Family();
         family.setId(dto.getId());
         family.setName(dto.getName());
-
+        family.setHomeLocation(dto.getHomeLocation());
+        family.setHomeSubLocation(dto.getHomeSubLocation());
+        family.setHomeClusterId(dto.getHomeClusterId());
+        family.setAliveParents(dto.getAliveParents());
+        family.setMarried(dto.getMarried());
+        family.setNumNonKeshoStudents(dto.getNumNonKeshoStudents());
+        family.setNumOfWives(dto.getNumOfWives());
+        family.setPrimaryCaretaker(dto.getPrimaryCaretaker());
+        family.setMainContactName(dto.getMainContactName());
+        family.setMobileNumber(dto.getMobileNumber());
+        family.setPhoneOwner(dto.getPhoneOwner());
+        family.setPhoneOwnerName(dto.getPhoneOwnerName());
+        family.setProfile(dto.getProfile());
+        family.setNumOfAdultsAtAddress(dto.getNumOfAdultsAtAddress());
         return family;
     }
 

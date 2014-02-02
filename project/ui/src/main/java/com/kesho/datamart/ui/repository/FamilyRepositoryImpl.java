@@ -1,6 +1,8 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.FamilyService;
 
 import javax.inject.Inject;
@@ -26,5 +28,10 @@ public class FamilyRepositoryImpl implements FamilyRepository {
     @Override
     public List<FamilyDto> getFamilies() {
         return familyService.getFamilies();
+    }
+
+    @Override
+    public Page<FamilyDto> getPage(int page, int pageSize) {
+        return familyService.getPage(new Request(page, pageSize));
     }
 }

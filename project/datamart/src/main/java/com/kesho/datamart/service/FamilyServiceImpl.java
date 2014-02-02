@@ -1,9 +1,16 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.PageImpl;
+import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.entity.Sponsor;
+import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
 import org.springframework.beans.factory.parsing.FailFastProblemReporter;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,4 +37,27 @@ public class FamilyServiceImpl implements FamilyService {
     public List<FamilyDto> getFamilies() {
         return assembler.toDto(dao.findAll());
     }
+
+    @Override
+    public Page<FamilyDto> getPage(Request request) {
+        List<String> errors = PageUtil.validate(request);
+
+        if(errors != null) {
+            return new PageImpl<FamilyDto>().withErrors(errors);
+        }
+
+        Pageable pageSpecification = new PageRequest(request.getPageNumber(), request.getPageSize());
+
+        return toPageResult(dao.findAll(pageSpecification), request);
+    }
+
+    private Page<FamilyDto> toPageResult(final org.springframework.data.domain.Page<Family> page, final Request request) {
+        if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {
+            return new PageImpl<FamilyDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());
+        }
+
+        Page<FamilyDto> result = new PageImpl<FamilyDto>().withContent(assembler.toDto(page.getContent())).withTotalPages(page.getTotalPages()).withPageSize(page.getNumberOfElements());
+        return result;
+    }
+
 }

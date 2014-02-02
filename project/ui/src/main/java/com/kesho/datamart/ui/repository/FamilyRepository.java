@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.Page;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface FamilyRepository {
     FamilyDto save(FamilyDto dto);
 
     List<FamilyDto> getFamilies();
+
+    Page<FamilyDto> getPage(int page, int pageSize);
 }

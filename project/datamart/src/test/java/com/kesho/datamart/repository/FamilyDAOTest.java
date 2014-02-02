@@ -52,7 +52,6 @@ public class FamilyDAOTest {
         family.setNumNonKeshoStudents(3);
         family.setNumOfAdultsAtAddress(2);
         family.setNumOfWives(4);
-        family.setNumOfStudentsAtAddress(5);
         family.setPhoneOwnerName("phoneOwner");
         family.setPrimaryCaretaker("primaryTaker");
         family.setProfile("profileffffffffffffffffffff\nghjfghjfghjfghj");
@@ -83,7 +82,6 @@ public class FamilyDAOTest {
         assertThat(saved.getNumNonKeshoStudents(), is(3));
         assertThat(saved.getNumOfAdultsAtAddress(), is(2));
         assertThat(saved.getNumOfWives(), is(4));
-        assertThat(saved.getNumOfStudentsAtAddress(), is(5));
         assertThat(saved.getPhoneOwnerName(), is("phoneOwner"));
         assertThat(saved.getPrimaryCaretaker(), is("primaryTaker"));
         assertThat(saved.getProfile(), is("profileffffffffffffffffffff\n" +

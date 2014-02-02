@@ -82,7 +82,6 @@ public class StudentsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
-        System.out.println("============================================");
 //        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
 

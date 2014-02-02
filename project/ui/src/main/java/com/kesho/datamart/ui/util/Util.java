@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.util;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.EnumSet;
 
@@ -18,7 +19,7 @@ public class Util {
     }
 
     public static Integer safeToIntegerValue(String value, Integer defaultValue) {
-        return value != null ? Integer.valueOf(value) : defaultValue;
+        return StringUtils.isNotBlank(value) ? Integer.valueOf(value) : defaultValue;
     }
 
     public static <T extends Enum> void initializeComboBoxValues(ComboBox<T> target, EnumSet source) {
