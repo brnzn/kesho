@@ -13,6 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
@@ -60,6 +64,8 @@ public class FamilyDialogController {
     private TextField numOfAdultsAtAddress;
 
     private ObservableList<FamilyDto> familiesModel = FXCollections.observableArrayList();
+    private Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 4, 0.0, 0, 0);
+
 
     @FXML
     private TableView<FamilyDto> familiesTable;
@@ -210,7 +216,10 @@ public class FamilyDialogController {
 
 		if (StringUtils.isBlank(familyName.getText())) {
 			errorMessage += "Family Name is mandatory!\n";
-		}
+            familyName.setEffect(invalidEffect);
+		} else {
+            familyName.setEffect(null);
+        }
 
 		if (errorMessage.length() == 0) {
 			return true;

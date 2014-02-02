@@ -1,6 +1,5 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
@@ -14,11 +13,15 @@ import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.ui.control.NumericTextField;
+import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -84,7 +87,6 @@ public class StudentController {
     private ComboBox<LeaverStatus> leaverStatus;
 
     private StudentDto selected;
-
     @Inject
     @Qualifier("StudentsController")
     private Selectable<StudentDto> selectedStudent;
@@ -98,6 +100,7 @@ public class StudentController {
 
     @FXML
     private void initialize() {
+
         selected = null;
         family.setUserData(null);
 
