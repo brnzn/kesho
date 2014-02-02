@@ -149,7 +149,7 @@ public class FamilyDialogController {
 
     @FXML
     private void doNew() {
-        resetForm();
+        reset();
     }
 
     @FXML
