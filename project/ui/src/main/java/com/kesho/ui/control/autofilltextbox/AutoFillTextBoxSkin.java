@@ -2,7 +2,7 @@
 
  * 
  */
-package np.com.ngopal.control;
+package com.kesho.ui.control.autofilltextbox;
 
 //IMPORT DIRECTIVES
 import com.sun.javafx.scene.control.skin.SkinBase;
@@ -25,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Callback;
-import org.apache.commons.lang.ObjectUtils;
 
 /**
  * This class helps to change the skin of the AutoFillTextBox Control

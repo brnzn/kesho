@@ -1,24 +1,18 @@
 
-package np.com.ngopal.control;
+package com.kesho.ui.control.autofilltextbox;
 
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 //import javafx.scene.control.TextBox;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
-import org.apache.commons.lang.ObjectUtils;
 
 /**
  * This class is main Control class which extends from Control <br>

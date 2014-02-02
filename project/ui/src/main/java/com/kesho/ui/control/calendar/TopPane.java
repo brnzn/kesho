@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,9 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-import calendar.FXCalendarControls.CalendarToggleButton;
-import calendar.FXCalendarControls.NormalButton;
-import calendar.FXCalendarControls.YearNavigatorArrowButton;
+import com.kesho.ui.control.calendar.FXCalendarControls.CalendarToggleButton;
+import com.kesho.ui.control.calendar.FXCalendarControls.NormalButton;
+import com.kesho.ui.control.calendar.FXCalendarControls.YearNavigatorArrowButton;
 
 public class TopPane extends Group {
 	private DatePicker datePicker;

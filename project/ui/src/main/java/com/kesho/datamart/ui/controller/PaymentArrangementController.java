@@ -1,9 +1,8 @@
 package com.kesho.datamart.ui.controller;
 
-import calendar.FXCalendar;
+import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FinancialArrangement;
 import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.service.StudentService;

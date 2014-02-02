@@ -1,6 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
-import calendar.FXCalendar;
+import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
@@ -10,7 +10,7 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Util;
-import custom.NumericTextField;
+import com.kesho.ui.control.NumericTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

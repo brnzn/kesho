@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;

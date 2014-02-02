@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import np.com.ngopal.control.AutoFillTextBox;
+import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 import javax.inject.Inject;
 import javax.inject.Named;

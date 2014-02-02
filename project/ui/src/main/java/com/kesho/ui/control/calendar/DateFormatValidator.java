@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

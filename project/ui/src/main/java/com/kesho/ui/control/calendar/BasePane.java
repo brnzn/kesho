@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,10 +20,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 
-import calendar.FXCalendarCell.DateCell;
-import calendar.FXCalendarCell.WeekCell;
-import calendar.FXCalendarControls.BaseNavigatorArrowButton;
-import calendar.FXCalendarControls.NormalButton;
+import com.kesho.ui.control.calendar.FXCalendarCell.DateCell;
+import com.kesho.ui.control.calendar.FXCalendarCell.WeekCell;
+import com.kesho.ui.control.calendar.FXCalendarControls.BaseNavigatorArrowButton;
+import com.kesho.ui.control.calendar.FXCalendarControls.NormalButton;
 
 public class BasePane extends Group {
 	private DatePicker datePicker;

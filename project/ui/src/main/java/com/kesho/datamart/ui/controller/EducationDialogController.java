@@ -1,13 +1,12 @@
 package com.kesho.datamart.ui.controller;
 
-import calendar.FXCalendar;
+import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.util.Util;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -19,13 +18,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.EnumSet;
-import java.util.concurrent.ExecutorService;
 
 /**
  */

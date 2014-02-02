@@ -1,28 +1,18 @@
 package com.kesho.datamart.ui.controller;
 
-import com.google.common.collect.Lists;
-import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
-import com.kesho.datamart.ui.util.Event;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import np.com.ngopal.control.AutoFillTextBox;
-import org.apache.commons.lang.StringUtils;
+import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 
 /**
  */

@@ -6,8 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import np.com.ngopal.control.*?>
-<?import np.com.ngopal.control.AutoFillTextBox?>
+<?import com.kesho.ui.control.autofilltextbox.AutoFillTextBox?>
 <?scenebuilder-classpath-element ../../java/np?>
 <?scenebuilder-classpath-element ../../../../target/classes?>
 

@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Side;

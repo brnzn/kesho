@@ -1,3 +1,3 @@
 .autofill-text {
-    -fx-skin: "np.com.ngopal.control.AutoFillTextBoxSkin";
+    -fx-skin: "com.kesho.ui.control.autofilltextbox.AutoFillTextBoxSkin";
 }

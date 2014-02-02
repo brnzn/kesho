@@ -1,6 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
-import calendar.FXCalendar;
+import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;

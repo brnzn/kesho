@@ -1,18 +1,14 @@
 import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.FamilyDto;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import np.com.ngopal.control.AutoFillTextBox;
+import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 /**
  * Created with IntelliJ IDEA.

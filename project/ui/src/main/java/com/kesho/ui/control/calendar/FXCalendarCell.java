@@ -1,4 +1,4 @@
-package calendar;
+package com.kesho.ui.control.calendar;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
