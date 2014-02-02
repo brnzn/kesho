@@ -7,6 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?scenebuilder-classpath-element ../../java?>
+<?scenebuilder-classpath-element ../../../../target/classes?>
 
 <AnchorPane prefHeight="592.0000999999975" prefWidth="830.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
@@ -26,13 +28,11 @@
                         <Label text="Married?" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                         <Label text="Number of wives:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                         <Label text="Primary Caretaker:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                        <Label text="Relationship to Child:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                         <Label text="Family Profile:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextArea fx:id="profile" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
-                        <TextField id="family" fx:id="numOfWives" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="family" fx:id="primaryCaretaker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField id="family" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="family" fx:id="aliveParents" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <NumericTextField fx:id="numOfWives" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="primaryCaretaker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <NumericTextField fx:id="aliveParents" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                         <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="186.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                           <children>
                             <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
@@ -151,8 +151,8 @@
                               </GridPane.margin>
                             </Label>
                             <Label text="No of adults in the household:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                            <TextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                            <TextField id="numOfStudentsAtAddress" fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                            <NumericTextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <NumericTextField fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                           </children>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="281.0" />
