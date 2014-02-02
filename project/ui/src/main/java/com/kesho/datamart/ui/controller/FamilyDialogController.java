@@ -91,6 +91,11 @@ public class FamilyDialogController {
     }
 
     private void refreshForm(FamilyDto dto) {
+        if(dto == null) {
+            resetForm();
+            return;
+        }
+
         this.id = dto.getId();
         familyName.setText(dto.getName());
         homeLocation.setValue(dto.getHomeLocation());
@@ -109,6 +114,22 @@ public class FamilyDialogController {
         numOfAdultsAtAddress.setText(Util.safeToStringValue(dto.getNumOfAdultsAtAddress(), null));
     }
 
+    private void resetForm() {
+        this.id = null;
+        familyName.setText(null);
+        homeLocation.setValue(null);
+        homeSubLocation.setText(null);
+        homeClusterId.setText(null);
+        aliveParents.setText(null);
+        numNonKeshoStudents.setText(null);
+        numOfWives.setText(null);
+        primaryCaretaker.setText(null);
+        mainContactName.setText(null);
+        mobileNumber.setText(null);
+        phoneOwnerName.setText(null);
+        profile.setText(null);
+        numOfAdultsAtAddress.setText(null);
+    }
     /**
 	 * Sets the stage of this dialog.
 	 * @param dialogStage
@@ -153,7 +174,7 @@ public class FamilyDialogController {
 	}
 
     private FamilyDto create() {
-        FamilyDtoBuilder builder = new FamilyDtoBuilder(null, this.familyName.getText());
+        FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
         return builder.withHomeLocation(homeLocation.getValue())
                 .withHomeSubLocation(homeSubLocation.getText())
                 .withHomeClusterId(homeClusterId.getText())
