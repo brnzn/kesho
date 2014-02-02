@@ -18,4 +18,6 @@ public interface FamilyRepository {
     List<FamilyDto> getFamilies();
 
     Page<FamilyDto> getPage(int page, int pageSize);
+
+    void delete(Long id);
 }

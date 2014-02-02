@@ -92,7 +92,7 @@ public class FamilyDialogController {
 
     private void refreshForm(FamilyDto dto) {
         if(dto == null) {
-            resetForm();
+            reset();
             return;
         }
 
@@ -114,7 +114,8 @@ public class FamilyDialogController {
         numOfAdultsAtAddress.setText(Util.safeToStringValue(dto.getNumOfAdultsAtAddress(), null));
     }
 
-    private void resetForm() {
+    private void reset() {
+        familiesTable.getSelectionModel().clearSelection();
         this.id = null;
         familyName.setText(null);
         homeLocation.setValue(null);
@@ -148,14 +149,14 @@ public class FamilyDialogController {
 
     @FXML
     private void doNew() {
-
+        resetForm();
     }
 
     @FXML
     private void delete() {
-        FamilyDto dto = familiesTable.getSelectionModel().getSelectedItem();
-        if(dto != null) {
-//            repository.
+        if(id != null) {
+            repository.delete(id);
+            refreshTable();
         }
 
     }

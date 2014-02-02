@@ -34,4 +34,9 @@ public class FamilyRepositoryImpl implements FamilyRepository {
     public Page<FamilyDto> getPage(int page, int pageSize) {
         return familyService.getPage(new Request(page, pageSize));
     }
+
+    @Override
+    public void delete(Long id) {
+        familyService.delete(id);
+    }
 }

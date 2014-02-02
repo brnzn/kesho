@@ -51,6 +51,11 @@ public class FamilyServiceImpl implements FamilyService {
         return toPageResult(dao.findAll(pageSpecification), request);
     }
 
+    @Override
+    public void delete(Long id) {
+        dao.delete(id);
+    }
+
     private Page<FamilyDto> toPageResult(final org.springframework.data.domain.Page<Family> page, final Request request) {
         if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {
             return new PageImpl<FamilyDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());

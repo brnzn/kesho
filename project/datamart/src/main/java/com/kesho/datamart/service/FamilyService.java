@@ -20,4 +20,6 @@ public interface FamilyService {
     List<FamilyDto> getFamilies();
 
     Page<FamilyDto> getPage(Request request);
+
+    void delete(Long id);
 }
