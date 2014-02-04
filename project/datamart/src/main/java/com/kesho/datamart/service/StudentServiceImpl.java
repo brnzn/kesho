@@ -48,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Page<StudentDto> getPage(Request request) {
-        List<String> errors = PageUtil.validate(request);
+        List<String> errors = ValidationUtil.validate(request);
 
         if(errors != null) {
             return new PageImpl<StudentDto>().withErrors(errors);

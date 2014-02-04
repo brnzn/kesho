@@ -44,7 +44,7 @@ public class EducationHistoryDAOTest {
     public void shouldGetEducationHistory() {
 //        educationHistoryDAO.findOne(1L);
 //        List<EducationHistory> h = educationHistoryDAO.findByStudentId(2L);
-//        System.out.println(h.get(0).getSchool().getName());
+//        System.out.println(h.get(0).getSchool().getFamilyName());
 
     }
 

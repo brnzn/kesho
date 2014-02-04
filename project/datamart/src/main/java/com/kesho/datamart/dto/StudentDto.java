@@ -243,6 +243,6 @@ public class StudentDto implements Comparable {
     }
 
     private String getDisplay() {
-        return name + " " + family.getName();
+        return name + " " + family.getFamilyName();
     }
 }

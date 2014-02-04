@@ -41,6 +41,6 @@ public class FamilyServiceIT {
         assertThat(result.getId(), notNullValue());
 
         Family saved = DBUtil.findOne(transactionManager, Family.class, dao, result.getId());
-        assertThat(saved.getName(), is(result.getName()));
+        assertThat(saved.getName(), is(result.getFamilyName()));
     }
 }

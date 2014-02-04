@@ -15,7 +15,7 @@ public class FamilyListCell extends ListCell<FamilyDto> {
     protected void updateItem(FamilyDto item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null) {
-            setText(item.getName());
+            setText(item.getFamilyName());
         }
     }
 }

@@ -151,7 +151,7 @@ public class StudentController {
         FamilyDto dto = WindowsUtil.getInstance().familySelector();
         if(dto != null) {
             family.setUserData(dto);
-            family.setText(dto.getName());
+            family.setText(dto.getFamilyName());
             selectedStudent.getSelectedItem().setFamily(dto);
         }
     }
@@ -208,7 +208,7 @@ public class StudentController {
 
         firstName.setText(student.getName());
 
-        family.setText(student.getFamily().getName());
+        family.setText(student.getFamily().getFamilyName());
         family.setUserData(student.getFamily());
 
         gender.getSelectionModel().select(student.getGender());

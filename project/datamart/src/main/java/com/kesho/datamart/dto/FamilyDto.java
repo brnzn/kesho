@@ -1,10 +1,11 @@
 package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.Location;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,33 +16,44 @@ import javax.persistence.Enumerated;
  */
 public class FamilyDto implements Comparable {
     private final Long id;
-    private final String name;
+    @NotBlank(message = "Name is mandatory")
+    private final String familyName;
+    @NotNull(message = "Home location is mandatory")
     private Location homeLocation;
+    @NotBlank(message = "Home sub location is mandatory")
     private String homeSubLocation;
     private String homeClusterId;
+    @NotNull(message = "Number of parents alive is mandatory")
+    @Min(value = 0, message = "Number of parents alive cannot be negative")
     private Integer aliveParents;
     private Boolean isMarried;
+    @NotNull(message = "Number of non Kesho students in the house is mandatory")
+    @Min(value = 0, message = "Number of non Kesho students in the house cannot be negative")
     private Integer numNonKeshoStudents;
+    @Min(value = 0, message = "Number of wives cannot be negative")
     private Integer numOfWives;
     private String primaryCaretaker;
     private String mainContactName;
     private String mobileNumber;
     private Boolean isPhoneOwner;
     private String phoneOwnerName;
+    @NotBlank(message = "Profile is mandatory")
     private String profile;
+    @NotNull(message = "Number of adults in the house is mandatory")
+    @Min(value = 0, message = "Number of adults in the house cannot be negative")
     private Integer numOfAdultsAtAddress;
 
     public FamilyDto(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.familyName = name;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFamilyName() {
+        return familyName;
     }
 
     public Location getHomeLocation() {
@@ -164,7 +176,7 @@ public class FamilyDto implements Comparable {
         FamilyDto familyDto = (FamilyDto) o;
 
         if (id != null ? !id.equals(familyDto.id) : familyDto.id != null) return false;
-        if (name != null ? !name.equals(familyDto.name) : familyDto.name != null) return false;
+        if (familyName != null ? !familyName.equals(familyDto.familyName) : familyDto.familyName != null) return false;
 
         return true;
     }
@@ -172,17 +184,17 @@ public class FamilyDto implements Comparable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (familyName != null ? familyName.hashCode() : 0);
         return result;
     }
 
     @Override
     public int compareTo(Object o) {
-        return this.getName().compareTo( ((FamilyDto)o).getName() );
+        return this.getFamilyName().compareTo( ((FamilyDto)o).getFamilyName() );
     }
 
     @Override
     public String toString() {
-        return name;
+        return familyName;
     }
 }

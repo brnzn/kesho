@@ -8,7 +8,6 @@ import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.EducationHistory;
-import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.EducationHistoryDAO;
 import com.kesho.datamart.repository.StudentsDAO;
@@ -62,7 +61,7 @@ public class StudentServiceIT {
     @Test
     public void shouldUpdateFamily() {
         StudentDto dto = studentService.get(1L);
-        assertThat(dto.getFamily().getName(), is("sn1"));
+        assertThat(dto.getFamily().getFamilyName(), is("sn1"));
 
         StudentDto newFamily = dto.withFamily(new FamilyDto(2L, "sn2"));
         studentService.save(newFamily);
@@ -128,7 +127,7 @@ public class StudentServiceIT {
 
         assertNotNull(s1);
         assertThat("name should be fn", s1.getName(), is("fn"));
-        assertThat("family name should be sn1", s1.getFamily().getName(), is("sn1"));
+        assertThat("family name should be sn1", s1.getFamily().getFamilyName(), is("sn1"));
         assertThat("should be active", s1.isActiveStudent(), is(true));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));
         assertThat("has disability true", s1.hasDisability(), is(true));

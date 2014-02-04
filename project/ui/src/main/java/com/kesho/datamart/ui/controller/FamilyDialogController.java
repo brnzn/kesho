@@ -1,28 +1,30 @@
 package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.Location;
-import com.kesho.datamart.dto.*;
+import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.FamilyDtoBuilder;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.util.Event;
+import com.kesho.datamart.ui.util.PagingUtil;
 import com.kesho.datamart.ui.util.Util;
+import com.kesho.datamart.ui.validation.FormValidator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  */
@@ -64,8 +66,7 @@ public class FamilyDialogController {
     private TextField numOfAdultsAtAddress;
 
     private ObservableList<FamilyDto> familiesModel = FXCollections.observableArrayList();
-    private Effect invalidEffect = new DropShadow(BlurType.GAUSSIAN, Color.RED, 4, 0.0, 0, 0);
-
+    private Map<String, Node> validationFields = new HashMap<>();
 
     @FXML
     private TableView<FamilyDto> familiesTable;
@@ -75,14 +76,23 @@ public class FamilyDialogController {
     private Pagination pagination;
 
     private Stage dialogStage;
-	/**
+
+    /**
+     * Sets the stage of this dialog.
+     * @param dialogStage
+     */
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    /**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
 	private void initialize() {
         refreshTable();
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<FamilyDto, String>("name"));
+        familyNameColumn.setCellValueFactory(new PropertyValueFactory<FamilyDto, String>("familyName"));
 
         Util.initializeYesNoGroup(isMarried, isPhoneOwner);
         Util.initializeComboBoxValues(homeLocation, EnumSet.allOf(Location.class));
@@ -93,7 +103,6 @@ public class FamilyDialogController {
                 refreshForm(dto2);
             }
         });
-
     }
 
     private void refreshForm(FamilyDto dto) {
@@ -103,18 +112,18 @@ public class FamilyDialogController {
         }
 
         this.id = dto.getId();
-        familyName.setText(dto.getName());
+        familyName.setText(dto.getFamilyName());
         homeLocation.setValue(dto.getHomeLocation());
         homeSubLocation.setText(dto.getHomeSubLocation());
         homeClusterId.setText(dto.getHomeClusterId());
         aliveParents.setText(Util.safeToStringValue(dto.getAliveParents(), null));
-        setState(isMarried, dto.getMarried());
+        Util.setYesNoToggleState(isMarried, dto.getMarried());
         numNonKeshoStudents.setText(Util.safeToStringValue(dto.getNumNonKeshoStudents(), null));
         numOfWives.setText(Util.safeToStringValue(dto.getNumOfWives(), null));
         primaryCaretaker.setText(dto.getPrimaryCaretaker());
         mainContactName.setText(dto.getMainContactName());
         mobileNumber.setText(dto.getMobileNumber());
-        setState(isPhoneOwner, dto.getMarried());
+        Util.setYesNoToggleState(isPhoneOwner, dto.getMarried());
         phoneOwnerName.setText(dto.getPhoneOwnerName());
         profile.setText(dto.getProfile());
         numOfAdultsAtAddress.setText(Util.safeToStringValue(dto.getNumOfAdultsAtAddress(), null));
@@ -137,21 +146,6 @@ public class FamilyDialogController {
         profile.setText(null);
         numOfAdultsAtAddress.setText(null);
     }
-    /**
-	 * Sets the stage of this dialog.
-	 * @param dialogStage
-	 */
-	public void setDialogStage(Stage dialogStage) {
-		this.dialogStage = dialogStage;
-	}
-
-    private void setState(ToggleGroup group, Boolean value) {
-        if (value == null || value) {
-            group.getToggles().get(0).setSelected(true);
-        } else {
-            group.getToggles().get(1).setSelected(true);
-        }
-    }
 
     @FXML
     private void doNew() {
@@ -164,7 +158,6 @@ public class FamilyDialogController {
             repository.delete(id);
             refreshTable();
         }
-
     }
 
 	/**
@@ -172,8 +165,8 @@ public class FamilyDialogController {
 	 */
 	@FXML
 	private void save() {
-        if (isInputValid()) {
-            FamilyDto family = create();
+        FamilyDto family = create();
+        if (isInputValid(family)) {
             repository.save(family);
             WindowsUtil.getInstance().getEventBus().fireEvent(Event.FAMILY_ADDED);
 			dialogStage.close();
@@ -198,7 +191,8 @@ public class FamilyDialogController {
                 .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
                 .build();
     }
-	/**
+
+    /**
 	 * Called when the user clicks cancel.
 	 */
 	@FXML
@@ -211,59 +205,60 @@ public class FamilyDialogController {
 	 *
 	 * @return true if the input is valid
 	 */
-	private boolean isInputValid() {
-		String errorMessage = "";
+	private boolean isInputValid(FamilyDto dto) {
+        String validation = FormValidator.validate(dto, getFields());
 
-		if (StringUtils.isBlank(familyName.getText())) {
-			errorMessage += "Family Name is mandatory!\n";
-            familyName.setEffect(invalidEffect);
-		} else {
-            familyName.setEffect(null);
+        if(StringUtils.isNotBlank(validation)) {
+	        Dialogs.showErrorDialog(dialogStage, validation, "Please correct invalid fields", "Invalid Fields");
+            return false;
+        } else {
+            return true;
         }
 
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			// Show the error message
-			Dialogs.showErrorDialog(dialogStage, errorMessage,
-					"Please correct invalid fields", "Invalid Fields");
-			return false;
-		}
 	}
+
+    private Map<String, Node> getFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("familyName", familyName);
+            validationFields.put("homeLocation", homeLocation);
+            validationFields.put("homeSubLocation", homeSubLocation);
+            validationFields.put("homeClusterId", homeClusterId);
+            validationFields.put("aliveParents", aliveParents);
+            validationFields.put("numNonKeshoStudents", numNonKeshoStudents);
+            validationFields.put("numOfWives", numOfWives);
+            validationFields.put("primaryCaretaker", primaryCaretaker);
+            validationFields.put("mainContactName", mainContactName);
+            validationFields.put("mobileNumber", mobileNumber);
+            validationFields.put("phoneOwnerName", phoneOwnerName);
+            validationFields.put("numOfAdultsAtAddress", numOfAdultsAtAddress);
+            validationFields.put("profile", profile);
+        }
+        return validationFields;
+    }
 
     private void initTable() {
         familiesModel.clear();
         familiesTable.setItems(familiesModel);
-
-        familiesTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FamilyDto>() {
-            @Override
-            public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto dto1, FamilyDto dto2) {
-                System.out.println("====================");
-            }
-        });
     }
 
     private void initPagination() {
-        Page p = getPage(0, 10);
-        if(p != null) {
-            familiesModel.addAll(p.getContent());    //
-            pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
-            pagination.currentPageIndexProperty().setValue(0);
-        }
-
-        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Page<FamilyDto> p = getPage(newValue.intValue(), 10);
-                pagination.setPageCount(p.getTotalPages());
-                familiesModel.clear();
-                familiesModel.addAll(p.getContent());
-            }
-        });
-    }
-
-    private Page<FamilyDto> getPage(final int page, final int pageSize) {
-        return repository.getPage(page, pageSize);
+        PagingUtil.initPagination(repository, familiesModel, pagination);
+//        Page p = PagingUtil.getPage(repository, 0, 10);
+//        if(p != null) {
+//            familiesModel.addAll(p.getContent());
+//            pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
+//            pagination.currentPageIndexProperty().setValue(0);
+//        }
+//
+//        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                Page<FamilyDto> p = PagingUtil.getPage(repository, newValue.intValue(), 10);
+//                pagination.setPageCount(p.getTotalPages());
+//                familiesModel.clear();
+//                familiesModel.addAll(p.getContent());
+//            }
+//        });
     }
 
     private void refreshTable() {

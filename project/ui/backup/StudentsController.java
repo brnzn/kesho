@@ -2,9 +2,7 @@ package backup;
 
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -159,7 +157,7 @@ public class StudentsController {
 
         if (person != null) {
 			nameLbl.setText(person.getName());
-			familyNameLbl.setText(person.getFamily().getName());
+			familyNameLbl.setText(person.getFamily().getFamilyName());
             if(person.getGender() != null) {
                 genderLbl.setText(person.getGender().toString());
             }

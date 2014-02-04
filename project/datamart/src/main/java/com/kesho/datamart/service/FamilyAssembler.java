@@ -1,12 +1,8 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.entity.Family;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +36,7 @@ public class FamilyAssembler {
     Family toFamily(FamilyDto dto) {
         Family family = new Family();
         family.setId(dto.getId());
-        family.setName(dto.getName());
+        family.setName(dto.getFamilyName());
         family.setHomeLocation(dto.getHomeLocation());
         family.setHomeSubLocation(dto.getHomeSubLocation());
         family.setHomeClusterId(dto.getHomeClusterId());

@@ -32,7 +32,7 @@ public class SponsorServiceImpl implements SponsorService {
 
     @Override
     public Page<SponsorDto> getPage(Request request) {
-        List<String> errors = PageUtil.validate(request);
+        List<String> errors = ValidationUtil.validate(request);
 
         if(errors != null) {
             return new PageImpl<SponsorDto>().withErrors(errors);

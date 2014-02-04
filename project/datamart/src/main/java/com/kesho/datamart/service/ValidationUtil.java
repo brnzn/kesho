@@ -1,6 +1,6 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.paging.Request;
+import com.kesho.datamart.domain.ValidationResult;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -16,19 +16,30 @@ import java.util.Set;
  * Time: 8:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PageUtil {
+public class ValidationUtil {
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    public static List<String> validate(Request request) {
-        Set<ConstraintViolation<Request>> violations = validator.validate(request);
+    public static <T> List<String> validate(T request) {
+        Set<ConstraintViolation<T>> violations = validator.validate(request);
 
         List<String> errors = null;
         if (!violations.isEmpty()) {
             errors = new ArrayList<String>();
-            for (ConstraintViolation<Request> violation:violations) {
+            for (ConstraintViolation<T> violation:violations) {
                 errors.add(violation.getMessage());
             }
         }
         return errors;
+    }
+
+    public static <T> ValidationResult validateNew(T request) {
+        Set<ConstraintViolation<T>> violations = validator.validate(request);
+
+        ValidationResult result = new ValidationResult();
+        for (ConstraintViolation<T> violation:violations) {
+            result.add(violation.getMessage(), violation.getPropertyPath().toString());
+        }
+
+        return result;
     }
 }

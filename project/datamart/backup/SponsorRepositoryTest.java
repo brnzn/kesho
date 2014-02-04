@@ -171,7 +171,7 @@ public class SponsorRepositoryTest {
 //		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createQueryTable("EDUCATION_HISTORY", String.format("select * from EDUCATION_HISTORY where student_id=%d order by level asc", student.getId())).getValue(1, "level").toString(), is("Level2"));
 //		assertThat("Expected EDUCATION_HISTORY", dbSetup.getConnection().createQueryTable("EDUCATION_HISTORY", String.format("select * from EDUCATION_HISTORY where student_id=%d order by level asc", student.getId())).getValue(1, "class").toString(), is(CLASS.YEAR2.name()));
 //		
-//		assertThat(student.getEducationHistory().iterator().next().getSchool().getName(), is("school1"));
+//		assertThat(student.getEducationHistory().iterator().next().getSchool().getFamilyName(), is("school1"));
 //	}
 //	
 //	@Test

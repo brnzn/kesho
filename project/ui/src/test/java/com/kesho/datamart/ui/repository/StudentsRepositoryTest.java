@@ -52,7 +52,7 @@ public class StudentsRepositoryTest {
         assertThat(page.getTotalPages(), is(1));
     }
 //
-//    @Test
+//    @com.kesho.datamart.ui.repository.TestMe
 //    public  void shouldReturnListOfStudents() {
 //        List<StudentDto> studentDtos = Lists.newArrayList(mock(StudentDto.class), mock(StudentDto.class));
 //

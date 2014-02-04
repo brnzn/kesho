@@ -12,7 +12,7 @@ import java.util.List;
  * Time: 6:11 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface FamilyRepository {
+public interface FamilyRepository extends Paging {
     FamilyDto save(FamilyDto dto);
 
     List<FamilyDto> getFamilies();

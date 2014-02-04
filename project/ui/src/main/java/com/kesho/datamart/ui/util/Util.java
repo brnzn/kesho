@@ -35,4 +35,13 @@ public class Util {
         }
     }
 
+    public static void setYesNoToggleState(ToggleGroup group, Boolean value) {
+        if (value == null || value) {
+            group.getToggles().get(0).setSelected(true);
+        } else {
+            group.getToggles().get(1).setSelected(true);
+        }
+    }
+
+
 }

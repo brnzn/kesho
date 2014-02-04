@@ -8,7 +8,6 @@ import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -136,7 +135,7 @@ public class StudentsController implements Selectable<StudentDto> {
         familyNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentDto, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<StudentDto, String> s) {
-                SimpleStringProperty sp = new SimpleStringProperty(s.getValue().getFamily().getName());
+                SimpleStringProperty sp = new SimpleStringProperty(s.getValue().getFamily().getFamilyName());
                 return sp;
             }
         });

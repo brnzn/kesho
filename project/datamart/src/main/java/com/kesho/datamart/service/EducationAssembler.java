@@ -46,7 +46,7 @@ public class EducationAssembler {
         log.setId(dto.getId());
         log.setCourse(dto.getCourse());
         log.setEducationStatus(dto.getEducationalStatus());
-//        log.setSchool(new School(dto.getInstitution().getId(), dto.getInstitution().getName()));
+//        log.setSchool(new School(dto.getInstitution().getId(), dto.getInstitution().getFamilyName()));
         log.setStartDate(dto.getDate());
         log.setStudentId(dto.getStudentId());
         log.setSecondaryLevel1(dto.getSecondaryEducationStatus1());

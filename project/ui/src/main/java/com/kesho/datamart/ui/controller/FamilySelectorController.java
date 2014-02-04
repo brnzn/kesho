@@ -89,7 +89,7 @@ public class FamilySelectorController {
 	 */
 	@FXML
 	private void handleOk() {
-//        if(!family.getSelected().getName().equals(family.getText())) {
+//        if(!family.getSelected().getFamilyName().equals(family.getText())) {
 //            System.out.println("invalid..................");
 //            return;
 //        }

@@ -3,12 +3,9 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PageImpl;
-import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.entity.Family;
-import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
-import org.springframework.beans.factory.parsing.FailFastProblemReporter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -40,7 +37,7 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Page<FamilyDto> getPage(Request request) {
-        List<String> errors = PageUtil.validate(request);
+        List<String> errors = ValidationUtil.validate(request);
 
         if(errors != null) {
             return new PageImpl<FamilyDto>().withErrors(errors);
