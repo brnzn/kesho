@@ -25,6 +25,7 @@ public class FamilyRepositoryImpl implements FamilyRepository {
         return familyService.save(dto);
     }
 
+    //TODO: not a good idea. Need to convince kate to drop the idea of uto complete text field
     @Override
     public List<FamilyDto> getFamilies() {
         return familyService.getFamilies();

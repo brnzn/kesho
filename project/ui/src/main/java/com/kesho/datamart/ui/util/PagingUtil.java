@@ -15,10 +15,6 @@ import javafx.scene.control.Pagination;
  * To change this template use File | Settings | File Templates.
  */
 public class PagingUtil {
-    public static <T> Page<T> getPage(Paging paging, final int page, final int pageSize) {
-        return paging.getPage(page, pageSize);
-    }
-
     public static <T> void initPagination(final Paging paging, final ObservableList<T> model, final Pagination pagination) {
         Page p = getPage(paging, 0, 10);
         if(p != null) {
@@ -31,6 +27,7 @@ public class PagingUtil {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 Page<T> p = getPage(paging, newValue.intValue(), 10);
+                //TODO: check for errors. What should we do in case of errors?
                 pagination.setPageCount(p.getTotalPages());
                 model.clear();
                 model.addAll(p.getContent());
@@ -38,4 +35,9 @@ public class PagingUtil {
         });
 
     }
+
+    private static <T> Page<T> getPage(Paging paging, final int page, final int pageSize) {
+        return paging.getPage(page, pageSize);
+    }
+
 }

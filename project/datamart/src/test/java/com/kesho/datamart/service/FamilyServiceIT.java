@@ -1,8 +1,13 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -14,6 +19,7 @@ import javax.inject.Inject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +31,9 @@ import static org.hamcrest.Matchers.notNullValue;
 @ContextConfiguration(locations = { "classpath:datamart-service-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class FamilyServiceIT {
+    @Rule
+    public final DatabaseSetupRule dbSetup = DatabaseSetupRule.setUpDataFor("kesho", "families-it-data.xml");
+
     @Inject
     private FamilyService familyService;
     @Inject
@@ -42,5 +51,45 @@ public class FamilyServiceIT {
 
         Family saved = DBUtil.findOne(transactionManager, Family.class, dao, result.getId());
         assertThat(saved.getName(), is(result.getFamilyName()));
+    }
+
+    @Test
+    public void shouldUpdateFamily() {
+        FamilyDto family = new FamilyDto(1L, "newname");
+
+        FamilyDto result = familyService.save(family);
+        assertThat(result.getId(), notNullValue());
+
+        Family saved = DBUtil.findOne(transactionManager, Family.class, dao, result.getId());
+        assertThat(saved.getName(), is("newname"));
+    }
+
+    @Test
+    public void shouldDeleteFamily() {
+        assertThat("Expected to find family ID 1", DBUtil.findOne(transactionManager, Family.class, dao, 1L), notNullValue());
+        familyService.delete(1L);
+        assertThat("Expected not to find family ID 1", DBUtil.findOne(transactionManager, Family.class, dao, 1L), nullValue());
+    }
+    @Test
+    public void shouldReturnErrorPageIfPageNumberIsNegative() {
+        Page<FamilyDto> page = familyService.getPage(new Request(-1, 1));
+        assertThat("Expected error page",page.isError(), is(true));
+        assertThat(page.getErrors().get(0), is("Page number cannot be negative"));
+    }
+
+    @Test
+    public void shouldReturnEmptyPageIfExceededPages() {
+        Page<FamilyDto> page = familyService.getPage(new Request(3, 3));
+        assertThat(page.getTotalPages(), is(2));
+        assertThat(page.getSize(), is(0));
+        assertThat("Expect error page", page.isError(), is(true));
+        assertThat(page.getErrors().get(0), is("Max pages is [2]"));
+    }
+
+    @Test
+    public void shouldReturnLastPage() {
+        Page<FamilyDto> page = familyService.getPage(new Request(1, 3));
+        assertThat(page.getTotalPages(), is(2));
+        assertThat(page.getSize(), is(2));
     }
 }
