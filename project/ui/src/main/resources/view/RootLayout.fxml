@@ -34,8 +34,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="System">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Institutions" />
-                    <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Add Family" />
+                    <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Manage Institutions" />
+                    <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Manage Families" />
                   </items>
                 </Menu>
               </menus>

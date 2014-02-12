@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.kesho.ui.control.*?>
 <?import com.kesho.ui.control.NumericTextField?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
@@ -11,197 +12,197 @@
 <?scenebuilder-classpath-element ../../../../target/classes?>
 
 <AnchorPane prefHeight="567.999977929685" prefWidth="830.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-    <children>
-        <BorderPane prefHeight="592.0000999999975" prefWidth="830.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <center>
-                <VBox prefHeight="386.0" prefWidth="632.0">
-                    <children>
-                        <TitledPane animated="false" collapsible="false" expanded="true" text="General">
-                            <content>
-                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <GridPane alignment="TOP_CENTER" hgap="10.0" minHeight="167.0" prefHeight="167.0" prefWidth="628.0" vgap="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                            <children>
-                                                <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                                <TextField fx:id="familyName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                                <Label text="Num of Parents alive:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                                <Label text="Married?" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                                <Label text="Number of wives:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                                <Label text="Primary Caretaker:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                                <Label text="Family Profile:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <TextArea fx:id="profile" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
-                                                <NumericTextField fx:id="numOfWives" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField fx:id="primaryCaretaker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <NumericTextField fx:id="aliveParents" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="186.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                    <children>
-                                                        <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                                                            <toggleGroup>
-                                                                <ToggleGroup fx:id="isMarried" />
-                                                            </toggleGroup>
-                                                        </RadioButton>
-                                                        <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isMarried" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="80.0" prefWidth="146.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="142.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="148.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="202.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                        </GridPane>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="125.0" text="Contact Details">
-                            <content>
-                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <GridPane hgap="10.0" prefHeight="167.0" prefWidth="628.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                            <children>
-                                                <Label text="Main Contact Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                                <Label text="Mobile Number:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                                <Label text="Phone owner:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                                <TextField fx:id="mainContactName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                                <TextField fx:id="mobileNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField fx:id="phoneOwnerName" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                                <Label text="Is it their own phone:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                                    <children>
-                                                        <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                                                            <toggleGroup>
-                                                                <ToggleGroup fx:id="isPhoneOwner" />
-                                                            </toggleGroup>
-                                                        </RadioButton>
-                                                        <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isPhoneOwner" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="136.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="149.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="167.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="186.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                        </GridPane>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="125.0" text="Location">
-                            <content>
-                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <GridPane hgap="10.0" prefHeight="123.0" prefWidth="690.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                            <children>
-                                                <Label text="Home Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                                <Label text="Home Sub Location:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                                <Label text="Home Cluster ID:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                                <TextField fx:id="homeSubLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField fx:id="homeClusterId" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                                <ComboBox fx:id="homeLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                                    <items>
-                                                        <FXCollections fx:factory="observableArrayList">
-                                                            <String fx:value="Item 1" />
-                                                            <String fx:value="Item 2" />
-                                                            <String fx:value="Item 3" />
-                                                        </FXCollections>
-                                                    </items>
-                                                </ComboBox>
-                                            </children>
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="139.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="147.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="131.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="221.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                        </GridPane>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="80.0" text="Household">
-                            <content>
-                                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <VBox prefHeight="54.0" prefWidth="691.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <children>
-                                                <GridPane hgap="10.0" prefHeight="50.0" prefWidth="730.0">
-                                                    <children>
-                                                        <Label text="No Non-kesho students in the household:" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                                            <GridPane.margin>
-                                                                <Insets left="5.0" right="5.0" />
-                                                            </GridPane.margin>
-                                                        </Label>
-                                                        <Label text="No of adults in the household:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                                        <NumericTextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                                        <NumericTextField fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                                    </children>
-                                                    <columnConstraints>
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="281.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="62.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="200.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="100.0" />
-                                                    </columnConstraints>
-                                                    <rowConstraints>
-                                                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-                                                    </rowConstraints>
-                                                    <VBox.margin>
-                                                        <Insets right="5.0" />
-                                                    </VBox.margin>
-                                                </GridPane>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                    </children>
-                </VBox>
-            </center>
-            <left>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="537.0" prefWidth="149.0">
-                    <children>
-                        <VBox prefHeight="562.0" prefWidth="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <TableView fx:id="familiesTable" prefHeight="547.0" prefWidth="148.0">
-                                    <columns>
-                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="146.0" text="Family Name" fx:id="familyNameColumn" />
-                                    </columns>
-                                </TableView>
-                                <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="6" prefHeight="65.0" prefWidth="334.0" />
-                            </children>
-                        </VBox>
-                    </children>
+  <children>
+    <BorderPane prefHeight="592.0000999999975" prefWidth="830.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <VBox prefHeight="386.0" prefWidth="632.0">
+          <children>
+            <TitledPane animated="false" collapsible="false" expanded="true" text="General">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <GridPane alignment="TOP_CENTER" hgap="10.0" minHeight="167.0" prefHeight="167.0" prefWidth="628.0" vgap="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                      <children>
+                        <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="familyName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Num of Parents alive:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <Label text="Married?" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label text="Number of wives:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <Label text="Primary Caretaker:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <Label text="Family Profile:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextArea fx:id="profile" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
+                        <NumericTextField fx:id="numOfWives" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="primaryCaretaker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <NumericTextField fx:id="aliveParents" prefHeight="-1.0" prefWidth="172.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="186.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <children>
+                            <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                              <toggleGroup>
+                                <ToggleGroup fx:id="isMarried" />
+                              </toggleGroup>
+                            </RadioButton>
+                            <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isMarried" />
+                          </children>
+                        </HBox>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="80.0" prefWidth="146.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="142.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="148.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="202.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
                 </AnchorPane>
-            </left>
-            <top>
-                <ToolBar>
-                    <items>
-                        <Button mnemonicParsing="false" onAction="#doNew" text="New" />
-                        <Button mnemonicParsing="false" onAction="#delete" text="Delete" />
-                        <Button mnemonicParsing="false" onAction="#save" text="Save" />
-                    </items>
-                </ToolBar>
-            </top>
-        </BorderPane>
-    </children>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="125.0" text="Contact Details">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <GridPane hgap="10.0" prefHeight="167.0" prefWidth="628.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                      <children>
+                        <Label text="Main Contact Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label text="Mobile Number:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label text="Phone owner:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="mainContactName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField fx:id="mobileNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="phoneOwnerName" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <Label text="Is it their own phone:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                          <children>
+                            <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                              <toggleGroup>
+                                <ToggleGroup fx:id="isPhoneOwner" />
+                              </toggleGroup>
+                            </RadioButton>
+                            <RadioButton mnemonicParsing="false" text="No" toggleGroup="$isPhoneOwner" />
+                          </children>
+                        </HBox>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="136.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="149.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="167.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="186.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="125.0" text="Location">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <GridPane hgap="10.0" prefHeight="123.0" prefWidth="690.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                      <children>
+                        <Label text="Home Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label text="Home Sub Location:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label text="Home Cluster ID:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="homeSubLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="homeClusterId" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <ComboBox fx:id="homeLocation" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="139.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="147.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="131.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="221.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="80.0" text="Household">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <VBox prefHeight="54.0" prefWidth="691.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <children>
+                        <GridPane hgap="10.0" prefHeight="50.0" prefWidth="730.0">
+                          <children>
+                            <Label text="No Non-kesho students in the household:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                              <GridPane.margin>
+                                <Insets left="5.0" right="5.0" />
+                              </GridPane.margin>
+                            </Label>
+                            <Label text="No of adults in the household:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <NumericTextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <NumericTextField fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="281.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="62.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <VBox.margin>
+                            <Insets right="5.0" />
+                          </VBox.margin>
+                        </GridPane>
+                      </children>
+                    </VBox>
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+          </children>
+        </VBox>
+      </center>
+      <left>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="537.0" prefWidth="149.0">
+          <children>
+            <VBox prefHeight="562.0" prefWidth="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <children>
+                <TableView fx:id="familiesTable" prefHeight="547.0" prefWidth="148.0">
+                  <columns>
+                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="146.0" text="Family Name" fx:id="familyNameColumn" />
+                  </columns>
+                </TableView>
+                <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="6" prefHeight="65.0" prefWidth="334.0" />
+              </children>
+            </VBox>
+          </children>
+        </AnchorPane>
+      </left>
+      <top>
+        <ToolBar>
+          <items>
+            <Button mnemonicParsing="false" onAction="#doNew" text="New" />
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#delete" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#save" text="Save" />
+          </items>
+        </ToolBar>
+      </top>
+    </BorderPane>
+  </children>
 </AnchorPane>

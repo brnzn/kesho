@@ -64,6 +64,8 @@ public class FamilyDialogController {
     private TextArea profile;
     @FXML
     private TextField numOfAdultsAtAddress;
+    @FXML
+    private Button deleteButton;
 
     private ObservableList<FamilyDto> familiesModel = FXCollections.observableArrayList();
     private Map<String, Node> validationFields = new HashMap<>();
@@ -100,6 +102,12 @@ public class FamilyDialogController {
         familiesTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FamilyDto>() {
             @Override
             public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto dto1, FamilyDto dto2) {
+                if(dto2 != null) {
+                    deleteButton.setDisable(false);
+                } else {
+                    deleteButton.setDisable(true);
+                }
+
                 refreshForm(dto2);
             }
         });
@@ -243,22 +251,6 @@ public class FamilyDialogController {
 
     private void initPagination() {
         PagingUtil.initPagination(repository, familiesModel, pagination);
-//        Page p = PagingUtil.getPage(repository, 0, 10);
-//        if(p != null) {
-//            familiesModel.addAll(p.getContent());
-//            pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
-//            pagination.currentPageIndexProperty().setValue(0);
-//        }
-//
-//        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                Page<FamilyDto> p = PagingUtil.getPage(repository, newValue.intValue(), 10);
-//                pagination.setPageCount(p.getTotalPages());
-//                familiesModel.clear();
-//                familiesModel.addAll(p.getContent());
-//            }
-//        });
     }
 
     private void refreshTable() {
