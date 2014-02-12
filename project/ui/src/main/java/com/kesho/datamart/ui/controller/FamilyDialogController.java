@@ -173,7 +173,7 @@ public class FamilyDialogController {
 	 */
 	@FXML
 	private void save() {
-        FamilyDto family = create();
+        FamilyDto family = buildDto();
         if (isInputValid(family)) {
             repository.save(family);
             WindowsUtil.getInstance().getEventBus().fireEvent(Event.FAMILY_ADDED);
@@ -181,7 +181,7 @@ public class FamilyDialogController {
 		}
 	}
 
-    private FamilyDto create() {
+    private FamilyDto buildDto() {
         FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
         return builder.withHomeLocation(homeLocation.getValue())
                 .withHomeSubLocation(homeSubLocation.getText())
@@ -249,12 +249,8 @@ public class FamilyDialogController {
         familiesTable.setItems(familiesModel);
     }
 
-    private void initPagination() {
-        PagingUtil.initPagination(repository, familiesModel, pagination);
-    }
-
     private void refreshTable() {
         initTable();
-        initPagination();
+        PagingUtil.initPagination(repository, familiesModel, pagination);
     }
 }
