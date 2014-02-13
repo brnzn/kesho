@@ -140,19 +140,19 @@ public class FamilyDialogController {
     private void reset() {
         familiesTable.getSelectionModel().clearSelection();
         this.id = null;
-        familyName.setText(null);
+        familyName.clear();
         homeLocation.setValue(null);
-        homeSubLocation.setText(null);
-        homeClusterId.setText(null);
-        aliveParents.setText(null);
-        numNonKeshoStudents.setText(null);
-        numOfWives.setText(null);
-        primaryCaretaker.setText(null);
-        mainContactName.setText(null);
-        mobileNumber.setText(null);
-        phoneOwnerName.setText(null);
-        profile.setText(null);
-        numOfAdultsAtAddress.setText(null);
+        homeSubLocation.clear();
+        homeClusterId.clear();
+        aliveParents.clear();
+        numNonKeshoStudents.clear();
+        numOfWives.clear();
+        primaryCaretaker.clear();
+        mainContactName.clear();
+        mobileNumber.clear();
+        phoneOwnerName.clear();
+        profile.clear();
+        numOfAdultsAtAddress.clear();
     }
 
     @FXML

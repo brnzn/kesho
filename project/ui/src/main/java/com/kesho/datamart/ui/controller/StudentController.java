@@ -122,6 +122,7 @@ public class StudentController {
             }
         });
 
+        //New button
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

@@ -254,6 +254,10 @@ public class EducationDetailsController  {
         educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
         calendar.setValue(dto.getDate().toDate());
         institutions.getSelectionModel().select(dto.getInstitution());
+        secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
+        secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
+        comments.setText(dto.getComments());
+
     }
 
 
@@ -265,5 +269,10 @@ public class EducationDetailsController  {
         calendar.clear();
         institutions.getSelectionModel().clearSelection();
         institutions.valueProperty().setValue(null);
+        secondaryStatus1.getSelectionModel().clearSelection();
+        secondaryStatus1.valueProperty().setValue(null);
+        secondaryStatus2.getSelectionModel().clearSelection();
+        secondaryStatus2.valueProperty().setValue(null);
+        comments.clear();
     }
 }
