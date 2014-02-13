@@ -47,7 +47,6 @@ public class StudentsDAOTest {
         student.setFirstName("s1");
         Family f = new Family();
         f.setId(1L);
-        f.setName("name");
         student.setFamily(f);
         student.setActive(true);
         student.setGender(Gender.M);
@@ -76,7 +75,7 @@ public class StudentsDAOTest {
         Student saved = txTemplate.execute(callback);
 
         assertThat(saved.getFirstName(), is("s1"));
-        assertThat(saved.getFamily().getName(), is("sn1"));
+        assertThat(saved.getFamily().getName(), is("a"));
         assertThat(saved.isActive(), is(true));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));
