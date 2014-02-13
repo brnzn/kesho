@@ -15,8 +15,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface StudentService {
-    //List<StudentDto> getAll();
-
     StudentDto get(Long id);
 
     Page<StudentDto> getPage(Request request);
