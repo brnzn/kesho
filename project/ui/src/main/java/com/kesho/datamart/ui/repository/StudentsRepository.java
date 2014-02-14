@@ -31,4 +31,6 @@ public interface StudentsRepository {
     List<StudentDto> getStudents();
 
     EducationDto findLatestEducation(Long studentId);
+
+    void deleteStudent(Long id);
 }

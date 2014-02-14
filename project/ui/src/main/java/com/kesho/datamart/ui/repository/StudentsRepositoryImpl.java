@@ -64,4 +64,9 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.findLatestEducation(studentId);
     }
 
+    @Override
+    public void deleteStudent(Long id) {
+        studentsService.deleteStudent(id);
+    }
+
 }

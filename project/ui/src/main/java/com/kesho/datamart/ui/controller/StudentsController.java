@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
@@ -47,9 +48,15 @@ public class StudentsController implements Selectable<StudentDto> {
     private TabPane studentTab;
     @FXML
     private Button newButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private StudentController studentController;
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
     private Map<String, EventHandler<ActionEvent>> newButtonHandlers = new HashMap<>();
+
+    private Map<String, FormActionListener> lifeCycle = new HashMap<>();
 
     @Override
     public StudentDto getSelectedItem() {
@@ -93,20 +100,35 @@ public class StudentsController implements Selectable<StudentDto> {
         newButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                newButtonHandlers.get(studentTab.getSelectionModel().getSelectedItem().getId()).handle(actionEvent);
+                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                if(elc != null) {
+                    elc.newFired();
+                }
+            }
+        });
+
+        deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                if(elc != null) {
+                    elc.deleteFired(studentsTable.getSelectionModel().getSelectedItem().getId());
+                }
             }
         });
 
         studentTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-                if (newButtonHandlers.get(tab2.getId()) == null) {
-                    newButton.disableProperty().setValue(true);
-                } else {
-                    newButton.disableProperty().setValue(false);
-                }
+//                if (newButtonHandlers.get(tab2.getId()) == null) {
+                    newButton.disableProperty().setValue(newButtonHandlers.get(tab2.getId()) == null);
+ //               } else {
+  //                  newButton.disableProperty().setValue(false);
+   //             }
             }
         });
+
+        lifeCycle.put("studentDetailsTab", studentController);
 
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
             @Override
@@ -140,10 +162,15 @@ public class StudentsController implements Selectable<StudentDto> {
             }
         });
 
+
         studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
-                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
+                deleteButton.disableProperty().setValue(studentDto2 == null);
+                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                if(elc != null) {
+                    elc.itemSelected(studentDto2);
+                }
             }
         });
     }

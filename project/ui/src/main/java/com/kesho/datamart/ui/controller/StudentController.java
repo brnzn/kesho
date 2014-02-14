@@ -6,6 +6,7 @@ import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -14,12 +15,9 @@ import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.ui.control.NumericTextField;
 import com.kesho.ui.control.calendar.FXCalendar;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -38,7 +36,7 @@ import java.util.EnumSet;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StudentController {
+public class StudentController implements FormActionListener<StudentDto> {
     @Autowired
     private StudentsRepository studentsRepository;
 
@@ -119,41 +117,27 @@ public class StudentController {
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
         Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
+    }
 
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                if (selectedStudent.getSelectedItem() != null) {
-                    initializeForm(selectedStudent.getSelectedItem());
-                }
-            }
-        });
+    @Override
+    public void newFired() {
+        add();
+    }
 
-        //New button
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                WindowsUtil.getInstance().getControllers().studentsController().registerNewChangeListener("studentDetailsTab", new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        add();
-                    }
-                });
-            }
-        });
+    @Override
+    public void itemSelected(StudentDto item) {
+        initializeForm(item);
+    }
 
+    @Override
+    public void deleteFired(Long id) {
+        studentsRepository.deleteStudent(id);
+        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
     }
 
     private void add() {
         resetForm();
         selected.set(new StudentDto());
-        //StudentDto dto = new StudentDto();
-//        boolean isOK = WindowsUtil.getInstance().studentForm(dto);
-//
-//        if (isOK) {
-//            studentsRepository.save(dto);
-//            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
-//        }
     }
 
     @FXML
@@ -162,12 +146,12 @@ public class StudentController {
         if(dto != null) {
             family.setUserData(dto);
             family.setText(dto.getFamilyName());
-            selectedStudent.getSelectedItem().setFamily(dto);
         }
     }
 
     @FXML
     private void save() {
+        //TODO: validate
         StudentDto dto = buildDto();
         boolean isNew = false;
         if (dto.getId() == null) {
@@ -175,17 +159,20 @@ public class StudentController {
         }
         dto = studentsRepository.save(dto);  //looks like it generate too many sqls
         selected.get().withName(firstName.getText()); // is this to refresh the table?
+        selected.get().setFamily(dto.getFamily());
 
-        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+        if(isNew) {
+            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+        }
 
-        selectedStudent.refresh();
+        selectedStudent.refresh(); // use event bus
 
     }
 
     private StudentDto buildDto() {
         StudentDto dto = selected.get();
         dto.withName(firstName.getText())
-                .withFamily((FamilyDto)family.getUserData())
+                .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
                 .activeStudent((Boolean) currentStudent.getSelectedToggle().getUserData())
@@ -227,10 +214,22 @@ public class StudentController {
         yearOfBirth.clear();
         contactNumber.clear();
         homeLocation.clear();
-        currentStudent.getSelectedToggle().setSelected(false);
-        hasDisability.getSelectedToggle().setSelected(false);
-        sponsored.getSelectedToggle().setSelected(false);
-        topupNeeded.getSelectedToggle().setSelected(false);
+        if(currentStudent.getSelectedToggle() != null) {
+            currentStudent.getSelectedToggle().setSelected(false);
+        }
+
+        if(hasDisability.getSelectedToggle() != null) {
+            hasDisability.getSelectedToggle().setSelected(false);
+        }
+
+        if(sponsored.getSelectedToggle() != null) {
+            sponsored.getSelectedToggle().setSelected(false);
+        }
+
+        if(topupNeeded.getSelectedToggle() != null) {
+            topupNeeded.getSelectedToggle().setSelected(false);
+        }
+
         sponsorshipStatus.getSelectionModel().clearSelection();
         email.clear();
         facebook.clear();
@@ -241,6 +240,11 @@ public class StudentController {
     }
 
     private void initializeForm(StudentDto student) {
+        if(student == null) {
+            resetForm();
+            return;
+        }
+
         selected.setValue(student);
 
         if (student.getStartDate() != null) {
