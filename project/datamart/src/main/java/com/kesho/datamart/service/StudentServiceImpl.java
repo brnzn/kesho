@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -97,6 +99,13 @@ public class StudentServiceImpl implements StudentService {
 
     public EducationDto findLatestEducation(Long studentId) {
         return educationHistoryDAO.findLatestEducation(studentId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteStudent(Long id) {
+        educationHistoryDAO.deleteByStudentId(id);
+        studentsDao.deleteByStudentId(id);
     }
 
     private Page<StudentDto> toPageResult(final org.springframework.data.domain.Page<Student> page, final Request request) {

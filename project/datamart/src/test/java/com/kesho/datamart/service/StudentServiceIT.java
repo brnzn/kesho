@@ -10,6 +10,7 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.EducationHistoryDAO;
+import com.kesho.datamart.repository.FamilyDAO;
 import com.kesho.datamart.repository.StudentsDAO;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
@@ -26,13 +27,11 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-
 import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,9 +53,26 @@ public class StudentServiceIT {
     private StudentsDAO dao;
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
+    @Inject
+    private FamilyDAO familyDAO;
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+
+    @Test
+    public void shouldCascadeDeleteEducationOnly() {
+        StudentDto dto = studentService.get(2L);
+
+        Long familyId =  dto.getFamily().getId();
+
+        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(2));
+
+        studentService.deleteStudent(2L);
+
+        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(0));
+        assertThat(familyDAO.findOne(familyId), notNullValue());
+    }
 
     @Test
     public void shouldUpdateFamily() {
@@ -84,6 +100,7 @@ public class StudentServiceIT {
         assertThat(educationHistory.get(1).getDate().getMonthOfYear(), is(4));
         assertThat(educationHistory.get(1).getDate().getDayOfMonth(), is(28));
     }
+
     @Test
     public void shouldAddEducationHistory() {
         LocalDate date = LocalDate.now();

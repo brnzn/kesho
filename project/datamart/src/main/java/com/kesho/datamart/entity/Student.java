@@ -1,5 +1,6 @@
 package com.kesho.datamart.entity;
 
+import com.google.common.collect.Lists;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
@@ -9,9 +10,7 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import java.util.Collections;
-import java.util.Set;
-
-import static com.google.common.collect.Sets.newHashSet;
+import java.util.List;
 
 //TODO: batch insert, validations
 @Entity
@@ -56,7 +55,7 @@ public class Student {
     @JoinColumn(name="STUDENT_ID", referencedColumnName="ID", updatable = false, insertable = false)
     //// bidirectional
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private Set<EducationHistory> educationHistory = newHashSet(); // TODO: change to list
+    private List<EducationHistory> educationHistory = Lists.newArrayList();  //TODO: need to do batch delete instead of one by one
     @Column(name= "EMAIL")
     private String email;
     @Column(name = "FACEBOOK")
@@ -109,8 +108,8 @@ public class Student {
 //		return logs;
 //	}
 
-	public Set<EducationHistory> getEducationHistory() {
-		return Collections.unmodifiableSet(educationHistory);
+	public List<EducationHistory> getEducationHistory() {
+		return Collections.unmodifiableList(educationHistory);
 	}
 
     public void setFamily(Family family) {
