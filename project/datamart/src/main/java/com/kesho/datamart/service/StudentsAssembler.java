@@ -73,6 +73,7 @@ public class StudentsAssembler {
         student.setTopupNeeded(dto.isTopupNeeded());
         student.setShortfall(dto.getShortfall());
         student.setAlumniNumber(dto.getAlumniNumber());
+        student.setTopupNeeded(dto.isTopupNeeded());
         return student;
     }
 }

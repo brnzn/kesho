@@ -232,7 +232,7 @@ public class StudentDto implements Comparable {
 
         StudentDto that = (StudentDto) o;
 
-        if (!id.equals(that.id)) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
         return true;
     }

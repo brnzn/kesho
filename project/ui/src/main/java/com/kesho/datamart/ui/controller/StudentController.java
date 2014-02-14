@@ -15,13 +15,13 @@ import com.kesho.datamart.ui.util.Util;
 import com.kesho.ui.control.NumericTextField;
 import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -85,8 +85,10 @@ public class StudentController {
     private NumericTextField alumniNumber;
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
+    @FXML
+    private Button saveButton;
 
-    private StudentDto selected;
+    private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
     @Inject
     @Qualifier("StudentsController")
     private Selectable<StudentDto> selectedStudent;
@@ -100,12 +102,18 @@ public class StudentController {
 
     @FXML
     private void initialize() {
+        selected.addListener(new ChangeListener<StudentDto>() {
+            @Override
+            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
+                saveButton.setDisable(studentDto2 == null);
+            }
+        });
 
-        selected = null;
+        selected.setValue(null);
         family.setUserData(null);
 
         dateControlBox.getChildren().add(calendar);
-        Util.initializeYesNoGroup(hasDisability, sponsored, currentStudent);
+        Util.initializeYesNoGroup(hasDisability, sponsored, currentStudent, topupNeeded);
 
         Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
@@ -115,7 +123,6 @@ public class StudentController {
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
             @Override
             public void handle() {
-                //      System.out.println("777777 " +selectedStudent.getSelectedItem().getId());
                 if (selectedStudent.getSelectedItem() != null) {
                     initializeForm(selectedStudent.getSelectedItem());
                 }
@@ -138,13 +145,15 @@ public class StudentController {
     }
 
     private void add() {
-        StudentDto dto = new StudentDto();
-        boolean isOK = WindowsUtil.getInstance().studentForm(dto);
-
-        if (isOK) {
-            studentsRepository.save(dto);
-            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
-        }
+        resetForm();
+        selected.set(new StudentDto());
+        //StudentDto dto = new StudentDto();
+//        boolean isOK = WindowsUtil.getInstance().studentForm(dto);
+//
+//        if (isOK) {
+//            studentsRepository.save(dto);
+//            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+//        }
     }
 
     @FXML
@@ -160,13 +169,22 @@ public class StudentController {
     @FXML
     private void save() {
         StudentDto dto = buildDto();
-        dto = studentsRepository.save(dto);
-        selected.withName(firstName.getText());
+        boolean isNew = false;
+        if (dto.getId() == null) {
+                             isNew = true;
+        }
+        dto = studentsRepository.save(dto);  //looks like it generate too many sqls
+        selected.get().withName(firstName.getText()); // is this to refresh the table?
+
+        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+
         selectedStudent.refresh();
+
     }
 
     private StudentDto buildDto() {
-        selected.withName(firstName.getText())
+        StudentDto dto = selected.get();
+        dto.withName(firstName.getText())
                 .withFamily((FamilyDto)family.getUserData())
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
@@ -182,26 +200,48 @@ public class StudentController {
                 .withGender(gender.getSelectionModel().getSelectedItem());
 
         if (StringUtils.isNotBlank(shortfall.getText())) {
-            selected.withShortfall(Integer.valueOf(shortfall.getText()));
+            dto.withShortfall(Integer.valueOf(shortfall.getText()));
         }
 
         if (StringUtils.isNotBlank(alumniNumber.getText())) {
-            selected.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
+            dto.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
         }
 
         if (calendar.getValue() != null) {
-            selected.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
+            dto.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
         if (StringUtils.isNotBlank(yearOfBirth.getText())) {
-            selected.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
+            dto.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
         }
 
-        return selected;
+        return dto;
+    }
+
+    private void resetForm() {
+        calendar.clear();
+        firstName.clear();
+        family.clear();
+        family.setUserData(null);
+        gender.getSelectionModel().clearSelection();
+        yearOfBirth.clear();
+        contactNumber.clear();
+        homeLocation.clear();
+        currentStudent.getSelectedToggle().setSelected(false);
+        hasDisability.getSelectedToggle().setSelected(false);
+        sponsored.getSelectedToggle().setSelected(false);
+        topupNeeded.getSelectedToggle().setSelected(false);
+        sponsorshipStatus.getSelectionModel().clearSelection();
+        email.clear();
+        facebook.clear();
+        levelOfSupport.getSelectionModel().clearSelection();
+        shortfall.clear();
+        alumniNumber.clear();
+        leaverStatus.getSelectionModel().clearSelection();
     }
 
     private void initializeForm(StudentDto student) {
-        selected = student;
+        selected.setValue(student);
 
         if (student.getStartDate() != null) {
             calendar.setValue(student.getStartDate().toDate());

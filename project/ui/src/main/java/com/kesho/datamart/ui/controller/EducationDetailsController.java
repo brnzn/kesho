@@ -31,6 +31,8 @@ import javax.inject.Inject;
 import java.util.EnumSet;
 import java.util.List;
 
+//TODO: sort buttons state, validations, numeric inputs etc
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson

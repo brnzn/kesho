@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.kesho.ui.control.*?>
 <?import com.kesho.ui.control.NumericTextField?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
@@ -57,7 +58,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                           <children>
                             <TextField fx:id="family" disable="true" editable="false" prefWidth="200.0" />
-                            <Button mnemonicParsing="false" text="..." onAction="#selectFamily"/>
+                            <Button mnemonicParsing="false" onAction="#selectFamily" text="..." />
                           </children>
                         </HBox>
                       </children>
@@ -144,7 +145,7 @@
                         <NumericTextField fx:id="shortfall" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="602.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
                           </children>
                           <padding>
                             <Insets right="10.0" />
