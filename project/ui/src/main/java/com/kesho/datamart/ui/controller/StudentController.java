@@ -11,14 +11,15 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
-import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
+import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.NumericTextField;
 import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +29,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,9 +53,9 @@ public class StudentController implements FormActionListener<StudentDto> {
     @FXML
     private NumericTextField yearOfBirth;
     @FXML
-    private TextField contactNumber;
+    private TextField contactNumber;     // TODO: check with kate if we can take it from family
     @FXML
-    private TextField homeLocation;
+    private TextField homeLocation;   //TODO: check with kate if it is duplicate with family details
     @FXML
     private ToggleGroup currentStudent;
     @FXML
@@ -93,6 +96,9 @@ public class StudentController implements FormActionListener<StudentDto> {
     @Inject
     private FamilyRepository familyRepository;
 
+    private Map<String, Node> validationFields = new HashMap<>();
+
+
     public StudentController() {
         calendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
@@ -121,23 +127,57 @@ public class StudentController implements FormActionListener<StudentDto> {
 
     @Override
     public void newFired() {
-        add();
+        resetForm();
+        selected.set(new StudentDto());
     }
 
     @Override
-    public void itemSelected(StudentDto item) {
-        initializeForm(item);
+    public void itemSelected(StudentDto student) {
+        if(student == null) {
+            resetForm();
+            return;
+        }
+
+        selected.setValue(student);
+
+        if (student.getStartDate() != null) {
+            calendar.setValue(student.getStartDate().toDate());
+        }
+
+        firstName.setText(student.getFirstName());
+
+        family.setText(student.getFamily().getFamilyName());
+        family.setUserData(student.getFamily());
+
+        gender.getSelectionModel().select(student.getGender());
+
+        yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
+
+        contactNumber.setText(student.getMobileNumber());
+        homeLocation.setText(student.getHomeLocation());
+
+        Util.setYesNoToggleState(currentStudent, student.isActiveStudent());
+        Util.setYesNoToggleState(hasDisability, student.hasDisability());
+        Util.setYesNoToggleState(sponsored, student.isSponsored());
+        Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
+
+        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
+        email.setText(student.getEmail());
+        facebook.setText(student.getFacebookAddress());
+
+        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
+
+        shortfall.setText(Util.safeToStringValue(student.getShortfall(), null));
+
+        alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
+
+        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
     }
 
     @Override
     public void deleteFired(Long id) {
         studentsRepository.deleteStudent(id);
         WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
-    }
-
-    private void add() {
-        resetForm();
-        selected.set(new StudentDto());
     }
 
     @FXML
@@ -151,22 +191,21 @@ public class StudentController implements FormActionListener<StudentDto> {
 
     @FXML
     private void save() {
-        //TODO: validate
         StudentDto dto = buildDto();
-        boolean isNew = false;
-        if (dto.getId() == null) {
-                             isNew = true;
+        if (isInputValid(dto)) {
+            boolean isNew = dto.getId() == null;
+
+            dto = studentsRepository.save(dto);  //looks like it generate too many sqls
+            //refresh the table
+            selected.get().withName(firstName.getText());
+            selected.get().setFamily(dto.getFamily());
+
+            if(isNew) { // fire event so table can be reloaded
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+            }
+
+            selectedStudent.refresh();
         }
-        dto = studentsRepository.save(dto);  //looks like it generate too many sqls
-        selected.get().withName(firstName.getText()); // is this to refresh the table?
-        selected.get().setFamily(dto.getFamily());
-
-        if(isNew) {
-            WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
-        }
-
-        selectedStudent.refresh(); // use event bus
-
     }
 
     private StudentDto buildDto() {
@@ -214,21 +253,14 @@ public class StudentController implements FormActionListener<StudentDto> {
         yearOfBirth.clear();
         contactNumber.clear();
         homeLocation.clear();
-        if(currentStudent.getSelectedToggle() != null) {
-            currentStudent.getSelectedToggle().setSelected(false);
-        }
 
-        if(hasDisability.getSelectedToggle() != null) {
-            hasDisability.getSelectedToggle().setSelected(false);
-        }
+        currentStudent.getToggles().get(0).setSelected(true);
 
-        if(sponsored.getSelectedToggle() != null) {
-            sponsored.getSelectedToggle().setSelected(false);
-        }
+        hasDisability.getToggles().get(0).setSelected(true);
 
-        if(topupNeeded.getSelectedToggle() != null) {
-            topupNeeded.getSelectedToggle().setSelected(false);
-        }
+        sponsored.getToggles().get(0).setSelected(true);
+
+        topupNeeded.getToggles().get(0).setSelected(true);
 
         sponsorshipStatus.getSelectionModel().clearSelection();
         email.clear();
@@ -239,55 +271,27 @@ public class StudentController implements FormActionListener<StudentDto> {
         leaverStatus.getSelectionModel().clearSelection();
     }
 
-    private void initializeForm(StudentDto student) {
-        if(student == null) {
-            resetForm();
-            return;
-        }
+    private boolean isInputValid(StudentDto dto) {
+        String validation = FormValidator.validate(dto, getFields());
 
-        selected.setValue(student);
-
-        if (student.getStartDate() != null) {
-            calendar.setValue(student.getStartDate().toDate());
-        }
-
-        firstName.setText(student.getName());
-
-        family.setText(student.getFamily().getFamilyName());
-        family.setUserData(student.getFamily());
-
-        gender.getSelectionModel().select(student.getGender());
-
-        yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
-
-        contactNumber.setText(student.getMobileNumber());
-        homeLocation.setText(student.getHomeLocation());
-
-        setState(currentStudent, student.isActiveStudent());
-        setState(hasDisability, student.hasDisability());
-        setState(sponsored, student.isSponsored());
-        setState(topupNeeded, student.isTopupNeeded());
-
-        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
-        email.setText(student.getEmail());
-        facebook.setText(student.getFacebookAddress());
-
-        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
-
-        shortfall.setText(Util.safeToStringValue(student.getShortfall(), null));
-
-        alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
-
-        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
-    }
-
-    private void setState(ToggleGroup group, Boolean value) {
-        if (value == null || value) {
-            group.getToggles().get(0).setSelected(true);
+        if(StringUtils.isNotBlank(validation)) {
+            WindowsUtil.getInstance().showErrorDialog(validation);
+            return false;
         } else {
-            group.getToggles().get(1).setSelected(true);
+            return true;
         }
+
     }
 
+    private Map<String, Node> getFields() {
 
+        if(validationFields.isEmpty()) {
+            validationFields.put("firstName", firstName);
+            validationFields.put("family", family);
+            validationFields.put("gender", gender);
+            validationFields.put("yearOfBirth", yearOfBirth);
+        }
+
+        return validationFields;
+    }
 }

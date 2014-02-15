@@ -143,7 +143,7 @@ public class StudentServiceIT {
         assertNotNull(s1);
 
         assertNotNull(s1);
-        assertThat("name should be fn", s1.getName(), is("fn"));
+        assertThat("name should be fn", s1.getFirstName(), is("fn"));
         assertThat("family name should be sn1", s1.getFamily().getFamilyName(), is("sn1"));
         assertThat("should be active", s1.isActiveStudent(), is(true));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));

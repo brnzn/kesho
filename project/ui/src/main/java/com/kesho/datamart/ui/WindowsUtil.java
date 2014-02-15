@@ -8,6 +8,7 @@ import com.kesho.datamart.ui.util.EventBus;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialogs;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -31,6 +32,9 @@ public class WindowsUtil {
 		return instance;
 	}
 
+    public void showErrorDialog(String msg) {
+        Dialogs.showErrorDialog(primaryStage, msg, "Please correct invalid fields", "Invalid Fields");
+    }
     public EventBus getEventBus() {
         return applicationContext.getBean(EventBus.class);
     }

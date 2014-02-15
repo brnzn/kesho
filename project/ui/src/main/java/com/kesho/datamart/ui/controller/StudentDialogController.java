@@ -4,7 +4,6 @@ import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
-import com.kesho.datamart.ui.repository.InstitutionRepository;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -68,7 +67,7 @@ public class StudentDialogController {
 	public void setDto(StudentDto dto) {
         this.dto = dto;
 
-        firstName.setText(dto.getName());
+        firstName.setText(dto.getFirstName());
         family.getSelectionModel().select(dto.getFamily());
 	}
 

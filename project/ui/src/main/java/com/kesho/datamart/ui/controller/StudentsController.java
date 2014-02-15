@@ -153,7 +153,7 @@ public class StudentsController implements Selectable<StudentDto> {
         studentsModel.clear();
 
         studentsTable.setItems(studentsModel);
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("firstName"));
         familyNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentDto, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<StudentDto, String> s) {

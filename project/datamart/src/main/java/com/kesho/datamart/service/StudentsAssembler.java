@@ -2,7 +2,6 @@ package com.kesho.datamart.service;
 
 import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
 
 import java.util.List;
@@ -56,7 +55,7 @@ public class StudentsAssembler {
     public Student toStudent(StudentDto dto) {
         Student student = new Student();
         student.setId(dto.getId());
-        student.setFirstName(dto.getName());
+        student.setFirstName(dto.getFirstName());
         student.setGender(dto.getGender());
         student.setHasDisability(dto.hasDisability());
         student.setHomeLocation(dto.getHomeLocation());

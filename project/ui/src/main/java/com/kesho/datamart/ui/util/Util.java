@@ -42,6 +42,4 @@ public class Util {
             group.getToggles().get(1).setSelected(true);
         }
     }
-
-
 }

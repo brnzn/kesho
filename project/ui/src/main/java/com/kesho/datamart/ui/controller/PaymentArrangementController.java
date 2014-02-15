@@ -94,7 +94,7 @@ public class PaymentArrangementController {
         StudentDto dto = WindowsUtil.getInstance().studentSelector();
         if(dto != null) {
             student.setUserData(dto);
-            student.setText(dto.getName());
+            student.setText(dto.getFirstName());
 //            selectedStudent.getSelectedItem().setFamily(dto);
         }
     }

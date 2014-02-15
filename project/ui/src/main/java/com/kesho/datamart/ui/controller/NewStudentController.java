@@ -286,7 +286,7 @@ public class NewStudentController {
         }
 
         currentId = student.getId();
-        firstName.setText(student.getName());
+        firstName.setText(student.getFirstName());
 //        surname.setText(student.getSurname());
         gender.getSelectionModel().select(student.getGender());
 

@@ -4,7 +4,12 @@ import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.SponsorshipStatus;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 /**
  * Model class for a StudentDto.
@@ -12,10 +17,16 @@ import org.joda.time.LocalDate;
  * @author Marco Jakob
  */
 public class StudentDto implements Comparable {
+    private String uuid = UUID.randomUUID().toString();
     private Long id;
-    private String name;
+    @NotBlank(message = "Name is mandatory")
+    private String firstName;
+    @NotNull(message = "Family is mandatory")
     private FamilyDto family;
+    @NotNull(message = "Gender is mandatory")
     private Gender gender;
+    @NotNull(message = "Year Of Birth is mandatory")
+    @Min(value = 1980, message = "Year of Birth cannot be less than 1980") // TODO: what should be the min year?? convert to date to we can validate past/future
     private Integer yearOfBirth;
     private String mobileNumber;
     private String homeLocation;
@@ -31,7 +42,6 @@ public class StudentDto implements Comparable {
     private Boolean topupNeeded;
     private Integer shortfall;
     private Integer alumniNumber;
-
     /**
 	 * Default constructor.
 	 */
@@ -42,8 +52,8 @@ public class StudentDto implements Comparable {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public FamilyDto getFamily() {
@@ -120,7 +130,7 @@ public class StudentDto implements Comparable {
     }
 
     public StudentDto withName(String name) {
-        this.name = name;
+        this.firstName = name;
         return this;
     }
 
@@ -225,6 +235,8 @@ public class StudentDto implements Comparable {
         return this.getDisplay().compareTo(((StudentDto)o).getDisplay());
     }
 
+    //TODO: cannot remember why hashcode/equals have been implemented....
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -232,17 +244,27 @@ public class StudentDto implements Comparable {
 
         StudentDto that = (StudentDto) o;
 
+        if (family != null ? !family.equals(that.family) : that.family != null) return false;
+        if (gender != that.gender) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (yearOfBirth != null ? !yearOfBirth.equals(that.yearOfBirth) : that.yearOfBirth != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (family != null ? family.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (yearOfBirth != null ? yearOfBirth.hashCode() : 0);
+        return result;
     }
 
+
     private String getDisplay() {
-        return name + " " + family.getFamilyName();
+        return firstName + " " + family.getFamilyName();
     }
 }

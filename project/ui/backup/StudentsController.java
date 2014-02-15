@@ -156,7 +156,7 @@ public class StudentsController {
  //       nameLbl.textProperty().bind(firstNameColumn.getCellObservableValue(studentsTable.getSelectionModel().getSelectedIndex()));
 
         if (person != null) {
-			nameLbl.setText(person.getName());
+			nameLbl.setText(person.getFirstName());
 			familyNameLbl.setText(person.getFamily().getFamilyName());
             if(person.getGender() != null) {
                 genderLbl.setText(person.getGender().toString());
