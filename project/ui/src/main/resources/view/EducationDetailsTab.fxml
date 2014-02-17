@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import custom.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
@@ -11,7 +10,7 @@
 <?scenebuilder-classpath-element ../../java?>
 <?scenebuilder-classpath-element ../../../../target/classes?>
 
-<Tab id="educationTab" fx:id="educationTab" text="Education" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
+<Tab id="educationTab" disable="true" fx:id="educationTab" text="Education" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
   <content>
     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="554.0000999999975">
       <children>

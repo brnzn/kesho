@@ -7,8 +7,7 @@ package com.kesho.datamart.ui;
  * Time: 10:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface FormActionListener<T> {
+public interface FormActionListener {
     void newFired();
     void deleteFired(Long id);
-    void itemSelected(T item);
 }

@@ -52,11 +52,11 @@ public class StudentsController implements Selectable<StudentDto> {
     private Button deleteButton;
     @FXML
     private StudentController studentController;
+    @FXML
+    private EducationDetailsController educationDetailsController;
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
-    private Map<String, EventHandler<ActionEvent>> newButtonHandlers = new HashMap<>();
-
-    private Map<String, FormActionListener> lifeCycle = new HashMap<>();
+    private Map<String, FormActionListener> formActionListeners = new HashMap<>();
 
     @Override
     public StudentDto getSelectedItem() {
@@ -77,10 +77,6 @@ public class StudentsController implements Selectable<StudentDto> {
         }
     }
 
-    public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
-        newButtonHandlers.put(id, eventHandler);
-    }
-
     //TODO: what should happen after adding student? Should we go back to last page, or last selected page? what happen if students were deleted by someone else or if we had order
     /**
      * Initializes the controller class. This method is automatically called
@@ -90,52 +86,13 @@ public class StudentsController implements Selectable<StudentDto> {
     private void initialize() {
 //        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
-
         studentsTable.getSelectionModel().select(0);
         studentsTable.focusModelProperty().get().focus(0, firstNameColumn);
         studentsTable.requestFocus();
-
-
         studentsTable.layout();
-        newButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                if(elc != null) {
-                    elc.newFired();
-                }
-            }
-        });
 
-        deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                if(elc != null) {
-                    elc.deleteFired(studentsTable.getSelectionModel().getSelectedItem().getId());
-                }
-            }
-        });
-
-        studentTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-//                if (newButtonHandlers.get(tab2.getId()) == null) {
-                    newButton.disableProperty().setValue(newButtonHandlers.get(tab2.getId()) == null);
- //               } else {
-  //                  newButton.disableProperty().setValue(false);
-   //             }
-            }
-        });
-
-        lifeCycle.put("studentDetailsTab", studentController);
-
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                refreshTable();
-            }
-        });
+        initTabButtons();
+        initFormActionListeners();
     }
 
     public void init() {
@@ -147,8 +104,8 @@ public class StudentsController implements Selectable<StudentDto> {
         StudentDto dto = studentsRepository.findOne(studentId);
         studentsModel.add(dto);
         studentsTable.getSelectionModel().select(dto);
-
     }
+
     private void initTable() {
         studentsModel.clear();
 
@@ -162,15 +119,10 @@ public class StudentsController implements Selectable<StudentDto> {
             }
         });
 
-
         studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
-                deleteButton.disableProperty().setValue(studentDto2 == null);
-                FormActionListener elc = lifeCycle.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                if(elc != null) {
-                    elc.itemSelected(studentDto2);
-                }
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
             }
         });
     }
@@ -178,7 +130,7 @@ public class StudentsController implements Selectable<StudentDto> {
     private void initPagination() {
         Page p = getPage(0, 10);
         if(p != null) {
-            studentsModel.addAll(p.getContent());    //
+            studentsModel.addAll(p.getContent());
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
             pagination.currentPageIndexProperty().setValue(0);
         }
@@ -203,19 +155,46 @@ public class StudentsController implements Selectable<StudentDto> {
         initPagination();
     }
 
-    public void disableButton(TabButton... buttons) {
+    public void disableButton(boolean disable, TabButton... buttons) {
         for (TabButton button:buttons) {
-            if(TabButton.NEW == button) {
-                newButton.disableProperty().set(true);
+            switch(button) {
+                case NEW:
+                    newButton.disableProperty().set(disable);
+                    break;
+                case DELETE:
+                    deleteButton.disableProperty().setValue(disable);
+                    break;
             }
         }
     }
 
-    public void enableButton(TabButton ...buttons) {
-        for (TabButton button:buttons) {
-            if(TabButton.NEW == button) {
-                newButton.disableProperty().set(false);
-            }
-        }
+    private void initFormActionListeners() {
+        formActionListeners.put("studentDetailsTab", studentController);
+        formActionListeners.put("educationTab", educationDetailsController);
     }
+
+
+    private void initTabButtons() {
+        newButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                if(elc != null) {
+                    elc.newFired();
+                }
+            }
+        });
+
+        deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                if(elc != null) {
+                    elc.deleteFired(studentsTable.getSelectionModel().getSelectedItem().getId());
+                }
+            }
+        });
+    }
+
+
 }

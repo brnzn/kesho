@@ -24,15 +24,15 @@ public class FormValidator {
     public static String validate(Object dto, Map<String, Node> targetFields) {
         ValidationResult validations = ValidationUtil.validateNew(dto);
 
+        for (Node node:targetFields.values()) {
+            node.setEffect(null);
+        }
+
         if (validations.isValid()) {
             return null;
         }
 
         String errorMessage = "";
-
-        for (Node node:targetFields.values()) {
-            node.setEffect(null);
-        }
 
         for (Map.Entry<String, String> violation:validations.values()) {
             errorMessage += violation.getKey() + "\n";

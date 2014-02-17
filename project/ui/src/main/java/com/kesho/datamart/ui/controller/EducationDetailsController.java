@@ -1,10 +1,11 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -12,14 +13,13 @@ import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
-import javafx.application.Platform;
+import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,6 +33,9 @@ import java.util.List;
 
 //TODO: sort buttons state, validations, numeric inputs etc
 
+//Save button should be disabled until 'edit'
+//delete button enable/disable is wrong
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -40,7 +43,7 @@ import java.util.List;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class EducationDetailsController  {
+public class EducationDetailsController implements FormActionListener {
     @FXML
     private HBox dateControlBox;
     private final FXCalendar calendar = new FXCalendar();
@@ -176,9 +179,15 @@ public class EducationDetailsController  {
      */
     @FXML
     private void initialize() {
+        educationTab.disableProperty().set(true);
+
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
             @Override
             public void handle() {
+                if(parentController.getSelectedItem() != null) {
+                    educationTab.disableProperty().set(false);
+                }
+
                 if (educationTab.isSelected()) {
                     refreshEducationTable();
                 }
@@ -190,12 +199,13 @@ public class EducationDetailsController  {
             @Override
             public void handle(javafx.event.Event event) {
                 if (educationTab.isSelected()) {
+                    parentController.disableButton(true, TabButton.DELETE);
                     loadInstitutions();
                     refreshEducationTable();
                     if(parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
-                        parentController.disableButton(TabButton.NEW);
+                        parentController.disableButton(true, TabButton.NEW);
                     } else {
-                        parentController.enableButton(TabButton.NEW);
+                        parentController.disableButton(false, TabButton.NEW);
                     }
                 }
             }
@@ -231,18 +241,6 @@ public class EducationDetailsController  {
                 }
             }
         });
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                WindowsUtil.getInstance().getControllers().studentsController().registerNewChangeListener("educationTab", new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        add();
-                    }
-                });
-            }
-        });
     }
 
     private void updateEducationForm(EducationDto dto) {
@@ -276,5 +274,15 @@ public class EducationDetailsController  {
         secondaryStatus2.getSelectionModel().clearSelection();
         secondaryStatus2.valueProperty().setValue(null);
         comments.clear();
+    }
+
+    @Override
+    public void newFired() {
+        add();
+    }
+
+    @Override
+    public void deleteFired(Long id) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

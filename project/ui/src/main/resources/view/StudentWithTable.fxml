@@ -38,7 +38,7 @@
                                         <TabPane fx:id="studentTab" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <tabs>
                                                 <fx:include fx:id="student" source="/view/StudentDetailsTab.fxml"/>
-                                                <fx:include source="/view/EducationDetailsTab.fxml"/>
+                                                <fx:include fx:id="educationDetails" source="/view/EducationDetailsTab.fxml"/>
                                                 <Tab text="Family">
                                                     <content>
                                                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

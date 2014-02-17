@@ -11,6 +11,8 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
+import com.kesho.datamart.ui.util.SystemEventListener;
+import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.NumericTextField;
@@ -18,6 +20,7 @@ import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -25,7 +28,6 @@ import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
@@ -39,7 +41,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StudentController implements FormActionListener<StudentDto> {
+public class StudentController implements FormActionListener {
     @Autowired
     private StudentsRepository studentsRepository;
 
@@ -68,7 +70,7 @@ public class StudentController implements FormActionListener<StudentDto> {
     private final FXCalendar calendar = new FXCalendar();
 
     @FXML
-    private TabPane studentTab;
+    private Tab studentDetailsTab;
 
     @FXML
     private ComboBox<SponsorshipStatus> sponsorshipStatus;
@@ -90,9 +92,9 @@ public class StudentController implements FormActionListener<StudentDto> {
     private Button saveButton;
 
     private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
+
     @Inject
-    @Qualifier("StudentsController")
-    private Selectable<StudentDto> selectedStudent;
+    private StudentsController parentController;
     @Inject
     private FamilyRepository familyRepository;
 
@@ -123,6 +125,24 @@ public class StudentController implements FormActionListener<StudentDto> {
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
         Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
+
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                if(parentController.getSelectedItem() != null) {
+                    itemSelected(parentController.getSelectedItem());
+                }
+            }
+        });
+
+        studentDetailsTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+            @Override
+            public void handle(javafx.event.Event event) {
+                if (studentDetailsTab.isSelected() && parentController.getSelectedItem() != null) {
+                    parentController.disableButton(false, TabButton.DELETE);
+                }
+            }
+        });
     }
 
     @Override
@@ -131,8 +151,13 @@ public class StudentController implements FormActionListener<StudentDto> {
         selected.set(new StudentDto());
     }
 
-    @Override
-    public void itemSelected(StudentDto student) {
+    private void itemSelected(StudentDto student) {
+        if(student != null) {
+            parentController.disableButton(false, TabButton.NEW, TabButton.DELETE);
+        } else {
+            parentController.disableButton(true, TabButton.DELETE);
+        }
+
         if(student == null) {
             resetForm();
             return;
@@ -177,7 +202,7 @@ public class StudentController implements FormActionListener<StudentDto> {
     @Override
     public void deleteFired(Long id) {
         studentsRepository.deleteStudent(id);
-        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
+        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED); // TODO: Delete event type
     }
 
     @FXML
@@ -204,7 +229,7 @@ public class StudentController implements FormActionListener<StudentDto> {
                 WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
             }
 
-            selectedStudent.refresh();
+            parentController.refresh();
         }
     }
 

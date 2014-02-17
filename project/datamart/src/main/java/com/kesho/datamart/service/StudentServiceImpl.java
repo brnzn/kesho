@@ -74,6 +74,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public EducationDto addEducationHistory(EducationDto dto) {
         EducationHistory log = educationAssembler.toLog(dto);
         log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
@@ -87,6 +88,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public EducationDto save(EducationDto dto) {
         //TODO: should it be find one??
         return addEducationHistory(dto);
