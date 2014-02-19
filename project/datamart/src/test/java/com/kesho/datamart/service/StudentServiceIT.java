@@ -133,7 +133,8 @@ public class StudentServiceIT {
 
         EducationHistory saved = findOne(EducationHistory.class, educationHistoryDAO, result.getId());
 
-        assertThat(saved.getSchool().getId(), is(1L));
+        ;
+        assertThat(educationHistoryDAO.findByIdWithSchool(result.getId()).getSchool().getId(), is(1L));
     }
 
     @Test

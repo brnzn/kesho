@@ -23,4 +23,9 @@ public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Lon
     @Transactional
     @Query("delete from EducationHistory eh where eh.studentId = :studentId")
     void deleteByStudentId(@Param("studentId") Long id);
+
+
+    @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.id = :id")
+    EducationHistory findByIdWithSchool(@Param("id")Long id);
+
 }

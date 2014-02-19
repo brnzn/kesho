@@ -275,6 +275,8 @@ public class StudentController implements FormActionListener {
         family.clear();
         family.setUserData(null);
         gender.getSelectionModel().clearSelection();
+        gender.valueProperty().setValue(null);
+
         yearOfBirth.clear();
         contactNumber.clear();
         homeLocation.clear();

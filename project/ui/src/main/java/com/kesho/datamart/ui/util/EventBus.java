@@ -25,6 +25,7 @@ public class EventBus {
     }
 
     public void fireEvent(Event type) {
+        System.out.println("Fire " + type);
         List<SystemEventListener> eventListeners = listeners.get(type);
         if(eventListeners != null) {
             for (SystemEventListener listener:eventListeners) {

@@ -91,6 +91,13 @@ public class StudentsController implements Selectable<StudentDto> {
         studentsTable.requestFocus();
         studentsTable.layout();
 
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                refreshTable();
+            }
+        });
+
         initTabButtons();
         initFormActionListeners();
     }

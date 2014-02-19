@@ -33,7 +33,7 @@ public class EducationAssembler {
                 .withSecondaryStatus1(log.getSecondaryLevel1())
                 .withSecondaryStatus2(log.getSecondaryLevel2())
                 .withStudentId(log.getStudentId())
-                .withInstitution(new InstitutionDto(log.getSchool().getId(), log.getSchool().getName()))
+                .withInstitution(new InstitutionDto(log.getSchool().getId(), log.getSchool().getName()))        // TODO: don't think I need school here.
                 .withEducationalStatus(log.getEducationStatus())
                 .withYear(log.getYear())
                 .withEducationDate(log.getStartDate())
