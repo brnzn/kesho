@@ -91,12 +91,12 @@ public class StudentsController implements Selectable<StudentDto> {
         studentsTable.requestFocus();
         studentsTable.layout();
 
-        WindowsUtil.getInstance().getEventBus().registerListener(new SystemEventListener() {
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
             @Override
             public void handle() {
                 refreshTable();
             }
-        }, Event.STUDENT_ADDED, Event.STUDENT_DELETED);
+        });
 
         initTabButtons();
         initFormActionListeners();
@@ -195,13 +195,13 @@ public class StudentsController implements Selectable<StudentDto> {
         deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                Long id = studentsTable.getSelectionModel().getSelectedItem().getId();
+                studentsRepository.deleteStudent(id);
                 FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
                 if(elc != null) {
-                    elc.deleteFired(studentsTable.getSelectionModel().getSelectedItem().getId());
+                    elc.deleteFired(id);
                 }
             }
         });
     }
-
-   //TODO: this controller should implement FormActionListener and delete student before fire event. Student details should just reset form
 }
