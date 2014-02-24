@@ -14,6 +14,7 @@ import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.ui.control.calendar.FXCalendar;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -79,6 +80,8 @@ public class EducationDetailsController implements FormActionListener {
     private TableColumn<EducationDto, String> yearCol;
     @FXML
     private TableColumn<EducationDto, String> courseCol;
+    @FXML
+    private Button saveButton;
 
     @Inject
     private InstitutionRepository institutionRepository;
@@ -88,22 +91,23 @@ public class EducationDetailsController implements FormActionListener {
     @Inject
     private StudentsController parentController;
 
+    private SimpleObjectProperty<EducationDto> selected = new SimpleObjectProperty<>();
 
     public EducationDetailsController() {
         WindowsUtil.getInstance().autowire(this);
         calendar.setDateTextWidth(Double.valueOf(150));
     }
 
-    private void add() {
-        EducationDto dto = new EducationDto();
-        boolean isOK = WindowsUtil.getInstance().educationForm(dto);
-
-        if(isOK) {
-            studentsRepository.addEducationHistory(dto.withStudentId(parentController.getSelectedItem().getId()));
-            refreshEducationTable();
-            updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
-        }
-    }
+//    private void add() {
+//        EducationDto dto = new EducationDto();
+//        boolean isOK = WindowsUtil.getInstance().educationForm(dto);
+//
+//        if(isOK) {
+//            studentsRepository.addEducationHistory(dto.withStudentId(parentController.getSelectedItem().getId()));
+//            refreshEducationTable();
+//            updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
+//        }
+//    }
 
     private void refreshEducationTable() {
         educationModel.clear();
@@ -122,21 +126,23 @@ public class EducationDetailsController implements FormActionListener {
 
     @FXML
     private void save() {
-        EducationDto dto = educationTable.getSelectionModel().getSelectedItem();
+        EducationDto dto = selected.get();
 
-        dto.withYear(Util.safeToIntegerValue(educationYear.getText(), null))
-                .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
-                .withCourse(course.getText())
-                .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
-                .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
-                .withInstitution(institutions.getSelectionModel().getSelectedItem())
-                .withComments(comments.getText());
+        dto.withStudentId(parentController.getSelectedItem().getId()).
+            withYear(Util.safeToIntegerValue(educationYear.getText(), null))
+            .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
+            .withCourse(course.getText())
+            .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
+            .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
+            .withInstitution(institutions.getSelectionModel().getSelectedItem())
+            .withComments(comments.getText());
 
         if(calendar.getValue() != null) {
             dto.withEducationDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
         studentsRepository.save(dto);
+        refreshEducationTable();
     }
 
     private void loadInstitutions() {
@@ -179,6 +185,14 @@ public class EducationDetailsController implements FormActionListener {
      */
     @FXML
     private void initialize() {
+        selected.addListener(new ChangeListener<EducationDto>() {
+            @Override
+            public void changed(ObservableValue<? extends EducationDto> observableValue, EducationDto dto1, EducationDto dto2) {
+                saveButton.setDisable(dto2 == null);
+                parentController.disableButton(dto2 == null, TabButton.DELETE);
+            }
+        });
+
         educationTab.disableProperty().set(true);
 
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
@@ -244,8 +258,9 @@ public class EducationDetailsController implements FormActionListener {
     }
 
     private void updateEducationForm(EducationDto dto) {
+        selected.set(dto);
         if(dto == null) {
-            clearForm();
+            resetForm();
             return;
         }
 
@@ -261,7 +276,7 @@ public class EducationDetailsController implements FormActionListener {
     }
 
 
-    private void clearForm() {
+    private void resetForm() {
         educationYear.clear();
         course.clear();
         educationalStatus.getSelectionModel().clearSelection();
@@ -278,11 +293,14 @@ public class EducationDetailsController implements FormActionListener {
 
     @Override
     public void newFired() {
-        add();
+        resetForm();
+        selected.set(new EducationDto());
+        //add();
     }
 
     @Override
     public void deleteFired(Long id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        studentsRepository.deleteEducationHistory(selected.get().getId());
+        refreshEducationTable();
     }
 }

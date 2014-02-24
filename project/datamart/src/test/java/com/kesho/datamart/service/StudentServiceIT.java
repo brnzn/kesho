@@ -59,6 +59,15 @@ public class StudentServiceIT {
     @Inject
     private JpaTransactionManager transactionManager;
 
+    @Test
+    public void shouldDeleteEducationHistory() {
+        assertThat(studentService.getEducationHistory(2L), hasSize(2));
+        studentService.deleteEducationHistory(1L);
+
+        List<EducationDto> items = studentService.getEducationHistory(2L);
+        assertThat(items, hasSize(1));
+        assertThat(items.get(0).getId(), is(2L));
+    }
 
     @Test
     public void shouldCascadeDeleteEducationOnly() {

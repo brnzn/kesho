@@ -32,4 +32,6 @@ public interface StudentService {
     EducationDto findLatestEducation(Long studentId);
 
     void deleteStudent(Long id);
+
+    void deleteEducationHistory(Long id);
 }

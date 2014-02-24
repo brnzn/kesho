@@ -10,7 +10,7 @@
 <?scenebuilder-classpath-element ../../java?>
 <?scenebuilder-classpath-element ../../../../target/classes?>
 
-<Tab id="educationTab" disable="true" fx:id="educationTab" text="Education" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
+<Tab id="educationTab" fx:id="educationTab" disable="true" text="Education" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
   <content>
     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="554.0000999999975">
       <children>
@@ -47,7 +47,7 @@
                         <TextArea fx:id="comments" prefHeight="67.0" prefWidth="403.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
                           </children>
                           <padding>
                             <Insets right="10.0" />

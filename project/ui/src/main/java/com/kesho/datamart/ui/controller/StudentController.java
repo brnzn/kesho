@@ -55,9 +55,9 @@ public class StudentController implements FormActionListener {
     @FXML
     private NumericTextField yearOfBirth;
     @FXML
-    private TextField contactNumber;     // TODO: check with kate if we can take it from family
+    private TextField contactNumber;
     @FXML
-    private TextField homeLocation;   //TODO: check with kate if it is duplicate with family details
+    private TextField homeLocation;
     @FXML
     private ToggleGroup currentStudent;
     @FXML

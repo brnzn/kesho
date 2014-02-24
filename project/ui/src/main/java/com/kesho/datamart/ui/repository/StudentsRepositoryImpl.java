@@ -69,4 +69,9 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         studentsService.deleteStudent(id);
     }
 
+    @Override
+    public void deleteEducationHistory(Long id) {
+        studentsService.deleteEducationHistory(id);
+    }
+
 }
