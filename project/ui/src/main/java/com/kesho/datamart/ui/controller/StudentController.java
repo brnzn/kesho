@@ -202,7 +202,8 @@ public class StudentController implements FormActionListener {
     @Override
     public void deleteFired(Long id) {
         studentsRepository.deleteStudent(id);
-        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED); // TODO: Delete event type
+        resetForm();
+        WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_DELETED);
     }
 
     @FXML

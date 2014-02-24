@@ -3,6 +3,7 @@ package com.kesho.datamart.ui.util;
 import javax.inject.Named;
 import java.util.*;
 
+//TODO: this implementation should be replaced with something more appropriate
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -13,6 +14,12 @@ import java.util.*;
 @Named
 public class EventBus {
     private Map<Event, List<SystemEventListener>> listeners = new HashMap<>();
+
+    public void registerListener(SystemEventListener listener, Event ...types) {
+        for (Event event:types) {
+            registerListener(event, listener);
+        }
+    }
 
     public void registerListener(Event type, SystemEventListener listener) {
         List<SystemEventListener> eventListeners = listeners.get(type);

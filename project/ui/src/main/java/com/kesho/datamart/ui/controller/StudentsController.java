@@ -91,12 +91,12 @@ public class StudentsController implements Selectable<StudentDto> {
         studentsTable.requestFocus();
         studentsTable.layout();
 
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
+        WindowsUtil.getInstance().getEventBus().registerListener(new SystemEventListener() {
             @Override
             public void handle() {
                 refreshTable();
             }
-        });
+        }, Event.STUDENT_ADDED, Event.STUDENT_DELETED);
 
         initTabButtons();
         initFormActionListeners();
@@ -203,5 +203,5 @@ public class StudentsController implements Selectable<StudentDto> {
         });
     }
 
-
+   //TODO: this controller should implement FormActionListener and delete student before fire event. Student details should just reset form
 }
