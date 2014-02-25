@@ -39,11 +39,7 @@
                                             <tabs>
                                                 <fx:include fx:id="student" source="/view/StudentDetailsTab.fxml"/>
                                                 <fx:include fx:id="educationDetails" source="/view/EducationDetailsTab.fxml"/>
-                                                <Tab text="Family">
-                                                    <content>
-                                                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                                    </content>
-                                                </Tab>
+                                                <fx:include fx:id="familyDetails" source="/view/FamilyDetailsTab.fxml"/>
                                                 <Tab text="Alumni">
                                                     <content>
                                                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

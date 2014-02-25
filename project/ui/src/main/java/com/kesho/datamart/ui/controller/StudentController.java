@@ -201,7 +201,6 @@ public class StudentController implements FormActionListener {
 
     @Override
     public void deleteFired(Long id) {
-//        studentsRepository.deleteStudent(id);
         resetForm();
     }
 

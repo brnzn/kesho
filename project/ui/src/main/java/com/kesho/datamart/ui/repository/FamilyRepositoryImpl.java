@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.FamilyService;
 
@@ -39,5 +40,10 @@ public class FamilyRepositoryImpl implements FamilyRepository {
     @Override
     public void delete(Long id) {
         familyService.delete(id);
+    }
+
+    @Override
+    public List<StudentDto> getFamilyStudents(Long familyId) {
+        return familyService.getFamilyStudents(familyId);
     }
 }

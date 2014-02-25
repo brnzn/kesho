@@ -1,6 +1,5 @@
 package com.kesho.datamart.ui;
 
-import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.controller.*;
@@ -136,66 +135,66 @@ public class WindowsUtil {
         return primaryStage.getScene().getRoot();
     }
 
-    public boolean studentForm(StudentDto dto) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewStudentForm.fxml"));
+//    public boolean studentForm(StudentDto dto) {
+//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewStudentForm.fxml"));
+//
+//        try {
+//            AnchorPane page = (AnchorPane) loader.load();
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("New Student");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(primaryStage);
+//            Scene scene = new Scene(page);
+//            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
+//
+//            dialogStage.setScene(scene);
+//            // Set the person into the controller
+//            StudentDialogController controller = loader.getController();
+//            controller.setDialogStage(dialogStage);
+//            controller.setDto(dto);
+//
+//            // Show the dialog and wait until the user closes it
+//            dialogStage.showAndWait();
+//
+//            return controller.isOkClicked();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return false;
+//    }
 
-        try {
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Student");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
 
-            dialogStage.setScene(scene);
-            // Set the person into the controller
-            StudentDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setDto(dto);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-
-    public boolean educationForm(EducationDto dto) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewEducationForm.fxml"));
-        EducationDialogController controller = WindowsUtil.getInstance().controllers.getEducationDialogController();
-
-        loader.setController(controller);
-
-        try {
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Education");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
-
-            dialogStage.setScene(scene);
-
-            // Set the person into the controller
-            controller.setDialogStage(dialogStage);
-            controller.setDto(dto);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return controller.isOkClicked();
-
-    }
+//    public boolean educationForm(EducationDto dto) {
+//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewEducationForm.fxml"));
+//        EducationDialogController controller = WindowsUtil.getInstance().controllers.getEducationDialogController();
+//
+//        loader.setController(controller);
+//
+//        try {
+//            AnchorPane page = (AnchorPane) loader.load();
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("New Education");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(primaryStage);
+//            Scene scene = new Scene(page);
+//            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
+//
+//            dialogStage.setScene(scene);
+//
+//            // Set the person into the controller
+//            controller.setDialogStage(dialogStage);
+//            controller.setDto(dto);
+//
+//            // Show the dialog and wait until the user closes it
+//            dialogStage.showAndWait();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return controller.isOkClicked();
+//
+//    }
 
     public void autowire(Object o) {
         applicationContext.getAutowireCapableBeanFactory().autowireBean(o);
@@ -336,13 +335,13 @@ public class WindowsUtil {
             return rootController;
         }
 
-        public NewStudentController getNewStudentController() {
-            return applicationContext.getBean(NewStudentController.class);
-        }
+//        public NewStudentController getNewStudentController() {
+//            return applicationContext.getBean(NewStudentController.class);
+//        }
 
-        public EducationDialogController getEducationDialogController() {
-            return applicationContext.getBean(EducationDialogController.class);
-        }
+//        public EducationDialogController getEducationDialogController() {
+//            return applicationContext.getBean(EducationDialogController.class);
+//        }
 
         public InstitutionController getInstitutionController() {
             return applicationContext.getBean(InstitutionController.class);

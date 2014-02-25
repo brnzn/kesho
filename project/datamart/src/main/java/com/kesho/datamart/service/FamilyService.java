@@ -2,7 +2,7 @@ package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
 
 import java.util.List;
@@ -22,4 +22,6 @@ public interface FamilyService {
     Page<FamilyDto> getPage(Request request);
 
     void delete(Long id);
+
+    List<StudentDto> getFamilyStudents(Long familyId);
 }

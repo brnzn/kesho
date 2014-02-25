@@ -98,17 +98,6 @@ public class EducationDetailsController implements FormActionListener {
         calendar.setDateTextWidth(Double.valueOf(150));
     }
 
-//    private void add() {
-//        EducationDto dto = new EducationDto();
-//        boolean isOK = WindowsUtil.getInstance().educationForm(dto);
-//
-//        if(isOK) {
-//            studentsRepository.addEducationHistory(dto.withStudentId(parentController.getSelectedItem().getId()));
-//            refreshEducationTable();
-//            updateEducationForm(educationTable.getSelectionModel().getSelectedItem());
-//        }
-//    }
-
     private void refreshEducationTable() {
         educationModel.clear();
         if(parentController.getSelectedItem() != null) {

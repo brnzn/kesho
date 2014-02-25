@@ -18,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 /**
@@ -38,6 +39,12 @@ public class FamilyDAOTest {
 
     @Inject
     private FamilyDAO dao;
+
+    @Test
+    public void shouldLoadFamily() {
+        Family family = dao.loadFamily(2L);
+        assertThat(family.getStudents(), hasSize(2));
+    }
 
     @Test
     public void shouldSaveFamily() {

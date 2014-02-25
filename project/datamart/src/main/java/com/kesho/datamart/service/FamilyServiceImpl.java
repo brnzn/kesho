@@ -3,6 +3,7 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PageImpl;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
@@ -25,6 +26,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Inject
     private FamilyDAO dao;
     private FamilyAssembler assembler = new FamilyAssembler();
+    private StudentsAssembler studentsAssembler = new StudentsAssembler();
 
     public FamilyDto save(FamilyDto family) {
         return assembler.toDto(dao.save(assembler.toFamily(family)));
@@ -51,6 +53,12 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public void delete(Long id) {
         dao.delete(id);
+    }
+
+    @Override
+    public List<StudentDto> getFamilyStudents(Long familyId) {
+        Family family = dao.loadFamily(familyId);
+        return family != null ? studentsAssembler.toDto(family.getStudents()) : null;
     }
 
     private Page<FamilyDto> toPageResult(final org.springframework.data.domain.Page<Family> page, final Request request) {

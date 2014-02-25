@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.StudentDto;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface FamilyRepository extends Paging {
     Page<FamilyDto> getPage(int page, int pageSize);
 
     void delete(Long id);
+
+    List<StudentDto> getFamilyStudents(Long familyId);
 }

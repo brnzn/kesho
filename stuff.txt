@@ -1,1 +1,7 @@
 https://github.com/incepttechnologies/JavaFXTableWithPagination/tree/master/src/javafxtablewithpagination
+
+Forms should support edit mode:
+  1) all inputs should be read only
+  2) combo boxes should be populated with current value only
+
+Clicking on edit button should reload relevant values to combo boxes + change inputs to editable
