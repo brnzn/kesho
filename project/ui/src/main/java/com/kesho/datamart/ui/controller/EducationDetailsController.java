@@ -4,14 +4,12 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
-import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
@@ -178,7 +176,7 @@ public class EducationDetailsController implements FormActionListener {
             @Override
             public void changed(ObservableValue<? extends EducationDto> observableValue, EducationDto dto1, EducationDto dto2) {
                 saveButton.setDisable(dto2 == null);
-                parentController.disableButton(dto2 == null, TabButton.DELETE);
+//                parentController.disableButton(dto2 == null, TabButton.DELETE);
             }
         });
 
@@ -202,14 +200,14 @@ public class EducationDetailsController implements FormActionListener {
             @Override
             public void handle(javafx.event.Event event) {
                 if (educationTab.isSelected()) {
-                    parentController.disableButton(true, TabButton.DELETE);
+  //                  parentController.disableButton(true, TabButton.DELETE);
                     loadInstitutions();
                     refreshEducationTable();
-                    if(parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
-                        parentController.disableButton(true, TabButton.NEW);
-                    } else {
-                        parentController.disableButton(false, TabButton.NEW);
-                    }
+//                    if(parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
+//                        parentController.disableButton(true, TabButton.NEW);
+//                    } else {
+//                        parentController.disableButton(false, TabButton.NEW);
+//                    }
                 }
             }
         });

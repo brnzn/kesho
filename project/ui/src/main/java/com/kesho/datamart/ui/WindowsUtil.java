@@ -43,6 +43,10 @@ public class WindowsUtil {
         return controllers;
     }
 
+    public boolean showWarningDialog(String title, String head, String message) {
+        Dialogs.DialogResponse resp = Dialogs.showWarningDialog(primaryStage, message, head, title, Dialogs.DialogOptions.YES_NO);
+        return resp == Dialogs.DialogResponse.YES;
+    }
     public void sponsors() {
         try {
             // Load the fxml file and set into the center of the main layout

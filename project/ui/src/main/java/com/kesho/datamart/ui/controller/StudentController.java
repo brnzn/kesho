@@ -12,7 +12,6 @@ import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
-import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.NumericTextField;
@@ -20,7 +19,6 @@ import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -135,14 +133,14 @@ public class StudentController implements FormActionListener {
             }
         });
 
-        studentDetailsTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (studentDetailsTab.isSelected() && parentController.getSelectedItem() != null) {
-                    parentController.disableButton(false, TabButton.DELETE);
-                }
-            }
-        });
+//        studentDetailsTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+//            @Override
+//            public void handle(javafx.event.Event event) {
+//                if (studentDetailsTab.isSelected() && parentController.getSelectedItem() != null) {
+//                    parentController.disableButton(false, TabButton.DELETE);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -152,11 +150,11 @@ public class StudentController implements FormActionListener {
     }
 
     private void itemSelected(StudentDto student) {
-        if(student != null) {
-            parentController.disableButton(false, TabButton.NEW, TabButton.DELETE);
-        } else {
-            parentController.disableButton(true, TabButton.DELETE);
-        }
+//        if(student != null) {
+//            parentController.disableButton(false, TabButton.NEW, TabButton.DELETE);
+//        } else {
+//            parentController.disableButton(true, TabButton.DELETE);
+//        }
 
         if(student == null) {
             resetForm();

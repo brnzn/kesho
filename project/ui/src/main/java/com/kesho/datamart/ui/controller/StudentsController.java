@@ -8,6 +8,7 @@ import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -57,6 +58,9 @@ public class StudentsController implements Selectable<StudentDto> {
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
     private Map<String, FormActionListener> formActionListeners = new HashMap<>();
+    //TODO: use bind
+    private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
+
 
     @Override
     public StudentDto getSelectedItem() {
@@ -84,6 +88,13 @@ public class StudentsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
+        selected.addListener(new ChangeListener<StudentDto>() {
+            @Override
+            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
+                deleteButton.setDisable(studentDto2 == null);
+            }
+        });
+
 //        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         studentsTable.getSelectionModel().select(0);
@@ -129,6 +140,7 @@ public class StudentsController implements Selectable<StudentDto> {
         studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
+                selected.set(studentDto2);
                 WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
             }
         });
@@ -162,18 +174,18 @@ public class StudentsController implements Selectable<StudentDto> {
         initPagination();
     }
 
-    public void disableButton(boolean disable, TabButton... buttons) {
-        for (TabButton button:buttons) {
-            switch(button) {
-                case NEW:
-                    newButton.disableProperty().set(disable);
-                    break;
-                case DELETE:
-                    deleteButton.disableProperty().setValue(disable);
-                    break;
-            }
-        }
-    }
+//    public void disableButton(boolean disable, TabButton... buttons) {
+//        for (TabButton button:buttons) {
+//            switch(button) {
+//                case NEW:
+//                    newButton.disableProperty().set(disable);
+//                    break;
+//                case DELETE:
+//                    deleteButton.disableProperty().setValue(disable);
+//                    break;
+//            }
+//        }
+//    }
 
     private void initFormActionListeners() {
         formActionListeners.put("studentDetailsTab", studentController);
@@ -195,11 +207,13 @@ public class StudentsController implements Selectable<StudentDto> {
         deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Long id = studentsTable.getSelectionModel().getSelectedItem().getId();
-                studentsRepository.deleteStudent(id);
-                FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                if(elc != null) {
-                    elc.deleteFired(id);
+                if(WindowsUtil.getInstance().showWarningDialog("Delete Student", String.format("Are you sure you want to delete [%s]", selected.get().getFirstName()) , "NOTE: Deleting a student will also delete its education history.")) {
+                    Long id = studentsTable.getSelectionModel().getSelectedItem().getId();
+                    studentsRepository.deleteStudent(id);
+                    FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
+                    if(elc != null) {
+                        elc.deleteFired(id);
+                    }
                 }
             }
         });
