@@ -43,6 +43,7 @@ public class StudentsController implements Selectable<StudentDto> {
     private Pagination pagination;
     @FXML
     private TabPane studentTab;
+    //TODO: bind method to buttons on fxml
     @FXML
     private Button newButton;
     @FXML

@@ -146,31 +146,31 @@ public class PaymentArrangementController {
             }
         });
 
-        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (paymentArrangementTab.isSelected()) {
-                    refreshTable();
-                    if (parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
-                        parentController.disableButton(TabButton.NEW);
-                    } else {
-                        parentController.enableButton(TabButton.NEW);
-                    }
-                }
-            }
-        });
+//        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
+//            @Override
+//            public void handle(javafx.event.Event event) {
+//                if (paymentArrangementTab.isSelected()) {
+//                    refreshTable();
+//                    if (parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
+//                        parentController.disableButton(TabButton.NEW);
+//                    } else {
+//                        parentController.enableButton(TabButton.NEW);
+//                    }
+//                }
+//            }
+//        });
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("paymentArrangementTab", new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        add();
-                    }
-                });
-            }
-        });
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("paymentArrangementTab", new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent e) {
+//                        add();
+//                    }
+//                });
+//            }
+//        });
 
         paymentArrangementTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override

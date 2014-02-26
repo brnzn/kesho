@@ -36,7 +36,7 @@
                   <children>
                     <TabPane fx:id="sponsorTabPane" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
                         <tabs>
-                            <fx:include source="/view/SponsorDetailsTab.fxml"/>
+                            <fx:include fx:id="sponsor" source="/view/SponsorDetailsTab.fxml"/>
                             <fx:include source="/view/PaymentArrangementTab.fxml"/>
                         </tabs>
                     </TabPane>
@@ -50,8 +50,8 @@
       <top>
         <ToolBar id="toptoolbar" fx:id="tb">
           <items>
-            <Button fx:id="newSponsorBtn" mnemonicParsing="false" text="New..." />
-            <Button mnemonicParsing="false" text="Delete" />
+            <Button fx:id="newSponsorBtn" mnemonicParsing="false" text="New..."  onAction="#add"/>
+            <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" onAction="#delete"/>
             <Button mnemonicParsing="false" text="Filter..." />
             <Button mnemonicParsing="false" text="Show All" />
           </items>

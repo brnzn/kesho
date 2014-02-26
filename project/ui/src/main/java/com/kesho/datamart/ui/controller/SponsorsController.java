@@ -48,10 +48,12 @@ public class SponsorsController implements Selectable<SponsorDto> {
     @FXML
     private TabPane sponsorTabPane;
     @FXML
-    private Button newSponsorBtn;
+    private Button deleteButton;
+
+    @FXML
+    private SponsorController sponsorController;
 
     private ObservableList<SponsorDto> sponsorsModel = FXCollections.observableArrayList();
-    private Map<String, EventHandler<ActionEvent>> newButtonHandlers = new HashMap<>();
 
     @Override
     public SponsorDto getSelectedItem() {
@@ -72,25 +74,6 @@ public class SponsorsController implements Selectable<SponsorDto> {
         }
     }
 
-    public void registerNewChangeListener(String id, EventHandler<ActionEvent> eventHandler) {
-        newButtonHandlers.put(id, eventHandler);
-    }
-
-    public void disableButton(TabButton... buttons) {
-        for (TabButton button:buttons) {
-            if(TabButton.NEW == button) {
-                newSponsorBtn.disableProperty().set(true);
-            }
-        }
-    }
-
-    public void enableButton(TabButton ...buttons) {
-        for (TabButton button:buttons) {
-            if(TabButton.NEW == button) {
-                newSponsorBtn.disableProperty().set(false);
-            }
-        }
-    }
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -100,29 +83,14 @@ public class SponsorsController implements Selectable<SponsorDto> {
         refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         sponsorsTable.getSelectionModel().select(0);
-//        sponsorsTable.focusModelProperty().get().focus(0, firstNameColumn);
-//        sponsorsTable.requestFocus();
-//        sponsorsTable.layout();
 
-        newSponsorBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-//                add();
-                newButtonHandlers.get(sponsorTabPane.getSelectionModel().getSelectedItem().getId()).handle(actionEvent);
-            }
-        });
-
-        sponsorTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab tab2) {
-                if (newButtonHandlers.get(tab2.getId()) == null) {
-                    newSponsorBtn.disableProperty().setValue(true);
-                } else {
-                    newSponsorBtn.disableProperty().setValue(false);
-                }
-            }
-        });
-
+//        newSponsorBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent actionEvent) {
+//                sponsorController.newFired();
+//            }
+//        });
+//
         WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_ADDED, new SystemEventListener() {
             @Override
             public void handle() {
@@ -131,16 +99,15 @@ public class SponsorsController implements Selectable<SponsorDto> {
         });
     }
 
-//    private void add() {
-//        SponsorDto dto = new SponsorDto();
-//        boolean isOK = WindowsUtil.getInstance().sponsorForm(dto);
-//
-//        if (isOK) {
-//            sponsorsRepository.save(dto);
-//            WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED);
-//            refreshTable();
-//        }
-//    }
+    @FXML
+    private void add() {
+        sponsorController.newFired();
+    }
+
+    @FXML
+    private void delete() {
+        System.out.println("delete...");
+    }
 
     private void initTable() {
         sponsorsModel.clear();

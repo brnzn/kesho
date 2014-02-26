@@ -1,5 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
@@ -11,13 +13,13 @@ import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ import java.util.EnumSet;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SponsorController {
+public class SponsorController implements FormActionListener {
     @Autowired
     private SponsorsRepository sponsorsRepository;
 
@@ -74,9 +76,11 @@ public class SponsorController {
     private ComboBox<LevelOfParticipation> participationLevel;
     @FXML
     private Tab sponsorDetailsTab;
+    @FXML
+    private Button saveButton;
 
 
-    private SponsorDto selected;
+    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
 
     @Inject
     private SponsorsController parentController;
@@ -89,7 +93,14 @@ public class SponsorController {
 
     @FXML
     private void initialize() {
-        selected = null;
+        selected.addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
+                saveButton.setDisable(dto1 == null);
+            }
+        });
+
+        selected.set(null);
         surname.setUserData(null);
 
         startDateBox.getChildren().add(startDateCalendar);
@@ -110,23 +121,18 @@ public class SponsorController {
             }
         });
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("sponsorDetailsTab", new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        add();
-                    }
-                });
-            }
-        });
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("sponsorDetailsTab", new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent e) {
+//                        add();
+//                    }
+//                });
+//            }
+//        });
 
-    }
-
-    private void add() {
-        SponsorDto dto = new SponsorDto();
-        initializeForm(dto);
     }
 
     @FXML
@@ -137,32 +143,37 @@ public class SponsorController {
     }
 
     private SponsorDto buildDto() {
-        selected.setName(firstName.getText());
-        selected.setSurname(surname.getText());
-        selected.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
-        selected.setActive((Boolean) active.getSelectedToggle().getUserData());
-        selected.setAddressLine1(addressLine1.getText());
-        selected.setAddressLine2(addressLine2.getText());
-        selected.setAnonymous((Boolean) anonymous.getSelectedToggle().getUserData());
-        selected.setCountry(country.getText());
-        selected.setCounty(county.getText());
-        if(endDateCalendar.getValue() != null) {
-            selected.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
+        SponsorDto current = selected.get();
+        current.setName(firstName.getText());
+        current.setSurname(surname.getText());
+        if(startDateCalendar.getValue() != null) {
+            current.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
         }
 
-        selected.setPostcode(postcode.getText());
-        selected.setPayeeType(payeeType.getValue());
-        selected.setPhone(phone.getText());
-        selected.setLevelOfParticipation(participationLevel.getValue());
-        selected.setHowFoundUs(howFoundUs.getValue());
-        selected.setEmail1(email1.getText());
-        selected.setEmail2(email2.getText());
+        current.setActive((Boolean) active.getSelectedToggle().getUserData());
+        current.setAddressLine1(addressLine1.getText());
+        current.setAddressLine2(addressLine2.getText());
+        current.setAnonymous((Boolean) anonymous.getSelectedToggle().getUserData());
+        current.setCountry(country.getText());
+        current.setCounty(county.getText());
 
-        return selected;
+        if(endDateCalendar.getValue() != null) {
+            current.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
+        }
+
+        current.setPostcode(postcode.getText());
+        current.setPayeeType(payeeType.getValue());
+        current.setPhone(phone.getText());
+        current.setLevelOfParticipation(participationLevel.getValue());
+        current.setHowFoundUs(howFoundUs.getValue());
+        current.setEmail1(email1.getText());
+        current.setEmail2(email2.getText());
+
+        return current;
     }
 
     private void initializeForm(SponsorDto dto) {
-        selected = dto;
+        selected.set(dto);
 
         if(dto == null) {
             resetForm();
@@ -203,9 +214,9 @@ public class SponsorController {
     private void resetForm() {
         firstName.clear();
         surname.clear();
-        anonymous.selectToggle(null);
+        anonymous.getToggles().get(0).setSelected(true);
         startDateCalendar.clear();
-        active.selectToggle(null);
+        active.getToggles().get(0).setSelected(true);
         addressLine1.clear();
         addressLine2.clear();
         country.clear();
@@ -229,4 +240,15 @@ public class SponsorController {
         }
     }
 
+    @Override
+    public void newFired() {
+        sponsorDetailsTab.getTabPane().getSelectionModel().select(sponsorDetailsTab);
+        resetForm();
+        selected.set(new SponsorDto());
+    }
+
+    @Override
+    public void deleteFired(Long id) {
+        resetForm();
+    }
 }
