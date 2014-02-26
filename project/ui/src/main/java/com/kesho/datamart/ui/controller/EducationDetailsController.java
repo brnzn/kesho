@@ -4,7 +4,6 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -34,11 +33,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-//TODO: sort buttons state, validations, numeric inputs etc
-
-//Save button should be disabled until 'edit'
-//delete button enable/disable is wrong
 
 /**
  * Created with IntelliJ IDEA.
