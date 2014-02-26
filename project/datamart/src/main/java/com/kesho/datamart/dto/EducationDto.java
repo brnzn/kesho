@@ -3,7 +3,10 @@ package com.kesho.datamart.dto;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,10 +16,15 @@ import org.joda.time.LocalDate;
  * To change this template use File | Settings | File Templates.
  */
 public class EducationDto {
+    @NotNull(message = "Institution is mandatory")
     private InstitutionDto institution;
+    @NotNull(message = "Date is mandatory")
     private LocalDate date;
+    @NotNull(message = "Year is mandatory")
     private Integer year;
+    @NotBlank(message = "Course is mandatory")
     private String course;
+    @NotNull(message = "Education Status is mandatory")
     private EducationStatus educationalStatus;
     private SubEducationStatus secondaryEducationStatus1;
     private SubEducationStatus secondaryEducationStatus2;

@@ -2,12 +2,10 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
-import com.kesho.datamart.ui.util.TabButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -23,8 +21,6 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +53,6 @@ public class StudentsController implements Selectable<StudentDto> {
     private EducationDetailsController educationDetailsController;
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
-    private Map<String, FormActionListener> formActionListeners = new HashMap<>();
     //TODO: use bind
     private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
 
@@ -110,7 +105,6 @@ public class StudentsController implements Selectable<StudentDto> {
         });
 
         initTabButtons();
-        initFormActionListeners();
     }
 
     public void init() {
@@ -174,33 +168,11 @@ public class StudentsController implements Selectable<StudentDto> {
         initPagination();
     }
 
-//    public void disableButton(boolean disable, TabButton... buttons) {
-//        for (TabButton button:buttons) {
-//            switch(button) {
-//                case NEW:
-//                    newButton.disableProperty().set(disable);
-//                    break;
-//                case DELETE:
-//                    deleteButton.disableProperty().setValue(disable);
-//                    break;
-//            }
-//        }
-//    }
-
-    private void initFormActionListeners() {
-        formActionListeners.put("studentDetailsTab", studentController);
-        formActionListeners.put("educationTab", educationDetailsController);
-    }
-
-
     private void initTabButtons() {
         newButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                if(elc != null) {
-                    elc.newFired();
-                }
+                studentController.newFired();
             }
         });
 
@@ -210,10 +182,7 @@ public class StudentsController implements Selectable<StudentDto> {
                 if(WindowsUtil.getInstance().showWarningDialog("Delete Student", String.format("Are you sure you want to delete [%s]", selected.get().getFirstName()) , "NOTE: Deleting a student will also delete its education history.")) {
                     Long id = studentsTable.getSelectionModel().getSelectedItem().getId();
                     studentsRepository.deleteStudent(id);
-                    FormActionListener elc = formActionListeners.get(studentTab.getSelectionModel().getSelectedItem().getId());
-                    if(elc != null) {
-                        elc.deleteFired(id);
-                    }
+                    studentController.deleteFired(id);
                 }
             }
         });

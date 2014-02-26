@@ -4,13 +4,14 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.ui.FormActionListener;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
+import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -21,14 +22,18 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //TODO: sort buttons state, validations, numeric inputs etc
 
@@ -42,7 +47,7 @@ import java.util.List;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class EducationDetailsController implements FormActionListener {
+public class EducationDetailsController {
     @FXML
     private HBox dateControlBox;
     private final FXCalendar calendar = new FXCalendar();
@@ -80,6 +85,8 @@ public class EducationDetailsController implements FormActionListener {
     private TableColumn<EducationDto, String> courseCol;
     @FXML
     private Button saveButton;
+    @FXML
+    private Button deleteButton;
 
     @Inject
     private InstitutionRepository institutionRepository;
@@ -90,6 +97,7 @@ public class EducationDetailsController implements FormActionListener {
     private StudentsController parentController;
 
     private SimpleObjectProperty<EducationDto> selected = new SimpleObjectProperty<>();
+    private Map<String, Node> validationFields = new HashMap<>();
 
     public EducationDetailsController() {
         WindowsUtil.getInstance().autowire(this);
@@ -114,7 +122,6 @@ public class EducationDetailsController implements FormActionListener {
     @FXML
     private void save() {
         EducationDto dto = selected.get();
-
         dto.withStudentId(parentController.getSelectedItem().getId()).
             withYear(Util.safeToIntegerValue(educationYear.getText(), null))
             .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
@@ -128,8 +135,34 @@ public class EducationDetailsController implements FormActionListener {
             dto.withEducationDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
-        studentsRepository.save(dto);
-        refreshEducationTable();
+        if (isInputValid(dto)) {
+            studentsRepository.save(dto);
+            refreshEducationTable();
+        }
+    }
+
+    private boolean isInputValid(EducationDto dto) {
+        String validation = FormValidator.validate(dto, getFields());
+
+        if(StringUtils.isNotBlank(validation)) {
+            WindowsUtil.getInstance().showErrorDialog(validation);
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    private Map<String, Node> getFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("institution", institutions);
+            validationFields.put("date", dateControlBox);
+            validationFields.put("year", educationYear);
+            validationFields.put("course", course);
+            validationFields.put("educationalStatus", educationalStatus);
+        }
+
+        return validationFields;
     }
 
     private void loadInstitutions() {
@@ -176,7 +209,7 @@ public class EducationDetailsController implements FormActionListener {
             @Override
             public void changed(ObservableValue<? extends EducationDto> observableValue, EducationDto dto1, EducationDto dto2) {
                 saveButton.setDisable(dto2 == null);
-//                parentController.disableButton(dto2 == null, TabButton.DELETE);
+                deleteButton.setDisable(dto2 == null || dto2.getId() == null);
             }
         });
 
@@ -200,14 +233,8 @@ public class EducationDetailsController implements FormActionListener {
             @Override
             public void handle(javafx.event.Event event) {
                 if (educationTab.isSelected()) {
-  //                  parentController.disableButton(true, TabButton.DELETE);
                     loadInstitutions();
                     refreshEducationTable();
-//                    if(parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
-//                        parentController.disableButton(true, TabButton.NEW);
-//                    } else {
-//                        parentController.disableButton(false, TabButton.NEW);
-//                    }
                 }
             }
         });
@@ -278,16 +305,17 @@ public class EducationDetailsController implements FormActionListener {
         comments.clear();
     }
 
-    @Override
-    public void newFired() {
+    @FXML
+    private void newFired() {
         resetForm();
         selected.set(new EducationDto());
-        //add();
     }
 
-    @Override
-    public void deleteFired(Long id) {
-        studentsRepository.deleteEducationHistory(selected.get().getId());
-        refreshEducationTable();
+    @FXML
+    private void deleteFired() {
+        if(WindowsUtil.getInstance().showWarningDialog("Delete Education History", "Are you sure you want to delete the selected education history row?", null)) {
+            studentsRepository.deleteEducationHistory(selected.get().getId());
+            refreshEducationTable();
+        }
     }
 }

@@ -45,9 +45,11 @@
                         <ComboBox id="institutionsCombobox" fx:id="institutions" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Comments" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                         <TextArea fx:id="comments" prefHeight="67.0" prefWidth="403.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                           <children>
                             <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteFired" text="Delete" />
+                            <Button fx:id="newButton" disable="false" mnemonicParsing="false" onAction="#newFired" text="New" />
                           </children>
                           <padding>
                             <Insets right="10.0" />

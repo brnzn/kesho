@@ -47,6 +47,7 @@ public class WindowsUtil {
         Dialogs.DialogResponse resp = Dialogs.showWarningDialog(primaryStage, message, head, title, Dialogs.DialogOptions.YES_NO);
         return resp == Dialogs.DialogResponse.YES;
     }
+
     public void sponsors() {
         try {
             // Load the fxml file and set into the center of the main layout

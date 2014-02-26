@@ -145,6 +145,7 @@ public class StudentController implements FormActionListener {
 
     @Override
     public void newFired() {
+        studentDetailsTab.getTabPane().getSelectionModel().select(studentDetailsTab);
         resetForm();
         selected.set(new StudentDto());
     }
