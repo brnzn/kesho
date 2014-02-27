@@ -21,4 +21,6 @@ public interface SponsorsRepository {
     PaymentArrangementDto save(PaymentArrangementDto dto);
 
     List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId);
+
+    void deleteSponsor(Long id);
 }

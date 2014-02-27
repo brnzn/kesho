@@ -9,6 +9,8 @@ import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,7 +36,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 @Named("SponsorsController")
-public class SponsorsController implements Selectable<SponsorDto> {
+public class SponsorsController {
     @Autowired
     private SponsorsRepository sponsorsRepository;
     @FXML
@@ -49,30 +51,39 @@ public class SponsorsController implements Selectable<SponsorDto> {
     private TabPane sponsorTabPane;
     @FXML
     private Button deleteButton;
+    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
 
     @FXML
     private SponsorController sponsorController;
 
     private ObservableList<SponsorDto> sponsorsModel = FXCollections.observableArrayList();
 
-    @Override
-    public SponsorDto getSelectedItem() {
-        return sponsorsTable.getSelectionModel().getSelectedItem();
+    void valueChanged() {
+        refreshTable();
     }
 
-    @Override
-    public void refresh() {
-        if(sponsorsTable.getSortOrder().isEmpty()) {
-            firstNameColumn.setVisible(false);
-            firstNameColumn.setVisible(true);
-        } else {
-            ObservableList<TableColumn<SponsorDto, ?>> sort = sponsorsTable.getSortOrder();
-            ObservableList<TableColumn<SponsorDto, ?>> sort1 = FXCollections.observableArrayList();
-            sort1.addAll(sort);
-            sponsorsTable.getSortOrder().removeAll(sort);
-            sponsorsTable.getSortOrder().addAll(sort1);
-        }
+    SimpleObjectProperty<SponsorDto> getSelectedProperty() {
+        return selected;
     }
+
+//    @Override
+//    public SponsorDto getSelectedItem() {
+//        return sponsorsTable.getSelectionModel().getSelectedItem();
+//    }
+//
+//    @Override
+//    public void refresh() {
+//        if(sponsorsTable.getSortOrder().isEmpty()) {
+//            firstNameColumn.setVisible(false);
+//            firstNameColumn.setVisible(true);
+//        } else {
+//            ObservableList<TableColumn<SponsorDto, ?>> sort = sponsorsTable.getSortOrder();
+//            ObservableList<TableColumn<SponsorDto, ?>> sort1 = FXCollections.observableArrayList();
+//            sort1.addAll(sort);
+//            sponsorsTable.getSortOrder().removeAll(sort);
+//            sponsorsTable.getSortOrder().addAll(sort1);
+//        }
+//    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -80,17 +91,28 @@ public class SponsorsController implements Selectable<SponsorDto> {
      */
     @FXML
     private void initialize() {
+        selected.addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto sponsorDto, SponsorDto sponsorDto2) {
+                deleteButton.setDisable(sponsorDto2 == null);
+            }
+        });
+
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
+        familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
+
+        sponsorsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto1, SponsorDto dto2) {
+                selected.set(dto2);
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_SELECTED); // used by payment arrangements
+            }
+        });
+
         refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         sponsorsTable.getSelectionModel().select(0);
 
-//        newSponsorBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                sponsorController.newFired();
-//            }
-//        });
-//
         WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_ADDED, new SystemEventListener() {
             @Override
             public void handle() {
@@ -106,28 +128,23 @@ public class SponsorsController implements Selectable<SponsorDto> {
 
     @FXML
     private void delete() {
-        System.out.println("delete...");
-    }
-
-    private void initTable() {
-        sponsorsModel.clear();
-
-        sponsorsTable.setItems(sponsorsModel);
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
-
-        sponsorsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SponsorDto>() {
-            @Override
-            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto1, SponsorDto dto2) {
-                WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_SELECTED);
-            }
-        });
+        if(WindowsUtil.getInstance().showWarningDialog("Delete Sponsor", String.format("Are you sure you want to delete [%s]", selected.get().getName()), "NOTE: Deleting sponsor will alos delete its Payment Arrangements")) {
+            Long id = selected.get().getId();
+            sponsorsRepository.deleteSponsor(id);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    refreshTable();
+                }
+            });
+            sponsorController.deleteFired(id);
+        }
     }
 
     private void initPagination() {
         Page p = getPage(0, 10);
         if(p != null) {
-            sponsorsModel.addAll(p.getContent());    //
+            sponsorsModel.addAll(p.getContent());
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
             pagination.currentPageIndexProperty().setValue(0);
         }
@@ -148,7 +165,9 @@ public class SponsorsController implements Selectable<SponsorDto> {
     }
 
     private void refreshTable() {
-        initTable();
+        sponsorsModel.clear();
+        sponsorsTable.setItems(sponsorsModel);
+
         initPagination();
     }
 }

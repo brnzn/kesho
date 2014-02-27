@@ -4,6 +4,7 @@ import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
 import com.kesho.datamart.entity.Sponsor;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 
 /**
@@ -17,7 +18,9 @@ public class SponsorDto {
     private Long id;
     private Boolean active;
     private Boolean anonymous;
+    @NotBlank(message = "Name is mandatory")
     private String name;
+    @NotBlank(message = "Family Name is mandatory")
     private String surname;
     private String addressLine1;
     private String addressLine2;

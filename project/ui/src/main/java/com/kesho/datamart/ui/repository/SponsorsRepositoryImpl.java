@@ -20,6 +20,7 @@ import java.util.List;
  */
 @Named("SponsorsRepositoryImpl")
 public class SponsorsRepositoryImpl implements SponsorsRepository {
+    //TODO: PaymentArrangementService should be part of SponsorService
     @Inject
     private SponsorService sponsorService;
     @Inject
@@ -43,5 +44,10 @@ public class SponsorsRepositoryImpl implements SponsorsRepository {
     @Override
     public List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId) {
         return paymentArrangementService.getPaymentArrangements(sponsorId);
+    }
+
+    @Override
+    public void deleteSponsor(Long id) {
+        sponsorService.deleteSponsor(id);
     }
 }

@@ -263,15 +263,15 @@ public class PaymentArrangementController {
         }
 
         selected.setStudentId(((StudentDto)student.getUserData()).getId());
-        selected.setSponsorId(parentController.getSelectedItem().getId());
+        selected.setSponsorId(parentController.getSelectedProperty().get().getId());
 
         return selected;
     }
 
     private void refreshTable() {
         tableModel.clear();
-        if(parentController.getSelectedItem() != null) {
-            List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(parentController.getSelectedItem().getId());
+        if(parentController.getSelectedProperty().get() != null) {
+            List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(parentController.getSelectedProperty().get().getId());
             tableModel.addAll(dtos);
             int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
             paymentArrangementTable.setItems(null);

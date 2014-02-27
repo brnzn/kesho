@@ -9,6 +9,7 @@ import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.repository.FamilyDAO;
+import com.kesho.datamart.repository.PaymentArrangementDao;
 import com.kesho.datamart.repository.SponsorsDAO;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
@@ -20,7 +21,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -43,6 +47,20 @@ public class SponsorServiceIT {
     private JpaTransactionManager transactionManager;
     @Inject
     private SponsorsDAO dao;
+    @Inject
+    private PaymentArrangementDao paymentArrangementDao;
+
+
+    @Test
+    public void shouldDeleteSponsorAndPaymentArrangement() {
+        assertNotNull(dao.findOne(1L));
+        assertThat(paymentArrangementDao.findBySponsorId(1L), hasSize(1));
+
+        service.deleteSponsor(1L);
+        assertNull(dao.findOne(1L));
+        assertThat(paymentArrangementDao.findBySponsorId(1L), hasSize(0));
+
+    }
 
     @Test
     public void shouldCreateSponsor() {

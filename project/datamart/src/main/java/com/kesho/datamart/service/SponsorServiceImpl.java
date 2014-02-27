@@ -5,9 +5,11 @@ import com.kesho.datamart.dto.PageImpl;
 import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.paging.Request;
+import com.kesho.datamart.repository.PaymentArrangementDao;
 import com.kesho.datamart.repository.SponsorsDAO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +26,9 @@ import java.util.List;
 public class SponsorServiceImpl implements SponsorService {
     @Inject
     private SponsorsDAO dao;
+    @Inject
+    private PaymentArrangementDao paymentArrangementDao;
+
     private SponsorAssembler assembler = new SponsorAssembler();
 
     public SponsorDto save(SponsorDto sponsor) {
@@ -41,6 +46,14 @@ public class SponsorServiceImpl implements SponsorService {
         Pageable pageSpecification = new PageRequest(request.getPageNumber(), request.getPageSize());
 
         return toPageResult(dao.findAll(pageSpecification), request);
+    }
+
+    @Transactional
+    @Override
+    public void deleteSponsor(Long id) {
+        paymentArrangementDao.deleteBySponsorId(id);
+        dao.deleteBySponsorId(id);
+
     }
 
     private Page<SponsorDto> toPageResult(final org.springframework.data.domain.Page<Sponsor> page, final Request request) {

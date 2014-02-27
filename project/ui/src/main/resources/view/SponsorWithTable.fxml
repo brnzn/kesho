@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import custom.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
@@ -51,7 +50,7 @@
         <ToolBar id="toptoolbar" fx:id="tb">
           <items>
             <Button fx:id="newSponsorBtn" mnemonicParsing="false" text="New..."  onAction="#add"/>
-            <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" onAction="#delete"/>
+            <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" onAction="#delete" disable="true"/>
             <Button mnemonicParsing="false" text="Filter..." />
             <Button mnemonicParsing="false" text="Show All" />
           </items>

@@ -54,9 +54,7 @@ public class StudentsController implements Selectable<StudentDto> {
     private EducationDetailsController educationDetailsController;
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
-    //TODO: use bind
     private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
-
 
     @Override
     public StudentDto getSelectedItem() {
@@ -91,7 +89,6 @@ public class StudentsController implements Selectable<StudentDto> {
             }
         });
 
-//        refreshTable();
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         studentsTable.getSelectionModel().select(0);
         studentsTable.focusModelProperty().get().focus(0, firstNameColumn);

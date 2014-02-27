@@ -15,4 +15,6 @@ public interface SponsorService {
     SponsorDto save(SponsorDto sponsor);
 
     Page<SponsorDto> getPage(Request request);
+
+    void deleteSponsor(Long id);
 }

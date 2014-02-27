@@ -1,31 +1,30 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.FormActionListener;
-import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
-import com.kesho.datamart.ui.util.Event;
-import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
-import javafx.application.Platform;
+import com.kesho.datamart.ui.validation.FormValidator;
+import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -79,8 +78,8 @@ public class SponsorController implements FormActionListener {
     @FXML
     private Button saveButton;
 
-
-    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
+    private Map<String, Node> validationFields = new HashMap<>();
+    private SimpleObjectProperty<SponsorDto> selected;
 
     @Inject
     private SponsorsController parentController;
@@ -93,53 +92,34 @@ public class SponsorController implements FormActionListener {
 
     @FXML
     private void initialize() {
+        selected = parentController.getSelectedProperty();
+
         selected.addListener(new ChangeListener<SponsorDto>() {
             @Override
             public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
+                initializeForm(dto1);
                 saveButton.setDisable(dto1 == null);
             }
         });
 
-        selected.set(null);
         surname.setUserData(null);
-
         startDateBox.getChildren().add(startDateCalendar);
         endDateBox.getChildren().add(endDateCalendar);
 
         Util.initializeYesNoGroup(active, anonymous);
-
         Util.initializeComboBoxValues(participationLevel, EnumSet.allOf(LevelOfParticipation.class));
         Util.initializeComboBoxValues(howFoundUs, EnumSet.allOf(FoundUs.class));
         Util.initializeComboBoxValues(payeeType, EnumSet.allOf(PayeeType.class));
-
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_SELECTED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                if (sponsorDetailsTab.isSelected()) {
-                    initializeForm(parentController.getSelectedItem());
-                }
-            }
-        });
-
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("sponsorDetailsTab", new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent e) {
-//                        add();
-//                    }
-//                });
-//            }
-//        });
-
     }
 
     @FXML
     private void save() {
         SponsorDto dto = buildDto();
-        dto = sponsorsRepository.save(dto);
-        WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED);
+        if (isInputValid(dto)) {
+            dto = sponsorsRepository.save(dto);
+            parentController.valueChanged();
+            //WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED); // only need to inform parent to refresh table
+        }
     }
 
     private SponsorDto buildDto() {
@@ -251,4 +231,28 @@ public class SponsorController implements FormActionListener {
     public void deleteFired(Long id) {
         resetForm();
     }
+
+    //TODO: create interface for validation + utility method to validate
+    private boolean isInputValid(SponsorDto dto) {
+        String validation = FormValidator.validate(dto, getFields());
+
+        if(StringUtils.isNotBlank(validation)) {
+            WindowsUtil.getInstance().showErrorDialog(validation);
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    private Map<String, Node> getFields() {
+
+        if(validationFields.isEmpty()) {
+            validationFields.put("name", firstName);
+            validationFields.put("surname", surname);
+        }
+
+        return validationFields;
+    }
+
 }
