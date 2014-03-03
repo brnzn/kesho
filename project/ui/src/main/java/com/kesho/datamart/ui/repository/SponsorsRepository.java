@@ -23,4 +23,6 @@ public interface SponsorsRepository {
     List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId);
 
     void deleteSponsor(Long id);
+
+    void deletePaymentArrangement(Long id);
 }

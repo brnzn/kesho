@@ -50,4 +50,9 @@ public class SponsorsRepositoryImpl implements SponsorsRepository {
     public void deleteSponsor(Long id) {
         sponsorService.deleteSponsor(id);
     }
+
+    @Override
+    public void deletePaymentArrangement(Long id) {
+        paymentArrangementService.delete(id);
+    }
 }

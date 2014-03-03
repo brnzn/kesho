@@ -2,6 +2,7 @@ package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.repository.PaymentArrangementDao;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,6 +23,7 @@ public class PaymentArrangementServiceImpl implements PaymentArrangementService 
     private PaymentArrangementAssembler assembler = new PaymentArrangementAssembler();
 
     @Override
+    @Transactional
     public PaymentArrangementDto save(PaymentArrangementDto dto) {
         return assembler.toDto(paymentArrangementDao.save(assembler.toEntity(dto)));
     }
@@ -29,5 +31,11 @@ public class PaymentArrangementServiceImpl implements PaymentArrangementService 
     @Override
     public List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId) {
         return paymentArrangementDao.findBySponsorId(sponsorId);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        paymentArrangementDao.deleteById(id);
     }
 }

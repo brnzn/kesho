@@ -15,4 +15,6 @@ public interface PaymentArrangementService {
     PaymentArrangementDto save(PaymentArrangementDto dto);
 
     List<PaymentArrangementDto> getPaymentArrangements(Long sponsorId);
+
+    void delete(Long id);
 }

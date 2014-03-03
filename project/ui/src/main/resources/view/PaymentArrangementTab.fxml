@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import custom.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
@@ -39,9 +38,11 @@
                         <Label text="Financial Arrangement:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                         <Label text="Total Allocated:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
                         <TextField fx:id="educationLevel" editable="false" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                           <children>
-                            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="newButton" mnemonicParsing="false" onAction="#add" text="New" />
+                            <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
+                            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#delete" text="Delete" />
                           </children>
                           <padding>
                             <Insets right="10.0" />

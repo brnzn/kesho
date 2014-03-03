@@ -67,11 +67,6 @@ public class SponsorsController {
     }
 
 //    @Override
-//    public SponsorDto getSelectedItem() {
-//        return sponsorsTable.getSelectionModel().getSelectedItem();
-//    }
-//
-//    @Override
 //    public void refresh() {
 //        if(sponsorsTable.getSortOrder().isEmpty()) {
 //            firstNameColumn.setVisible(false);

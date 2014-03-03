@@ -1,5 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FinancialArrangement;
 import com.kesho.datamart.dto.EducationDto;
@@ -12,6 +14,7 @@ import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -32,7 +36,9 @@ import org.joda.time.LocalDate;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -76,7 +82,15 @@ public class PaymentArrangementController {
     @FXML
     private TextField educationLevel;
 
-    private PaymentArrangementDto selected;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button deleteButton;
+
+    private SimpleObjectProperty<PaymentArrangementDto> selected = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<SponsorDto> selectedSponsor = new SimpleObjectProperty<>();
+
+    private Map<String, Node> validationFields = new HashMap<>();
 
     public PaymentArrangementController() {
         startDateCalendar.setDateTextWidth(Double.valueOf(200));
@@ -101,6 +115,23 @@ public class PaymentArrangementController {
 
     @FXML
     private void initialize() {
+        selectedSponsor.bind(parentController.getSelectedProperty());
+        selectedSponsor.addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
+                refreshTable();
+            }
+        });
+
+
+        selected.addListener(new ChangeListener<PaymentArrangementDto>() {
+            @Override
+            public void changed(ObservableValue<? extends PaymentArrangementDto> observableValue, PaymentArrangementDto dto1, PaymentArrangementDto dto2) {
+                saveButton.setDisable(dto2 == null);
+                deleteButton.setDisable(dto2 == null || dto2.getId() == null);
+            }
+        });
+
         student.setUserData(null);
         startDateBox.getChildren().add(startDateCalendar);
         endDateBox.getChildren().add(endDateCalendar);
@@ -137,40 +168,12 @@ public class PaymentArrangementController {
 
         Util.initializeComboBoxValues(financialArrangement, EnumSet.allOf(FinancialArrangement.class));
 
-        WindowsUtil.getInstance().getEventBus().registerListener(com.kesho.datamart.ui.util.Event.SPONSOR_SELECTED, new SystemEventListener() {
+        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
-            public void handle() {
-                if (paymentArrangementTab.isSelected()) {
-                    refreshTable();
-                }
+            public void handle(javafx.event.Event event) {
+                refreshTable();
             }
         });
-
-//        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
-//            @Override
-//            public void handle(javafx.event.Event event) {
-//                if (paymentArrangementTab.isSelected()) {
-//                    refreshTable();
-//                    if (parentController.getSelectedItem() == null || parentController.getSelectedItem().getId() == null) {
-//                        parentController.disableButton(TabButton.NEW);
-//                    } else {
-//                        parentController.enableButton(TabButton.NEW);
-//                    }
-//                }
-//            }
-//        });
-
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                WindowsUtil.getInstance().getControllers().sponsorsController().registerNewChangeListener("paymentArrangementTab", new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent e) {
-//                        add();
-//                    }
-//                });
-//            }
-//        });
 
         paymentArrangementTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
@@ -193,13 +196,20 @@ public class PaymentArrangementController {
                 initializeForm(newValue);
             }
         });
-
-
     }
 
+    @FXML
     private void add() {
         PaymentArrangementDto dto = new PaymentArrangementDto();
         initializeForm(dto);
+    }
+
+    @FXML
+    private void delete () {
+        if(WindowsUtil.getInstance().showWarningDialog("Delete Financial Arrangement", "Are you sure you want to delete the selected Financial Arrangement row?", null)) {
+            sponsorsRepository.deletePaymentArrangement(selected.get().getId());
+            refreshTable();
+        }
     }
 
     private void clearForm() {
@@ -214,7 +224,7 @@ public class PaymentArrangementController {
     }
 
     private void initializeForm(PaymentArrangementDto dto) {
-        selected = dto;
+        selected.set(dto);
         if(dto == null) {
             clearForm();
             return;
@@ -242,43 +252,64 @@ public class PaymentArrangementController {
     @FXML
     private void save() {
         PaymentArrangementDto dto = buildDto();
-        dto = sponsorsRepository.save(dto);
-
-        refreshTable();
+        if(FormValidator.validateAndAlert(dto, getFields())) {
+            sponsorsRepository.save(dto);
+            refreshTable();
+        }
     }
 
     private PaymentArrangementDto buildDto() {
-        if(selected == null) {
-            selected = new PaymentArrangementDto();
-        }
+        PaymentArrangementDto dto = new PaymentArrangementDto();
 
         if (endDateCalendar.getValue() != null) {
-            selected.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
+            dto.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
         }
 
-        selected.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
-        selected.setFinancialArrangement(financialArrangement.getValue());
+        if(startDateCalendar.getValue() != null) {
+            dto.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
+        }
+
+        dto.setFinancialArrangement(financialArrangement.getValue());
+
         if(StringUtils.isNotBlank(totalAllocated.getText())) {
-            selected.setAmount(new BigDecimal(totalAllocated.getText()));
+            dto.setAmount(new BigDecimal(totalAllocated.getText()));
         }
 
-        selected.setStudentId(((StudentDto)student.getUserData()).getId());
-        selected.setSponsorId(parentController.getSelectedProperty().get().getId());
+        if(student != null) {
+            dto.setStudentId(((StudentDto)student.getUserData()).getId());
+        }
 
-        return selected;
+        dto.setSponsorId(selectedSponsor.get().getId());
+
+        return dto;
     }
 
     private void refreshTable() {
-        tableModel.clear();
-        if(parentController.getSelectedProperty().get() != null) {
-            List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(parentController.getSelectedProperty().get().getId());
-            tableModel.addAll(dtos);
-            int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
-            paymentArrangementTable.setItems(null);
-            paymentArrangementTable.layout();
-            paymentArrangementTable.setItems(tableModel);
-            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-            paymentArrangementTable.getSelectionModel().select(selectedIndex);
+        if (paymentArrangementTab.isSelected()) {
+            tableModel.clear();
+            if(selectedSponsor.get() != null) {
+                List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selectedSponsor.get().getId());
+                tableModel.addAll(dtos);
+                int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
+                paymentArrangementTable.setItems(null);
+                paymentArrangementTable.layout();
+                paymentArrangementTable.setItems(tableModel);
+                // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+                paymentArrangementTable.getSelectionModel().select(selectedIndex);
+            }
         }
     }
+
+    private Map<String, Node> getFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("startDate", startDateBox);
+            validationFields.put("endDate", endDateBox);
+            validationFields.put("type", financialArrangement);
+            validationFields.put("amount", totalAllocated);
+            validationFields.put("studentId", student);
+        }
+
+        return validationFields;
+    }
+
 }

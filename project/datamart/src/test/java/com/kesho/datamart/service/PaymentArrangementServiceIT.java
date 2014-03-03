@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -40,6 +41,14 @@ public class PaymentArrangementServiceIT {
     private JpaTransactionManager transactionManager;
     @Inject
     private PaymentArrangementDao paymentArrangementDao;
+
+
+    @Test
+    public void shouldDeletePaymentArrangement() {
+        assertThat(paymentArrangementDao.findOne(1L), notNullValue());
+        service.delete(1L);
+        assertThat(paymentArrangementDao.findOne(1L), nullValue());
+    }
 
     @Test
     public void shouldCreate() {

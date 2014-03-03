@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -19,13 +20,19 @@ import java.math.BigDecimal;
  */
 public class PaymentArrangementDto {
     private Long id;
+    @NotNull(message = "Student is mandatory")
     private Long studentId;
+    @NotNull(message = "Sponsor is mandatory")
     private Long sponsorId;
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @NotNull(message = "Start of commitment is mandatory")
     private LocalDate startDate;
+    @NotNull(message = "End of commitment is mandatory")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate endDate;
+    @NotNull(message = "Financial arrangement is mandatory")
     private FinancialArrangement type;
+    @NotNull(message = "Total allocated is mandatory")
     private BigDecimal amount;
     private String studentName;
 

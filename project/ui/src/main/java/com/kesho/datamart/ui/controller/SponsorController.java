@@ -4,7 +4,6 @@ import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
 import com.kesho.datamart.dto.SponsorDto;
-import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.util.Util;
@@ -33,7 +32,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SponsorController implements FormActionListener {
+public class SponsorController {
     @Autowired
     private SponsorsRepository sponsorsRepository;
 
@@ -79,7 +78,7 @@ public class SponsorController implements FormActionListener {
     private Button saveButton;
 
     private Map<String, Node> validationFields = new HashMap<>();
-    private SimpleObjectProperty<SponsorDto> selected;
+    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
 
     @Inject
     private SponsorsController parentController;
@@ -92,12 +91,12 @@ public class SponsorController implements FormActionListener {
 
     @FXML
     private void initialize() {
-        selected = parentController.getSelectedProperty();
+        selected.bind(parentController.getSelectedProperty());
 
         selected.addListener(new ChangeListener<SponsorDto>() {
             @Override
             public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
-                initializeForm(dto1);
+                initializeForm();
                 saveButton.setDisable(dto1 == null);
             }
         });
@@ -115,10 +114,11 @@ public class SponsorController implements FormActionListener {
     @FXML
     private void save() {
         SponsorDto dto = buildDto();
-        if (isInputValid(dto)) {
+        if (FormValidator.validateAndAlert(dto, getFields())) {
             dto = sponsorsRepository.save(dto);
+            selected.bind(parentController.getSelectedProperty());
             parentController.valueChanged();
-            //WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_ADDED); // only need to inform parent to refresh table
+
         }
     }
 
@@ -152,8 +152,8 @@ public class SponsorController implements FormActionListener {
         return current;
     }
 
-    private void initializeForm(SponsorDto dto) {
-        selected.set(dto);
+    private void initializeForm() {
+        SponsorDto dto = selected.get();
 
         if(dto == null) {
             resetForm();
@@ -162,7 +162,7 @@ public class SponsorController implements FormActionListener {
 
         firstName.setText(dto.getName());
         surname.setText(dto.getSurname());
-        setState(anonymous, dto.getActive());
+        Util.setYesNoToggleState(anonymous, dto.getActive());
 
         if(dto.getStartDate() != null) {
             startDateCalendar.setValue(dto.getStartDate().toDate());
@@ -170,7 +170,7 @@ public class SponsorController implements FormActionListener {
             startDateCalendar.clear();
         }
 
-        setState(active, dto.getActive());
+        Util.setYesNoToggleState(active, dto.getActive());
         addressLine1.setText(dto.getAddressLine1());
         addressLine2.setText(dto.getAddressLine2());
         country.setText(dto.getCountry());
@@ -212,41 +212,19 @@ public class SponsorController implements FormActionListener {
         email2.clear();
     }
 
-    private void setState(ToggleGroup group, Boolean value) {
-        if (value == null || value) {
-            group.getToggles().get(0).setSelected(true);
-        } else {
-            group.getToggles().get(1).setSelected(true);
-        }
-    }
-
-    @Override
-    public void newFired() {
+    void newFired() {
         sponsorDetailsTab.getTabPane().getSelectionModel().select(sponsorDetailsTab);
         resetForm();
+        //Must unbind in order to set new value
+        selected.unbind();
         selected.set(new SponsorDto());
     }
 
-    @Override
-    public void deleteFired(Long id) {
+    void deleteFired(Long id) {
         resetForm();
     }
 
-    //TODO: create interface for validation + utility method to validate
-    private boolean isInputValid(SponsorDto dto) {
-        String validation = FormValidator.validate(dto, getFields());
-
-        if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog(validation);
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
     private Map<String, Node> getFields() {
-
         if(validationFields.isEmpty()) {
             validationFields.put("name", firstName);
             validationFields.put("surname", surname);

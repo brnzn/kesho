@@ -50,7 +50,6 @@ public class SponsorServiceIT {
     @Inject
     private PaymentArrangementDao paymentArrangementDao;
 
-
     @Test
     public void shouldDeleteSponsorAndPaymentArrangement() {
         assertNotNull(dao.findOne(1L));
