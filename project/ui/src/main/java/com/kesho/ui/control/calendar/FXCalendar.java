@@ -253,7 +253,7 @@ public class FXCalendar extends HBox {
 	}
 
 	/**
-	 * @param baseColor
+	 * @param color
 	 *            the baseColor to set
 	 */
 	public void setBaseColor(Color color) {
@@ -297,7 +297,7 @@ public class FXCalendar extends HBox {
 	}
 
 	/**
-	 * @param dateTextWidth
+	 * @param width
 	 *            the dateTextWidth to set
 	 */
 	public void setDateTextWidth(Double width) {
@@ -363,7 +363,7 @@ public class FXCalendar extends HBox {
 	}
 
 	/**
-	 * @param value
+	 * @param date
 	 *            the value to set
 	 */
 	public void setValue(Date date) {
@@ -377,6 +377,7 @@ public class FXCalendar extends HBox {
 			selectedDateProperty().set(0);
 			selectedMonthProperty().set(0);
 			selectedYearProperty().set(0);
+            dateTxtField.clear();
 		}
 	}
 
@@ -416,7 +417,6 @@ public class FXCalendar extends HBox {
 	 * 
 	 * @author Sai.Dandem
 	 * 
-	 * @param <ItemType>
 	 */
 	public static interface Cell {
 		Node getNode();
@@ -430,7 +430,6 @@ public class FXCalendar extends HBox {
 	 * 
 	 * @author Sai.Dandem
 	 * 
-	 * @param <ItemType>
 	 */
 	public static class DateTextField extends TextField implements Cell {
 		public DateTextField() {
