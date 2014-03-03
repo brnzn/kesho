@@ -275,7 +275,7 @@ public class PaymentArrangementController {
             dto.setAmount(new BigDecimal(totalAllocated.getText()));
         }
 
-        if(student != null) {
+        if(student != null && student.getUserData() != null) {
             dto.setStudentId(((StudentDto)student.getUserData()).getId());
         }
 
