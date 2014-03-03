@@ -75,6 +75,10 @@ public class PaymentArrangementController {
 
     @FXML
     private TableColumn<PaymentArrangementDto, LocalDate> startCol;
+
+    @FXML
+    private TableColumn<PaymentArrangementDto, LocalDate> endCol;
+
     @FXML
     private TableColumn<PaymentArrangementDto, String> studentNameCol;
     @FXML
@@ -137,6 +141,7 @@ public class PaymentArrangementController {
         endDateBox.getChildren().add(endDateCalendar);
 
         startCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, LocalDate>("startDate"));
+        endCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, LocalDate>("endDate"));
         studentNameCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, String>("studentName"));
         studentNameCol.setCellFactory(new Callback<TableColumn<PaymentArrangementDto, String>, TableCell<PaymentArrangementDto, String>>() {
             @Override
