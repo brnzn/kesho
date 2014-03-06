@@ -1,9 +1,9 @@
 package com.kesho.datamart.service;
 
-import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public class StudentsAssembler {
 
     //TODO: function
     public List<StudentDto> toDto(List<Student> students) {
-        List<StudentDto> dtos = Lists.newArrayList();
+        List<StudentDto> dtos = new ArrayList<>();
         for (Student student : students) {
             dtos.add(toDto(student));
         }

@@ -196,6 +196,7 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+            <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>
@@ -219,8 +220,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.4</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.7</source>
+						<target>1.7</target>
 					</configuration>
 				</plugin>
 				<plugin>

@@ -4,9 +4,6 @@ import com.kesho.datamart.domain.Location;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
-
-import static com.google.common.collect.Sets.newHashSet;
 
 /**
  * Created with IntelliJ IDEA.

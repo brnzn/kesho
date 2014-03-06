@@ -1,6 +1,5 @@
 package com.kesho.datamart.entity;
 
-import com.google.common.collect.Lists;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
@@ -9,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class Student {
     @JoinColumn(name="STUDENT_ID", referencedColumnName="ID", updatable = false, insertable = false)
     //// bidirectional
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private List<EducationHistory> educationHistory = Lists.newArrayList();  //TODO: need to do batch delete instead of one by one
+    private List<EducationHistory> educationHistory = new ArrayList<>();  //TODO: need to do batch delete instead of one by one
     @Column(name= "EMAIL")
     private String email;
     @Column(name = "FACEBOOK")

@@ -1,14 +1,10 @@
-import com.google.common.collect.Lists;
-import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +27,7 @@ public class ControlTest extends Application {
         primaryStage.setTitle("AutoFillTextBox without FilterMode");
 
         //SAMPLE DATA
-        ObservableList<FamilyDto> data = FXCollections.observableArrayList(Lists.newArrayList(new FamilyDto(1L, "aa"), new FamilyDto(2L, "ab"), new FamilyDto(1L, "aaa")));
+//        ObservableList<FamilyDto> data = FXCollections.observableArrayList(Lists.newArrayList(new FamilyDto(1L, "aa"), new FamilyDto(2L, "ab"), new FamilyDto(1L, "aaa")));
 //        String[] s = new String[]{"apple","ball","cat","doll","elephant",
 //                "fight","georgeous","height","ice","jug",
 //                "aplogize","bank","call","done","ego",
@@ -51,7 +47,7 @@ public class ControlTest extends Application {
         hbox.setSpacing(10);
         //CustomControl
         final AutoFillTextBox box = new AutoFillTextBox();
-        box.setData(data);
+//        box.setData(data);
         box.getListview().getSelectionModel().getSelectedItems().addListener(new ListChangeListener() {
             @Override
             public void onChanged(Change change) {

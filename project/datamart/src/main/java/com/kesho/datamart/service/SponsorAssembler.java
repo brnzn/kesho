@@ -1,11 +1,9 @@
 package com.kesho.datamart.service;
 
-import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.SponsorDto;
-import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Sponsor;
-import com.kesho.datamart.entity.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ import java.util.List;
 public class SponsorAssembler {
 
     public List<SponsorDto> toDto(List<Sponsor> sponsors) {
-        List<SponsorDto> dtos = Lists.newArrayList();
+        List<SponsorDto> dtos = new ArrayList<>();
         for (Sponsor sponsor : sponsors) {
             dtos.add(toDto(sponsor));
         }

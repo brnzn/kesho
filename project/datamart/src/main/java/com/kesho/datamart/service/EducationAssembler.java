@@ -1,11 +1,10 @@
 package com.kesho.datamart.service;
 
-import com.google.common.collect.Lists;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.entity.EducationHistory;
-import com.kesho.datamart.entity.School;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ import java.util.List;
 public class EducationAssembler {
     //TODO: function
     public List<EducationDto> toDto(List<EducationHistory> logs) {
-        List<EducationDto> dtos = Lists.newArrayList();
+        List<EducationDto> dtos = new ArrayList<>();
         for (EducationHistory log : logs) {
             dtos.add(toDto(log));
         }
