@@ -255,14 +255,29 @@ public class EducationDetailsController {
         educationalStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationStatus>() {
             @Override
             public void changed(ObservableValue<? extends EducationStatus> observableValue, EducationStatus s, EducationStatus s2) {
-                if(s2 == null) {
-                    secondaryStatus1.getSelectionModel().clearSelection();
-                } else {
-                    secondaryStatus1.getItems().clear();
+                secondaryStatus2.getItems().clear();
+                secondaryStatus1.getItems().clear();
+                secondaryStatus2.getSelectionModel().clearSelection();
+                secondaryStatus1.getSelectionModel().clearSelection();
+
+                if(s2 != null) {
                     secondaryStatus1.getItems().addAll(s2.getChildren());
                 }
             }
         });
+
+        secondaryStatus1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SubEducationStatus>() {
+            @Override
+            public void changed(ObservableValue<? extends SubEducationStatus> observableValue, SubEducationStatus s, SubEducationStatus s2) {
+                if(s2 == null) {
+                    secondaryStatus2.getSelectionModel().clearSelection();
+                } else {
+                    secondaryStatus2.getItems().clear();
+                    secondaryStatus2.getItems().addAll(s2.getChildren());
+                }
+            }
+        });
+
     }
 
     private void updateEducationForm(EducationDto dto) {
