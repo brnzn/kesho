@@ -5,11 +5,8 @@ import com.kesho.datamart.ui.controller.RootController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.io.IOException;
 
 
@@ -50,7 +47,7 @@ public class KeshoApp extends Application {
         primaryStage.sizeToScene();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		launch(args);
 	}
 }

@@ -1,2 +1,4 @@
 version on entities
 equals/hashcode
+
+copy schema.script to home/orenberenson/db/db/ for local db
