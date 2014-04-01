@@ -1,7 +1,19 @@
+http://zenjava.com/javafx/maven/web-bundle.html
 https://github.com/incepttechnologies/JavaFXTableWithPagination/tree/master/src/javafxtablewithpagination
 
-Forms should support edit mode:
-  1) all inputs should be read only
-  2) combo boxes should be populated with current value only
+jnlp:
+need to sign jars:
+javafxpackager -signJar --outdir /home/orenberenson/kesho/project/ui/target/jfx/app/dist -keyStore testKeys -storePass berenson -alias jdc -srcdir /home/orenberenson/kesho/project/ui/target/jfx/app/dist
 
-Clicking on edit button should reload relevant values to combo boxes + change inputs to editable
+run javafxpackager and then jarsigner for each jar that seemed to be unsigned: jarsigner -keystore testKeys aspectjrt-1.7.2.jar jdc
+
+dialogs not showing images
+
+native app:
+to create dmg need to run on mac
+copy dmg file when dialog to install app open
+
+
+
+
+
