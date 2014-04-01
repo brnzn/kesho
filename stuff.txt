@@ -14,6 +14,14 @@ to create dmg need to run on mac
 copy dmg file when dialog to install app open
 
 
+To install standalone app(I hope these are the correct steps):
+1) double click the dmg file
+2) drag to Application folder
+3) Go to Application folder and double click kesho1 app (It will not open at this time)
+4) The first attempt should have created a folder db/db under your home directory. If you are not sure about your home directory, open terminal and type pwd.
+5) Copy the attached script to [home dir]/db/db
+6) re launch kesho1 application
+
 
 
 
