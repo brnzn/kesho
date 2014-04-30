@@ -1,10 +1,10 @@
 package migration
 
+import scala.io.Source
 import org.squeryl.Session
 import org.squeryl.SessionFactory
-import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.adapters.MySQLAdapter
-import scala.io.Source
+import migration.writer.SchoolWriter
 
 object Migration {
   val databaseUsername = "oren"
@@ -18,7 +18,8 @@ object Migration {
 //    	println(line.length +" "+ line)
  
 
-    Source.fromFile("./src/migration/Schools-only.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
+    Source.fromFile("./src/data/Schools-only.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
+    Source.fromFile("./src/data/contacts-only.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
   }
 
   def startDatabaseSession(): Unit = {

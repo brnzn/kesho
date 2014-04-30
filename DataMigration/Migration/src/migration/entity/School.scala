@@ -1,8 +1,8 @@
-package migration
+package migration.entity
 
 import org.squeryl.annotations.Column
 
-class SCHOOLS(val id: Long,
+class School(val id: Long,
     val name: String,
   @Column("ADDRESS_LINE1") val addressLine1: String,
   @Column("ADDRESS_LINE2") val addressLine2: String,

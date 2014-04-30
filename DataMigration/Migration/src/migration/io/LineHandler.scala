@@ -1,4 +1,6 @@
-package migration
+package migration.io
+
+import scala.Array.canBuildFrom
 
 class LineHandler (line: String, length: Int = -1) {
   require(line != null)

@@ -1,4 +1,3 @@
-id,supplier_id,supplier_title,supplier_first_name,supplier_last_name,job title
 1,S10001,Mr,Gitonga,S. Maina,
 2,S10003,Mrs,Mwema,,Head Teacher
 3,S10004,Mrs,Mercy,Mwandege,

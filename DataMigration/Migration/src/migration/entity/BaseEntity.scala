@@ -1,4 +1,4 @@
-package migration
+package migration.entity
 
 import org.squeryl.KeyedEntity
 

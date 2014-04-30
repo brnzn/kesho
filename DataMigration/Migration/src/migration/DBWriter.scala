@@ -1,6 +1,8 @@
 package migration
 
 import org.squeryl.PrimitiveTypeMode._
+import migration.writer.DataWriter
+import migration.io.LineHandler
 
 class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
   def insert() {
