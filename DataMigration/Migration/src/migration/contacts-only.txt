@@ -1,0 +1,105 @@
+id,supplier_id,supplier_title,supplier_first_name,supplier_last_name,job title
+1,S10001,Mr,Gitonga,S. Maina,
+2,S10003,Mrs,Mwema,,Head Teacher
+3,S10004,Mrs,Mercy,Mwandege,
+4,S10006,,Irene,,Head Teacher
+5,S10006,Mrs,Grace,Mzungu,Administrator
+6,S10007,Mrs,,Walbea,Deputy
+7,S10008,,,Rashid,
+8,S10008,Mr,,Rashid,Deputy
+9,S10010,,Rachel,,
+10,S10010,Mr,Beja,,
+11,S10011,,Caroline,Gege,Deputy
+12,S10011,Mrs,Florence,Chondo,
+13,S10012,Mr,,Muthomi,
+14,S10014,Mr,Amos,Ndune,
+15,S10015,Ms,Margaret,Khainga,
+16,S10016,,John,Kashanga,
+17,S10016,Mr,,Thoya,
+18,S10016,Mr,Joseph E.,Katana,
+19,S10017,Mr,A.M.,Ndune,
+20,S10018,Mr,,Ndune,
+21,S10019,Mr,Cornelius,Chiro,
+22,S10020,Mr,David,Mumba,Head Teacher
+23,S10021,Mr,,Githoa,Deputy
+24,S10021,Miss,Robina,Mutulis,
+25,S10021,Mr,Alois,Masha,Head Teacher
+26,S10022,Mrs,J.M.,Mafimbo,
+27,S10023,Mrs,Cecelia,Mrima,
+28,S10024,Mr,Gilbert ,Karisa,
+29,S10025,Mr,,Birya,School clerk
+30,S10025,,Jesinta,Indeche,Deputy
+31,S10025,Mr,,Kaingu,
+32,S10025,Mrs,Mafimbo,,
+33,S10026,Mr,,Kinga,Deputy
+34,S10026,Mrs,Shume,,
+35,S10027,Mr,,Kiiru,
+36,S10027,Madam,,Zoka,Deputy
+37,S10028,Mr,Boniface,Luwali,
+38,S10032,Mr,,Kamau,
+39,S10032,Mr,,Kamau,
+40,S10032,Mr,P.W.,Warui,
+41,S10033,Mr,Jonathan,Baha,
+42,S10034,Mr,Paul,Otula,
+43,S10035,Mr,,Kinyanjui,
+44,S10035,Mr,David G.,Kariuki,
+45,S10035,Mr,David G.,Kariuki,
+46,S10036,Madam,,Cynthia,Nursery
+47,S10036,Mr,Sammy ,Nyamawi,Head Teacher
+48,S10037,Mr,Lear,Saleta,
+49,S10039,Mr, King’ori, ,
+50,S10040,Mrs,,Mwangi,
+51,S10040,Mr,Masese,,
+52,S10041,Mr,,Sadi,
+53,S10041,Madam,,Mng’aro,
+54,S10041,Mr,Boniface ,Muramba,Head Teacher
+55,S10042,Mrs,Mwalekwa,,
+56,S10042,Mrs,Mwalekwa,,
+57,S10044,Mr,,Mwemba,
+58,S10047,Mr,,Nyamu,Head Teacher
+59,S10047,Mr,,Kadimo,Deputy
+60,S10053,Mr,Sarah,,Deputy
+61,S10064,Prof,Mohammed S,Rajab,
+62,S10072,Mr,Oscar,Mwasambu,
+63,S10075,Mr,,Muramba,Head Teacher
+64,S10085,Mr,Damigott,John,
+65,S10091,Mr,Tole,,
+66,S10094,,Clerk,Hezron,
+67,S10094,,Mathew,,Bursar
+68,S10094,Mr,John K,Kirui,
+69,S10099,Mr,,Kitsao,
+70,S10101,Mrs,Magdalene,Sang,
+71,S10109,Mr,Justus,Sulubu,Primary Head Teacher
+72,S10110,,Anthony,Chembe,Head Teacher
+73,S10110,,Robert,Yaa,CMC chairman
+74,S10110,,Reuben,Masha,Head Teacher
+75,S10112,Madam,,Eunice,
+76,S10113,,Imelda,A. Barasa,
+77,S10114,Mrs,Onserio,,
+78,S10114,Mrs,Onserio,,
+79,S10114,Mr,Onserio,,
+80,S10116,Mrs,Omanya  A.,Berth,
+81,S10123,Mr,Joseph,Mukangula,
+82,S10124,,Ann,,Bursar
+83,S10124,Mrs,Rosemary,Wanaswa,
+84,S10125,Mr,Francis,Ogutu,
+85,S10127,Madam,,Silala,
+86,S10127,Mr,,Toya,
+87,S10135,,Angela,,
+88,S10135,,Chewya,,
+89,S10135,Ms,Karimi,,
+90,S10158,,Metrine,,
+91,S10160,,Margaret ,Ruinge,
+92,S10161,Mr,Watson,Chano,Head Teacher
+93,S10164,Mr,Patrick,Maina Nderitu,
+94,S10165,,A.J.,Apiyo,
+95,S10166,Mr,,Mwatela,Deputy
+96,S10166,Mr,Mwangome,,Head Teacher
+97,S10167,Mr,S M,Njoroge,
+98,S10170,Mr,Lawrence,Kiwara,
+99,S10171,,Edwin ,Namachanja,
+100,S10173,Mr,Boaz,Owino ,
+101,S10176,Mr,Emmanuel,Karuke,
+102,S10177,Mr,Matata,Koti Musomba,
+103,S10185,Ms,Anne,,
+104,S10195,Mr,Patrick,Mzungu,

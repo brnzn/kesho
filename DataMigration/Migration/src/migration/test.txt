@@ -1,0 +1,104 @@
+S10001,Utumishi Academy (National),PO Box 39,,,,Gilgil,
+S10002,Chanagande Secondary School,PO Box 179,,Giriama,,Kaloleni,
+S10003,Korosho Primary School,PO Box 49,,,,Kilifi,
+S10004,Port Reitz Mombasa,98342 - 80100,,,Mercy Mwandege,Mombasa,
+S10005,St Patricks Academy - Kilifi,PO Box 62,,,,Kilifi,
+S10006,Upendo Modern Primary and Nursery School,Orphan Support Project-PO Box 898,,,Kenya,Kilifi,
+S10007,Kilifi Primary School,PO Box 58,,,,Kilifi,
+S10008,Kibarani Primary School, Kilifi,PO Box 32,,,,Kilifi,
+S10010,Lutsangani Secondary School ,PO Box 1121,,,,Kilifi,
+S10011,Ribe Girls Secondary School ,PO Box 312,,,,Kaloleni,
+S10012,Fumbini Primary School,PO Box 323,,,,Kilifi,
+S10013,Msumarani Secondary School,PO Box 53,,,,Mtwapa,
+S10014,Dr Krapf Memorial Secondary School - Rabai,PO Box 40,,,Mr Ravoch - Teacher,Mazeras,
+S10015,Limuru Girls’s School (National),PO Box 340-00217,,,, Limuru,
+S10016,Ribe Boys High School (National),PO Box 198,,,,Kaloleni,
+S10017,Sokoke Secondary School,PO Box 237,,,Mr A Ndune,Kilifi,
+S10018,Ndigiria Primary School,PO Box 21,,,Mr Ndune,Vitengeni- Kilifi,
+S10019,Chasimba Primary School,PO Box 1078,,,Cornelius Chiro,Kilifi,
+S10020,Mnarani Primary School,PO Box 735 ,,,,Kilifi,80108
+S10021,Kilifi Township Secondary School,PO Box 16,,,,Kilifi,
+S10022,Moi Kadzonzo Girls Secondary School,PO Box 239,,,Mrs J M Mafimbo,Mariakani,
+S10023,Ganze Secondary School,PO Box 9,,,Mrs Cecelia Mrima,Ganze,
+S10024,St George’s Secondary School,PO Box 59,,Giriama,Vitalis Majeni,Kaloleni,
+S10025,St Johns Girls Secondary School,PO Box 3,,Giriama,,Kaloleni,
+S10026,Kiwandani Primary School,PO Box 575,,,,Kilifi,80108
+S10027,Bahari Girls Secondary School (National),PO Box 641,,,,Kilifi,
+S10028,Vitengeni Baptist Secondary School,PO Box 832,,,Kenya,Kilifi,
+S10029,Mangu High School (National),P.O BOX 314 ,,,,THIKA,01000
+S10031,The Technical University of Mombasa ,P.O.Box 90420-80100,,,Kenya,Mombasa,
+S10032,Lenana School (National),PO Box 30253 - 00100,,,Mr P W Warui,Nairobi,
+S10033,St Thomas Primary School,679,,,,Kilifi,80108
+S10034,Maseno School (National),PO Box 120-40105,,,,Maseno,
+S10035,Alliance High School (National),PO Box 07 - 00902,,,David G. Kariuki,Kikuyu,
+S10036,Kibaoni Primary School,PO Box 988,,,,Kilifi,80108
+S10037,APAK Secondary School,PO Box 40825-80100,,Lear Saleta,,Mombasa,
+S10038,Matuga Girls High School,PO Box 24,,Matuga,,,,
+S10039,Mariakani Secondary School,PO Box 34,,, ,Mariakani,
+S10040,Nairobi School (National),PO Box 30047-00100,,,Kenya,Nairobi,
+S10041,Basi Primary School,PO Box 1273,,,,Kilifi,80108
+S10042,Bura Girls High School,PO Box 81,Ng’ambwa,,,Taita,
+S10043,Shimba Hills Secondary School,PO Box 27,,,,Kwale,
+S10044,Godoma Secondary School,PO Box 494,Bamba,,,Kilifi,
+S10047,Kilimo Primary School,P.O BOX 195,,,,KILIFI,
+S10053,Majaoni Secondary School,P.O BOX 505,,,,Kilifi,
+S10054,Moi University,"P.O. Box 3900,",,,,Eldoret,
+S10064,Pwani University College,PO Box 195 ,,,Kenya,Kilifi,80108
+S10072,Computer Course,,,,Kenya,Kilifi,
+S10075,Kibarani School for the Deaf,PO Box 265,,,Kenya,Kilifi,
+S10085,Mikingirini Primary School,208 - 80108,,,,Kilifi,80108
+S10089,Chief Mwangeka Girls Secondary School,PO Box 1044,,,Kenya,Wundanyi-Taita,
+S10090,Kombeni Girls Secondary School,,,,,Kaloleni,
+S10091,Kenyatta High School,57,Mwatate,,Kenya,Taita,
+S10094,Nakuru High School (National),661 - 20100,,,,Nakuru,
+S10095,Alliance Girls High School (National),PO Box 109, ,,Kenya,Kikuyu,00902
+S10097,Waa Girls Secondary School,259,,,,Ukunda,
+S10099,Malindi High School,PO Box 127 - 80200,,,Kenya,Malindi,
+S10101,Moi Girls High School Eldoret (National),P.O. Box 140 - 30100,,,Kenya,Eldoret,30100
+S10106,St Michael’s Girls Secondary School,P.O. Box 158,80105,,Kenya,Kaloleni,
+S10107,Jaribuni Secondary School,P.O Box 401,,,Kenya,Kilifi,80108
+S10108,Kwale Girls High School,P.O Box 87,,,,Kwale,
+S10109,Bofa Primary School,PO Box 485,,,,Kilifi,
+S10110,Misufini Primary School,Po Box 32,,,,Vitengeni ,
+S10112,Kilifi Nursery School,P.O BOX 481,,,,KILIFI,80108
+S10113,Maryhill Girls High School (National),P.O BOX 9,,,,Thika,0100
+S10114,Bahari Parents Academy,P.O BOX 325,,,,Mtwapa,
+S10115,St. Mary’s Secondary school Lushangonyi,P.O. BOX 1010,,,,Wundanyi,
+S10116,St. George’s Girls Secondary School (National),P.O BOX 11635 - 00400,,,,Nairobi,
+S10117,Kwale Boys High School,P.O. BOX 13-80403,,,,Kwale,
+S10118,State House Girls’ High School,P.O BOX 30252 - 00100,,,,Nairobi,
+S10121,Bondo Teachers Training College, P.O. BOX 424,,,,Bondo,40601
+S10123,St Anthony’s Boys Kitale,P.O Box 946 -30200,,,Kenya,Kitale,
+S10124,St. Brigid’s Girls High School -  Kiminini,PO Box 591 - 30200,,,,Kitale,
+S10125,Agoro Sare High School,P.O Box 8,,,Kenya,Oyugis,40222
+S10127,Silala Primary School,P.O BOX 82,,,,GANZE,
+S10131,United States International University,P.O BOX 14634,,,Kenya,Nairobi,00800
+S10135,Tewa Training Centre,69-,,,,Mtwapa,80109
+S10153,South Eastern Kenya University ,P.O BOX 170,,,,Kitui,9022
+S10154,Kenyatta University,P.O BOX 43844,,,,Nairobi,00100
+S10155,Egerton University,P.O BOX 536,,,Kenya,Egerton,20115
+S10157,University of Science and Technology,P.O BOX 210,,,Kenya,Bondo,40601
+S10158,Unik Driving College,P.O BOX 83970,,,,Mombasa,80100
+S10160,Loreto High school Limuru,Private Bag,,,Kenya,Limuru,00217
+S10161,Kilodi primary shool,P.O Box 1249,,,Kenya,Kilifi,
+S10162,The Technical University of Kenya,"P.O Box 52428 - 00200, ",Haile Selassie Avenue,,,Nairobi,
+S10163,Pwani secondary/vocational school for the deaf,P.O BOX 1484,,,,Kilifi,80108
+S10164,Moi High school -Mbiruri,P.O BOX 34 ,,,,Runyenjes,060103
+S10165,Asumbi Girls High School,P.O BOX 46,,,,Asumbi,40309
+S10166,Marafiki Primary School,P.O. BOX 1016,,,,KILIFI,
+S10167,Moi Forces Academy,P.O BOX 77155,,,,Nairobi,00611
+S10168,Lugulu Girls’ High School,Private Bag ,,,,Webuye,
+S10169,Nakuru Girls High School,P.O BOX 1352,,,,Nakuru,
+S10170,Kagumo High School (National),P.O BOX 69 ,,,,Kiganjo,10102
+S10171,Friends School  Kamusinga,Private Bag,,,,Kimilili,
+S10172,Kakamega School,P.O BOX 90,,,,Kakamega,
+S10173,Maranda High school,P.O BOX 120,,,,Bondo,
+S10174,Mdzongoloni Primary school,P.O. BOX 414,,,,Kilifi,
+S10176,Mavueni Primary School,P.O BOX   285,,,,Kilifi,
+S10177,Satelite Science Educators,,,,,,
+S10180,Sosodemu Primary school,,,,,,
+S10185,Kilifi Junior school and Day care centre,P.O BOX 1069 ,,,,KILIFI,80108
+S10188,Konjora Primary School,,,,,,
+S10191,Mama Ngina Girls  High school,P.O Box 81074,,,,Mombasa,
+S10195,Sahajanand Special school,P.O BOX 982 ,,,,Mtwapa,80109
+S10196,Majajani secondary school,P.O BOX 930,,,,Kilifi,80108
