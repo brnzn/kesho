@@ -1,8 +1,8 @@
-package migration
+package migration.writer
 
 import org.squeryl.PrimitiveTypeMode._
 import migration.entity.Contact
-import migration.writer.DataWriter
+import migration.Schema
 
 class ContactWriter extends DataWriter {
   def insert(values: Array[String]) = {
