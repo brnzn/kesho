@@ -1,15 +1,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/data/jpa
-	    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-	    http://www.springframework.org/schema/tx
-	    http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 	    ">
 
     <context:component-scan base-package="com.kesho.datamart.repository" />
@@ -56,31 +55,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<bean id="dataSourceMarketing" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<!-- Connection properties -->
-		<property name="driverClass" value="${db.driver}" />
-		<property name="jdbcUrl" value="${db.connection.url}" />
-		<property name="user" value="${db.connection.username}" />
-		<property name="password" value="${db.connection.password}" />
-		<!-- Pool properties -->
-		<property name="acquireIncrement" value="${db.c3p0.acquireIncrement}" />
-		<property name="acquireRetryAttempts" value="${db.c3p0.acquireRetryAttempts}" />
-		<property name="acquireRetryDelay" value="${db.c3p0.acquireRetryDelay}" />
-		<property name="checkoutTimeout" value="${db.c3p0.checkoutTimeout}" />
-		<property name="idleConnectionTestPeriod" value="${db.c3p0.idleConnectionTestPeriod}" />
-		<property name="initialPoolSize" value="${db.c3p0.initialPoolSize}" />
-		<property name="maxConnectionAge" value="${db.c3p0.maxConnectionAge}" />
-		<property name="maxIdleTimeExcessConnections" value="${db.c3p0.maxIdleTimeExcessConnections}" />
-		<property name="maxIdleTime" value="${db.c3p0.maxIdleTime}" />
-		<property name="maxPoolSize" value="${db.c3p0.maxPoolSize}" />
-		<property name="maxStatementsPerConnection" value="${db.c3p0.maxStatementsPerConnection}" />
-		<property name="maxStatements" value="${db.c3p0.maxStatements}" />
-		<property name="minPoolSize" value="${db.c3p0.minPoolSize}" />
-		<property name="numHelperThreads" value="${db.c3p0.numHelperThreads}" />
-		<!-- Experimental to remove deadlock, see http://bugs.mysql.com/bug.php?id=64700 -->
-		<property name="preferredTestQuery" value="SELECT 1" />
-	</bean>
+    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSourceMarketing">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:file:${user.home}/db/db/schema;shutdown=true" />
+        <property name="username" value="SA" />
+        <property name="password" value="" />
+    </bean>
 
 	<tx:annotation-driven />
 	<jpa:repositories base-package="com.kesho.datamart.repository" transaction-manager-ref="transactionManager" />

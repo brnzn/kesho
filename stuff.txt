@@ -1,3 +1,5 @@
+mvn clean jfx:web -DskipTests
+
 http://zenjava.com/javafx/maven/web-bundle.html
 https://github.com/incepttechnologies/JavaFXTableWithPagination/tree/master/src/javafxtablewithpagination
 

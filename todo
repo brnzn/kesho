@@ -1,3 +1,4 @@
+cannot delete student, so no need for delete button
 students details:
 gender - radio button
 students table don't refresh after delete
