@@ -1,0 +1,4 @@
+needs to be build on mac
+1) copy jars to dist folder (as needed in build.xml)
+2) run do-deploy
+3) generated dmg should be under deploy/bundles folder 
