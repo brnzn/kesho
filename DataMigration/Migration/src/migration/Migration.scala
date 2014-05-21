@@ -23,8 +23,8 @@ object Migration {
  
 
 //    Source.fromFile("./src/data/Schools-only-final.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
-    Source.fromFile("./src/data/Schools-contacts-only-final.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
-//    Source.fromFile("./src/data/contact-detail-only.txt").getLines().foreach(line => new DBWriter(new ContactDetailsWriter, line, 5).insert)  
+//    Source.fromFile("./src/data/Schools-contacts-only-final.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
+    Source.fromFile("./src/data/Schools-contacts-details-final.txt").getLines().foreach(line => new DBWriter(new ContactDetailsWriter, line, 5).insert)  
 
 //    Source.fromFile("./src/data/Sponsors-only.txt").getLines().foreach(line => new DBWriter(new SponsorWriter, line, 9).insert)  
 //    Source.fromFile("./src/data/SponsorsContactsDetails-only.txt").getLines().foreach(line => new DBWriter(new SponsorContactWriter, line, 4).insert)  

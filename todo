@@ -1,0 +1,67 @@
+students details:
+gender - radio button
+students table don't refresh after delete
+from family tab link to student (table at the bottom)
+Rename buttons to new/delete student
+grey out fields on family tab
+Add new input 'Total soponsorship required (anual)' on sponsorship section
+add sponsor table to student details + links to sponsor
+	Name/Surname, end of commitment (select where start dates is latest), anonymity, if not active show line in grey
+Move sponsorship section (+ sponsors table) to new tab 
+education tab - add title to section
+rename course to course name and move above comments 
+Course should be mandatory if education status is College or university
+Education start date calendar should default to 01/01/year
+When clicking New on education status, default values to prev year
+Add predicted end date on education table - start date + 12 month
+Alumni number can be removed  
+Family tab - rename 'No Non-kesho students to' Num of children in household
+	No of adults to Num of adults (> 18 years) in household  
+New tab History - New table for history
+
+Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate 
+Home location on Students tab should come from Family details (view only)
+Contact section to move under sponsorship section
+Rename Contact sections to 'Student Contacts'
+Rename Contact Number to Phone Number
+
+Move these inputs to sponsorship section:
+start date - rename to 'Start date with Kesho' (1 right)
+Current student (1 left)
+Add end date field (2 right)
+Leaver status move under (3 right)
+Leaver status - delete option 'Sibling ...' + 'Alumni...'
+
+If Sponsored = yes, then disable Sponsorship status dropdown 
+Sponsored - rename to Receiveing financial support?
+Sponsorship status - rename to Reason
+Add option to Sponsorship status "Recent College/University leaver"
+Add clear option to Sponsorship status (applicable to all dropdowns)
+Add input Other whic free text
+Delete 'Topup Needed'
+Delete Shortfall
+Level of Support - correct spelling of - 'One off donation'
+
+Kesho menu - student/ sponsor buttons instead of menu
+System - rename to Data
+Manage Institution rename to Schools
+window should be 3cm wider
+Enable export to xls
+
+After updating familiy, family details on student details are not getting refreshed until reloading the page. Should always refresh when clicking on family tab
+All forms input should be disabled until pressing new or selecting row.
+
+End of education on payment arrangment should be date
+Save on payment arrangment should do update and not new
+New on payment arrangment saved with 'current student' even if student not selected
+  
+
+New table for Sibiling - name, year of birth, gender, literacy support (yes/no) checkbox, child protection (yes/no) checkbox, other support (free text)  
+Student table on of family table should show just sibiling
+
+Sponsors:
+An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (see new field on student table)  
+
+Move end of education to education form as overall input (not per row) 
+
+
