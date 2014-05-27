@@ -1,5 +1,6 @@
 cannot delete student, so no need for delete button
 students details:
+add Receiving Financial Support?
 gender - radio button
 students table don't refresh after delete
 from family tab link to student (table at the bottom)
@@ -56,6 +57,8 @@ End of education on payment arrangment should be date
 Save on payment arrangment should do update and not new
 New on payment arrangment saved with 'current student' even if student not selected
   
+New concern coulmns for student (see email from kate)
+Reason for Departure changes (see email from kate) - departure reason + details dropdows of enums with dependencies
 
 New table for Sibiling - name, year of birth, gender, literacy support (yes/no) checkbox, child protection (yes/no) checkbox, other support (free text)  
 Student table on of family table should show just sibiling
@@ -64,5 +67,7 @@ Sponsors:
 An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (see new field on student table)  
 
 Move end of education to education form as overall input (not per row) 
+
+
 
 

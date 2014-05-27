@@ -8,16 +8,21 @@ class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
   def insert() {
     println("==> Inserting " + line)
     val values = new LineHandler(line, length).split
-    
+
     try {
-	    transaction {
-	      worker.insert(values)
-	      println("Inserted " + line)
-	    }
+      transaction {
+        worker.insert(values)
+        println("Inserted " + line)
+      }
     } catch {
+      case e: IllegalArgumentException => {
+        println("skipping empty row...")
+      }
       case e: Throwable => {
-        println("************ Failed to insert row:" + line + "**************")
-        e.printStackTrace()
+        println("************ Failed to insert row:" + line + "**************" + e.getMessage())
+//        if (e.getMessage() != null && !e.getMessage().contains("Duplicate entry")) {
+          e.printStackTrace()
+//        }
       }
     }
   }
