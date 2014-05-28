@@ -11,19 +11,17 @@ class StudentWriter extends DataWriter {
   def insert(values: Array[String]) = {
     if(values(0) != null && !values(0).isEmpty()) {
       
-      //student_departed	student_departure_reason	pk_student_id	student_first_names	student_gender	student_last_name
-
-       def fam = from(Schema.families)(s => where(s.name === values(5).trim()) select(s))
+       def fam = from(Schema.families)(s => where(s.name === values(6).trim()) select(s))
       println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
       	
-    	Schema.students.insert(new Student(new java.lang.Long(values(2).substring(1)), fam.toList(0).id, values(3).trim(), toInt(values(0)), values(1), toGender(values(4)), values(6)));
+    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), fam.toList(0).id, values(5).trim(), toInt(values(2), "no"), values(3), toGender(values(7)), values(4), toInt(values(1), "no")));
     } 
     //throw new IllegalArgumentException("empty row");
   }
   
-  def toInt(value: String) :Int = {
+  def toInt(value: String, falseValue: String) :Int = {
     println("--> " + value)
-    if(value.equalsIgnoreCase("yes")) {
+    if(value.equalsIgnoreCase(falseValue)) {
       return 0
     } else {
       return 1

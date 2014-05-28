@@ -1,3 +1,23 @@
+==============
+Question 1:  Receiving Financial Support?  Yes   No
+Question 2:  Current Student?   Yes   No
+
+Sub Menu options vary depending how they answer those TWO  questions.
+
+If Yes Yes - I guess it would enter automatically “Currently Sponsored” and then they would need to be offered a sub-menu for them to choose the  Level of Support such as  Full/Part/One off Donation etc...
+
+If No Yes - then they get the Gap Year / Other options
+
+If No No - they get the Graduated more than 2 years ago, sponsorship withdrawn, expiry of one off donation options.
+
+labels ?
+see codes in spreadsheet from kate
+all values are pre defined (combobox)
+selection in first filter second
+Other will expose free text input
+If Receive financial support is yes then current student must be yes 
+how to call DEPARTURE_REASON/DETAILS?
+===============================
 cannot delete student, so no need for delete button
 students details:
 add Receiving Financial Support?
