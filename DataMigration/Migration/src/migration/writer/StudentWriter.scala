@@ -10,17 +10,29 @@ import migration.entity.Student
 class StudentWriter extends DataWriter {
   def insert(values: Array[String]) = {
     if(values(0) != null && !values(0).isEmpty()) {
-      
-       def fam = from(Schema.families)(s => where(s.name === values(6).trim()) select(s))
-      println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
-      	
-    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), fam.toList(0).id, values(5).trim(), toInt(values(2), "no"), values(3), toGender(values(7)), values(4), toInt(values(1), "no")));
+       def fam = from(Schema.families)(s => where(s.name === values(7).trim()) select(s))
+       println(fam.size)
+      //println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
+       //fam.toList(0).id, , toInt(values(2), "no"), , , values(4), 
+    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), values(2), toInt(values(3), "no"), toDepartureReason(values(4)),values(5).trim, values(6).trim, fam.toList(0).id, toGender(values(8))));
     } 
+    
+    /*
+//pk_student_id	
+ * Receiving Financial Support?	
+ * Level of Support	
+ * Enrichment/Other Support	
+ * Reason not receiving financial support	
+ * Reason not receiving financial support_detail	
+ * student_first_names	
+ * student_last_name	
+ * student_gender
+ */
     //throw new IllegalArgumentException("empty row");
   }
   
   def toInt(value: String, falseValue: String) :Int = {
-    println("--> " + value)
+    //println("--> " + value)
     if(value.equalsIgnoreCase(falseValue)) {
       return 0
     } else {
@@ -34,7 +46,21 @@ class StudentWriter extends DataWriter {
     } else {
       null
     }
-    
+  }
+  
+  //TODFO: use pattern match
+  def toDepartureReason(value: String) :String = {
+    if(value.trim().equalsIgnoreCase("Graduated more than 2 years ago")) {
+      "GRADUATED"
+    } else if (value.trim().equalsIgnoreCase("Expiry of One Off Donation")) {
+      "EXPIRY"
+    } else if (value.trim().equalsIgnoreCase("Sponsorship Withdrawn")) {
+      "WITHDRAWN"
+    } else if (value.trim().equalsIgnoreCase("Gap Year")) {
+      "GAP_YEAR"
+    } else {
+      value
+    }
   }
 }
 
