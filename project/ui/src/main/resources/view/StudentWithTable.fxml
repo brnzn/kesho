@@ -58,7 +58,6 @@
                 <ToolBar id="toptoolbar" fx:id="tb">
                     <items>
                         <Button fx:id="newButton" mnemonicParsing="false" text="New..." />
-                        <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" disable="true"/>
                         <Button mnemonicParsing="false" text="Filter..." />
                         <Button mnemonicParsing="false" text="Show All" />
                     </items>

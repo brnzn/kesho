@@ -1,10 +1,10 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.domain.FinancialSupportStatus;
 import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.SponsorshipStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
@@ -66,7 +66,7 @@ public class NewStudentController {
     private TabPane studentTab;
 
     @FXML
-    private ComboBox<SponsorshipStatus> sponsorshipStatus;
+    private ComboBox<FinancialSupportStatus> sponsorshipStatus;
     @FXML
     private TextField email;
     @FXML
@@ -150,7 +150,7 @@ public class NewStudentController {
 
         Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
-        Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
+        Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(FinancialSupportStatus.class));
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
 
         initializeYesNoGroup(currentStudent, hasDisability, sponsored, topupNeeded);
@@ -300,7 +300,7 @@ public class NewStudentController {
         setState(sponsored, student.isSponsored());
         setState(topupNeeded, student.isTopupNeeded());
 
-        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
+        sponsorshipStatus.getSelectionModel().select(student.getFinancialSupportStatus());
         email.setText(student.getEmail());
         facebook.setText(student.getFacebookAddress());
 

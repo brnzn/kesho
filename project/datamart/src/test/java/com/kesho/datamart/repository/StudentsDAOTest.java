@@ -1,16 +1,13 @@
 package com.kesho.datamart.repository;
 
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
-import com.kesho.datamart.domain.CLASS;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.entity.*;
-import com.kesho.datamart.service.DBUtil;
 import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -48,13 +45,12 @@ public class StudentsDAOTest {
         Family f = new Family();
         f.setId(1L);
         student.setFamily(f);
-        student.setActive(true);
         student.setGender(Gender.M);
         student.setHasDisability(true);
         student.setHomeLocation("s1home");
         student.setContactNumber("12345");
         student.setStartDate(startDate);
-        student.setSponsored(true);
+        student.setFinancialSupport(true);
         student.setYearOfBirth(2000);
 
 		final Student s = repo.save(student);
@@ -76,13 +72,11 @@ public class StudentsDAOTest {
 
         assertThat(saved.getFirstName(), is("s1"));
         assertThat(saved.getFamily().getName(), is("a"));
-        assertThat(saved.isActive(), is(true));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));
         assertThat(saved.getHomeLocation(), is("s1home"));
         assertThat(saved.getContactNumber(), is("12345"));
         assertThat(saved.getStartDate(), is(startDate));
-        assertThat(saved.isSponsored(), is(true));
         assertThat(saved.getYearOfBirth(), is(2000));
 
 		assertThat("Expected 1 row", dbSetup.getConnection().createQueryTable("students", String.format("select * from STUDENTS where id=%d", s.getId())).getRowCount(), is(1));

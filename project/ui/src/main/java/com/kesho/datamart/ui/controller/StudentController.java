@@ -1,9 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.domain.Gender;
-import com.kesho.datamart.domain.LeaverStatus;
-import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.SponsorshipStatus;
+import com.kesho.datamart.domain.*;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.FormActionListener;
@@ -32,6 +29,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO: After New and Update need to refresh table, but leave form as is
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -49,7 +47,10 @@ public class StudentController implements FormActionListener {
     private TextField family;
 
     @FXML
-    private ComboBox<Gender> gender;
+    private HBox genderBox;
+
+    @FXML
+    private ToggleGroup gender;
     @FXML
     private NumericTextField yearOfBirth;
     @FXML
@@ -57,12 +58,12 @@ public class StudentController implements FormActionListener {
     @FXML
     private TextField homeLocation;
     @FXML
-    private ToggleGroup currentStudent;
-    @FXML
     private ToggleGroup hasDisability;
+    @FXML
+    private ToggleGroup enrichmentSupport;
 
     @FXML
-    private ToggleGroup sponsored;
+    private ToggleGroup financialSupport;
     @FXML
     private HBox dateControlBox;
     private final FXCalendar calendar = new FXCalendar();
@@ -71,7 +72,12 @@ public class StudentController implements FormActionListener {
     private Tab studentDetailsTab;
 
     @FXML
-    private ComboBox<SponsorshipStatus> sponsorshipStatus;
+    private ComboBox<FinancialSupportStatus> financialSupportStatus;
+    @FXML
+    private ComboBox<FinancialSupportStatusDetails> financialSupportStatusDetails;
+    @FXML
+    private TextField otherFinancialSupportStatusDetails;
+
     @FXML
     private TextField email;
     @FXML
@@ -104,6 +110,16 @@ public class StudentController implements FormActionListener {
         WindowsUtil.getInstance().autowire(this);
     }
 
+    /* if financialSupportStatus = other
+        financialSupportStatusDetails not visible
+        otherFinancialSupportStatusDetails visible
+        else
+        populate financialSupportStatusDetails  values
+        financialSupportStatusDetails  visible
+        otherFinancialSupportStatusDetails noy visible
+     *
+     *
+     */
     @FXML
     private void initialize() {
         selected.addListener(new ChangeListener<StudentDto>() {
@@ -117,11 +133,33 @@ public class StudentController implements FormActionListener {
         family.setUserData(null);
 
         dateControlBox.getChildren().add(calendar);
-        Util.initializeYesNoGroup(hasDisability, sponsored, currentStudent, topupNeeded);
+        Util.initializeYesNoGroup(hasDisability, financialSupport, topupNeeded, enrichmentSupport);
 
-        Util.initializeComboBoxValues(gender, EnumSet.allOf(Gender.class));
+        gender.getToggles().get(0).setUserData(Gender.F);
+        gender.getToggles().get(1).setUserData(Gender.M);
+
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
-        Util.initializeComboBoxValues(sponsorshipStatus, EnumSet.allOf(SponsorshipStatus.class));
+        Util.initializeComboBoxValues(financialSupportStatus, EnumSet.allOf(FinancialSupportStatus.class));
+
+        financialSupportStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FinancialSupportStatus>() {
+            @Override
+            public void changed(ObservableValue<? extends FinancialSupportStatus> observableValue, FinancialSupportStatus s, FinancialSupportStatus s2) {
+                financialSupportStatusDetails.getItems().clear();
+                if(s2 != null) {
+                    if(FinancialSupportStatus.OTHER != s2) {
+                        financialSupportStatusDetails.getItems().addAll(s2.getChildren());
+                        financialSupportStatusDetails.setVisible(true);
+                        otherFinancialSupportStatusDetails.setVisible(false);
+                        otherFinancialSupportStatusDetails.clear();
+                    } else {
+                        financialSupportStatusDetails.setVisible(false);
+                        financialSupportStatusDetails.getSelectionModel().clearSelection();
+                        otherFinancialSupportStatusDetails.setVisible(true);
+                    }
+                }
+            }
+        });
+
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
 
         WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
@@ -132,15 +170,6 @@ public class StudentController implements FormActionListener {
                 }
             }
         });
-
-//        studentDetailsTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-//            @Override
-//            public void handle(javafx.event.Event event) {
-//                if (studentDetailsTab.isSelected() && parentController.getSelectedItem() != null) {
-//                    parentController.disableButton(false, TabButton.DELETE);
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -151,12 +180,6 @@ public class StudentController implements FormActionListener {
     }
 
     private void itemSelected(StudentDto student) {
-//        if(student != null) {
-//            parentController.disableButton(false, TabButton.NEW, TabButton.DELETE);
-//        } else {
-//            parentController.disableButton(true, TabButton.DELETE);
-//        }
-
         if(student == null) {
             resetForm();
             return;
@@ -173,19 +196,32 @@ public class StudentController implements FormActionListener {
         family.setText(student.getFamily().getFamilyName());
         family.setUserData(student.getFamily());
 
-        gender.getSelectionModel().select(student.getGender());
+        if (Gender.F.equals(student.getGender())) {
+            gender.getToggles().get(0).setSelected(true);
+        } else if (Gender.M.equals(student.getGender())) {
+            gender.getToggles().get(1).setSelected(true);
+        }
+  //      gender.getSelectionModel().select(student.getGender());
 
         yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
 
         contactNumber.setText(student.getMobileNumber());
         homeLocation.setText(student.getHomeLocation());
 
-        Util.setYesNoToggleState(currentStudent, student.isActiveStudent());
         Util.setYesNoToggleState(hasDisability, student.hasDisability());
-        Util.setYesNoToggleState(sponsored, student.isSponsored());
+        Util.setYesNoToggleState(financialSupport, student.hasFinancialSupport());
+        Util.setYesNoToggleState(enrichmentSupport, student.getEnrichmentSupport());
         Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
+        //Util.setYesNoToggleState(enrichmentSupport, student.??);
 
-        sponsorshipStatus.getSelectionModel().select(student.getSponsorshipStatus());
+
+        financialSupportStatus.getSelectionModel().select(student.getFinancialSupportStatus());
+        if(student.getFinancialSupportStatus() != null && FinancialSupportStatus.OTHER != student.getFinancialSupportStatus() && student.getFinancialSupportStatusDetails() != null) {
+            financialSupportStatusDetails.getSelectionModel().select(FinancialSupportStatusDetails.valueOf(student.getFinancialSupportStatusDetails()));
+        } else if (FinancialSupportStatus.OTHER == student.getFinancialSupportStatus()){
+            otherFinancialSupportStatusDetails.setText(student.getFinancialSupportStatusDetails());
+        }
+
         email.setText(student.getEmail());
         facebook.setText(student.getFacebookAddress());
 
@@ -200,7 +236,7 @@ public class StudentController implements FormActionListener {
 
     @Override
     public void deleteFired(Long id) {
-        resetForm();
+        //Student cannot be deleted
     }
 
     @FXML
@@ -237,16 +273,17 @@ public class StudentController implements FormActionListener {
                 .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
-                .activeStudent((Boolean) currentStudent.getSelectedToggle().getUserData())
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
-                .sponsored((Boolean) sponsored.getSelectedToggle().getUserData())
+                .withEnrichmentSupport((Boolean) enrichmentSupport.getSelectedToggle().getUserData())
+                .withFinancialSupport((Boolean) financialSupport.getSelectedToggle().getUserData())
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
                 .withTopupNeeded((Boolean) topupNeeded.getSelectedToggle().getUserData())
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
-                .withSponsorStatus(sponsorshipStatus.getSelectionModel().getSelectedItem())
+                .withFinancialSupportStatus(financialSupportStatus.getSelectionModel().getSelectedItem())
+                .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
-                .withGender(gender.getSelectionModel().getSelectedItem());
+                .withGender((Gender) gender.getSelectedToggle().getUserData());
 
         if (StringUtils.isNotBlank(shortfall.getText())) {
             dto.withShortfall(Integer.valueOf(shortfall.getText()));
@@ -267,27 +304,31 @@ public class StudentController implements FormActionListener {
         return dto;
     }
 
+    private String getFinancialSupportStatusDetails() {
+        return FinancialSupportStatus.OTHER == financialSupportStatus.getSelectionModel().getSelectedItem() ?
+               otherFinancialSupportStatusDetails.getText() :
+               financialSupportStatusDetails.getSelectionModel() != null ?
+                       financialSupportStatusDetails.getSelectionModel().getSelectedItem().name() : null;
+
+    }
     private void resetForm() {
         calendar.clear();
         firstName.clear();
         family.clear();
         family.setUserData(null);
-        gender.getSelectionModel().clearSelection();
-        gender.valueProperty().setValue(null);
+        gender.getToggles().get(0).setSelected(true);
 
         yearOfBirth.clear();
         contactNumber.clear();
         homeLocation.clear();
 
-        currentStudent.getToggles().get(0).setSelected(true);
-
         hasDisability.getToggles().get(0).setSelected(true);
-
-        sponsored.getToggles().get(0).setSelected(true);
+        enrichmentSupport.getToggles().get(0).setSelected(true);
+        financialSupport.getToggles().get(0).setSelected(true);
 
         topupNeeded.getToggles().get(0).setSelected(true);
 
-        sponsorshipStatus.getSelectionModel().clearSelection();
+        financialSupportStatus.getSelectionModel().clearSelection();
         email.clear();
         facebook.clear();
         levelOfSupport.getSelectionModel().clearSelection();
@@ -298,7 +339,6 @@ public class StudentController implements FormActionListener {
 
     private boolean isInputValid(StudentDto dto) {
         String validation = FormValidator.validate(dto, getFields());
-
         if(StringUtils.isNotBlank(validation)) {
             WindowsUtil.getInstance().showErrorDialog(validation);
             return false;
@@ -313,7 +353,7 @@ public class StudentController implements FormActionListener {
         if(validationFields.isEmpty()) {
             validationFields.put("firstName", firstName);
             validationFields.put("family", family);
-            validationFields.put("gender", gender);
+            validationFields.put("gender", genderBox);
             validationFields.put("yearOfBirth", yearOfBirth);
         }
 

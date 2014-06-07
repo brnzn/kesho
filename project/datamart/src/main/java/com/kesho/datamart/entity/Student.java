@@ -1,9 +1,9 @@
 package com.kesho.datamart.entity;
 
+import com.kesho.datamart.domain.FinancialSupportStatus;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.SponsorshipStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: batch insert, validations
 @Entity
 @Table(name = "STUDENTS")
 public class Student {
@@ -28,9 +27,6 @@ public class Student {
     @JoinColumn(name = "FAMILY_ID" , nullable = false, referencedColumnName = "ID")
     private Family family;
 
-//    @Column(name = "CURRENT_STUDENT", columnDefinition = "BIT")
-    @Transient
-    private Boolean active;
     @Column(name = "GENDER", columnDefinition = "CHAR")
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -43,14 +39,9 @@ public class Student {
     @Column(name = "START_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate startDate;
-//    @Column(name = "SPONSORED", columnDefinition = "BIT")
-    @Transient
-    private Boolean sponsored;
+
     @Column(name = "YEAR_OF_BIRTH", columnDefinition = "SMALLINT")
     private Integer yearOfBirth;
-
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-//    private List<StudentLog> logs = newArrayList();
 //
 // unidirectional
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -58,28 +49,58 @@ public class Student {
     //// bidirectional
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
     private List<EducationHistory> educationHistory = new ArrayList<>();  //TODO: need to do batch delete instead of one by one
+
     @Column(name= "EMAIL")
     private String email;
+
     @Column(name = "FACEBOOK")
     private String facebookAddress;
-//    @Column(name = "STUDENT_STATUS")
-//    @Enumerated(EnumType.STRING)
-    @Transient
+
+    @Column(name = "LEAVER_STATUS")
+    @Enumerated(EnumType.STRING)
     private LeaverStatus leaverStatus;
- //   @Column(name = "SPONSORSHIP_STATUS")
- //   @Enumerated(EnumType.STRING)
-    @Transient
-    private SponsorshipStatus sponsorshipStatus;
+
+    @Column(name = "FINANCIAL_SUPPORT", columnDefinition = "BIT")
+    private Boolean financialSupport;
+
+    @Column(name = "ENRICHMENT_SUPPORT", columnDefinition = "BIT")
+    private Boolean enrichmentSupport;
+
+    @Column(name = "FINANCIAL_SUPPORT_STATUS")
+    @Enumerated(EnumType.STRING)
+    private FinancialSupportStatus financialSupportStatus;
+
+    @Column(name = "FINANCIAL_SUPPORT_STATUS_DETAILS")
+    private String financialSupportStatusDetails;
+
     @Column(name = "LEVEL_OF_SUPPORT")
     @Enumerated(EnumType.STRING)
     private LevelOfSupport levelOfSupport;
+
     @Column(name = "TOPUP_NEEDED", columnDefinition = "BIT")
     private Boolean topupNeeded;
+
     @Column(name = "SHORTFALL")
     private Integer shortfall;
+
     @Column(name = "ALUMNI_MEMBER")
     private Integer alumniNumber;
 
+    public Boolean getEnrichmentSupport() {
+        return enrichmentSupport;
+    }
+
+    public void setEnrichmentSupport(Boolean enrichmentSupport) {
+        this.enrichmentSupport = enrichmentSupport;
+    }
+
+    public String getFinancialSupportStatusDetails() {
+        return financialSupportStatusDetails;
+    }
+
+    public void setFinancialSupportStatusDetails(String financialSupportStatusDetails) {
+        this.financialSupportStatusDetails = financialSupportStatusDetails;
+    }
 
     public Long getId() {
 		return id;
@@ -97,21 +118,12 @@ public class Student {
 		this.firstName = firstName;
 	}
 
-//	public void addLog(StudentLog log) {
-//		log.setStudent(this);
-//		this.logs.add(log);
-//	}
-
 	public void addToEducationHistory(EducationHistory educationHistory) {
         //bidirectional
 //		educationHistory.setStudent(this);
 		this.educationHistory.add(educationHistory);
 	}
 	
-//	public List<StudentLog> getLogs() {
-//		return logs;
-//	}
-
 	public List<EducationHistory> getEducationHistory() {
 		return Collections.unmodifiableList(educationHistory);
 	}
@@ -122,14 +134,6 @@ public class Student {
 
     public Family getFamily() {
         return family;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean isActive() {
-        return active;
     }
 
     public void setGender(Gender gender) {
@@ -172,12 +176,12 @@ public class Student {
         return startDate;
     }
 
-    public void setSponsored(Boolean sponsored) {
-        this.sponsored = sponsored;
+    public void setFinancialSupport(Boolean financialSupport) {
+        this.financialSupport = financialSupport;
     }
 
-    public Boolean isSponsored() {
-        return sponsored;
+    public Boolean hasFinancialSupport() {
+        return financialSupport;
     }
 
     public void setYearOfBirth(Integer yearOfBirth) {
@@ -212,12 +216,12 @@ public class Student {
         this.leaverStatus = leaverStatus;
     }
 
-    public SponsorshipStatus getSponsorshipStatus() {
-        return sponsorshipStatus;
+    public FinancialSupportStatus getFinancialSupportStatus() {
+        return financialSupportStatus;
     }
 
-    public void setSponsorshipStatus(SponsorshipStatus sponsorshipStatus) {
-        this.sponsorshipStatus = sponsorshipStatus;
+    public void setFinancialSupportStatus(FinancialSupportStatus financialSupportStatus) {
+        this.financialSupportStatus = financialSupportStatus;
     }
 
 

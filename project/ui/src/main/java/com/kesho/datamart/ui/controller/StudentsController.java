@@ -47,8 +47,6 @@ public class StudentsController implements Selectable<StudentDto> {
     @FXML
     private Button newButton;
     @FXML
-    private Button deleteButton;
-    @FXML
     private StudentController studentController;
     @FXML
     private EducationDetailsController educationDetailsController;
@@ -82,13 +80,6 @@ public class StudentsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
-        selected.addListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
-                deleteButton.setDisable(studentDto2 == null);
-            }
-        });
-
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         studentsTable.getSelectionModel().select(0);
         studentsTable.focusModelProperty().get().focus(0, firstNameColumn);
@@ -171,17 +162,6 @@ public class StudentsController implements Selectable<StudentDto> {
             @Override
             public void handle(ActionEvent actionEvent) {
                 studentController.newFired();
-            }
-        });
-
-        deleteButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if(WindowsUtil.getInstance().showWarningDialog("Delete Student", String.format("Are you sure you want to delete [%s]", selected.get().getFirstName()) , "NOTE: Deleting a student will also delete its education history.")) {
-                    Long id = studentsTable.getSelectionModel().getSelectedItem().getId();
-                    studentsRepository.deleteStudent(id);
-                    studentController.deleteFired(id);
-                }
             }
         });
     }

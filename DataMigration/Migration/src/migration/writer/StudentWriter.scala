@@ -11,10 +11,10 @@ class StudentWriter extends DataWriter {
   def insert(values: Array[String]) = {
     if(values(0) != null && !values(0).isEmpty()) {
        def fam = from(Schema.families)(s => where(s.name === values(7).trim()) select(s))
-       println(fam.size)
+       //println(fam.size)
       //println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
        //fam.toList(0).id, , toInt(values(2), "no"), , , values(4), 
-    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), null, toInt(values(3), "no"), toDepartureReason(values(4)),values(5).trim, values(6).trim, fam.toList(0).id, toGender(values(8))));
+    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), null, toInt(values(3), "no"), toDepartureReason(values(4)),toDepartureReasonDetails(values(5)), values(6).trim, fam.toList(0).id, toGender(values(8))));
     } 
     
     /*
@@ -53,18 +53,64 @@ class StudentWriter extends DataWriter {
     if(value.trim().equalsIgnoreCase("Graduated more than 2 years ago")) {
       "GRADUATED"
     } else if (value.trim().equalsIgnoreCase("Expiry of One Off Donation")) {
-      "EXPIRY"
+      "DONATION_EXPIRY"
     } else if (value.trim().equalsIgnoreCase("Sponsorship Withdrawn")) {
       "WITHDRAWN"
     } else if (value.trim().equalsIgnoreCase("Gap Year")) {
       "GAP_YEAR"
+    } else if (value.trim().length() > 0) {
+      throw new IllegalArgumentException(value + " not supported");
     } else {
-      value
+      null
     }
   }
+  
+  def toDepartureReasonDetails(value: String) :String = {
+    if(value.trim().equalsIgnoreCase("Post Primary")) {
+      "POST_PRIMARY"
+    } else if (value.trim().equalsIgnoreCase("Post Secondary")) {
+      "POST_SECONDARY"
+    } else if (value.trim().equalsIgnoreCase("Post College")) {
+      "POST_COLLEGE"
+    } else if (value.trim().equalsIgnoreCase("Post University")) {
+      "POST_UNI"
+    } else if (value.trim().equalsIgnoreCase("Nursery")) {
+      "NURSERY"
+    } else if (value.trim().equalsIgnoreCase("Primary")) {
+      "PRIMARY"
+    } else if (value.trim().equalsIgnoreCase("Secondary")) {
+      "SECONDARY"
+    } else if (value.trim().equalsIgnoreCase("College")) {
+      "COLLEGE"
+    } else if (value.trim().equalsIgnoreCase("University")) {
+      "UNI"
+    } else if (value.trim().equalsIgnoreCase("Poor Cooperation")) {
+      "POOR_COOPERATION"
+    } else if (value.trim().equalsIgnoreCase("Poor Performance")) {
+      "POOR_PERFORMANCE"
+    } else if (value.trim().equalsIgnoreCase("Dropped Out")) {
+      "DROPPED_OUT"
+    } else if (value.trim().equalsIgnoreCase("Family found another sponsor")) {
+      "GOT_ANOTHER_SPONSOR"
+    } else if (value.trim().equalsIgnoreCase("Referred by Kesho to new sponsor")) {
+      "REFERRED_TO_ANOTHER_SPONSOR"
+    } else if (value.trim().equalsIgnoreCase("Family able to pay")) {
+      "ABLE_TO_PAY"
+    } else if (value.trim().equalsIgnoreCase("Pregnant / Married")) {
+      "PREGNANT"
+    } else if (value.trim().equalsIgnoreCase("Dishonesty")) {
+      "DISHONESTY"
+    } else if (value.trim().equalsIgnoreCase("Parents Decision")) {
+      "PARENTS_DECISION"
+    } else if (value.trim().length() > 0) {
+      throw new IllegalArgumentException(value + " not supported");
+    } else {
+      null
+    }
+  }
+  
 }
-
-
+    
 /*
  * val id: Long,
   @Column("FAMILY_ID") val county: Long,

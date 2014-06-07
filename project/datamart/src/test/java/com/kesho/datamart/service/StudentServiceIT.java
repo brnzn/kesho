@@ -155,18 +155,16 @@ public class StudentServiceIT {
         assertNotNull(s1);
         assertThat("name should be fn", s1.getFirstName(), is("fn"));
         assertThat("family name should be sn1", s1.getFamily().getFamilyName(), is("sn1"));
-        assertThat("should be active", s1.isActiveStudent(), is(true));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));
         assertThat("has disability true", s1.hasDisability(), is(true));
         assertThat("home location h1", s1.getHomeLocation(), is("h1"));
         assertThat("contact number 11111", s1.getMobileNumber(), is("11111"));
-        assertThat("is sponsored true", s1.isSponsored(), is(true));
         assertThat("start date " + startDate.toString(), s1.getStartDate(), is(startDate));
         assertThat("year of birth 2000", s1.getYearOfBirth(), is(2000));
         assertThat("email email1 ", s1.getEmail(), is("email1"));
         assertThat("facebook fb1", s1.getFacebookAddress(), is("fb1"));
         assertThat("student status s1s", s1.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
-        assertThat("sponsor status sp1", s1.getSponsorshipStatus(), is(SponsorshipStatus.REVIEW));
+//        assertThat("sponsor status sp1", s1.getFinancialSupportStatus(), is(FinancialSupportStatus.REVIEW));
         assertThat("level of support full", s1.getLevelOfSupport(), is(LevelOfSupport.FULL));
         assertThat("topup needed true", s1.isTopupNeeded(), is(true));
         assertThat("shortfall 100", s1.getShortfall(), is(100));
@@ -184,12 +182,10 @@ public class StudentServiceIT {
                 .withHomeLocation("hl")
                 .withStartDate(startDate)
                 .withYearOfBirth(2000)
-                .activeStudent(true)
-                .sponsored(true)
                 .withEmail("email")
                 .withFacebookAddress("fb")
                 .withLeaverStatus(LeaverStatus.ALUMNI_NO_LONGER_NEEDED)
-                .withSponsorStatus(SponsorshipStatus.RECENT_SECONDARY_LEAVER)
+//                .withSponsorStatus(FinancialSupportStatus.RECENT_SECONDARY_LEAVER)
                 .withLevelOfSupport(LevelOfSupport.ON_HOLD)
                 .withTopupNeeded(true)
                 .withShortfall(1)
@@ -209,12 +205,10 @@ public class StudentServiceIT {
         assertThat(saved.getHomeLocation(), is("hl"));
         assertThat(saved.getStartDate(), is(startDate));
         assertThat(saved.getYearOfBirth(), is(2000));
-        assertThat(saved.isActive(), is(true));
-        assertThat(saved.isSponsored(), is(true));
         assertThat(saved.getEmail(), is("email"));
         assertThat(saved.getFacebookAddress(), is("fb"));
         assertThat(saved.getLeaverStatus(), is(LeaverStatus.ALUMNI_NO_LONGER_NEEDED));
-        assertThat(saved.getSponsorshipStatus(), is(SponsorshipStatus.RECENT_SECONDARY_LEAVER));
+//        assertThat(saved.getFinancialSupportStatus(), is(FinancialSupportStatus.RECENT_SECONDARY_LEAVER));
         assertThat(saved.getLevelOfSupport(), is(LevelOfSupport.ON_HOLD));
         assertThat(saved.isTopupNeeded(), is(true));
         assertThat(saved.getShortfall(), is(1));

@@ -328,7 +328,6 @@ public class WindowsUtil {
 //
 //    }
 
-    //TODO: demo code. delete once connected to db
     public class Controllers {
         private RootController rootController;
 
@@ -339,14 +338,6 @@ public class WindowsUtil {
         public RootController getRootController() {
             return rootController;
         }
-
-//        public NewStudentController getNewStudentController() {
-//            return applicationContext.getBean(NewStudentController.class);
-//        }
-
-//        public EducationDialogController getEducationDialogController() {
-//            return applicationContext.getBean(EducationDialogController.class);
-//        }
 
         public InstitutionController getInstitutionController() {
             return applicationContext.getBean(InstitutionController.class);

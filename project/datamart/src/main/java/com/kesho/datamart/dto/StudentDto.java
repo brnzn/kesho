@@ -1,9 +1,9 @@
 package com.kesho.datamart.dto;
 
+import com.kesho.datamart.domain.FinancialSupportStatus;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.SponsorshipStatus;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 
@@ -30,14 +30,15 @@ public class StudentDto implements Comparable {
     private Integer yearOfBirth;
     private String mobileNumber;
     private String homeLocation;
-    private Boolean isActiveStudent;
     private Boolean hasDisability;
-    private Boolean isSponsored;
+    private Boolean financialSupport;
+    private Boolean enrichmentSupport;
     private LocalDate startDate;
     private String email;
     private String facebookAddress;
     private LeaverStatus leaverStatus;
-    private SponsorshipStatus sponsorshipStatus;
+    private FinancialSupportStatus financialSupportStatus;
+    private String financialSupportStatusDetails;
     private LevelOfSupport levelOfSupport;
     private Boolean topupNeeded;
     private Integer shortfall;
@@ -76,16 +77,12 @@ public class StudentDto implements Comparable {
         return homeLocation;
     }
 
-    public Boolean isActiveStudent() {
-        return isActiveStudent;
-    }
-
     public Boolean hasDisability() {
         return hasDisability;
     }
 
-    public Boolean isSponsored() {
-        return isSponsored;
+    public Boolean hasFinancialSupport() {
+        return financialSupport;
     }
 
     public LocalDate getStartDate() {
@@ -104,8 +101,12 @@ public class StudentDto implements Comparable {
         return leaverStatus;
     }
 
-    public SponsorshipStatus getSponsorshipStatus() {
-        return sponsorshipStatus;
+    public FinancialSupportStatus getFinancialSupportStatus() {
+        return financialSupportStatus;
+    }
+
+    public String getFinancialSupportStatusDetails() {
+        return financialSupportStatusDetails;
     }
 
     public LevelOfSupport getLevelOfSupport() {
@@ -122,6 +123,10 @@ public class StudentDto implements Comparable {
 
     public Integer getAlumniNumber() {
         return alumniNumber;
+    }
+
+    public Boolean getEnrichmentSupport() {
+        return enrichmentSupport;
     }
 
     public StudentDto withId(Long id) {
@@ -154,18 +159,13 @@ public class StudentDto implements Comparable {
         return this;
     }
 
-    public StudentDto activeStudent(Boolean isActive) {
-        this.isActiveStudent = isActive;
-        return this;
-    }
-
     public StudentDto withHasDisability(Boolean hasDisability) {
         this.hasDisability = hasDisability;
         return this;
     }
 
-    public StudentDto sponsored(Boolean sponsored) {
-        this.isSponsored = sponsored;
+    public StudentDto withFinancialSupport(Boolean financialSupport) {
+        this.financialSupport = financialSupport;
         return this;
     }
 
@@ -186,11 +186,6 @@ public class StudentDto implements Comparable {
 
     public StudentDto withLeaverStatus(LeaverStatus leaverStatus) {
         this.leaverStatus = leaverStatus;
-        return this;
-    }
-
-    public StudentDto withSponsorStatus(SponsorshipStatus sponsorStatus) {
-        this.sponsorshipStatus = sponsorStatus;
         return this;
     }
 
@@ -216,6 +211,22 @@ public class StudentDto implements Comparable {
 
     public StudentDto withAlumniNumber(Integer alumniNumber) {
         this.alumniNumber = alumniNumber;
+        return this;
+    }
+
+
+    public StudentDto withFinancialSupportStatus(FinancialSupportStatus status) {
+        this.financialSupportStatus = status;
+        return this;
+    }
+
+    public StudentDto withFinancialSupportStatusDetails(String details) {
+        this.financialSupportStatusDetails = details;
+        return this;
+    }
+
+    public StudentDto withEnrichmentSupport(Boolean value) {
+        this.enrichmentSupport = value;
         return this;
     }
 
@@ -267,4 +278,5 @@ public class StudentDto implements Comparable {
     private String getDisplay() {
         return firstName + " " + family.getFamilyName();
     }
+
 }

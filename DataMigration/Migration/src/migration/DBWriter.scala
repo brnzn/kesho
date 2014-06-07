@@ -6,7 +6,7 @@ import migration.io.LineHandler
 
 class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
   def insert() {
-    println("==> Inserting " + line)
+ //   println("==> Inserting " + line)
     val values = new LineHandler(line, length).split
 
     try {

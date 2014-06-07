@@ -37,13 +37,14 @@ public class StudentsAssembler {
                 .withStartDate(student.getStartDate())
                 .withMobileNumber(student.getContactNumber())
                 .withYearOfBirth(student.getYearOfBirth())
-                .activeStudent(student.isActive())
-                .sponsored(student.isSponsored())
+                .withFinancialSupport(student.hasFinancialSupport())
+                .withFinancialSupportStatus(student.getFinancialSupportStatus())
+                .withFinancialSupportStatusDetails(student.getFinancialSupportStatusDetails())
                 .withEmail(student.getEmail())
                 .withFacebookAddress(student.getFacebookAddress())
                 .withLeaverStatus(student.getLeaverStatus())
-                .withSponsorStatus(student.getSponsorshipStatus())
                 .withLevelOfSupport(student.getLevelOfSupport())
+                .withEnrichmentSupport(student.getEnrichmentSupport())
                 .withTopupNeeded(student.isTopupNeeded())
                 .withShortfall(student.getShortfall())
                 .withAlumniNumber(student.getAlumniNumber())   ;
@@ -62,17 +63,18 @@ public class StudentsAssembler {
         student.setStartDate(dto.getStartDate())       ;
         student.setContactNumber(dto.getMobileNumber());
         student.setYearOfBirth(dto.getYearOfBirth());
-        student.setActive(dto.isActiveStudent());
-        student.setSponsored(dto.isSponsored());
+        student.setFinancialSupport(dto.hasFinancialSupport());
+        student.setFinancialSupportStatusDetails(dto.getFinancialSupportStatusDetails());
         student.setEmail(dto.getEmail());
         student.setFacebookAddress(dto.getFacebookAddress());
         student.setLeaverStatus(dto.getLeaverStatus());
-        student.setSponsorshipStatus(dto.getSponsorshipStatus());
+        student.setFinancialSupportStatus(dto.getFinancialSupportStatus());
         student.setLevelOfSupport(dto.getLevelOfSupport());
         student.setTopupNeeded(dto.isTopupNeeded());
         student.setShortfall(dto.getShortfall());
         student.setAlumniNumber(dto.getAlumniNumber());
         student.setTopupNeeded(dto.isTopupNeeded());
+        student.setEnrichmentSupport(dto.getEnrichmentSupport());
         return student;
     }
 }
