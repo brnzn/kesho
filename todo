@@ -1,40 +1,7 @@
 sponsors arrangment: looks like the data is a mix of commitment + arrangment. In the new application there is only arrangment
 what is sponsor_default_account, sponsor_default_currency, sponsor_default_payment_method, sponsor_gift_aid_status, 
 sponsor_arrangements::arrangement_payment_start_date vs start_commitment vs sponsors_sponsor_commitments::commitment_start_date, sponsor_arrangements::arrangement_payment_end_date vs sponsors_sponsor_commitments::commitment_end_date?
-
-cannot insert student T10122 without family name
 should we insert education without date - currently default to 01/01/1900
-school should be mandatory on education on if it is not gap year. 
-
-migration issues:
-student T10122 have no family name - UPENDO
-education
-no school id 10072 
-S10072 IS THE NAME OF A COMPANY PROVIDING COMPUTER COURSES.  IT FALLS UNDER SUPPLIER - MR. OSCAR MWANSAMBU, COMPUTER COURSE, KILIFI, KENYA
-
-T10514 row is empty + no student has no related data
-T10125 row is empty + no student T10125 - has history 
-
-student history:
-some comments are very long. Can we shorten them?
-no student id T10125 
-T10125,19/10/2008,Employee
-T10125,19/10/2008,Payment of Ksh1810 made to PAYE Income Tax.
-T10125,19/10/2008,Payment of Ksh4800 made to PAYE Income Tax.
-T10125,19/10/2008,Payment of Ksh7232 made to AON Minet Insurance Brokers Limited.
-T10125,20/10/2008,Payment of Ksh200 made to Imperial Bank.
-T10125,20/10/2008,Payment of Ksh200 made to Imperial Bank.
-T10125,20/10/2008,Payment of Ksh200 made to Imperial Bank.
-T10125,20/10/2008,Credit received of Ksh4800 received from Taxes.
-T10125,20/10/2008,Credit received of Ksh1810 received from Taxes.
-
-no student id T10122 
-T10122,30/09/2008,Payment of Ksh1136.25 made to Kilifi Uniform Shop 1.
-T10122,22/01/2009,He's now sponsored through Upendo.  Attends a Muslim School.  Now top of the class.
-T10122,22/01/2009,Brother to Issa (CP).  Used to be a street boy in Kilifi.
-T10122,08/04/2009,Thriving at Muslim school.  Came first in 2008 in class.
-T10122,26/02/2010,Dropped out of school in 2009
-T10122,28/09/2010,Referred to upendo
 
 ==============
 Question 1:  Receiving Financial Support?  Yes   No
@@ -56,6 +23,7 @@ Other will expose free text input
 If Receive financial support is yes then current student must be yes 
 how to call DEPARTURE_REASON/DETAILS?
 ===============================
+school should be mandatory on education on if it is not gap year. 
 cannot delete student, so no need for delete button
 students details:
 add Receiving Financial Support?

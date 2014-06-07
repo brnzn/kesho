@@ -28,7 +28,8 @@ public class Student {
     @JoinColumn(name = "FAMILY_ID" , nullable = false, referencedColumnName = "ID")
     private Family family;
 
-    @Column(name = "CURRENT_STUDENT", columnDefinition = "BIT")
+//    @Column(name = "CURRENT_STUDENT", columnDefinition = "BIT")
+    @Transient
     private Boolean active;
     @Column(name = "GENDER", columnDefinition = "CHAR")
     @Enumerated(EnumType.STRING)
@@ -42,7 +43,8 @@ public class Student {
     @Column(name = "START_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate startDate;
-    @Column(name = "SPONSORED", columnDefinition = "BIT")
+//    @Column(name = "SPONSORED", columnDefinition = "BIT")
+    @Transient
     private Boolean sponsored;
     @Column(name = "YEAR_OF_BIRTH", columnDefinition = "SMALLINT")
     private Integer yearOfBirth;
@@ -60,11 +62,13 @@ public class Student {
     private String email;
     @Column(name = "FACEBOOK")
     private String facebookAddress;
-    @Column(name = "STUDENT_STATUS")
-    @Enumerated(EnumType.STRING)
+//    @Column(name = "STUDENT_STATUS")
+//    @Enumerated(EnumType.STRING)
+    @Transient
     private LeaverStatus leaverStatus;
-    @Column(name = "SPONSORSHIP_STATUS")
-    @Enumerated(EnumType.STRING)
+ //   @Column(name = "SPONSORSHIP_STATUS")
+ //   @Enumerated(EnumType.STRING)
+    @Transient
     private SponsorshipStatus sponsorshipStatus;
     @Column(name = "LEVEL_OF_SUPPORT")
     @Enumerated(EnumType.STRING)

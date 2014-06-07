@@ -29,7 +29,7 @@ public class EducationHistory {
     private EducationStatus educationStatus;
 
     @Column(name = "CLASS")
-	private Integer year;
+	private String year;
 
     @Column(name = "START_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -52,17 +52,6 @@ public class EducationHistory {
 
     @Column(name = "COMMENTS")
     private String comments;
-
-//    @Column(name = "SCHOOL_ID", nullable=false)
-//    private Long schoolId;
-//
-//    public Long getSchoolId() {
-//        return schoolId;
-//    }
-
-//    public void setSchoolId(Long schoolId) {
-//        this.schoolId = schoolId;
-//    }
 
     public Long getStudentId() {
         return studentId;
@@ -96,11 +85,11 @@ public class EducationHistory {
 		return educationStatus;
 	}
 
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 

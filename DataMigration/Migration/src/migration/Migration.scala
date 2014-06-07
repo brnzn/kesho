@@ -33,8 +33,8 @@ object Migration {
 //    Source.fromFile("./src/data/SponsorsContactsDetails-only.txt").getLines().foreach(line => new DBWriter(new SponsorContactWriter, line, 4).insert)  
 
     //Source.fromFile("./src/data/Families.txt").getLines().foreach(line => new DBWriter(new FamilyWriter, line, 2).insert)  
-    //Source.fromFile("./src/data/students.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
-    //Source.fromFile("./src/data/education.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
+    //Source.fromFile("./src/data/studentsKN.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
+    //Source.fromFile("./src/data/educationKN.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
     //Source.fromFile("./src/data/studentHistory.txt").getLines().foreach(line => new DBWriter(new StudentHistoryWriter, line, 3).insert)
 
   }

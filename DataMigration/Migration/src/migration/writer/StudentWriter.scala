@@ -14,7 +14,7 @@ class StudentWriter extends DataWriter {
        println(fam.size)
       //println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
        //fam.toList(0).id, , toInt(values(2), "no"), , , values(4), 
-    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), values(2), toInt(values(3), "no"), toDepartureReason(values(4)),values(5).trim, values(6).trim, fam.toList(0).id, toGender(values(8))));
+    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), null, toInt(values(3), "no"), toDepartureReason(values(4)),values(5).trim, values(6).trim, fam.toList(0).id, toGender(values(8))));
     } 
     
     /*

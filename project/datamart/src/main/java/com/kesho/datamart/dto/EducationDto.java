@@ -21,7 +21,7 @@ public class EducationDto {
     @NotNull(message = "Date is mandatory")
     private LocalDate date;
     @NotNull(message = "Year is mandatory")
-    private Integer year;
+    private String year;
     @NotBlank(message = "Course is mandatory")
     private String course;
     @NotNull(message = "Education Status is mandatory")
@@ -53,7 +53,7 @@ public class EducationDto {
         return this;
     }
 
-    public EducationDto withYear(Integer year) {
+    public EducationDto withYear(String year) {
         this.year = year;
         return this;
     }
@@ -81,7 +81,7 @@ public class EducationDto {
         return "";
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 

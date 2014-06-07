@@ -20,9 +20,9 @@ class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
       }
       case e: Throwable => {
         println("************ Failed to insert row:" + line + "**************" + e.getMessage())
-//        if (e.getMessage() != null && !e.getMessage().contains("Duplicate entry")) {
+        if (e.getMessage() != null && !e.getMessage().contains("Duplicate entry")) {
           e.printStackTrace()
-//        }
+        }
       }
     }
   }

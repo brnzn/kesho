@@ -117,7 +117,7 @@ public class EducationDetailsController {
     private void save() {
         EducationDto dto = selected.get();
         dto.withStudentId(parentController.getSelectedItem().getId()).
-            withYear(Util.safeToIntegerValue(educationYear.getText(), null))
+            withYear(educationYear.getText())
             .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
             .withCourse(course.getText())
             .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
