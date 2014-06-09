@@ -173,12 +173,12 @@ public class PaymentArrangementController {
 
         Util.initializeComboBoxValues(financialArrangement, EnumSet.allOf(FinancialArrangement.class));
 
-        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                refreshTable();
-            }
-        });
+//        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
+//            @Override
+//            public void handle(javafx.event.Event event) {
+//                refreshTable();
+//            }
+//        });
 
         paymentArrangementTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
@@ -289,8 +289,8 @@ public class PaymentArrangementController {
         return dto;
     }
 
-    private void refreshTable() {
-        if (paymentArrangementTab.isSelected()) {
+    void refreshTable() {
+//        if (paymentArrangementTab.isSelected()) {
             tableModel.clear();
             if(selectedSponsor.get() != null) {
                 List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selectedSponsor.get().getId());
@@ -302,7 +302,7 @@ public class PaymentArrangementController {
                 // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
                 paymentArrangementTable.getSelectionModel().select(selectedIndex);
             }
-        }
+ //       }
     }
 
     private Map<String, Node> getFields() {

@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
+//import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,8 +21,8 @@ public class StudentSelectorController {
     @Inject
     private StudentsRepository repository;
     private ObservableList<StudentDto> data;
-    @FXML
-    private AutoFillTextBox<StudentDto> student;
+//    @FXML
+//    private AutoFillTextBox<StudentDto> student;
 
     private boolean okClicked = false;
 	private Stage dialogStage;
@@ -39,18 +39,18 @@ public class StudentSelectorController {
         okClicked = false;
         okButton.setDisable(true);
         data = FXCollections.observableArrayList(repository.getStudents());
-        student.setData(data);
+  //      student.setData(data);
 
-        student.selected().addListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto familyDto, StudentDto familyDto2) {
-                if(familyDto2 == null) {
-                    okButton.setDisable(true);
-                } else {
-                    okButton.setDisable(false);
-                }
-            }
-        });
+//        student.selected().addListener(new ChangeListener<StudentDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto familyDto, StudentDto familyDto2) {
+//                if(familyDto2 == null) {
+//                    okButton.setDisable(true);
+//                } else {
+//                    okButton.setDisable(false);
+//                }
+//            }
+//        });
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class StudentSelectorController {
 	}
 
     public StudentDto getSelected() {
-        return student.getSelected();
+        return null; //student.getSelected();
     }
 	/**
 	 * Called when the user clicks ok.

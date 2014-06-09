@@ -1,7 +1,10 @@
 package com.kesho.datamart.ui.util;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.EnumSet;
@@ -14,6 +17,19 @@ import java.util.EnumSet;
  * To change this template use File | Settings | File Templates.
  */
 public class Util {
+    public static void decorateNumericInput(TextField ...inputs) {
+        for(TextField input: inputs) {
+            input.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    if(!StringUtils.isNumeric(keyEvent.getCharacter())) {
+                        keyEvent.consume();
+                    }
+                }
+            });
+        }
+    }
+
     public static String safeToStringValue(Object value, String defaultValue) {
         return value != null ? value.toString() : (defaultValue != null ? defaultValue : "");
     }

@@ -1,17 +1,21 @@
+replace calendar with fx 8
+replace auto complete with controlsfx
+replace dialogs with controlsfx
+
 sponsors arrangment: looks like the data is a mix of commitment + arrangment. In the new application there is only arrangment
 what is sponsor_default_account, sponsor_default_currency, sponsor_default_payment_method, sponsor_gift_aid_status, 
 sponsor_arrangements::arrangement_payment_start_date vs start_commitment vs sponsors_sponsor_commitments::commitment_start_date, sponsor_arrangements::arrangement_payment_end_date vs sponsors_sponsor_commitments::commitment_end_date?
 should we insert education without date - currently default to 01/01/1900
-
-==============
-support fields - see codes in spreadsheet from kate
-===============================
-school should be mandatory on education on if it is not gap year. 
+---------------------
+done - add Receiving Financial Support?
+done- gender - radio button
 done- cannot delete student, so no need for delete button
+done - financial support fields - see codes in spreadsheet from kate
+
+----------------------------------
+
+school should be mandatory on education on if it is not gap year. 
 students details:
-add Receiving Financial Support?
-gender - radio button
-students table don't refresh after delete
 from family tab link to student (table at the bottom)
 Rename buttons to new/delete student
 grey out fields on family tab

@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
+//import com.kesho.ui.control.autofilltextbox.AutoFillTextBox;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,8 +21,8 @@ public class FamilySelectorController {
     @Inject
     private FamilyRepository repository;
     private ObservableList<FamilyDto> data;
-    @FXML
-    private AutoFillTextBox<FamilyDto> family;
+//    @FXML
+//    private AutoFillTextBox<FamilyDto> family;
     @FXML
     private Button okButton;
 
@@ -38,18 +38,18 @@ public class FamilySelectorController {
         okClicked = false;
         okButton.setDisable(true);
         data = FXCollections.observableArrayList(repository.getFamilies());
-        family.setData(data);
+//        family.setData(data);
 
-        family.selected().addListener(new ChangeListener<FamilyDto>() {
-            @Override
-            public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto familyDto, FamilyDto familyDto2) {
-                if(familyDto2 == null) {
-                    okButton.setDisable(true);
-                } else {
-                    okButton.setDisable(false);
-                }
-            }
-        });
+//        family.selected().addListener(new ChangeListener<FamilyDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto familyDto, FamilyDto familyDto2) {
+//                if(familyDto2 == null) {
+//                    okButton.setDisable(true);
+//                } else {
+//                    okButton.setDisable(false);
+//                }
+//            }
+//        });
 
 //        family.getListview().itemsProperty().addListener(new ChangeListener(){
 //            @Override
@@ -82,7 +82,8 @@ public class FamilySelectorController {
 	}
 
     public FamilyDto getSelected() {
-        return family.getSelected();
+       // return family.getSelected();
+        return null;
     }
 	/**
 	 * Called when the user clicks ok.

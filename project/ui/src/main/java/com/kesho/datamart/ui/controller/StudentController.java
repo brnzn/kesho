@@ -11,7 +11,6 @@ import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import com.kesho.ui.control.NumericTextField;
 import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -52,7 +51,7 @@ public class StudentController implements FormActionListener {
     @FXML
     private ToggleGroup gender;
     @FXML
-    private NumericTextField yearOfBirth;
+    private TextField yearOfBirth; //numeric
     @FXML
     private TextField contactNumber;
     @FXML
@@ -87,9 +86,9 @@ public class StudentController implements FormActionListener {
     @FXML
     private ToggleGroup topupNeeded;
     @FXML
-    private NumericTextField shortfall;
+    private TextField shortfall;    // numeric
     @FXML
-    private NumericTextField alumniNumber;
+    private TextField alumniNumber; // numeric
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
     @FXML
@@ -122,6 +121,8 @@ public class StudentController implements FormActionListener {
      */
     @FXML
     private void initialize() {
+        Util.decorateNumericInput(yearOfBirth, shortfall, alumniNumber);
+
         selected.addListener(new ChangeListener<StudentDto>() {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {

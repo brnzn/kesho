@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="870.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="700.0" prefWidth="870.0" xmlns:fx="http://javafx.com/fxml">
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -35,8 +35,16 @@
                   <children>
                     <TabPane fx:id="sponsorTabPane" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
                         <tabs>
-                            <fx:include fx:id="sponsor" source="/view/SponsorDetailsTab.fxml"/>
-                            <fx:include source="/view/PaymentArrangementTab.fxml"/>
+                            <Tab id="sponsorDetailsTab" fx:id="sponsorDetailsTab" text="Sponsor Details">
+                                <content>
+                                    <fx:include fx:id="sponsor" source="../view/SponsorDetailsTab.fxml"/>
+                                </content>
+                            </Tab>
+                            <Tab id="paymentArrangementTab" fx:id="paymentArrangementTab" text="Payment Arrangement">
+                                <content>
+                                    <fx:include fx:id="paymentArrangement" source="../view/PaymentArrangementTab.fxml"/>
+                                </content>
+                            </Tab>
                         </tabs>
                     </TabPane>
                   </children>

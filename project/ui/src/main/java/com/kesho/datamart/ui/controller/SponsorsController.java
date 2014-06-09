@@ -37,6 +37,10 @@ import java.util.Map;
  */
 @Named("SponsorsController")
 public class SponsorsController {
+    @FXML
+    private PaymentArrangementController paymentArrangementController;
+    @FXML
+    private Tab paymentArrangementTab;
     @Autowired
     private SponsorsRepository sponsorsRepository;
     @FXML
@@ -55,6 +59,9 @@ public class SponsorsController {
 
     @FXML
     private SponsorController sponsorController;
+    @FXML
+    private Tab sponsorDetailsTab;
+
 
     private ObservableList<SponsorDto> sponsorsModel = FXCollections.observableArrayList();
 
@@ -114,10 +121,20 @@ public class SponsorsController {
                 refreshTable();
             }
         });
+
+        paymentArrangementTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+            @Override
+            public void handle(javafx.event.Event event) {
+                if (paymentArrangementTab.isSelected()) {
+                    paymentArrangementController.refreshTable();
+                }
+            }
+        });
     }
 
     @FXML
     private void add() {
+        sponsorTabPane.getSelectionModel().select(sponsorDetailsTab);
         sponsorController.newFired();
     }
 

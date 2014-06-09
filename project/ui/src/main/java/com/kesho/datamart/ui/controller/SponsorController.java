@@ -72,8 +72,8 @@ public class SponsorController {
     private ComboBox<FoundUs> howFoundUs;
     @FXML
     private ComboBox<LevelOfParticipation> participationLevel;
-    @FXML
-    private Tab sponsorDetailsTab;
+//    @FXML
+//    private Tab sponsorDetailsTab;
     @FXML
     private Button saveButton;
 
@@ -213,7 +213,7 @@ public class SponsorController {
     }
 
     void newFired() {
-        sponsorDetailsTab.getTabPane().getSelectionModel().select(sponsorDetailsTab);
+//        sponsorDetailsTab.getTabPane().getSelectionModel().select(sponsorDetailsTab);
         resetForm();
         //Must unbind in order to set new value
         selected.unbind();
