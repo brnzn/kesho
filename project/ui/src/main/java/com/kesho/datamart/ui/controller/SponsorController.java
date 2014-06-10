@@ -8,15 +8,12 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,11 +38,15 @@ public class SponsorController {
     @FXML
     private TextField surname;
     @FXML
-    private HBox startDateBox;
-    private final FXCalendar startDateCalendar = new FXCalendar();
+    private DatePicker startDate;
     @FXML
-    private HBox endDateBox;
-    private final FXCalendar endDateCalendar = new FXCalendar();
+    private DatePicker endDate;
+//    @FXML
+//    private HBox startDateBox;
+//    private final FXCalendar startDateCalendar = new FXCalendar();
+//    @FXML
+//    private HBox endDateBox;
+//    private final FXCalendar endDateCalendar = new FXCalendar();
     @FXML
     private ToggleGroup active;
     @FXML
@@ -84,8 +85,6 @@ public class SponsorController {
     private SponsorsController parentController;
 
     public SponsorController() {
-        startDateCalendar.setDateTextWidth(Double.valueOf(200));
-        endDateCalendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
     }
 
@@ -102,8 +101,6 @@ public class SponsorController {
         });
 
         surname.setUserData(null);
-        startDateBox.getChildren().add(startDateCalendar);
-        endDateBox.getChildren().add(endDateCalendar);
 
         Util.initializeYesNoGroup(active, anonymous);
         Util.initializeComboBoxValues(participationLevel, EnumSet.allOf(LevelOfParticipation.class));
@@ -126,10 +123,7 @@ public class SponsorController {
         SponsorDto current = selected.get();
         current.setName(firstName.getText());
         current.setSurname(surname.getText());
-        if(startDateCalendar.getValue() != null) {
-            current.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
-        }
-
+        current.setStartDate(Util.toJodaDate(startDate.getValue()));
         current.setActive((Boolean) active.getSelectedToggle().getUserData());
         current.setAddressLine1(addressLine1.getText());
         current.setAddressLine2(addressLine2.getText());
@@ -137,9 +131,7 @@ public class SponsorController {
         current.setCountry(country.getText());
         current.setCounty(county.getText());
 
-        if(endDateCalendar.getValue() != null) {
-            current.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
-        }
+        current.setEndDate(Util.toJodaDate(endDate.getValue()));
 
         current.setPostcode(postcode.getText());
         current.setPayeeType(payeeType.getValue());
@@ -164,11 +156,7 @@ public class SponsorController {
         surname.setText(dto.getSurname());
         Util.setYesNoToggleState(anonymous, dto.getActive());
 
-        if(dto.getStartDate() != null) {
-            startDateCalendar.setValue(dto.getStartDate().toDate());
-        } else {
-            startDateCalendar.clear();
-        }
+        startDate.valueProperty().set(Util.toJavaDate(dto.getStartDate()));
 
         Util.setYesNoToggleState(active, dto.getActive());
         addressLine1.setText(dto.getAddressLine1());
@@ -176,11 +164,7 @@ public class SponsorController {
         country.setText(dto.getCountry());
         county.setText(dto.getCounty());
 
-        if(dto.getEndDate() != null) {
-            endDateCalendar.setValue(dto.getEndDate().toDate());
-        } else {
-            endDateCalendar.clear();
-        }
+        endDate.valueProperty().set(Util.toJavaDate(dto.getEndDate()));
 
         postcode.setText(dto.getPostcode());
         payeeType.setValue(dto.getPayeeType());
@@ -195,14 +179,13 @@ public class SponsorController {
         firstName.clear();
         surname.clear();
         anonymous.getToggles().get(0).setSelected(true);
-        startDateCalendar.clear();
+        startDate.valueProperty().setValue(null);
         active.getToggles().get(0).setSelected(true);
         addressLine1.clear();
         addressLine2.clear();
         country.clear();
         county.clear();
-        endDateCalendar.clear();
-
+        endDate.valueProperty().setValue(null);
         postcode.clear();
         payeeType.setValue(null);
         phone.clear();
@@ -213,7 +196,6 @@ public class SponsorController {
     }
 
     void newFired() {
-//        sponsorDetailsTab.getTabPane().getSelectionModel().select(sponsorDetailsTab);
         resetForm();
         //Must unbind in order to set new value
         selected.unbind();

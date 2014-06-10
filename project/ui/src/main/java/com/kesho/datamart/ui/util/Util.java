@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 import java.util.EnumSet;
 
@@ -17,6 +18,22 @@ import java.util.EnumSet;
  * To change this template use File | Settings | File Templates.
  */
 public class Util {
+    public static LocalDate toJodaDate(java.time.LocalDate date) {
+        if(date == null) {
+            return null;
+        }
+
+        return new LocalDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+    }
+
+    public static java.time.LocalDate toJavaDate(final LocalDate date) {
+        if(date == null) {
+            return null;
+        }
+
+        return java.time.LocalDate.of(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
+    }
+
     public static void decorateNumericInput(TextField ...inputs) {
         for(TextField input: inputs) {
             input.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {

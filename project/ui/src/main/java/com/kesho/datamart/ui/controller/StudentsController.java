@@ -49,7 +49,19 @@ public class StudentsController implements Selectable<StudentDto> {
     @FXML
     private StudentController studentController;
     @FXML
+    private Tab studentDetailsTab;
+
+    @FXML
     private EducationDetailsController educationDetailsController;
+    @FXML
+    private Tab educationTab;
+
+
+    @FXML
+    private Tab familyTab;
+    @FXML
+    private FamilyDetailsController familyDetailsController;
+
 
     private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
     private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
@@ -94,6 +106,41 @@ public class StudentsController implements Selectable<StudentDto> {
         });
 
         initTabButtons();
+
+        familyTab.disableProperty().set(true);
+        educationTab.disableProperty().set(true);
+
+        selected.addListener(new ChangeListener<StudentDto>() {
+            @Override
+            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
+                familyTab.disableProperty().set(dto2 == null);
+                educationTab.disableProperty().set(dto2 == null);
+
+                if (familyTab.isSelected()) {
+                    familyDetailsController.updateForm(dto2);
+                }
+            }
+        });
+
+        familyTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+            @Override
+            public void handle(javafx.event.Event event) {
+                if (familyTab.isSelected()) {
+                    familyDetailsController.updateForm(selected.get());
+                }
+            }
+        });
+
+        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+            @Override
+            public void handle(javafx.event.Event event) {
+                if (educationTab.isSelected()) {
+                    educationDetailsController.loadInstitutions();
+                    educationDetailsController.refreshEducationTable();
+                }
+            }
+        });
+
     }
 
     public void init() {
@@ -124,6 +171,17 @@ public class StudentsController implements Selectable<StudentDto> {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
                 selected.set(studentDto2);
+                studentController.itemSelected(studentDto2);
+
+                if(studentDto2 != null) {
+                    educationTab.disableProperty().set(false);
+                }
+
+                if (educationTab.isSelected()) {
+                    educationDetailsController.refreshEducationTable();
+                }
+
+                //TODO: not needed
                 WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
             }
         });
@@ -162,6 +220,7 @@ public class StudentsController implements Selectable<StudentDto> {
             @Override
             public void handle(ActionEvent actionEvent) {
                 studentController.newFired();
+                studentTab.getSelectionModel().select(studentDetailsTab);
             }
         });
     }

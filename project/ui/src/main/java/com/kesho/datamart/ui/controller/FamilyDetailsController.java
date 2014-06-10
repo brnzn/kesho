@@ -6,17 +6,10 @@ import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
-import com.kesho.datamart.ui.util.Event;
-import com.kesho.datamart.ui.util.SystemEventListener;
-import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -73,17 +66,10 @@ public class FamilyDetailsController {
     @FXML
     private TableColumn<StudentDto, LevelOfSupport> levelOfSupportCol;
 
-
-    @FXML
-    private Tab familyTab;
-
     @Inject
     private StudentsController parentController;
     @Inject
     private FamilyRepository repository;
-
-
-    private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
 
     public FamilyDetailsController() {
         WindowsUtil.getInstance().autowire(this);
@@ -100,38 +86,9 @@ public class FamilyDetailsController {
 
         studentsModel.clear();
         studentsTable.setItems(studentsModel);
-
-        familyTab.disableProperty().set(true);
-
-        selected.addListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
-                if (familyTab.isSelected()) {
-                    updateForm(dto2);
-                }
-            }
-        });
-
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                familyTab.disableProperty().set(parentController.getSelectedItem() == null);
-                selected.set(parentController.getSelectedItem());
-            }
-        });
-
-        familyTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (familyTab.isSelected()) {
-                    updateForm(selected.get());
-                }
-            }
-        });
-
     }
 
-    private void updateForm(StudentDto studentDto) {
+    void updateForm(StudentDto studentDto) {
         if (studentDto == null) {
             resetForm();
             return;

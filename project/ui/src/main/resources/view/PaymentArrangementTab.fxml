@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="m" minHeight="0.0" minWidth="0.0" prefHeight="503.0000999999975" prefWidth="590.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.PaymentArrangementController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0000999999975" prefWidth="590.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.PaymentArrangementController">
   <children>
     <VBox minWidth="538.0" prefHeight="388.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>

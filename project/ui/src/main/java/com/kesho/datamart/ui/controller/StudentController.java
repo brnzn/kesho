@@ -8,7 +8,6 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
-import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
 import com.kesho.ui.control.calendar.FXCalendar;
@@ -17,7 +16,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -68,9 +70,6 @@ public class StudentController implements FormActionListener {
     private final FXCalendar calendar = new FXCalendar();
 
     @FXML
-    private Tab studentDetailsTab;
-
-    @FXML
     private ComboBox<FinancialSupportStatus> financialSupportStatus;
     @FXML
     private ComboBox<FinancialSupportStatusDetails> financialSupportStatusDetails;
@@ -109,16 +108,6 @@ public class StudentController implements FormActionListener {
         WindowsUtil.getInstance().autowire(this);
     }
 
-    /* if financialSupportStatus = other
-        financialSupportStatusDetails not visible
-        otherFinancialSupportStatusDetails visible
-        else
-        populate financialSupportStatusDetails  values
-        financialSupportStatusDetails  visible
-        otherFinancialSupportStatusDetails noy visible
-     *
-     *
-     */
     @FXML
     private void initialize() {
         Util.decorateNumericInput(yearOfBirth, shortfall, alumniNumber);
@@ -162,25 +151,15 @@ public class StudentController implements FormActionListener {
         });
 
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
-
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                if(parentController.getSelectedItem() != null) {
-                    itemSelected(parentController.getSelectedItem());
-                }
-            }
-        });
     }
 
     @Override
     public void newFired() {
-        studentDetailsTab.getTabPane().getSelectionModel().select(studentDetailsTab);
         resetForm();
         selected.set(new StudentDto());
     }
 
-    private void itemSelected(StudentDto student) {
+    void itemSelected(StudentDto student) {
         if(student == null) {
             resetForm();
             return;

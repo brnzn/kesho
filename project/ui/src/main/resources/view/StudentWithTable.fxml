@@ -7,8 +7,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<?scenebuilder-classpath-element ../../java?>
-<?scenebuilder-classpath-element ../../../../target/classes?>
 
 <AnchorPane prefHeight="700.0" prefWidth="870.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
     <children>
@@ -37,9 +35,21 @@
                                     <children>
                                         <TabPane fx:id="studentTab" prefHeight="667.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <tabs>
-                                                <fx:include fx:id="student" source="/view/StudentDetailsTab.fxml"/>
-                                                <fx:include fx:id="educationDetails" source="/view/EducationDetailsTab.fxml"/>
-                                                <fx:include fx:id="familyDetails" source="/view/FamilyDetailsTab.fxml"/>
+                                                <Tab id="studentDetailsTab" fx:id="studentDetailsTab" text="Student Details">
+                                                    <content>
+                                                        <fx:include fx:id="student" source="../view/StudentDetailsTab.fxml"/>
+                                                    </content>
+                                                </Tab>
+                                                <Tab id="educationTab" fx:id="educationTab" disable="true" text="Education">
+                                                    <content>
+                                                        <fx:include fx:id="educationDetails" source="../view/EducationDetailsTab.fxml"/>
+                                                    </content>
+                                                </Tab>
+                                                <Tab id="familyTab" fx:id="familyTab" disable="true" text="Family">
+                                                    <content>
+                                                        <fx:include fx:id="familyDetails" source="../view/FamilyDetailsTab.fxml"/>
+                                                    </content>
+                                                </Tab>
                                                 <Tab text="Alumni">
                                                     <content>
                                                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

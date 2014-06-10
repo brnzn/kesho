@@ -64,8 +64,6 @@ public class EducationDetailsController {
 
     @FXML
     private TableView<EducationDto> educationTable;
-    @FXML
-    private Tab educationTab;
 
     @FXML
     private TableColumn<EducationDto, String> institutionCol;
@@ -98,7 +96,7 @@ public class EducationDetailsController {
         calendar.setDateTextWidth(Double.valueOf(150));
     }
 
-    private void refreshEducationTable() {
+    void refreshEducationTable() {
         educationModel.clear();
         if(parentController.getSelectedItem() != null) {
             List<EducationDto> dtos = studentsRepository.getEducationHistory(parentController.getSelectedItem().getId());
@@ -159,7 +157,7 @@ public class EducationDetailsController {
         return validationFields;
     }
 
-    private void loadInstitutions() {
+    void loadInstitutions() {
         institutions.getItems().clear();
         new Service<Void>() {
             @Override
@@ -204,32 +202,6 @@ public class EducationDetailsController {
             public void changed(ObservableValue<? extends EducationDto> observableValue, EducationDto dto1, EducationDto dto2) {
                 saveButton.setDisable(dto2 == null);
                 deleteButton.setDisable(dto2 == null || dto2.getId() == null);
-            }
-        });
-
-        educationTab.disableProperty().set(true);
-
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_SELECTED, new SystemEventListener() {
-            @Override
-            public void handle() {
-                if(parentController.getSelectedItem() != null) {
-                    educationTab.disableProperty().set(false);
-                }
-
-                if (educationTab.isSelected()) {
-                    refreshEducationTable();
-                }
-            }
-        });
-
-
-        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (educationTab.isSelected()) {
-                    loadInstitutions();
-                    refreshEducationTable();
-                }
             }
         });
 

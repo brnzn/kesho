@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="601.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="com.kesho.datamart.ui.controller.SponsorController">
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="601.0000999999975" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8" fx:controller="com.kesho.datamart.ui.controller.SponsorController">
   <children>
     <VBox minWidth="601.0000999999975" prefHeight="520.0" prefWidth="601.0000999999975" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -21,7 +21,6 @@
                     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                    <HBox fx:id="startDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label prefWidth="97.0" text="Anonymous:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                       <children>
@@ -36,16 +35,19 @@
                     <Label text="Family Name:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <TextField fx:id="surname" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <Label text="End Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <HBox fx:id="endDateBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <Label minWidth="-Infinity" prefWidth="112.0" text="Active:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="163.9998779296875" spacing="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                      <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="anonymous" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="No" toggleGroup="$anonymous" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="anonymous" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="No" toggleGroup="$anonymous" />
+                       </children>
                     </HBox>
+                              <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="endDate" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="96.0" prefWidth="96.0" />
@@ -147,4 +149,3 @@
     </VBox>
   </children>
 </AnchorPane>
-

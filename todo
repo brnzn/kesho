@@ -1,3 +1,5 @@
+add jpa version
+validations on all dtos + length settings on inputs
 replace calendar with fx 8
 replace auto complete with controlsfx
 replace dialogs with controlsfx
