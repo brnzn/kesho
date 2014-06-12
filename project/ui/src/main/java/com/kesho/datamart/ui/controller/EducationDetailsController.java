@@ -7,11 +7,8 @@ import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import com.kesho.datamart.ui.util.Event;
-import com.kesho.datamart.ui.util.SystemEventListener;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,12 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
@@ -43,8 +38,7 @@ import java.util.Map;
  */
 public class EducationDetailsController {
     @FXML
-    private HBox dateControlBox;
-    private final FXCalendar calendar = new FXCalendar();
+    private DatePicker startDate;
     @FXML
     private ComboBox<InstitutionDto> institutions;
     @FXML
@@ -93,7 +87,6 @@ public class EducationDetailsController {
 
     public EducationDetailsController() {
         WindowsUtil.getInstance().autowire(this);
-        calendar.setDateTextWidth(Double.valueOf(150));
     }
 
     void refreshEducationTable() {
@@ -121,11 +114,8 @@ public class EducationDetailsController {
             .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
             .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
             .withInstitution(institutions.getSelectionModel().getSelectedItem())
-            .withComments(comments.getText());
-
-        if(calendar.getValue() != null) {
-            dto.withEducationDate(LocalDate.fromDateFields(calendar.getValue()));
-        }
+            .withComments(comments.getText())
+            .withEducationDate(Util.toJodaDate(startDate.getValue()));
 
         if (isInputValid(dto)) {
             studentsRepository.save(dto);
@@ -136,8 +126,10 @@ public class EducationDetailsController {
     private boolean isInputValid(EducationDto dto) {
         String validation = FormValidator.validate(dto, getFields());
 
+        //if()
+
         if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog(validation);
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Education details", validation);
             return false;
         } else {
             return true;
@@ -148,7 +140,7 @@ public class EducationDetailsController {
     private Map<String, Node> getFields() {
         if(validationFields.isEmpty()) {
             validationFields.put("institution", institutions);
-            validationFields.put("date", dateControlBox);
+            validationFields.put("date", startDate);
             validationFields.put("year", educationYear);
             validationFields.put("course", course);
             validationFields.put("educationalStatus", educationalStatus);
@@ -222,7 +214,6 @@ public class EducationDetailsController {
             }
         });
 
-        dateControlBox.getChildren().add(calendar);
         Util.initializeComboBoxValues(educationalStatus, EnumSet.allOf(EducationStatus.class));
         educationalStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationStatus>() {
             @Override
@@ -262,7 +253,7 @@ public class EducationDetailsController {
         educationYear.setText(Util.safeToStringValue(dto.getYear(), ""));
         course.setText(dto.getCourse());
         educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
-        calendar.setValue(dto.getDate().toDate());
+        startDate.valueProperty().setValue(Util.toJavaDate(dto.getDate()));
         institutions.getSelectionModel().select(dto.getInstitution());
         secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
         secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
@@ -276,7 +267,7 @@ public class EducationDetailsController {
         course.clear();
         educationalStatus.getSelectionModel().clearSelection();
         educationalStatus.valueProperty().setValue(null);
-        calendar.clear();
+        startDate.setValue(null);
         institutions.getSelectionModel().clearSelection();
         institutions.valueProperty().setValue(null);
         secondaryStatus1.getSelectionModel().clearSelection();

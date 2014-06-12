@@ -1,13 +1,13 @@
 package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialogs;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -90,10 +90,11 @@ public class InstitutionController {
 	 * 
 	 * @return true if the input is valid
 	 */
+    //TODO: bind button to text so no need to validate
 	private boolean isInputValid() {
 		if (StringUtils.isBlank(institutionName.getText())) {
             // Show the error message
-            Dialogs.showErrorDialog(dialogStage, "Please enter Institution Name");
+//            Dialogs.showErrorDialog(dialogStage, "Please enter Institution Name");
             return false;
 		}
 

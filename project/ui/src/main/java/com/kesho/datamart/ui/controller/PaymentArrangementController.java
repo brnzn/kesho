@@ -2,7 +2,6 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.ui.validation.FormValidator;
-import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.FinancialArrangement;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.PaymentArrangementDto;
@@ -56,11 +55,11 @@ public class PaymentArrangementController {
     private StudentService studentService;
 
     @FXML
-    private HBox startDateBox;
-    private final FXCalendar startDateCalendar = new FXCalendar();
+    private DatePicker startDate;
+
     @FXML
-    private HBox endDateBox;
-    private final FXCalendar endDateCalendar = new FXCalendar();
+    private DatePicker endDate;
+
     @FXML
     private ComboBox<FinancialArrangement> financialArrangement;
     @FXML
@@ -97,8 +96,6 @@ public class PaymentArrangementController {
     private Map<String, Node> validationFields = new HashMap<>();
 
     public PaymentArrangementController() {
-        startDateCalendar.setDateTextWidth(Double.valueOf(200));
-        endDateCalendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
     }
 
@@ -137,8 +134,6 @@ public class PaymentArrangementController {
         });
 
         student.setUserData(null);
-        startDateBox.getChildren().add(startDateCalendar);
-        endDateBox.getChildren().add(endDateCalendar);
 
         startCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, LocalDate>("startDate"));
         endCol.setCellValueFactory(new PropertyValueFactory<PaymentArrangementDto, LocalDate>("endDate"));
@@ -218,8 +213,8 @@ public class PaymentArrangementController {
     }
 
     private void clearForm() {
-        startDateCalendar.clear();
-        endDateCalendar.clear();
+        startDate.valueProperty().setValue(null);
+        endDate.valueProperty().setValue(null);
         totalAllocated.clear();
         financialArrangement.getSelectionModel().clearSelection();
         financialArrangement.valueProperty().setValue(null);
@@ -236,28 +231,24 @@ public class PaymentArrangementController {
         }
 
         student.setText(dto.getStudentName());
-        if(dto.getStartDate() != null) {
-            startDateCalendar.setValue(dto.getStartDate().toDate());
-        } else {
-            startDateCalendar.clear();
-        }
+        startDate.valueProperty().setValue(Util.toJavaDate(dto.getStartDate()));
 
-        if (dto.getEndDate() != null) {
-            endDateCalendar.setValue(dto.getEndDate().toDate());
-        } else {
-            endDateCalendar.clear();
-        }
+        endDate.valueProperty().setValue(Util.toJavaDate(dto.getEndDate()));
+
 
         financialArrangement.setValue(dto.getFinancialArrangement());
         totalAllocated.setText(Util.safeToStringValue(dto.getAmount(), ""));
-
-//        student.setUserData(null);
     }
 
     @FXML
     private void save() {
         PaymentArrangementDto dto = buildDto();
-        if(FormValidator.validateAndAlert(dto, getFields())) {
+
+        String validation = FormValidator.validate(dto, getFields());
+
+        if(StringUtils.isNotBlank(validation)) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", validation);
+        } else {
             sponsorsRepository.save(dto);
             refreshTable();
         }
@@ -266,13 +257,9 @@ public class PaymentArrangementController {
     private PaymentArrangementDto buildDto() {
         PaymentArrangementDto dto = new PaymentArrangementDto();
 
-        if (endDateCalendar.getValue() != null) {
-            dto.setEndDate(LocalDate.fromDateFields(endDateCalendar.getValue()));
-        }
+        dto.setEndDate(Util.toJodaDate(endDate.getValue()));
 
-        if(startDateCalendar.getValue() != null) {
-            dto.setStartDate(LocalDate.fromDateFields(startDateCalendar.getValue()));
-        }
+        dto.setStartDate(Util.toJodaDate(startDate.getValue()));
 
         dto.setFinancialArrangement(financialArrangement.getValue());
 
@@ -307,8 +294,8 @@ public class PaymentArrangementController {
 
     private Map<String, Node> getFields() {
         if(validationFields.isEmpty()) {
-            validationFields.put("startDate", startDateBox);
-            validationFields.put("endDate", endDateBox);
+            validationFields.put("startDate", startDate);
+            validationFields.put("endDate", endDate);
             validationFields.put("type", financialArrangement);
             validationFields.put("amount", totalAllocated);
             validationFields.put("studentId", student);

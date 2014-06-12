@@ -3,10 +3,14 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.Dialogs;
 //import np.com.ngopal.control.AutoFillTextBox;
 
 /**
@@ -48,6 +52,7 @@ public class ControlTest extends Application {
         //Layout
         HBox hbox = new HBox();
         hbox.setSpacing(10);
+
         //CustomControl
  //       final AutoFillTextBox box = new AutoFillTextBox(data);
         //Label
@@ -55,12 +60,24 @@ public class ControlTest extends Application {
         l.translateYProperty().set(5);
         l.translateXProperty().set(5);
 
-  //      hbox.getChildren().addAll(l,box);
+        Button b = new Button("click");
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Dialogs.create()
+                        .owner( primaryStage)
+                        .title("You do want dialogs right?")
+                        .masthead("Just Checkin'")
+                        .message( "I was a bit worried that you might not want them, so I wanted to double check.")
+                        .showError();
+            }
+        });
+        hbox.getChildren().addAll(b);
         Scene scene = new Scene(hbox,300,200);
 
         primaryStage.setScene(scene);
         scene.getStylesheets().add("/test/control.css");
- //       primaryStage.setVisible(true);
+        primaryStage.show();
 
     }
 }

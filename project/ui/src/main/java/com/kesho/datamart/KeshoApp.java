@@ -34,7 +34,6 @@ public class KeshoApp extends Application {
             RootController rootController = loader.getController();
             WindowsUtil.getInstance().getControllers().setRootController(rootController);
 			Scene scene = new Scene(rootLayout);
-            scene.getStylesheets().add(KeshoApp.class.getResource("/style/calendar_styles.css").toExternalForm());
 
             primaryStage.setScene(scene);
 			primaryStage.show();

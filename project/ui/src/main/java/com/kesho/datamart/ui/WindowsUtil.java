@@ -7,11 +7,12 @@ import com.kesho.datamart.ui.util.EventBus;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialogs;
+//import javafx.scene.control.Dialogs;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -31,27 +32,40 @@ public class WindowsUtil {
 		return instance;
 	}
 
-    public void showErrorDialog(String msg) {
-        Dialogs.showErrorDialog(primaryStage, msg, "Please correct invalid fields", "Invalid Fields");
+    public void showErrorDialog(String title, String masthead, String msg) {
+        Dialogs.create()
+                .owner( primaryStage)
+                .title(title)
+                .masthead(masthead)
+                .message(msg)
+                .showError();
+
+//        Dialogs.showErrorDialog(primaryStage, msg, "Please correct invalid fields", "Invalid Fields");
     }
     public EventBus getEventBus() {
         return applicationContext.getBean(EventBus.class);
     }
 
+    /**
+     * @deprecated
+     * @return
+     */
     //TODO: delete
     public Controllers getControllers() {
         return controllers;
     }
 
     public boolean showWarningDialog(String title, String head, String message) {
-        Dialogs.DialogResponse resp = Dialogs.showWarningDialog(primaryStage, message, head, title, Dialogs.DialogOptions.YES_NO);
-        return resp == Dialogs.DialogResponse.YES;
+        //TODO: fix
+//        Dialogs.DialogResponse resp = Dialogs.showWarningDialog(primaryStage, message, head, title, Dialogs.DialogOptions.YES_NO);
+//        return resp == Dialogs.DialogResponse.YES;
+        return false;
     }
 
     public void sponsors() {
         try {
             // Load the fxml file and set into the center of the main layout
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/SponsorWithTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Sponsors.fxml"));
             controllers.getRootController().setTtile("Sponsors");
             loader.setController(WindowsUtil.getInstance().getControllers().sponsorsController());
 
@@ -67,7 +81,7 @@ public class WindowsUtil {
     public void students() {
         try {
             // Load the fxml file and set into the center of the main layout
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentWithTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Students.fxml"));
             controllers.getRootController().setTtile("Students");
             StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
             loader.setController(sc);
@@ -77,7 +91,6 @@ public class WindowsUtil {
             primaryStage.sizeToScene();
             sc.init();
         } catch (IOException e) {
-            // Exception gets thrown if the fxml file could not be loaded
             e.printStackTrace();
         }
     }
@@ -85,7 +98,7 @@ public class WindowsUtil {
     public void students(Long studentId) {
         try {
             // Load the fxml file and set into the center of the main layout
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentWithTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Students.fxml"));
             controllers.getRootController().setTtile("Students");
             StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
             loader.setController(sc);
@@ -108,98 +121,10 @@ public class WindowsUtil {
 		this.primaryStage = primaryStage;
 	}
 
-//    public void showStudentsTable() throws IOException {
-//        BorderPane pane = (BorderPane) getRoot().lookup("#contentLayout");
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/StudentsTable.fxml"));
-//        loader.setController(controllers.getStudentsController());
-//
-//        AnchorPane page = (AnchorPane) loader.load();
-//        controllers.getRootController().setTtile("Students List");
-//        pane.setCenter(page);
-//        primaryStage.sizeToScene();
-//    }
-
-//    public void showNewStudentDetails(StudentDto student) {
-//        try {
-//            BorderPane pane = (BorderPane)getRoot().lookup("#contentLayout");
-//            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Student.fxml"));
-//            NewStudentController controller = controllers.getNewStudentController();
-//            loader.setController(controller);
-//
-//            AnchorPane page = (AnchorPane) loader.load();
-//            controller.setSelectedStudent(student);
-//            controllers.getRootController().setTtile("New Student");
-//            pane.setCenter(page);
-//            primaryStage.sizeToScene();
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
-//    }
-
     private Parent getRoot() {
         return primaryStage.getScene().getRoot();
     }
 
-//    public boolean studentForm(StudentDto dto) {
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewStudentForm.fxml"));
-//
-//        try {
-//            AnchorPane page = (AnchorPane) loader.load();
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("New Student");
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.initOwner(primaryStage);
-//            Scene scene = new Scene(page);
-//            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
-//
-//            dialogStage.setScene(scene);
-//            // Set the person into the controller
-//            StudentDialogController controller = loader.getController();
-//            controller.setDialogStage(dialogStage);
-//            controller.setDto(dto);
-//
-//            // Show the dialog and wait until the user closes it
-//            dialogStage.showAndWait();
-//
-//            return controller.isOkClicked();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return false;
-//    }
-
-
-//    public boolean educationForm(EducationDto dto) {
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewEducationForm.fxml"));
-//        EducationDialogController controller = WindowsUtil.getInstance().controllers.getEducationDialogController();
-//
-//        loader.setController(controller);
-//
-//        try {
-//            AnchorPane page = (AnchorPane) loader.load();
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("New Education");
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.initOwner(primaryStage);
-//            Scene scene = new Scene(page);
-//            scene.getStylesheets().add(WindowsUtil.class.getResource("/style/calendar_styles.css").toExternalForm());
-//
-//            dialogStage.setScene(scene);
-//
-//            // Set the person into the controller
-//            controller.setDialogStage(dialogStage);
-//            controller.setDto(dto);
-//
-//            // Show the dialog and wait until the user closes it
-//            dialogStage.showAndWait();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return controller.isOkClicked();
-//
-//    }
 
     public void autowire(Object o) {
         applicationContext.getAutowireCapableBeanFactory().autowireBean(o);
@@ -207,7 +132,7 @@ public class WindowsUtil {
     }
 
     public StudentDto studentSelector() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/studentSelector.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/AutoCompleteSelector.fxml"));
         StudentSelectorController controller = controllers.getStudentSelector();
         loader.setController(controller);
         AnchorPane page = null;
@@ -218,7 +143,6 @@ public class WindowsUtil {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
-            scene.getStylesheets().add("/style/AutoFillTextBox.css");
             dialogStage.setScene(scene);
 
             // Set the person into the controller
@@ -235,7 +159,7 @@ public class WindowsUtil {
     }
 
     public FamilyDto familySelector() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilySelector.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/AutoCompleteSelector.fxml"));
         FamilySelectorController controller = controllers.getFamilySelector();
         loader.setController(controller);
         AnchorPane page = null;
@@ -246,7 +170,6 @@ public class WindowsUtil {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
-            scene.getStylesheets().add("/style/AutoFillTextBox.css");
             dialogStage.setScene(scene);
 
             // Set the person into the controller
@@ -263,7 +186,7 @@ public class WindowsUtil {
     }
 
     public void familyForm() throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/NewFamilyForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilyForm.fxml"));
         FamilyDialogController controller = controllers.getFamilyDialogController();
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
@@ -298,35 +221,6 @@ public class WindowsUtil {
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
     }
-
-//    public boolean sponsorForm(SponsorDto dto) {
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/backup/NewSponsorForm.fxml"));
-//
-//        try {
-//            AnchorPane page = (AnchorPane) loader.load();
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("New Sponsor");
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.initOwner(primaryStage);
-//            Scene scene = new Scene(page);
-//
-//            dialogStage.setScene(scene);
-//            // Set the person into the controller
-//            SponsorDialogController controller = loader.getController();
-//            controller.setDialogStage(dialogStage);
-//            controller.setDto(dto);
-//
-//            // Show the dialog and wait until the user closes it
-//            dialogStage.showAndWait();
-//
-//            return controller.isOkClicked();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return false;
-//
-//    }
 
     public class Controllers {
         private RootController rootController;

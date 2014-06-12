@@ -3,6 +3,7 @@ package com.kesho.datamart.ui.controller;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
+import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
@@ -14,6 +15,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -111,11 +113,15 @@ public class SponsorController {
     @FXML
     private void save() {
         SponsorDto dto = buildDto();
-        if (FormValidator.validateAndAlert(dto, getFields())) {
+
+        String validation = FormValidator.validate(dto, getFields());
+
+        if(StringUtils.isNotBlank(validation)) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", validation);
+        } else {
             dto = sponsorsRepository.save(dto);
             selected.bind(parentController.getSelectedProperty());
             parentController.valueChanged();
-
         }
     }
 

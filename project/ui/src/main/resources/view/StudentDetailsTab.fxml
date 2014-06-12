@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="610.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8" fx:controller="com.kesho.datamart.ui.controller.StudentController">
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kesho.datamart.ui.controller.StudentController">
   <children>
     <VBox minWidth="601.0000999999975" prefHeight="550.0" prefWidth="610.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -24,19 +24,20 @@
                     <TextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label text="Gender:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                      <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="hasDisability" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="No" toggleGroup="$hasDisability" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="hasDisability" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="No" toggleGroup="$hasDisability" />
+                       </children>
                     </HBox>
                     <Label minWidth="-Infinity" prefWidth="112.0" text="Has Disability?" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <Label text="Year of Birth:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
-                    <HBox fx:id="dateControlBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                       <children>
                         <TextField fx:id="family" disable="true" editable="false" prefWidth="200.0" />
@@ -44,13 +45,16 @@
                       </children>
                     </HBox>
                     <HBox fx:id="genderBox" alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="398.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
-                      <RadioButton mnemonicParsing="false" text="Female" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="gender" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="Male" toggleGroup="$gender" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Female" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="gender" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="Male" toggleGroup="$gender" />
+                       </children>
                     </HBox>
+                              <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="120.0" prefWidth="127.0" />
@@ -85,7 +89,7 @@
                     <Label text="Home Location:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     <TextField fx:id="homeLocation" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <Label text="Leaver Status:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="leaverStatus" editable="false" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="leaverStatus" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -111,23 +115,27 @@
                   <children>
                     <Label text="Receiving Financial Support?" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                      <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="financialSupport" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="No" toggleGroup="$financialSupport" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="financialSupport" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="No" toggleGroup="$financialSupport" />
+                       </children>
                     </HBox>
                     <Label text="Reason for Not receiving Financial Support:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <ComboBox fx:id="financialSupportStatus" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label text="Topup Needed?" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                      <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="topupNeeded" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="No" toggleGroup="$topupNeeded" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="topupNeeded" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="No" toggleGroup="$topupNeeded" />
+                       </children>
                     </HBox>
                     <Label text="Level Of Support:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                     <ComboBox fx:id="levelOfSupport" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -143,14 +151,16 @@
                     </HBox>
                     <Label text="Receiving Enrichment / Other Support?" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                      <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                        <toggleGroup>
-                          <ToggleGroup fx:id="enrichmentSupport" />
-                        </toggleGroup>
-                      </RadioButton>
-                      <RadioButton mnemonicParsing="false" text="No" toggleGroup="$enrichmentSupport" />
+                       <children>
+                         <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
+                           <toggleGroup>
+                             <ToggleGroup fx:id="enrichmentSupport" />
+                           </toggleGroup>
+                         </RadioButton>
+                         <RadioButton mnemonicParsing="false" text="No" toggleGroup="$enrichmentSupport" />
+                       </children>
                     </HBox>
-                    <ComboBox fx:id="financialSupportStatusDetails" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    <ComboBox fx:id="financialSupportStatusDetails" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <TextField fx:id="otherFinancialSupportStatusDetails" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   </children>
                   <columnConstraints>

@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="554.0000999999975" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="554.0000999999975" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
   <children>
     <VBox minWidth="538.0" prefHeight="388.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <TableView fx:id="educationTable" prefHeight="200.0" prefWidth="200.0">
           <columns>
-            <TableColumn prefWidth="75.0" text="Date" fx:id="educationDateCol" />
-            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="138.0" text="Institution Name" fx:id="institutionCol" />
-            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="143.0" text="Educational level" fx:id="educationLevelCol" />
-            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="109.0" text="Class / Year" fx:id="yearCol" />
-            <TableColumn prefWidth="75.0" text="Course" fx:id="courseCol" />
+            <TableColumn fx:id="educationDateCol" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="institutionCol" maxWidth="5000.0" minWidth="10.0" prefWidth="138.0" text="Institution Name" />
+            <TableColumn fx:id="educationLevelCol" maxWidth="5000.0" minWidth="10.0" prefWidth="143.0" text="Educational level" />
+            <TableColumn fx:id="yearCol" maxWidth="5000.0" minWidth="10.0" prefWidth="109.0" text="Class / Year" />
+            <TableColumn fx:id="courseCol" prefWidth="75.0" text="Course" />
           </columns>
         </TableView>
         <TitledPane animated="false" text="untitled">
@@ -32,7 +32,6 @@
                     <Label text="Class / Year" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <Label text="Course" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <Label text="Educational Status" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <HBox fx:id="dateControlBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <TextField fx:id="educationYear" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <TextField fx:id="course" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <ComboBox fx:id="secondaryStatus1" maxWidth="-Infinity" minWidth="-1.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -51,6 +50,7 @@
                         <Insets right="10.0" />
                       </padding>
                     </HBox>
+                              <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />

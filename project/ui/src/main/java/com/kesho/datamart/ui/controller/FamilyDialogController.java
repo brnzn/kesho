@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
+import org.controlsfx.dialog.Dialogs;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -111,6 +112,8 @@ public class FamilyDialogController {
                 refreshForm(dto2);
             }
         });
+
+        Util.decorateNumericInput(numOfWives, aliveParents, numOfAdultsAtAddress, numNonKeshoStudents);
     }
 
     private void refreshForm(FamilyDto dto) {
@@ -217,7 +220,12 @@ public class FamilyDialogController {
         String validation = FormValidator.validate(dto, getFields());
 
         if(StringUtils.isNotBlank(validation)) {
-	        Dialogs.showErrorDialog(dialogStage, validation, "Please correct invalid fields", "Invalid Fields");
+            Dialogs.create()
+                    .owner( dialogStage)
+                    .title("Invalid Fields")
+                    .masthead("Please correct invalid fields")
+                    .message(validation)
+                    .showError();
             return false;
         } else {
             return true;

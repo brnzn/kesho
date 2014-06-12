@@ -1,4 +1,10 @@
 needs to be build on mac
-1) copy jars to dist folder (as needed in build.xml)
+1) checkout the latest from git
+2) build datamart - mvn clean install -DskipTests 
+3) build ui - mvn clean jfx:web -DskipTests 
+this will create target/jfx/app folder with all the jars
+
+Copy the project BuildDMG to mac
+1) copy jars to bin/dist folder (ui jar under dist and the rest under dist/lib see build.xml)
 2) run do-deploy
-3) generated dmg should be under deploy/bundles folder 
+3) generated dmg should be under bin/deploy/bundles folder

@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jfxrt>/usr/java/jdk1.8.0_05/jre/lib/ext/jfxrt.jar</jfxrt>
         <JAVA_8_HOME>/usr/java/jdk1.8.0_05</JAVA_8_HOME>
-        <javafx.dialogs>/home/orenberenson/kesho/project/ui/lib/javafx-dialogs-0.0.1.jar</javafx.dialogs>
+        <!--<javafx.dialogs>/home/orenberenson/kesho/project/ui/lib/javafx-dialogs-0.0.1.jar</javafx.dialogs>-->
 		<org.springframework.version>4.0.5.RELEASE</org.springframework.version>
         <hamcrest.version>1.3</hamcrest.version>
         <junit.version>4.11</junit.version>
@@ -66,13 +66,13 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>javafx</groupId>
-			<artifactId>dialogs</artifactId>
-			<scope>system</scope>
-			<version>0.0.1</version>
-			<systemPath>${javafx.dialogs}</systemPath>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>javafx</groupId>-->
+			<!--<artifactId>dialogs</artifactId>-->
+			<!--<scope>system</scope>-->
+			<!--<version>0.0.1</version>-->
+			<!--<systemPath>${javafx.dialogs}</systemPath>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>com.kesho</groupId>
 			<artifactId>kesho-datamart</artifactId>

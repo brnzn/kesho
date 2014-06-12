@@ -1,6 +1,7 @@
+students profile
+family history/profile
 add jpa version
 validations on all dtos + length settings on inputs
-replace calendar with fx 8
 replace auto complete with controlsfx
 replace dialogs with controlsfx
 
@@ -13,6 +14,7 @@ done - add Receiving Financial Support?
 done- gender - radio button
 done- cannot delete student, so no need for delete button
 done - financial support fields - see codes in spreadsheet from kate
+done - replace calendar with fx 8
 
 ----------------------------------
 

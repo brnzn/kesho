@@ -10,16 +10,12 @@ import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import com.kesho.ui.control.calendar.FXCalendar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -65,9 +61,9 @@ public class StudentController implements FormActionListener {
 
     @FXML
     private ToggleGroup financialSupport;
+
     @FXML
-    private HBox dateControlBox;
-    private final FXCalendar calendar = new FXCalendar();
+    private DatePicker startDate;
 
     @FXML
     private ComboBox<FinancialSupportStatus> financialSupportStatus;
@@ -104,7 +100,6 @@ public class StudentController implements FormActionListener {
 
 
     public StudentController() {
-        calendar.setDateTextWidth(Double.valueOf(200));
         WindowsUtil.getInstance().autowire(this);
     }
 
@@ -122,7 +117,6 @@ public class StudentController implements FormActionListener {
         selected.setValue(null);
         family.setUserData(null);
 
-        dateControlBox.getChildren().add(calendar);
         Util.initializeYesNoGroup(hasDisability, financialSupport, topupNeeded, enrichmentSupport);
 
         gender.getToggles().get(0).setUserData(Gender.F);
@@ -167,9 +161,7 @@ public class StudentController implements FormActionListener {
 
         selected.setValue(student);
 
-        if (student.getStartDate() != null) {
-            calendar.setValue(student.getStartDate().toDate());
-        }
+        startDate.valueProperty().set(Util.toJavaDate(student.getStartDate()));
 
         firstName.setText(student.getFirstName());
 
@@ -181,7 +173,6 @@ public class StudentController implements FormActionListener {
         } else if (Gender.M.equals(student.getGender())) {
             gender.getToggles().get(1).setSelected(true);
         }
-  //      gender.getSelectionModel().select(student.getGender());
 
         yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
 
@@ -192,7 +183,6 @@ public class StudentController implements FormActionListener {
         Util.setYesNoToggleState(financialSupport, student.hasFinancialSupport());
         Util.setYesNoToggleState(enrichmentSupport, student.getEnrichmentSupport());
         Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
-        //Util.setYesNoToggleState(enrichmentSupport, student.??);
 
 
         financialSupportStatus.getSelectionModel().select(student.getFinancialSupportStatus());
@@ -263,7 +253,8 @@ public class StudentController implements FormActionListener {
                 .withFinancialSupportStatus(financialSupportStatus.getSelectionModel().getSelectedItem())
                 .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
-                .withGender((Gender) gender.getSelectedToggle().getUserData());
+                .withGender((Gender) gender.getSelectedToggle().getUserData())
+                .withStartDate(Util.toJodaDate(startDate.getValue()));
 
         if (StringUtils.isNotBlank(shortfall.getText())) {
             dto.withShortfall(Integer.valueOf(shortfall.getText()));
@@ -271,10 +262,6 @@ public class StudentController implements FormActionListener {
 
         if (StringUtils.isNotBlank(alumniNumber.getText())) {
             dto.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
-        }
-
-        if (calendar.getValue() != null) {
-            dto.withStartDate(LocalDate.fromDateFields(calendar.getValue()));
         }
 
         if (StringUtils.isNotBlank(yearOfBirth.getText())) {
@@ -292,7 +279,7 @@ public class StudentController implements FormActionListener {
 
     }
     private void resetForm() {
-        calendar.clear();
+        startDate.valueProperty().setValue(null);
         firstName.clear();
         family.clear();
         family.setUserData(null);
@@ -320,7 +307,7 @@ public class StudentController implements FormActionListener {
     private boolean isInputValid(StudentDto dto) {
         String validation = FormValidator.validate(dto, getFields());
         if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog(validation);
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Student details", validation);
             return false;
         } else {
             return true;

@@ -5,16 +5,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import com.kesho.ui.control.autofilltextbox.AutoFillTextBox?>
-<?scenebuilder-classpath-element ../../java/np?>
-<?scenebuilder-classpath-element ../../../../target/classes?>
 
-<AnchorPane prefHeight="226.0" prefWidth="302.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="226.0" prefWidth="302.9999000000025" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8">
   <children>
     <HBox prefHeight="226.0" prefWidth="302.9999000000025" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Label text="Student:" />
-        <AutoFillTextBox fx:id="student" prefWidth="200.0" />
+        <Label text="Select" />
+        <TextField fx:id="textField" prefWidth="200.0" />
       </children>
     </HBox>
     <HBox id="HBox" alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="5.0">
