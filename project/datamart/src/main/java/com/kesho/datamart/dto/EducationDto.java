@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 public class EducationDto {
-    @NotNull(message = "Institution is mandatory")
     private InstitutionDto institution;
     @NotNull(message = "Date is mandatory")
     private LocalDate date;

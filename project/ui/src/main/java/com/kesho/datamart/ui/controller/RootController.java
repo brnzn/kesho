@@ -4,6 +4,7 @@ import com.kesho.datamart.ui.WindowsUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import javax.inject.Named;
 import java.io.IOException;
 
 /**
@@ -13,6 +14,7 @@ import java.io.IOException;
  * Time: 9:59 PM
  * To change this template use File | Settings | File Templates.
  */
+@Named
 public class RootController {
     @FXML private Label mainLbl;
 

@@ -18,19 +18,38 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
+//TODO: refactor - method to load fxmls
 public class WindowsUtil {
 
 	private static WindowsUtil instance = new WindowsUtil();
     private BorderPane rootLayout;
 	private Stage primaryStage;
-    private Controllers controllers = new Controllers();
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/ui-context.xml");
+
 
     private WindowsUtil(){}
 	
 	public static WindowsUtil getInstance() {
 		return instance;
 	}
+
+    public void showRoot(final Stage primaryStage) {
+        try {
+            this.primaryStage = primaryStage;
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/RootLayout.fxml"));
+            loader.setController(getController(RootController.class));
+            rootLayout = (BorderPane) loader.load();
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+
+        WindowsUtil.getInstance().students();
+        primaryStage.sizeToScene();
+    }
 
     public void showErrorDialog(String title, String masthead, String msg) {
         Dialogs.create()
@@ -39,26 +58,19 @@ public class WindowsUtil {
                 .masthead(masthead)
                 .message(msg)
                 .showError();
-
-//        Dialogs.showErrorDialog(primaryStage, msg, "Please correct invalid fields", "Invalid Fields");
     }
+
     public EventBus getEventBus() {
         return applicationContext.getBean(EventBus.class);
     }
 
-    /**
-     * @deprecated
-     * @return
-     */
-    //TODO: delete
-    public Controllers getControllers() {
-        return controllers;
-    }
-
     public boolean showWarningDialog(String title, String head, String message) {
-        //TODO: fix
-//        Dialogs.DialogResponse resp = Dialogs.showWarningDialog(primaryStage, message, head, title, Dialogs.DialogOptions.YES_NO);
-//        return resp == Dialogs.DialogResponse.YES;
+        Dialogs.create()
+                .owner(primaryStage)
+                .title(title)
+                .masthead(head)
+                .message(message)
+                .showWarning();
         return false;
     }
 
@@ -66,8 +78,8 @@ public class WindowsUtil {
         try {
             // Load the fxml file and set into the center of the main layout
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Sponsors.fxml"));
-            controllers.getRootController().setTtile("Sponsors");
-            loader.setController(WindowsUtil.getInstance().getControllers().sponsorsController());
+            getController(RootController.class).setTtile("Sponsors");//controllers.getRootController().setTtile("Sponsors");
+            loader.setController(getController(SponsorsController.class));//WindowsUtil.getInstance().getControllers().sponsorsController());
 
             AnchorPane overviewPage = (AnchorPane) loader.load();
             rootLayout.setCenter(overviewPage);
@@ -82,8 +94,8 @@ public class WindowsUtil {
         try {
             // Load the fxml file and set into the center of the main layout
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Students.fxml"));
-            controllers.getRootController().setTtile("Students");
-            StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
+            getController(RootController.class).setTtile("Students");//controllers.getRootController().setTtile("Students");
+            StudentsController sc = getController(StudentsController.class);//WindowsUtil.getInstance().getControllers().studentsController();
             loader.setController(sc);
 
             AnchorPane overviewPage = (AnchorPane) loader.load();
@@ -99,8 +111,8 @@ public class WindowsUtil {
         try {
             // Load the fxml file and set into the center of the main layout
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Students.fxml"));
-            controllers.getRootController().setTtile("Students");
-            StudentsController sc = WindowsUtil.getInstance().getControllers().studentsController();
+            getController(RootController.class).setTtile("Students");//controllers.getRootController().setTtile("Students");
+            StudentsController sc = getController(StudentsController.class);//WindowsUtil.getInstance().getControllers().studentsController();
             loader.setController(sc);
 
             AnchorPane overviewPage = (AnchorPane) loader.load();
@@ -133,7 +145,7 @@ public class WindowsUtil {
 
     public StudentDto studentSelector() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/AutoCompleteSelector.fxml"));
-        StudentSelectorController controller = controllers.getStudentSelector();
+        StudentSelectorController controller = getController(StudentSelectorController.class);//controllers.getStudentSelector();
         loader.setController(controller);
         AnchorPane page = null;
         try {
@@ -160,7 +172,7 @@ public class WindowsUtil {
 
     public FamilyDto familySelector() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/AutoCompleteSelector.fxml"));
-        FamilySelectorController controller = controllers.getFamilySelector();
+        FamilySelectorController controller = getController(FamilySelectorController.class);//controllers.getFamilySelector();
         loader.setController(controller);
         AnchorPane page = null;
         try {
@@ -187,7 +199,7 @@ public class WindowsUtil {
 
     public void familyForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilyForm.fxml"));
-        FamilyDialogController controller = controllers.getFamilyDialogController();
+        FamilyDialogController controller = getController(FamilyDialogController.class);//controllers.getFamilyDialogController();
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
@@ -205,7 +217,7 @@ public class WindowsUtil {
 
     public void institutionsForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/InstitutionForm.fxml"));
-        InstitutionController controller = controllers.getInstitutionController();
+        InstitutionController controller = getController(InstitutionController.class);//controllers.getInstitutionController();
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
@@ -222,40 +234,7 @@ public class WindowsUtil {
         dialogStage.showAndWait();
     }
 
-    public class Controllers {
-        private RootController rootController;
-
-        public void setRootController(RootController rootController) {
-            this.rootController = rootController;
-        }
-
-        public RootController getRootController() {
-            return rootController;
-        }
-
-        public InstitutionController getInstitutionController() {
-            return applicationContext.getBean(InstitutionController.class);
-        }
-
-        public StudentsController studentsController() {
-            return applicationContext.getBean(StudentsController.class);
-        }
-
-        public FamilyDialogController getFamilyDialogController() {
-            return applicationContext.getBean(FamilyDialogController.class);
-        }
-
-        public FamilySelectorController getFamilySelector() {
-            return applicationContext.getBean(FamilySelectorController.class);
-        }
-
-        public SponsorsController sponsorsController() {
-            return applicationContext.getBean(SponsorsController.class);
-        }
-
-        public StudentSelectorController getStudentSelector() {
-            return applicationContext.getBean(StudentSelectorController.class);
-        }
+    private <T> T getController(Class<T> controller) {
+        return applicationContext.getBean(controller);
     }
-
 }

@@ -1,3 +1,4 @@
+search forms
 students profile
 family history/profile
 add jpa version
@@ -17,8 +18,8 @@ done - financial support fields - see codes in spreadsheet from kate
 done - replace calendar with fx 8
 
 ----------------------------------
-
-school should be mandatory on education on if it is not gap year. 
+click save to cause validation errors -> select another sponsor/student -> the validation errors should clear
+need to be tested - school should be mandatory on education only if it is not gap year.
 students details:
 from family tab link to student (table at the bottom)
 Rename buttons to new/delete student

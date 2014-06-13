@@ -18,13 +18,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.apache.commons.lang.StringUtils;
 import org.controlsfx.dialog.Dialogs;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -217,20 +217,19 @@ public class FamilyDialogController {
 	 * @return true if the input is valid
 	 */
 	private boolean isInputValid(FamilyDto dto) {
-        String validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getFields());
 
-        if(StringUtils.isNotBlank(validation)) {
+        if(validation.size() > 0) {
             Dialogs.create()
                     .owner( dialogStage)
                     .title("Invalid Fields")
                     .masthead("Please correct invalid fields")
-                    .message(validation)
+                    .message(FormValidator.reduce(validation))
                     .showError();
             return false;
         } else {
             return true;
         }
-
 	}
 
     private Map<String, Node> getFields() {

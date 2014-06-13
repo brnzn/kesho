@@ -9,10 +9,7 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.service.StudentService;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
-import com.kesho.datamart.ui.util.SystemEventListener;
-import com.kesho.datamart.ui.util.TabButton;
 import com.kesho.datamart.ui.util.Util;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,13 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -244,10 +239,10 @@ public class PaymentArrangementController {
     private void save() {
         PaymentArrangementDto dto = buildDto();
 
-        String validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getFields());
 
-        if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", validation);
+        if(validation.size() > 0) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", FormValidator.reduce(validation));
         } else {
             sponsorsRepository.save(dto);
             refreshTable();

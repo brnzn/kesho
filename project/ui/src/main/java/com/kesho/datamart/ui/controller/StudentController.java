@@ -18,12 +18,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //TODO: After New and Update need to refresh table, but leave form as is
@@ -274,7 +274,7 @@ public class StudentController implements FormActionListener {
     private String getFinancialSupportStatusDetails() {
         return FinancialSupportStatus.OTHER == financialSupportStatus.getSelectionModel().getSelectedItem() ?
                otherFinancialSupportStatusDetails.getText() :
-               financialSupportStatusDetails.getSelectionModel() != null ?
+               financialSupportStatusDetails.getSelectionModel().getSelectedItem() != null ?
                        financialSupportStatusDetails.getSelectionModel().getSelectedItem().name() : null;
 
     }
@@ -305,9 +305,10 @@ public class StudentController implements FormActionListener {
     }
 
     private boolean isInputValid(StudentDto dto) {
-        String validation = FormValidator.validate(dto, getFields());
-        if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Student details", validation);
+        List<String> validation = FormValidator.validate(dto, getFields());
+
+        if(validation.size() > 0) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Student details", FormValidator.reduce(validation));
             return false;
         } else {
             return true;

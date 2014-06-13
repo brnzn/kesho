@@ -20,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
@@ -124,22 +123,33 @@ public class EducationDetailsController {
     }
 
     private boolean isInputValid(EducationDto dto) {
-        String validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getFields());
 
-        //if()
+        institutions.setEffect(null);
+        if(institutions.getSelectionModel().getSelectedItem() == null) {
+            if (isSchoolRequired()) {
+                validation.add("School is required");
+                FormValidator.renderInvalid(institutions);
+            }
+        }
 
-        if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Education details", validation);
+
+        if(validation.size() > 0) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Education details", FormValidator.reduce(validation));
             return false;
         } else {
             return true;
         }
+    }
+
+    private boolean isSchoolRequired() {
+        EducationStatus status = educationalStatus.getSelectionModel().getSelectedItem();
+        return EducationStatus.GapAfterTertiary != status && EducationStatus.GapSchoolLeaver != status;
 
     }
 
     private Map<String, Node> getFields() {
         if(validationFields.isEmpty()) {
-            validationFields.put("institution", institutions);
             validationFields.put("date", startDate);
             validationFields.put("year", educationYear);
             validationFields.put("course", course);

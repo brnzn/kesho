@@ -3,7 +3,6 @@ package com.kesho.datamart.ui.controller;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
-import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.SponsorDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
@@ -15,13 +14,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -114,10 +112,10 @@ public class SponsorController {
     private void save() {
         SponsorDto dto = buildDto();
 
-        String validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getFields());
 
-        if(StringUtils.isNotBlank(validation)) {
-            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", validation);
+        if(validation.size() > 0) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", FormValidator.reduce(validation));
         } else {
             dto = sponsorsRepository.save(dto);
             selected.bind(parentController.getSelectedProperty());
