@@ -41,7 +41,7 @@ import java.util.Map;
  * Time: 7:32 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PaymentArrangementController {
+public class PaymentArrangementController extends AbstractChildController<SponsorDto>{
     @Inject
     private SponsorsRepository sponsorsRepository;
     @Inject
@@ -85,13 +85,31 @@ public class PaymentArrangementController {
     @FXML
     private Button deleteButton;
 
-    private SimpleObjectProperty<PaymentArrangementDto> selected = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<SponsorDto> selectedSponsor = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<PaymentArrangementDto> selectedPayment = new SimpleObjectProperty<>();
+//    private SimpleObjectProperty<SponsorDto> selectedSponsor = new SimpleObjectProperty<>();
 
     private Map<String, Node> validationFields = new HashMap<>();
 
     public PaymentArrangementController() {
         WindowsUtil.getInstance().autowire(this);
+    }
+
+    @Override
+    public Map<String, Node> getValidateableFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("startDate", startDate);
+            validationFields.put("endDate", endDate);
+            validationFields.put("type", financialArrangement);
+            validationFields.put("amount", totalAllocated);
+            validationFields.put("studentId", student);
+        }
+
+        return validationFields;
+    }
+
+    @Override
+    public void refresh(SponsorDto dto) {
+        refreshTable();
     }
 
     @FXML
@@ -105,22 +123,21 @@ public class PaymentArrangementController {
         if(dto != null) {
             student.setUserData(dto);
             student.setText(dto.getFirstName());
-//            selectedStudent.getSelectedItem().setFamily(dto);
         }
     }
 
     @FXML
     private void initialize() {
-        selectedSponsor.bind(parentController.getSelectedProperty());
-        selectedSponsor.addListener(new ChangeListener<SponsorDto>() {
-            @Override
-            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
-                refreshTable();
-            }
-        });
+//        selectedSponsor.bind(parentController.getSelectedProperty());
+//        selectedSponsor.addListener(new ChangeListener<SponsorDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
+//                refreshTable();
+//            }
+//        });
 
 
-        selected.addListener(new ChangeListener<PaymentArrangementDto>() {
+        selectedPayment.addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
             public void changed(ObservableValue<? extends PaymentArrangementDto> observableValue, PaymentArrangementDto dto1, PaymentArrangementDto dto2) {
                 saveButton.setDisable(dto2 == null);
@@ -202,7 +219,7 @@ public class PaymentArrangementController {
     @FXML
     private void delete () {
         if(WindowsUtil.getInstance().showWarningDialog("Delete Financial Arrangement", "Are you sure you want to delete the selected Financial Arrangement row?", null)) {
-            sponsorsRepository.deletePaymentArrangement(selected.get().getId());
+            sponsorsRepository.deletePaymentArrangement(selectedPayment.get().getId());
             refreshTable();
         }
     }
@@ -219,7 +236,7 @@ public class PaymentArrangementController {
     }
 
     private void initializeForm(PaymentArrangementDto dto) {
-        selected.set(dto);
+        selectedPayment.set(dto);
         if(dto == null) {
             clearForm();
             return;
@@ -239,7 +256,7 @@ public class PaymentArrangementController {
     private void save() {
         PaymentArrangementDto dto = buildDto();
 
-        List<String> validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", FormValidator.reduce(validation));
@@ -252,6 +269,7 @@ public class PaymentArrangementController {
     private PaymentArrangementDto buildDto() {
         PaymentArrangementDto dto = new PaymentArrangementDto();
 
+        dto.setId(selectedPayment.get().getId());
         dto.setEndDate(Util.toJodaDate(endDate.getValue()));
 
         dto.setStartDate(Util.toJodaDate(startDate.getValue()));
@@ -266,7 +284,7 @@ public class PaymentArrangementController {
             dto.setStudentId(((StudentDto)student.getUserData()).getId());
         }
 
-        dto.setSponsorId(selectedSponsor.get().getId());
+        dto.setSponsorId(selected.get().getId());
 
         return dto;
     }
@@ -274,8 +292,8 @@ public class PaymentArrangementController {
     void refreshTable() {
 //        if (paymentArrangementTab.isSelected()) {
             tableModel.clear();
-            if(selectedSponsor.get() != null) {
-                List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selectedSponsor.get().getId());
+            if(selected.get() != null) {
+                List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selected.get().getId());
                 tableModel.addAll(dtos);
                 int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
                 paymentArrangementTable.setItems(null);
@@ -285,18 +303,6 @@ public class PaymentArrangementController {
                 paymentArrangementTable.getSelectionModel().select(selectedIndex);
             }
  //       }
-    }
-
-    private Map<String, Node> getFields() {
-        if(validationFields.isEmpty()) {
-            validationFields.put("startDate", startDate);
-            validationFields.put("endDate", endDate);
-            validationFields.put("type", financialArrangement);
-            validationFields.put("amount", totalAllocated);
-            validationFields.put("studentId", student);
-        }
-
-        return validationFields;
     }
 
 }

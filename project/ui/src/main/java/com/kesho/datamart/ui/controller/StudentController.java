@@ -34,7 +34,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StudentController implements FormActionListener {
+public class StudentController extends AbstractChildController<StudentDto> implements FormActionListener {
     @Autowired
     private StudentsRepository studentsRepository;
 
@@ -89,7 +89,8 @@ public class StudentController implements FormActionListener {
     @FXML
     private Button saveButton;
 
-    private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
+
+    private Tab studentDetailsTab;
 
     @Inject
     private StudentsController parentController;
@@ -101,6 +102,12 @@ public class StudentController implements FormActionListener {
 
     public StudentController() {
         WindowsUtil.getInstance().autowire(this);
+    }
+
+
+    @Override
+    public void refresh(StudentDto dto) {
+        itemSelected(dto);
     }
 
     @FXML
@@ -150,22 +157,26 @@ public class StudentController implements FormActionListener {
     @Override
     public void newFired() {
         resetForm();
+        selected.unbind();
         selected.set(new StudentDto());
     }
 
-    void itemSelected(StudentDto student) {
+    private  void itemSelected(StudentDto student) {
         if(student == null) {
             resetForm();
             return;
         }
 
-        selected.setValue(student);
-
         startDate.valueProperty().set(Util.toJavaDate(student.getStartDate()));
 
         firstName.setText(student.getFirstName());
 
-        family.setText(student.getFamily().getFamilyName());
+        if(student.getFamily() != null) {
+            family.setText(student.getFamily().getFamilyName());
+        } else {
+            family.setText(null);
+        }
+
         family.setUserData(student.getFamily());
 
         if (Gender.F.equals(student.getGender())) {
@@ -238,7 +249,9 @@ public class StudentController implements FormActionListener {
     }
 
     private StudentDto buildDto() {
-        StudentDto dto = selected.get();
+        StudentDto dto = new StudentDto();
+        dto.withId(selected.get().getId());
+
         dto.withName(firstName.getText())
                 .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())
@@ -254,19 +267,10 @@ public class StudentController implements FormActionListener {
                 .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
                 .withGender((Gender) gender.getSelectedToggle().getUserData())
-                .withStartDate(Util.toJodaDate(startDate.getValue()));
-
-        if (StringUtils.isNotBlank(shortfall.getText())) {
-            dto.withShortfall(Integer.valueOf(shortfall.getText()));
-        }
-
-        if (StringUtils.isNotBlank(alumniNumber.getText())) {
-            dto.withAlumniNumber(Integer.valueOf(alumniNumber.getText()));
-        }
-
-        if (StringUtils.isNotBlank(yearOfBirth.getText())) {
-            dto.withYearOfBirth(Integer.valueOf(yearOfBirth.getText()));
-        }
+                .withStartDate(Util.toJodaDate(startDate.getValue()))
+                .withShortfall(Util.safeToIntegerValue(shortfall.getText(), null))
+                .withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
+                .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null));
 
         return dto;
     }
@@ -305,7 +309,7 @@ public class StudentController implements FormActionListener {
     }
 
     private boolean isInputValid(StudentDto dto) {
-        List<String> validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Student details", FormValidator.reduce(validation));
@@ -316,7 +320,7 @@ public class StudentController implements FormActionListener {
 
     }
 
-    private Map<String, Node> getFields() {
+    public Map<String, Node> getValidateableFields() {
 
         if(validationFields.isEmpty()) {
             validationFields.put("firstName", firstName);

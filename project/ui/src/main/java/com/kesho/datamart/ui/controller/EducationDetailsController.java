@@ -4,6 +4,7 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.InstitutionRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
@@ -35,7 +36,7 @@ import java.util.Map;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class EducationDetailsController {
+public class EducationDetailsController extends AbstractChildController<StudentDto> {
     @FXML
     private DatePicker startDate;
     @FXML
@@ -81,14 +82,70 @@ public class EducationDetailsController {
     @Inject
     private StudentsController parentController;
 
-    private SimpleObjectProperty<EducationDto> selected = new SimpleObjectProperty<>();
+    private Tab educationTab;
+
+
+    private SimpleObjectProperty<EducationDto> selectedEducation = new SimpleObjectProperty<>();
+
     private Map<String, Node> validationFields = new HashMap<>();
 
     public EducationDetailsController() {
         WindowsUtil.getInstance().autowire(this);
     }
 
-    void refreshEducationTable() {
+    @Override
+    public void refresh(StudentDto dto) {
+        loadInstitutions();
+        refreshEducationTable();
+    }
+
+    public Map<String, Node> getValidateableFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("date", startDate);
+            validationFields.put("year", educationYear);
+            validationFields.put("course", course);
+            validationFields.put("educationalStatus", educationalStatus);
+        }
+
+        return validationFields;
+    }
+
+
+//    @Override
+//    public void setSelectedProperty(SimpleObjectProperty<StudentDto> selectedProperty) {
+//        this.selectedStudent = selectedProperty;
+//
+//        selectedStudent.addListener(new ChangeListener<StudentDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
+//                educationTab.disableProperty().set(dto2 == null);
+//
+//                if (educationTab.isSelected()) {
+//                    loadInstitutions();
+//                    refreshEducationTable();
+//                }
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void setTab(Tab educationTab) {
+//        this.educationTab = educationTab;
+//
+//        educationTab.disableProperty().set(true);
+//
+//        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
+//            @Override
+//            public void handle(javafx.event.Event event) {
+//                if (educationTab.isSelected()) {
+//                    loadInstitutions();
+//                    refreshEducationTable();
+//                }
+//            }
+//        });
+//    }
+
+    private void refreshEducationTable() {
         educationModel.clear();
         if(parentController.getSelectedItem() != null) {
             List<EducationDto> dtos = studentsRepository.getEducationHistory(parentController.getSelectedItem().getId());
@@ -105,7 +162,9 @@ public class EducationDetailsController {
 
     @FXML
     private void save() {
-        EducationDto dto = selected.get();
+        EducationDto dto = new EducationDto();
+        dto.withId(selectedEducation.get().getId());
+
         dto.withStudentId(parentController.getSelectedItem().getId()).
             withYear(educationYear.getText())
             .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
@@ -123,7 +182,7 @@ public class EducationDetailsController {
     }
 
     private boolean isInputValid(EducationDto dto) {
-        List<String> validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
         institutions.setEffect(null);
         if(institutions.getSelectionModel().getSelectedItem() == null) {
@@ -148,18 +207,7 @@ public class EducationDetailsController {
 
     }
 
-    private Map<String, Node> getFields() {
-        if(validationFields.isEmpty()) {
-            validationFields.put("date", startDate);
-            validationFields.put("year", educationYear);
-            validationFields.put("course", course);
-            validationFields.put("educationalStatus", educationalStatus);
-        }
-
-        return validationFields;
-    }
-
-    void loadInstitutions() {
+    private void loadInstitutions() {
         institutions.getItems().clear();
         new Service<Void>() {
             @Override
@@ -199,7 +247,7 @@ public class EducationDetailsController {
      */
     @FXML
     private void initialize() {
-        selected.addListener(new ChangeListener<EducationDto>() {
+        selectedEducation.addListener(new ChangeListener<EducationDto>() {
             @Override
             public void changed(ObservableValue<? extends EducationDto> observableValue, EducationDto dto1, EducationDto dto2) {
                 saveButton.setDisable(dto2 == null);
@@ -254,7 +302,7 @@ public class EducationDetailsController {
     }
 
     private void updateEducationForm(EducationDto dto) {
-        selected.set(dto);
+        selectedEducation.set(dto);
         if(dto == null) {
             resetForm();
             return;
@@ -290,7 +338,7 @@ public class EducationDetailsController {
     @FXML
     private void newFired() {
         resetForm();
-        selected.set(new EducationDto());
+        selectedEducation.set(new EducationDto());
     }
 
     @FXML
@@ -300,4 +348,5 @@ public class EducationDetailsController {
             refreshEducationTable();
         }
     }
+
 }

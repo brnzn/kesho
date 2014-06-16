@@ -29,7 +29,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SponsorController {
+public class SponsorController extends AbstractChildController<SponsorDto>{
     @Autowired
     private SponsorsRepository sponsorsRepository;
 
@@ -41,12 +41,6 @@ public class SponsorController {
     private DatePicker startDate;
     @FXML
     private DatePicker endDate;
-//    @FXML
-//    private HBox startDateBox;
-//    private final FXCalendar startDateCalendar = new FXCalendar();
-//    @FXML
-//    private HBox endDateBox;
-//    private final FXCalendar endDateCalendar = new FXCalendar();
     @FXML
     private ToggleGroup active;
     @FXML
@@ -73,13 +67,12 @@ public class SponsorController {
     private ComboBox<FoundUs> howFoundUs;
     @FXML
     private ComboBox<LevelOfParticipation> participationLevel;
-//    @FXML
-//    private Tab sponsorDetailsTab;
+
     @FXML
     private Button saveButton;
 
     private Map<String, Node> validationFields = new HashMap<>();
-    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
+//    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
 
     @Inject
     private SponsorsController parentController;
@@ -88,17 +81,34 @@ public class SponsorController {
         WindowsUtil.getInstance().autowire(this);
     }
 
+    @Override
+    public Map<String, Node> getValidateableFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("name", firstName);
+            validationFields.put("surname", surname);
+        }
+
+        return validationFields;
+    }
+
+    @Override
+    public void refresh(SponsorDto dto) {
+        initializeForm();
+        saveButton.setDisable(dto == null);
+    }
+
+
     @FXML
     private void initialize() {
-        selected.bind(parentController.getSelectedProperty());
+//        selected.bind(parentController.getSelectedProperty());
 
-        selected.addListener(new ChangeListener<SponsorDto>() {
-            @Override
-            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
-                initializeForm();
-                saveButton.setDisable(dto1 == null);
-            }
-        });
+//        selected.addListener(new ChangeListener<SponsorDto>() {
+//            @Override
+//            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
+//                initializeForm();
+//                saveButton.setDisable(dto1 == null);
+//            }
+//        });
 
         surname.setUserData(null);
 
@@ -112,19 +122,20 @@ public class SponsorController {
     private void save() {
         SponsorDto dto = buildDto();
 
-        List<String> validation = FormValidator.validate(dto, getFields());
+        List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", FormValidator.reduce(validation));
         } else {
             dto = sponsorsRepository.save(dto);
-            selected.bind(parentController.getSelectedProperty());
+//            selected.bind(parentController.getSelectedProperty());
             parentController.valueChanged();
         }
     }
 
     private SponsorDto buildDto() {
-        SponsorDto current = selected.get();
+        SponsorDto current = new SponsorDto();//selected.get();
+        current.setId(selected.get().getId());
         current.setName(firstName.getText());
         current.setSurname(surname.getText());
         current.setStartDate(Util.toJodaDate(startDate.getValue()));
@@ -208,15 +219,6 @@ public class SponsorController {
 
     void deleteFired(Long id) {
         resetForm();
-    }
-
-    private Map<String, Node> getFields() {
-        if(validationFields.isEmpty()) {
-            validationFields.put("name", firstName);
-            validationFields.put("surname", surname);
-        }
-
-        return validationFields;
     }
 
 }

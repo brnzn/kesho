@@ -100,6 +100,12 @@ public class SponsorsController {
             }
         });
 
+        sponsorController.setTab(sponsorDetailsTab);
+        sponsorController.setSelectedProperty(selected);
+
+        paymentArrangementController.setTab(paymentArrangementTab);
+        paymentArrangementController.setSelectedProperty(selected);
+
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
 
@@ -130,6 +136,8 @@ public class SponsorsController {
                 }
             }
         });
+
+
     }
 
     @FXML

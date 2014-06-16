@@ -9,6 +9,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,6 +32,14 @@ public class FormValidator {
 
     public static void renderInvalid(Node node) {
         node.setEffect(invalidEffect);
+    }
+
+    public static void clearValidation(Collection<Node> nodes) {
+        if(nodes != null) {
+            for (Node node: nodes) {
+                node.setEffect(null);
+            }
+        }
     }
 
     public static String reduce(List<String> msgs) {

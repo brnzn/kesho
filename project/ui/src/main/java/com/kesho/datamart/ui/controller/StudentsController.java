@@ -107,39 +107,14 @@ public class StudentsController implements Selectable<StudentDto> {
 
         initTabButtons();
 
-        familyTab.disableProperty().set(true);
-        educationTab.disableProperty().set(true);
+        familyDetailsController.setTab(familyTab);
+        familyDetailsController.setSelectedProperty(selected);
 
-        selected.addListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
-                familyTab.disableProperty().set(dto2 == null);
-                educationTab.disableProperty().set(dto2 == null);
+        educationDetailsController.setTab(educationTab);
+        educationDetailsController.setSelectedProperty(selected);
 
-                if (familyTab.isSelected()) {
-                    familyDetailsController.updateForm(dto2);
-                }
-            }
-        });
-
-        familyTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (familyTab.isSelected()) {
-                    familyDetailsController.updateForm(selected.get());
-                }
-            }
-        });
-
-        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-            @Override
-            public void handle(javafx.event.Event event) {
-                if (educationTab.isSelected()) {
-                    educationDetailsController.loadInstitutions();
-                    educationDetailsController.refreshEducationTable();
-                }
-            }
-        });
+        studentController.setTab(studentDetailsTab);
+        studentController.setSelectedProperty(selected);
 
     }
 
@@ -171,18 +146,6 @@ public class StudentsController implements Selectable<StudentDto> {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
                 selected.set(studentDto2);
-                studentController.itemSelected(studentDto2);
-
-                if(studentDto2 != null) {
-                    educationTab.disableProperty().set(false);
-                }
-
-                if (educationTab.isSelected()) {
-                    educationDetailsController.refreshEducationTable();
-                }
-
-                //TODO: not needed
-                WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_SELECTED);
             }
         });
     }
