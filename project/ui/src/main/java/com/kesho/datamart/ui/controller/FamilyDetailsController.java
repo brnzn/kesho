@@ -123,42 +123,6 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         numOfAdultsAtAddress.setText(Util.safeToStringValue(familyDto.getNumOfAdultsAtAddress(), null));
     }
 
-    @Override
-    public Map<String, Node> getValidateableFields() {
-        return null;
-    }
-
-//    @Override
-//    public void setSelectedProperty(SimpleObjectProperty<StudentDto> selectedProperty) {
-//        this.selected = selectedProperty;
-//
-//        selected.addListener(new ChangeListener<StudentDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
-//                familyTab.disableProperty().set(dto2 == null);
-//
-//                if (familyTab.isSelected()) {
-//                    updateForm(dto2);
-//                }
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void setTab(Tab familyTab) {
-//        this.familyTab = familyTab;
-//        familyTab.disableProperty().set(true);
-//
-//        familyTab.setOnSelectionChanged(new EventHandler<Event>() {
-//            @Override
-//            public void handle(javafx.event.Event event) {
-//                if (familyTab.isSelected()) {
-//                    updateForm(selected.get());
-//                }
-//            }
-//        });
-//    }
-
     private void loadStudents(final Long familyId) {
         Platform.runLater(new Runnable() {
             @Override

@@ -41,7 +41,7 @@ import java.util.Map;
  * Time: 7:32 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PaymentArrangementController extends AbstractChildController<SponsorDto>{
+public class PaymentArrangementController extends AbstractEditableController<SponsorDto>{
     @Inject
     private SponsorsRepository sponsorsRepository;
     @Inject
@@ -86,7 +86,6 @@ public class PaymentArrangementController extends AbstractChildController<Sponso
     private Button deleteButton;
 
     private SimpleObjectProperty<PaymentArrangementDto> selectedPayment = new SimpleObjectProperty<>();
-//    private SimpleObjectProperty<SponsorDto> selectedSponsor = new SimpleObjectProperty<>();
 
     private Map<String, Node> validationFields = new HashMap<>();
 
@@ -128,14 +127,6 @@ public class PaymentArrangementController extends AbstractChildController<Sponso
 
     @FXML
     private void initialize() {
-//        selectedSponsor.bind(parentController.getSelectedProperty());
-//        selectedSponsor.addListener(new ChangeListener<SponsorDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
-//                refreshTable();
-//            }
-//        });
-
 
         selectedPayment.addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
@@ -290,19 +281,16 @@ public class PaymentArrangementController extends AbstractChildController<Sponso
     }
 
     void refreshTable() {
-//        if (paymentArrangementTab.isSelected()) {
-            tableModel.clear();
-            if(selected.get() != null) {
-                List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selected.get().getId());
-                tableModel.addAll(dtos);
-                int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
-                paymentArrangementTable.setItems(null);
-                paymentArrangementTable.layout();
-                paymentArrangementTable.setItems(tableModel);
-                // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-                paymentArrangementTable.getSelectionModel().select(selectedIndex);
-            }
- //       }
+        tableModel.clear();
+        if(selected.get() != null) {
+            List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selected.get().getId());
+            tableModel.addAll(dtos);
+            int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
+            paymentArrangementTable.setItems(null);
+            paymentArrangementTable.layout();
+            paymentArrangementTable.setItems(tableModel);
+            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+            paymentArrangementTable.getSelectionModel().select(selectedIndex);
+        }
     }
-
 }

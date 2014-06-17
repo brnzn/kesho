@@ -58,7 +58,7 @@ public class EducationDto {
     }
 
     public String getInstitutionName() {
-        return institution.getName();
+        return institution != null ? institution.getName() : null;
     }
 
     public LocalDate getDate() {

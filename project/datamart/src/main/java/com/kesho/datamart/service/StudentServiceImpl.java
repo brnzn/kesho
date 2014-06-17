@@ -77,7 +77,10 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public EducationDto addEducationHistory(EducationDto dto) {
         EducationHistory log = educationAssembler.toLog(dto);
-        log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
+        if(dto.getInstitution() != null) {
+            log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
+        }
+
         log = educationHistoryDAO.save(log);
         return educationAssembler.toDto(log);
     }

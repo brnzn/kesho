@@ -3,6 +3,7 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.entity.EducationHistory;
+import com.kesho.datamart.entity.School;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class EducationAssembler {
                 .withSecondaryStatus1(log.getSecondaryLevel1())
                 .withSecondaryStatus2(log.getSecondaryLevel2())
                 .withStudentId(log.getStudentId())
-                .withInstitution(new InstitutionDto(log.getSchool().getId(), log.getSchool().getName()))        // TODO: don't think I need school here.
+                .withInstitution(createSchool(log))
                 .withEducationalStatus(log.getEducationStatus())
                 .withYear(log.getYear())
                 .withEducationDate(log.getStartDate())
@@ -53,5 +54,15 @@ public class EducationAssembler {
         log.setYear(dto.getYear());
         log.setComments(dto.getComments());
         return log;
+    }
+
+    private InstitutionDto createSchool(final EducationHistory log) {
+        School school = log.getSchool();
+        if(school != null) {
+            return new InstitutionDto(school.getId(), school.getName());
+        } else {
+            return null;
+        }
+
     }
 }

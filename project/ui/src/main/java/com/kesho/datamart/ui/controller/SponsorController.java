@@ -8,9 +8,6 @@ import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -29,7 +26,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SponsorController extends AbstractChildController<SponsorDto>{
+public class SponsorController extends AbstractEditableController<SponsorDto> {
     @Autowired
     private SponsorsRepository sponsorsRepository;
 
@@ -72,7 +69,6 @@ public class SponsorController extends AbstractChildController<SponsorDto>{
     private Button saveButton;
 
     private Map<String, Node> validationFields = new HashMap<>();
-//    private SimpleObjectProperty<SponsorDto> selected = new SimpleObjectProperty<>();
 
     @Inject
     private SponsorsController parentController;
@@ -100,16 +96,6 @@ public class SponsorController extends AbstractChildController<SponsorDto>{
 
     @FXML
     private void initialize() {
-//        selected.bind(parentController.getSelectedProperty());
-
-//        selected.addListener(new ChangeListener<SponsorDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto, SponsorDto dto1) {
-//                initializeForm();
-//                saveButton.setDisable(dto1 == null);
-//            }
-//        });
-
         surname.setUserData(null);
 
         Util.initializeYesNoGroup(active, anonymous);
@@ -128,13 +114,12 @@ public class SponsorController extends AbstractChildController<SponsorDto>{
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", FormValidator.reduce(validation));
         } else {
             dto = sponsorsRepository.save(dto);
-//            selected.bind(parentController.getSelectedProperty());
             parentController.valueChanged();
         }
     }
 
     private SponsorDto buildDto() {
-        SponsorDto current = new SponsorDto();//selected.get();
+        SponsorDto current = new SponsorDto();
         current.setId(selected.get().getId());
         current.setName(firstName.getText());
         current.setSurname(surname.getText());
@@ -212,8 +197,6 @@ public class SponsorController extends AbstractChildController<SponsorDto>{
 
     void newFired() {
         resetForm();
-        //Must unbind in order to set new value
-        selected.unbind();
         selected.set(new SponsorDto());
     }
 

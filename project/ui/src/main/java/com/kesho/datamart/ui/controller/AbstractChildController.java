@@ -1,16 +1,11 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.dto.StudentDto;
-import com.kesho.datamart.ui.validation.FormValidator;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Tab;
-
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,27 +15,19 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractChildController<T> implements ChildController<T> {
-    protected SimpleObjectProperty<T> selected = new SimpleObjectProperty<>();
-
-    private Tab tab;
-
+    protected SimpleObjectProperty<T> selected;
+    protected Tab tab;
     public abstract void refresh(T dto);
-    public abstract Map<String, Node> getValidateableFields();
 
 
     @Override
     public void setSelectedProperty(SimpleObjectProperty<T> selectedProperty) {
-        this.selected.bind(selectedProperty);
-        //this.selected = selectedProperty;
+        this.selected = selectedProperty;
 
         selected.addListener(new ChangeListener<T>() {
             @Override
             public void changed(ObservableValue<? extends T> observableValue, T dto1, T dto2) {
-                tab.disableProperty().set(dto2 == null);
-                if (tab.isSelected()) {
-                    clearFormValidations(getValidateableFields());
-                    refresh(dto2);
-                }
+                selectedChanged(dto2);
             }
         });
     }
@@ -60,9 +47,10 @@ public abstract class AbstractChildController<T> implements ChildController<T> {
         });
     }
 
-    protected void clearFormValidations(Map<String, Node> fields) {
-        if(fields != null) {
-            FormValidator.clearValidation(fields.values());
+    protected void selectedChanged(T dto) {
+        tab.disableProperty().set(dto == null);
+        if (tab.isSelected()) {
+            refresh(dto);
         }
     }
 }

@@ -36,7 +36,7 @@ import java.util.Map;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class EducationDetailsController extends AbstractChildController<StudentDto> {
+public class EducationDetailsController extends AbstractEditableController<StudentDto> {
     @FXML
     private DatePicker startDate;
     @FXML
@@ -78,9 +78,6 @@ public class EducationDetailsController extends AbstractChildController<StudentD
     private InstitutionRepository institutionRepository;
     @Inject
     private StudentsRepository studentsRepository;
-
-    @Inject
-    private StudentsController parentController;
 
     private Tab educationTab;
 
@@ -147,8 +144,8 @@ public class EducationDetailsController extends AbstractChildController<StudentD
 
     private void refreshEducationTable() {
         educationModel.clear();
-        if(parentController.getSelectedItem() != null) {
-            List<EducationDto> dtos = studentsRepository.getEducationHistory(parentController.getSelectedItem().getId());
+        if(selected.get() != null) {
+            List<EducationDto> dtos = studentsRepository.getEducationHistory(selected.get().getId());
             educationModel.addAll(dtos);
             int selectedIndex = educationTable.getSelectionModel().getSelectedIndex();
             educationTable.setItems(null);
@@ -165,7 +162,7 @@ public class EducationDetailsController extends AbstractChildController<StudentD
         EducationDto dto = new EducationDto();
         dto.withId(selectedEducation.get().getId());
 
-        dto.withStudentId(parentController.getSelectedItem().getId()).
+        dto.withStudentId(selected.get().getId()).
             withYear(educationYear.getText())
             .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
             .withCourse(course.getText())

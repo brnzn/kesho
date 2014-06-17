@@ -16,9 +16,8 @@ done- gender - radio button
 done- cannot delete student, so no need for delete button
 done - financial support fields - see codes in spreadsheet from kate
 done - replace calendar with fx 8
-
+done - click save to cause validation errors -> select another sponsor/student -> the validation errors should clear
 ----------------------------------
-click save to cause validation errors -> select another sponsor/student -> the validation errors should clear
 need to be tested - school should be mandatory on education only if it is not gap year.
 students details:
 from family tab link to student (table at the bottom)

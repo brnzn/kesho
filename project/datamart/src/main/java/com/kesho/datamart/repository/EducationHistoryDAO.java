@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Long>{
 
-    @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.studentId = :studentId")
+    @Query("select eh from EducationHistory eh left join fetch eh.school where eh.studentId = :studentId")
     List<EducationHistory> findByStudentId(@Param("studentId") Long studentId);
 
     //@Query("select eh from EducationHistory eh where eh.studentId = :studentId and eh.startDate in(select max(eh1.startDate) from EducationHistory eh1 where eh1.studentId = :studentId)")

@@ -34,7 +34,7 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StudentController extends AbstractChildController<StudentDto> implements FormActionListener {
+public class StudentController extends AbstractEditableController<StudentDto> implements FormActionListener {
     @Autowired
     private StudentsRepository studentsRepository;
 
@@ -107,6 +107,7 @@ public class StudentController extends AbstractChildController<StudentDto> imple
 
     @Override
     public void refresh(StudentDto dto) {
+        saveButton.setDisable(dto == null);
         itemSelected(dto);
     }
 
@@ -114,14 +115,6 @@ public class StudentController extends AbstractChildController<StudentDto> imple
     private void initialize() {
         Util.decorateNumericInput(yearOfBirth, shortfall, alumniNumber);
 
-        selected.addListener(new ChangeListener<StudentDto>() {
-            @Override
-            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto studentDto, StudentDto studentDto2) {
-                saveButton.setDisable(studentDto2 == null);
-            }
-        });
-
-        selected.setValue(null);
         family.setUserData(null);
 
         Util.initializeYesNoGroup(hasDisability, financialSupport, topupNeeded, enrichmentSupport);
