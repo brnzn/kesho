@@ -58,6 +58,8 @@ class StudentWriter extends DataWriter {
       "WITHDRAWN"
     } else if (value.trim().equalsIgnoreCase("Gap Year")) {
       "GAP_YEAR"
+    } else if(value.trim.equalsIgnoreCase("Other")) {
+      "OTHER"
     } else if (value.trim().length() > 0) {
       throw new IllegalArgumentException(value + " not supported");
     } else {
@@ -103,7 +105,7 @@ class StudentWriter extends DataWriter {
     } else if (value.trim().equalsIgnoreCase("Parents Decision")) {
       "PARENTS_DECISION"
     } else if (value.trim().length() > 0) {
-      throw new IllegalArgumentException(value + " not supported");
+      value.trim
     } else {
       null
     }

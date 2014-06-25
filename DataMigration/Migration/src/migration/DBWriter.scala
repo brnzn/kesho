@@ -16,7 +16,7 @@ class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
       }
     } catch {
       case e: IllegalArgumentException => {
-        println("skipping empty row...")
+        e.printStackTrace();
       }
       case e: Throwable => {
         println("************ Failed to insert row:" + line + "**************" + e.getMessage())

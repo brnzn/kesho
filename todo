@@ -1,3 +1,4 @@
+http://fxexperience.com/controlsfx/features/#decorationvalidation
 search forms
 students profile
 family history/profile
@@ -10,6 +11,9 @@ sponsors arrangment: looks like the data is a mix of commitment + arrangment. In
 what is sponsor_default_account, sponsor_default_currency, sponsor_default_payment_method, sponsor_gift_aid_status, 
 sponsor_arrangements::arrangement_payment_start_date vs start_commitment vs sponsors_sponsor_commitments::commitment_start_date, sponsor_arrangements::arrangement_payment_end_date vs sponsors_sponsor_commitments::commitment_end_date?
 should we insert education without date - currently default to 01/01/1900
+
+student history: no student T10125,10/19/2008,Employee
+
 ---------------------
 done - add Receiving Financial Support?
 done- gender - radio button
@@ -17,12 +21,14 @@ done- cannot delete student, so no need for delete button
 done - financial support fields - see codes in spreadsheet from kate
 done - replace calendar with fx 8
 done - click save to cause validation errors -> select another sponsor/student -> the validation errors should clear
+done - school should be mandatory on education only if it is not gap year.
+done - Rename buttons to new student
+done - should be 3cm wider
+done - grey out fields on family tab
+
 ----------------------------------
-need to be tested - school should be mandatory on education only if it is not gap year.
 students details:
 from family tab link to student (table at the bottom)
-Rename buttons to new/delete student
-grey out fields on family tab
 Add new input 'Total soponsorship required (anual)' on sponsorship section
 add sponsor table to student details + links to sponsor
 	Name/Surname, end of commitment (select where start dates is latest), anonymity, if not active show line in grey
@@ -63,7 +69,6 @@ Level of Support - correct spelling of - 'One off donation'
 Kesho menu - student/ sponsor buttons instead of menu
 System - rename to Data
 Manage Institution rename to Schools
-window should be 3cm wider
 Enable export to xls
 
 After updating familiy, family details on student details are not getting refreshed until reloading the page. Should always refresh when clicking on family tab
