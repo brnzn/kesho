@@ -44,11 +44,11 @@ object Migration {
     //Source.fromFile("./src/data/educationKN.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
 //    Source.fromFile("./src/data/homeLocation.txt").getLines().foreach(line => new DBWriter(new HomeLocationWriter, line, 2).insert)
     //Source.fromFile("./src/data/dob.txt").getLines().foreach(line => new DBWriter(new DOBWriter, line, 2).insert)
-    //Source.fromFile("./src/data/studentHistory.txt").getLines().foreach(line => new DBWriter(new StudentHistoryWriter, line, 3).insert)
+    Source.fromFile("./src/data/studentHistory.txt").getLines().foreach(line => new DBWriter(new StudentHistoryWriter, line, 3).insert)
     //Source.fromFile("./src/data/studentContact.txt").getLines().foreach(line => new DBWriter(new StudentContactWriter, line, 4).insert)
     //Source.fromFile("./src/data/familyContact.txt").getLines().foreach(line => new DBWriter(new FamilyContactWriter, line, 5).insert)
 //    Source.fromFile("./src/data/familyProfile.txt").getLines().foreach(line => new DBWriter(new FamilyProfileWriter, line, 3).insert)
-    Source.fromFile("./src/data/numParents.txt").getLines().foreach(line => new DBWriter(new NumParentsWriter, line, 2).insert)
+//    Source.fromFile("./src/data/numParents.txt").getLines().foreach(line => new DBWriter(new NumParentsWriter, line, 2).insert)
 
   }
 

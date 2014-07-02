@@ -1,5 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
+import com.kesho.datamart.dto.Dto;
 import com.kesho.datamart.ui.validation.FormValidator;
 import javafx.scene.Node;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * Time: 7:57 AM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class AbstractEditableController<T> extends AbstractChildController<T> {
+public abstract class AbstractEditableController<T extends Dto> extends AbstractChildController<T> {
     public abstract Map<String, Node> getValidateableFields();
 
     @Override

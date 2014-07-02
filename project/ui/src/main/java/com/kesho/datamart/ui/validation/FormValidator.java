@@ -56,6 +56,10 @@ public class FormValidator {
     }
 
     public static List<String> validate(Object dto, Map<String, Node> targetFields) {
+        if(targetFields.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         ValidationResult validations = ValidationUtil.validateNew(dto);
 
         //targetFields.values().forEach(node -> node.setEffect(null));

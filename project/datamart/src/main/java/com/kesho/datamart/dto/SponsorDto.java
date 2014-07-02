@@ -14,7 +14,7 @@ import org.joda.time.LocalDate;
  * Time: 8:17 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SponsorDto {
+public class SponsorDto implements Dto {
     private Long id;
     private Boolean active;
     private Boolean anonymous;

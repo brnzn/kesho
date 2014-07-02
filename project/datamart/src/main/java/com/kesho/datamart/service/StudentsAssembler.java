@@ -47,7 +47,8 @@ public class StudentsAssembler {
                 .withEnrichmentSupport(student.getEnrichmentSupport())
                 .withTopupNeeded(student.isTopupNeeded())
                 .withShortfall(student.getShortfall())
-                .withAlumniNumber(student.getAlumniNumber())   ;
+                .withAlumniNumber(student.getAlumniNumber())
+                .withTotalSponsorshipRequired(student.getTotalSponsorshipRequired());
 
         return dto;
     }
@@ -75,6 +76,7 @@ public class StudentsAssembler {
         student.setAlumniNumber(dto.getAlumniNumber());
         student.setTopupNeeded(dto.isTopupNeeded());
         student.setEnrichmentSupport(dto.getEnrichmentSupport());
+        student.setTotalSponsorshipRequired(dto.getTotalSponsorshipRequired());
         return student;
     }
 }

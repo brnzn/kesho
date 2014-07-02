@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.domain.*;
+import com.kesho.datamart.domain.Gender;
+import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.FormActionListener;
@@ -10,14 +11,10 @@ import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
@@ -57,31 +54,11 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     @FXML
     private ToggleGroup hasDisability;
     @FXML
-    private ToggleGroup enrichmentSupport;
-
-    @FXML
-    private ToggleGroup financialSupport;
-
-    @FXML
     private DatePicker startDate;
-
-    @FXML
-    private ComboBox<FinancialSupportStatus> financialSupportStatus;
-    @FXML
-    private ComboBox<FinancialSupportStatusDetails> financialSupportStatusDetails;
-    @FXML
-    private TextField otherFinancialSupportStatusDetails;
-
     @FXML
     private TextField email;
     @FXML
     private TextField facebook;
-    @FXML
-    private ComboBox<LevelOfSupport> levelOfSupport;
-    @FXML
-    private ToggleGroup topupNeeded;
-    @FXML
-    private TextField shortfall;    // numeric
     @FXML
     private TextField alumniNumber; // numeric
     @FXML
@@ -89,8 +66,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     @FXML
     private Button saveButton;
 
-
-    private Tab studentDetailsTab;
 
     @Inject
     private StudentsController parentController;
@@ -113,38 +88,16 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
     @FXML
     private void initialize() {
-        Util.decorateNumericInput(yearOfBirth, shortfall, alumniNumber);
+        Util.decorateNumericInput(yearOfBirth, alumniNumber);
 
         family.setUserData(null);
 
-        Util.initializeYesNoGroup(hasDisability, financialSupport, topupNeeded, enrichmentSupport);
+        Util.initializeYesNoGroup(hasDisability);
 
         gender.getToggles().get(0).setUserData(Gender.F);
         gender.getToggles().get(1).setUserData(Gender.M);
 
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
-        Util.initializeComboBoxValues(financialSupportStatus, EnumSet.allOf(FinancialSupportStatus.class));
-
-        financialSupportStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FinancialSupportStatus>() {
-            @Override
-            public void changed(ObservableValue<? extends FinancialSupportStatus> observableValue, FinancialSupportStatus s, FinancialSupportStatus s2) {
-                financialSupportStatusDetails.getItems().clear();
-                if(s2 != null) {
-                    if(FinancialSupportStatus.OTHER != s2) {
-                        financialSupportStatusDetails.getItems().addAll(s2.getChildren());
-                        financialSupportStatusDetails.setVisible(true);
-                        otherFinancialSupportStatusDetails.setVisible(false);
-                        otherFinancialSupportStatusDetails.clear();
-                    } else {
-                        financialSupportStatusDetails.setVisible(false);
-                        financialSupportStatusDetails.getSelectionModel().clearSelection();
-                        otherFinancialSupportStatusDetails.setVisible(true);
-                    }
-                }
-            }
-        });
-
-        Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
     }
 
     @Override
@@ -184,24 +137,9 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         homeLocation.setText(student.getHomeLocation());
 
         Util.setYesNoToggleState(hasDisability, student.hasDisability());
-        Util.setYesNoToggleState(financialSupport, student.hasFinancialSupport());
-        Util.setYesNoToggleState(enrichmentSupport, student.getEnrichmentSupport());
-        Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
-
-
-        financialSupportStatus.getSelectionModel().select(student.getFinancialSupportStatus());
-        if(student.getFinancialSupportStatus() != null && FinancialSupportStatus.OTHER != student.getFinancialSupportStatus() && student.getFinancialSupportStatusDetails() != null) {
-            financialSupportStatusDetails.getSelectionModel().select(FinancialSupportStatusDetails.valueOf(student.getFinancialSupportStatusDetails()));
-        } else if (FinancialSupportStatus.OTHER == student.getFinancialSupportStatus()){
-            otherFinancialSupportStatusDetails.setText(student.getFinancialSupportStatusDetails());
-        }
 
         email.setText(student.getEmail());
         facebook.setText(student.getFacebookAddress());
-
-        levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
-
-        shortfall.setText(Util.safeToStringValue(student.getShortfall(), null));
 
         alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
 
@@ -242,39 +180,26 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     }
 
     private StudentDto buildDto() {
-        StudentDto dto = new StudentDto();
-        dto.withId(selected.get().getId());
+        StudentDto dto = selected.get();//new StudentDto();
+        //dto.withId(selected.get().getId());
 
         dto.withName(firstName.getText())
                 .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())
                 .withHomeLocation(homeLocation.getText())
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
-                .withEnrichmentSupport((Boolean) enrichmentSupport.getSelectedToggle().getUserData())
-                .withFinancialSupport((Boolean) financialSupport.getSelectedToggle().getUserData())
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
-                .withTopupNeeded((Boolean) topupNeeded.getSelectedToggle().getUserData())
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
-                .withFinancialSupportStatus(financialSupportStatus.getSelectionModel().getSelectedItem())
-                .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
-                .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
                 .withGender((Gender) gender.getSelectedToggle().getUserData())
                 .withStartDate(Util.toJodaDate(startDate.getValue()))
-                .withShortfall(Util.safeToIntegerValue(shortfall.getText(), null))
                 .withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
-                .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null));
+                .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
+        ;
 
         return dto;
     }
 
-    private String getFinancialSupportStatusDetails() {
-        return FinancialSupportStatus.OTHER == financialSupportStatus.getSelectionModel().getSelectedItem() ?
-               otherFinancialSupportStatusDetails.getText() :
-               financialSupportStatusDetails.getSelectionModel().getSelectedItem() != null ?
-                       financialSupportStatusDetails.getSelectionModel().getSelectedItem().name() : null;
-
-    }
     private void resetForm() {
         startDate.valueProperty().setValue(null);
         firstName.clear();
@@ -287,16 +212,8 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         homeLocation.clear();
 
         hasDisability.getToggles().get(0).setSelected(true);
-        enrichmentSupport.getToggles().get(0).setSelected(true);
-        financialSupport.getToggles().get(0).setSelected(true);
-
-        topupNeeded.getToggles().get(0).setSelected(true);
-
-        financialSupportStatus.getSelectionModel().clearSelection();
         email.clear();
         facebook.clear();
-        levelOfSupport.getSelectionModel().clearSelection();
-        shortfall.clear();
         alumniNumber.clear();
         leaverStatus.getSelectionModel().clearSelection();
     }

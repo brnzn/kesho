@@ -184,7 +184,7 @@ public class StudentServiceIT {
                 .withYearOfBirth(2000)
                 .withEmail("email")
                 .withFacebookAddress("fb")
-                .withLeaverStatus(LeaverStatus.ALUMNI_NO_LONGER_NEEDED)
+                .withLeaverStatus(LeaverStatus.DEPARTED_BEFORE_COMPLETE)
 //                .withSponsorStatus(FinancialSupportStatus.RECENT_SECONDARY_LEAVER)
                 .withLevelOfSupport(LevelOfSupport.ON_HOLD)
                 .withTopupNeeded(true)
@@ -207,7 +207,7 @@ public class StudentServiceIT {
         assertThat(saved.getYearOfBirth(), is(2000));
         assertThat(saved.getEmail(), is("email"));
         assertThat(saved.getFacebookAddress(), is("fb"));
-        assertThat(saved.getLeaverStatus(), is(LeaverStatus.ALUMNI_NO_LONGER_NEEDED));
+        assertThat(saved.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
 //        assertThat(saved.getFinancialSupportStatus(), is(FinancialSupportStatus.RECENT_SECONDARY_LEAVER));
         assertThat(saved.getLevelOfSupport(), is(LevelOfSupport.ON_HOLD));
         assertThat(saved.isTopupNeeded(), is(true));

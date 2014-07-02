@@ -49,7 +49,11 @@ public class StudentsController implements Selectable<StudentDto> {
     @FXML
     private StudentController studentController;
     @FXML
+    private StudentSponsorController studentSponsorController;
+    @FXML
     private Tab studentDetailsTab;
+    @FXML
+    private Tab studentSponsorTab;
 
     @FXML
     private EducationDetailsController educationDetailsController;
@@ -116,10 +120,11 @@ public class StudentsController implements Selectable<StudentDto> {
         studentController.setTab(studentDetailsTab);
         studentController.setSelectedProperty(selected);
 
-    }
+        studentSponsorController.setTab(studentSponsorTab);
+        studentSponsorController.setSelectedProperty(selected);
 
-    public void init() {
         refreshTable();
+
     }
 
     public void init(Long studentId) {
@@ -151,7 +156,7 @@ public class StudentsController implements Selectable<StudentDto> {
     }
 
     private void initPagination() {
-        Page p = getPage(0, 10);
+        Page p = getPage(0, 20); //TODO: page size should come from properties file
         if(p != null) {
             studentsModel.addAll(p.getContent());
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
@@ -161,7 +166,7 @@ public class StudentsController implements Selectable<StudentDto> {
         pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Page<StudentDto> p = getPage(newValue.intValue(), 10);
+                Page<StudentDto> p = getPage(newValue.intValue(), 20);   //TODO: page size should come from properties file
                 pagination.setPageCount(p.getTotalPages());
                 studentsModel.clear();
                 studentsModel.addAll(p.getContent());
@@ -173,6 +178,7 @@ public class StudentsController implements Selectable<StudentDto> {
         return studentsRepository.getPage(page, pageSize);
     }
 
+    @FXML
     private void refreshTable() {
         initTable();
         initPagination();

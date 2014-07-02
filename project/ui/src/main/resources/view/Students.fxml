@@ -50,6 +50,11 @@
                                                         <fx:include fx:id="familyDetails" source="../view/FamilyDetailsTab.fxml" />
                                                     </content>
                                                 </Tab>
+                                                <Tab id="studentSponsorTab" fx:id="studentSponsorTab" disable="true" text="Sponsors">
+                                                    <content>
+                                                        <fx:include fx:id="studentSponsor" source="../view/StudentSponsorDetailsTab.fxml" />
+                                                    </content>
+                                                </Tab>
                                                 <Tab text="Alumni">
                                                     <content>
                                                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
@@ -69,7 +74,7 @@
                     <items>
                         <Button fx:id="newButton" mnemonicParsing="false" text="New Student..." />
                         <Button mnemonicParsing="false" text="Filter..." />
-                        <Button mnemonicParsing="false" text="Show All" />
+                        <Button mnemonicParsing="false" onAction="#refreshTable" text="Show All" />
                     </items>
                 </ToolBar>
             </top>

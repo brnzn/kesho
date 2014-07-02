@@ -25,16 +25,17 @@ done - school should be mandatory on education only if it is not gap year.
 done - Rename buttons to new student
 done - should be 3cm wider
 done - grey out fields on family tab
+done - from family tab link to student (table at the bottom)
+done - Add new input 'Total soponsorship required (anual)' on sponsorship section
+done - Leaver status - delete option 'Sibling ...' + 'Alumni...'
+done - Move sponsorship section to new tab
+done - rename course to course name and move above comments
+done - education tab - add title to section
 
 ----------------------------------
 students details:
-from family tab link to student (table at the bottom)
-Add new input 'Total soponsorship required (anual)' on sponsorship section
 add sponsor table to student details + links to sponsor
 	Name/Surname, end of commitment (select where start dates is latest), anonymity, if not active show line in grey
-Move sponsorship section (+ sponsors table) to new tab 
-education tab - add title to section
-rename course to course name and move above comments 
 Course should be mandatory if education status is College or university
 Education start date calendar should default to 01/01/year
 When clicking New on education status, default values to prev year
@@ -54,7 +55,6 @@ Move these inputs to sponsorship section:
 start date - rename to 'Start date with Kesho' (1 right)
 Add end date field (2 right)
 Leaver status move under (3 right)
-Leaver status - delete option 'Sibling ...' + 'Alumni...'
 
 If Sponsored = yes, then disable Sponsorship status dropdown 
 Sponsored - rename to Receiveing financial support?

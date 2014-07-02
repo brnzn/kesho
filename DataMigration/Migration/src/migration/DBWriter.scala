@@ -12,7 +12,7 @@ class DBWriter(val worker: DataWriter, val line: String, val length: Int) {
     try {
       transaction {
         worker.insert(values)
-        println("Inserted " + line)
+//        println("Inserted " + line)
       }
     } catch {
       case e: IllegalArgumentException => {

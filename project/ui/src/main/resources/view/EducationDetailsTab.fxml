@@ -21,7 +21,7 @@
             <TableColumn fx:id="courseCol" prefWidth="75.0" text="Course" />
           </columns>
         </TableView>
-        <TitledPane animated="false" text="untitled">
+        <TitledPane animated="false" text="Education Details">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="276.0" prefWidth="537.9998779296875">
               <children>
@@ -30,13 +30,13 @@
                     <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Label text="Institution name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Label text="Class / Year" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <Label text="Course" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <Label text="Educational Status" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <Label text="Course Name" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Label text="Educational Status" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <TextField fx:id="educationYear" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <TextField fx:id="course" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <ComboBox fx:id="secondaryStatus1" maxWidth="-Infinity" minWidth="-1.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <ComboBox fx:id="educationalStatus" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <ComboBox fx:id="secondaryStatus2" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <TextField fx:id="course" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <ComboBox fx:id="secondaryStatus1" maxWidth="-Infinity" minWidth="-1.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="educationalStatus" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="secondaryStatus2" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <ComboBox id="institutionsCombobox" fx:id="institutions" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label text="Comments" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                     <TextArea fx:id="comments" prefHeight="67.0" prefWidth="403.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
@@ -60,10 +60,10 @@
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />

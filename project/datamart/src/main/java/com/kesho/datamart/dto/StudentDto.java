@@ -16,7 +16,7 @@ import java.util.UUID;
  *
  * @author Marco Jakob
  */
-public class StudentDto implements Comparable {
+public class StudentDto implements Comparable, Dto {
     private String uuid = UUID.randomUUID().toString();
     private Long id;
     @NotBlank(message = "Name is mandatory")
@@ -43,6 +43,7 @@ public class StudentDto implements Comparable {
     private Boolean topupNeeded;
     private Integer shortfall;
     private Integer alumniNumber;
+    private Integer totalSRequired;
     /**
 	 * Default constructor.
 	 */
@@ -51,6 +52,10 @@ public class StudentDto implements Comparable {
 
     public Long getId() {
         return id;
+    }
+
+    public Integer getTotalSponsorshipRequired() {
+        return totalSRequired;
     }
 
     public String getFirstName() {
@@ -214,6 +219,10 @@ public class StudentDto implements Comparable {
         return this;
     }
 
+    public StudentDto withTotalSponsorshipRequired(Integer amount) {
+        this.totalSRequired = amount;
+        return this;
+    }
 
     public StudentDto withFinancialSupportStatus(FinancialSupportStatus status) {
         this.financialSupportStatus = status;

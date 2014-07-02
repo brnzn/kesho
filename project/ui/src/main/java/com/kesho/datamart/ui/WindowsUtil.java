@@ -101,7 +101,6 @@ public class WindowsUtil {
             AnchorPane overviewPage = (AnchorPane) loader.load();
             rootLayout.setCenter(overviewPage);
             primaryStage.sizeToScene();
-            sc.init();
         } catch (IOException e) {
             e.printStackTrace();
         }

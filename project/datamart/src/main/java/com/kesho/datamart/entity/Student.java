@@ -86,6 +86,10 @@ public class Student {
     @Column(name = "ALUMNI_MEMBER")
     private Integer alumniNumber;
 
+    @Column(name = "TOTAL_SPONSORSHIP_REQUIRED")
+    private Integer totalSRequired;
+
+
     public Boolean getEnrichmentSupport() {
         return enrichmentSupport;
     }
@@ -118,11 +122,19 @@ public class Student {
 		this.firstName = firstName;
 	}
 
-	public void addToEducationHistory(EducationHistory educationHistory) {
+    public Integer getTotalSponsorshipRequired() {
+        return totalSRequired;
+    }
+
+    public void setTotalSponsorshipRequired(Integer totalSRequired) {
+        this.totalSRequired = totalSRequired;
+    }
+
+    //	public void addToEducationHistory(EducationHistory educationHistory) {
         //bidirectional
 //		educationHistory.setStudent(this);
-		this.educationHistory.add(educationHistory);
-	}
+//		this.educationHistory.add(educationHistory);
+//	}
 	
 	public List<EducationHistory> getEducationHistory() {
 		return Collections.unmodifiableList(educationHistory);
