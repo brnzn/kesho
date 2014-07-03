@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=C:/java/jdk1.7_u21/jre/lib/jfxrt.jar -DgroupId=com.oracle -DartifactId=javafx-runtime -Dversion=2.2.21 -Dpackaging=jar -DgeneratePom=true
