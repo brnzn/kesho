@@ -12,6 +12,27 @@
   <children>
     <VBox minWidth="601.0000999999975" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TitledPane animated="false" prefHeight="200.0" prefWidth="671.0" text="Sponsors" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <TableView fx:id="sponsorsTable" prefHeight="174.0" prefWidth="648.0" stylesheets="@../style/test_styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
+                                  <TableColumn fx:id="surnameCol" prefWidth="75.0" text="Surname" />
+                                    <TableColumn fx:id="endOfCommitCol" prefWidth="177.00003051757812" text="End Of Commitment" />
+                                    <TableColumn fx:id="anonymityCol" prefWidth="110.0" text="Anonymity" />
+                                    <TableColumn fx:id="amountCol" prefWidth="75.0" text="Amount" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
         <TitledPane animated="false" collapsible="false" text="Sponsorship" VBox.vgrow="ALWAYS">
           <content>
             <AnchorPane id="Content">

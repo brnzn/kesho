@@ -152,6 +152,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
                         if(item!=null){
                             //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
                             Hyperlink link = new Hyperlink(item);
+                            link.underlineProperty().setValue(true);
                             link.setUserData(((PaymentArrangementDto)getTableRow().getItem()).getStudentId());
                             //link.setUserData();
                             link.setOnAction(new EventHandler<ActionEvent>() {

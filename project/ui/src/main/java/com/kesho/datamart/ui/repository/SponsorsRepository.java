@@ -3,6 +3,7 @@ package com.kesho.datamart.ui.repository;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.dto.StudentSponsorDto;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface SponsorsRepository {
     void deleteSponsor(Long id);
 
     void deletePaymentArrangement(Long id);
+
+    List<StudentSponsorDto> getStudentSponsors(Long studentId);
+
+    SponsorDto findOne(Long sponsorId);
 }

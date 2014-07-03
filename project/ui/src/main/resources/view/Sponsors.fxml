@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="890.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="720.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -60,7 +60,7 @@
             <Button fx:id="newSponsorBtn" mnemonicParsing="false" onAction="#add" text="New..." />
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#delete" text="Delete" />
             <Button mnemonicParsing="false" text="Filter..." />
-            <Button mnemonicParsing="false" text="Show All" />
+            <Button mnemonicParsing="false" onAction="#refreshTable" text="Show All" />
           </items>
         </ToolBar>
       </top>

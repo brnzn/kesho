@@ -35,6 +35,7 @@ import java.util.Map;
  * Time: 5:11 PM
  * To change this template use File | Settings | File Templates.
  */
+//TODO: implement the same as students controller (selected etc)
 @Named("SponsorsController")
 public class SponsorsController {
     @FXML
@@ -69,23 +70,16 @@ public class SponsorsController {
         refreshTable();
     }
 
-    SimpleObjectProperty<SponsorDto> getSelectedProperty() {
-        return selected;
-    }
-
-//    @Override
-//    public void refresh() {
-//        if(sponsorsTable.getSortOrder().isEmpty()) {
-//            firstNameColumn.setVisible(false);
-//            firstNameColumn.setVisible(true);
-//        } else {
-//            ObservableList<TableColumn<SponsorDto, ?>> sort = sponsorsTable.getSortOrder();
-//            ObservableList<TableColumn<SponsorDto, ?>> sort1 = FXCollections.observableArrayList();
-//            sort1.addAll(sort);
-//            sponsorsTable.getSortOrder().removeAll(sort);
-//            sponsorsTable.getSortOrder().addAll(sort1);
-//        }
+//    SimpleObjectProperty<SponsorDto> getSelectedProperty() {
+//        return selected;
 //    }
+
+    public void init(Long sponsorId) {
+        initTable();
+        SponsorDto dto = sponsorsRepository.findOne(sponsorId);
+        sponsorsModel.add(dto);
+        sponsorsTable.getSelectionModel().select(dto);
+    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -106,19 +100,7 @@ public class SponsorsController {
         paymentArrangementController.setTab(paymentArrangementTab);
         paymentArrangementController.setSelectedProperty(selected);
 
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
-        familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
-
-        sponsorsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SponsorDto>() {
-            @Override
-            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto1, SponsorDto dto2) {
-                selected.set(dto2);
-                WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_SELECTED); // used by payment arrangements
-            }
-        });
-
         refreshTable();
-        firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         sponsorsTable.getSelectionModel().select(0);
 
         WindowsUtil.getInstance().getEventBus().registerListener(Event.SPONSOR_ADDED, new SystemEventListener() {
@@ -138,6 +120,23 @@ public class SponsorsController {
         });
 
 
+    }
+
+    private void initTable() {
+        sponsorsModel.clear();
+        sponsorsTable.setItems(sponsorsModel);
+
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("name"));
+        familyNameColumn.setCellValueFactory(new PropertyValueFactory<SponsorDto, String>("surname"));
+        firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
+
+        sponsorsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SponsorDto>() {
+            @Override
+            public void changed(ObservableValue<? extends SponsorDto> observableValue, SponsorDto dto1, SponsorDto dto2) {
+                selected.set(dto2);
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.SPONSOR_SELECTED); // used by payment arrangements
+            }
+        });
     }
 
     @FXML
@@ -162,7 +161,7 @@ public class SponsorsController {
     }
 
     private void initPagination() {
-        Page p = getPage(0, 10);
+        Page p = getPage(0, 20);
         if(p != null) {
             sponsorsModel.addAll(p.getContent());
             pagination.setPageCount(p.getTotalPages() > 0 ? p.getTotalPages() : 1);
@@ -172,7 +171,7 @@ public class SponsorsController {
         pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Page<SponsorDto> p = getPage(newValue.intValue(), 10);
+                Page<SponsorDto> p = getPage(newValue.intValue(), 20);
                 pagination.setPageCount(p.getTotalPages());
                 sponsorsModel.clear();
                 sponsorsModel.addAll(p.getContent());
@@ -184,10 +183,9 @@ public class SponsorsController {
         return sponsorsRepository.getPage(page, pageSize);
     }
 
+    @FXML
     private void refreshTable() {
-        sponsorsModel.clear();
-        sponsorsTable.setItems(sponsorsModel);
-
+        initTable();
         initPagination();
     }
 }

@@ -84,6 +84,26 @@ public class WindowsUtil {
             AnchorPane overviewPage = (AnchorPane) loader.load();
             rootLayout.setCenter(overviewPage);
             primaryStage.sizeToScene();
+            primaryStage.getScene().getStylesheets().add(WindowsUtil.class.getResource("/style/test_styles.css").toExternalForm());
+
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+    }
+
+    public void sponsors(Long sponsorId) {
+        try {
+            // Load the fxml file and set into the center of the main layout
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Sponsors.fxml"));
+            getController(RootController.class).setTtile("Sponsors");//controllers.getRootController().setTtile("Sponsors");
+            SponsorsController sc = getController(SponsorsController.class);
+            loader.setController(sc);//WindowsUtil.getInstance().getControllers().sponsorsController());
+
+            AnchorPane overviewPage = (AnchorPane) loader.load();
+            rootLayout.setCenter(overviewPage);
+            primaryStage.sizeToScene();
+            sc.init(sponsorId);
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded
             e.printStackTrace();

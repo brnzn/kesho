@@ -3,6 +3,7 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PageImpl;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.dto.StudentSponsorDto;
 import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.PaymentArrangementDao;
@@ -54,6 +55,16 @@ public class SponsorServiceImpl implements SponsorService {
         paymentArrangementDao.deleteBySponsorId(id);
         dao.deleteBySponsorId(id);
 
+    }
+
+    @Override
+    public List<StudentSponsorDto> getStudentSponsors(Long studentId) {
+        return dao.getStudentSponsors(studentId);
+    }
+
+    @Override
+    public SponsorDto findOne(Long sponsorId) {
+        return assembler.toDto(dao.findOne(sponsorId));
     }
 
     private Page<SponsorDto> toPageResult(final org.springframework.data.domain.Page<Sponsor> page, final Request request) {

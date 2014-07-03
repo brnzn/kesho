@@ -2,7 +2,10 @@ package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.dto.StudentSponsorDto;
 import com.kesho.datamart.paging.Request;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,4 +20,8 @@ public interface SponsorService {
     Page<SponsorDto> getPage(Request request);
 
     void deleteSponsor(Long id);
+
+    List<StudentSponsorDto> getStudentSponsors(Long studentId);
+
+    SponsorDto findOne(Long sponsorId);
 }

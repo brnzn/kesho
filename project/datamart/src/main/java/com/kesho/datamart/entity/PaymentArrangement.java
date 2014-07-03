@@ -43,6 +43,9 @@ public class PaymentArrangement {
     @Column(name = "AMOUNT")
     private BigDecimal amount;
 
+    //TODO: remove default currency
+    @Column(name = "CURRENCY")
+    private String currency = "GBP";
 
     public Long getId() {
         return id;
@@ -98,5 +101,13 @@ public class PaymentArrangement {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

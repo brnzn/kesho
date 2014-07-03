@@ -1,24 +1,35 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.domain.*;
-import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.domain.FinancialSupportStatus;
+import com.kesho.datamart.domain.FinancialSupportStatusDetails;
+import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.dto.StudentSponsorDto;
 import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
+import com.kesho.datamart.ui.repository.SponsorsRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
-import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +44,12 @@ import java.util.Map;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StudentSponsorController extends AbstractEditableController<StudentDto> implements FormActionListener {
+public class StudentSponsorController extends AbstractEditableController<StudentDto> {
     @Autowired
     private StudentsRepository studentsRepository;
+
+    @Autowired
+    private SponsorsRepository sponsorsRepository;
 
     @FXML
     private ToggleGroup enrichmentSupport;
@@ -62,6 +76,21 @@ public class StudentSponsorController extends AbstractEditableController<Student
     @FXML
     private Button saveButton;
 
+    @FXML
+    private TableColumn<StudentSponsorDto, Boolean> anonymityCol;
+
+    @FXML
+    private TableColumn<StudentSponsorDto, LocalDate> endOfCommitCol;
+    @FXML
+    private TableColumn<StudentSponsorDto, String> surnameCol;
+    @FXML
+    private TableColumn<StudentSponsorDto, String> nameCol;
+    @FXML
+    private TableColumn<StudentSponsorDto, BigDecimal> amountCol;
+
+    @FXML
+    private TableView<StudentSponsorDto> sponsorsTable;
+    private ObservableList<StudentSponsorDto> sponsorsModel = FXCollections.observableArrayList();
 
     @Inject
     private StudentsController parentController;
@@ -79,11 +108,58 @@ public class StudentSponsorController extends AbstractEditableController<Student
     @Override
     public void refresh(StudentDto dto) {
         saveButton.setDisable(dto == null);
+        refreshEducationTable();
         itemSelected(dto);
+    }
+
+    public Map<String, Node> getValidateableFields() {
+        return validationFields;
     }
 
     @FXML
     private void initialize() {
+        anonymityCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, Boolean>("anonymity"));
+        endOfCommitCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, LocalDate>("endOfCommitment"));
+        surnameCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, String>("surname"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, String>("name"));
+        //TODO: grey line if sponsor not active
+        nameCol.setCellFactory(new Callback<TableColumn<StudentSponsorDto, String>, TableCell<StudentSponsorDto, String>>() {
+            @Override
+            public TableCell<StudentSponsorDto, String> call(TableColumn<StudentSponsorDto, String> sponsorName) {
+                TableCell<StudentSponsorDto, String> cell = new TableCell<StudentSponsorDto, String>() {
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+
+                        if(item!=null){
+                            if(!((StudentSponsorDto)getTableRow().getItem()).isActive()) {
+                                getTableRow().getStyleClass().add("row");
+                            } else {
+                                getTableRow().getStyleClass().remove("row");
+                            }
+                            Hyperlink link = new Hyperlink(item);
+                            link.underlineProperty().setValue(true);
+                            link.setUserData(((StudentSponsorDto)getTableRow().getItem()).getSponsorId());
+                            link.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent e) {
+                                    WindowsUtil.getInstance().sponsors((Long) ((Hyperlink) e.getSource()).getUserData());
+                                }
+                            });
+                            setGraphic(link);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        });
+
+        amountCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, BigDecimal>("amount"));
+
+        sponsorsModel.clear();
+        sponsorsTable.setItems(sponsorsModel);
+
         Util.decorateNumericInput(shortfall, totalSRequired);
 
         Util.initializeYesNoGroup(financialSupport, topupNeeded, enrichmentSupport);
@@ -93,8 +169,8 @@ public class StudentSponsorController extends AbstractEditableController<Student
             @Override
             public void changed(ObservableValue<? extends FinancialSupportStatus> observableValue, FinancialSupportStatus s, FinancialSupportStatus s2) {
                 financialSupportStatusDetails.getItems().clear();
-                if(s2 != null) {
-                    if(FinancialSupportStatus.OTHER != s2) {
+                if (s2 != null) {
+                    if (FinancialSupportStatus.OTHER != s2) {
                         financialSupportStatusDetails.getItems().addAll(s2.getChildren());
                         financialSupportStatusDetails.setVisible(true);
                         otherFinancialSupportStatusDetails.setVisible(false);
@@ -109,13 +185,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
         });
 
         Util.initializeComboBoxValues(levelOfSupport, EnumSet.allOf(LevelOfSupport.class));
-    }
-
-    @Override
-    public void newFired() {
-        resetForm();
-        selected.unbind();
-        selected.set(new StudentDto());
     }
 
     private  void itemSelected(StudentDto student) {
@@ -141,11 +210,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
         shortfall.setText(Util.safeToStringValue(student.getShortfall(), null));
 
         totalSRequired.setText(Util.safeToStringValue(student.getTotalSponsorshipRequired(), null));
-    }
-
-    @Override
-    public void deleteFired(Long id) {
-        //Student cannot be deleted
     }
 
     @FXML
@@ -205,7 +269,18 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
     }
 
-    public Map<String, Node> getValidateableFields() {
-        return validationFields;
+    private void refreshEducationTable() {
+        sponsorsModel.clear();
+        if(selected.get() != null) {
+            List<StudentSponsorDto> dtos = sponsorsRepository.getStudentSponsors(selected.get().getId());
+            sponsorsModel.addAll(dtos);
+            int selectedIndex = sponsorsTable.getSelectionModel().getSelectedIndex();
+            sponsorsTable.setItems(null);
+            sponsorsTable.layout();
+            sponsorsTable.setItems(sponsorsModel);
+            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+            sponsorsTable.getSelectionModel().select(selectedIndex);
+        }
     }
+
 }

@@ -3,6 +3,7 @@ package com.kesho.datamart.ui.repository;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.dto.StudentSponsorDto;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.PaymentArrangementService;
 import com.kesho.datamart.service.SponsorService;
@@ -54,5 +55,15 @@ public class SponsorsRepositoryImpl implements SponsorsRepository {
     @Override
     public void deletePaymentArrangement(Long id) {
         paymentArrangementService.delete(id);
+    }
+
+    @Override
+    public List<StudentSponsorDto> getStudentSponsors(Long studentId) {
+        return sponsorService.getStudentSponsors(studentId);
+    }
+
+    @Override
+    public SponsorDto findOne(Long sponsorId) {
+        return sponsorService.findOne(sponsorId);
     }
 }
