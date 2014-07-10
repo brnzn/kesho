@@ -21,9 +21,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
+import java.time.Month;
+import java.time.MonthDay;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,8 @@ import java.util.Map;
 public class EducationDetailsController extends AbstractEditableController<StudentDto> {
     @FXML
     private DatePicker startDate;
+    @FXML
+    private DatePicker predictedEndDate;
     @FXML
     private ComboBox<InstitutionDto> institutions;
     @FXML
@@ -94,53 +99,18 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     public void refresh(StudentDto dto) {
         loadInstitutions();
         refreshEducationTable();
+        resetForm();
     }
 
     public Map<String, Node> getValidateableFields() {
         if(validationFields.isEmpty()) {
             validationFields.put("date", startDate);
             validationFields.put("year", educationYear);
-            validationFields.put("course", course);
             validationFields.put("educationalStatus", educationalStatus);
         }
 
         return validationFields;
     }
-
-
-//    @Override
-//    public void setSelectedProperty(SimpleObjectProperty<StudentDto> selectedProperty) {
-//        this.selectedStudent = selectedProperty;
-//
-//        selectedStudent.addListener(new ChangeListener<StudentDto>() {
-//            @Override
-//            public void changed(ObservableValue<? extends StudentDto> observableValue, StudentDto dto1, StudentDto dto2) {
-//                educationTab.disableProperty().set(dto2 == null);
-//
-//                if (educationTab.isSelected()) {
-//                    loadInstitutions();
-//                    refreshEducationTable();
-//                }
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void setTab(Tab educationTab) {
-//        this.educationTab = educationTab;
-//
-//        educationTab.disableProperty().set(true);
-//
-//        educationTab.setOnSelectionChanged(new EventHandler<javafx.event.Event>() {
-//            @Override
-//            public void handle(javafx.event.Event event) {
-//                if (educationTab.isSelected()) {
-//                    loadInstitutions();
-//                    refreshEducationTable();
-//                }
-//            }
-//        });
-//    }
 
     private void refreshEducationTable() {
         educationModel.clear();
@@ -170,7 +140,8 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             .withSecondaryStatus2(secondaryStatus2.getSelectionModel().getSelectedItem())
             .withInstitution(institutions.getSelectionModel().getSelectedItem())
             .withComments(comments.getText())
-            .withEducationDate(Util.toJodaDate(startDate.getValue()));
+            .withEducationDate(Util.toJodaDate(startDate.getValue()))
+            .withPredictedEndDate(Util.toJodaDate(predictedEndDate.getValue()));
 
         if (isInputValid(dto)) {
             studentsRepository.save(dto);
@@ -181,7 +152,10 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     private boolean isInputValid(EducationDto dto) {
         List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
+        //Reset effect
         institutions.setEffect(null);
+        course.setEffect(null);
+
         if(institutions.getSelectionModel().getSelectedItem() == null) {
             if (isSchoolRequired()) {
                 validation.add("School is required");
@@ -189,6 +163,10 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             }
         }
 
+        if(StringUtils.isBlank(course.getText()) && isCourseRequired()) {
+            validation.add("Course is required");
+            FormValidator.renderInvalid(course);
+        }
 
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Education details", FormValidator.reduce(validation));
@@ -198,6 +176,11 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         }
     }
 
+    private boolean isCourseRequired() {
+        EducationStatus status = educationalStatus.getSelectionModel().getSelectedItem();
+        return status == EducationStatus.College || status == EducationStatus.University;
+
+    }
     private boolean isSchoolRequired() {
         EducationStatus status = educationalStatus.getSelectionModel().getSelectedItem();
         return EducationStatus.GapAfterTertiary != status && EducationStatus.GapSchoolLeaver != status;
@@ -219,24 +202,6 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             }
         }.start();
     }
-//    private void loadEducationHistory() {
-//        educationModel.clear();
-//        educationTable.setItems(educationModel);
-//
-//        new Service<Void>() {
-//            @Override
-//            protected Task<Void> createTask() {
-//                return new Task<Void>() {
-//                    @Override
-//                    protected Void call() throws Exception {
-//                        System.out.println("== current id:" + selectedStudent.getSelectedItem().getId());
-//                        educationModel.addAll(studentsRepository.getEducationHistory(selectedStudent.getSelectedItem().getId()));
-//                        return null;
-//                    }
-//                };
-//            }
-//        }.start();
-//    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -261,11 +226,18 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         educationModel.clear();
         educationTable.setItems(educationModel);
 
+        selectedEducation.addListener(new ChangeListener<EducationDto>() {
+            @Override
+            public void changed(ObservableValue<? extends EducationDto> observable, EducationDto oldValue, EducationDto newValue) {
+                updateEducationForm(newValue);
+            }
+        });
+
         educationTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationDto>() {
             @Override
             public void changed(ObservableValue<? extends EducationDto> observable,
                                 EducationDto oldValue, EducationDto newValue) {
-                updateEducationForm(newValue);
+                selectedEducation.set(newValue);
             }
         });
 
@@ -299,7 +271,6 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     }
 
     private void updateEducationForm(EducationDto dto) {
-        selectedEducation.set(dto);
         if(dto == null) {
             resetForm();
             return;
@@ -309,11 +280,11 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         course.setText(dto.getCourse());
         educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
         startDate.valueProperty().setValue(Util.toJavaDate(dto.getDate()));
+        predictedEndDate.valueProperty().setValue(Util.toJavaDate(dto.getPredictedEndDate()));
         institutions.getSelectionModel().select(dto.getInstitution());
         secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
         secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
         comments.setText(dto.getComments());
-
     }
 
 
@@ -323,6 +294,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         educationalStatus.getSelectionModel().clearSelection();
         educationalStatus.valueProperty().setValue(null);
         startDate.setValue(null);
+        predictedEndDate.setValue(null);
         institutions.getSelectionModel().clearSelection();
         institutions.valueProperty().setValue(null);
         secondaryStatus1.getSelectionModel().clearSelection();
@@ -335,7 +307,10 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     @FXML
     private void newFired() {
         resetForm();
-        selectedEducation.set(new EducationDto());
+        selectedEducation.set(getDefaultDto());
+        java.time.LocalDate date = java.time.LocalDate.now().withMonth(Month.JANUARY.getValue()).withDayOfMonth(1);
+        startDate.setValue(date);
+        predictedEndDate.setValue(date.plusYears(1));
     }
 
     @FXML
@@ -346,4 +321,8 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         }
     }
 
+    private EducationDto getDefaultDto() {
+        EducationDto dto = studentsRepository.getLastYearEducationLog(selected.get().getId());
+        return dto != null ? dto : new EducationDto();
+    }
 }

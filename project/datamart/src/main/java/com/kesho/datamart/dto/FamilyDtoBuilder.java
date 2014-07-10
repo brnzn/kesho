@@ -40,7 +40,7 @@ public class FamilyDtoBuilder {
         dto.setHomeClusterId(homeClusterId);
         dto.setAliveParents(aliveParents);
         dto.setMarried(isMarried);
-        dto.setNumNonKeshoStudents(numNonKeshoStudents);
+        dto.setNumOfChildrenAtAddress(numNonKeshoStudents);
         dto.setNumOfWives(numOfWives);
         dto.setPrimaryCaretaker(primaryCaretaker);
         dto.setMainContactName(mainContactName);

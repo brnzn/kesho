@@ -21,7 +21,7 @@ public class FamilyAssembler {
         dto.setHomeClusterId(family.getHomeClusterId());
         dto.setAliveParents(family.getAliveParents());
         dto.setMarried(family.isMarried());
-        dto.setNumNonKeshoStudents(family.getNumNonKeshoStudents());
+        dto.setNumOfChildrenAtAddress(family.getNumOfChildrenAtAddress());
         dto.setNumOfWives(family.getNumOfWives());
         dto.setPrimaryCaretaker(family.getPrimaryCaretaker());
         dto.setMainContactName(family.getMainContactName());
@@ -42,7 +42,7 @@ public class FamilyAssembler {
         family.setHomeClusterId(dto.getHomeClusterId());
         family.setAliveParents(dto.getAliveParents());
         family.setMarried(dto.getMarried());
-        family.setNumNonKeshoStudents(dto.getNumNonKeshoStudents());
+        family.setNumOfChildrenAtAddress(dto.getNumOfChildrenAtAddress());
         family.setNumOfWives(dto.getNumOfWives());
         family.setPrimaryCaretaker(dto.getPrimaryCaretaker());
         family.setMainContactName(dto.getMainContactName());

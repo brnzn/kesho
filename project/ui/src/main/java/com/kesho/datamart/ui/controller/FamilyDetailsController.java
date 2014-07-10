@@ -3,7 +3,6 @@ package com.kesho.datamart.ui.controller;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
@@ -15,14 +14,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -145,7 +142,7 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         homeClusterId.setText(familyDto.getHomeClusterId());
         aliveParents.setText(Util.safeToStringValue(familyDto.getAliveParents(), null));
         Util.setYesNoToggleState(isMarried, familyDto.getMarried());
-        numNonKeshoStudents.setText(Util.safeToStringValue(familyDto.getNumNonKeshoStudents(), null));
+        numNonKeshoStudents.setText(Util.safeToStringValue(familyDto.getNumOfChildrenAtAddress(), null));
         numOfWives.setText(Util.safeToStringValue(familyDto.getNumOfWives(), null));
         primaryCaretaker.setText(familyDto.getPrimaryCaretaker());
         mainContactName.setText(familyDto.getMainContactName());

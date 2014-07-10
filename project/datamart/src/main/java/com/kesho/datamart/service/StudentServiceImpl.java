@@ -1,24 +1,17 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.PageImpl;
-import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.dto.*;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
+import com.kesho.datamart.entity.StudentHistory;
 import com.kesho.datamart.paging.Request;
-import com.kesho.datamart.repository.EducationHistoryDAO;
-import com.kesho.datamart.repository.FamilyDAO;
-import com.kesho.datamart.repository.SchoolsDAO;
-import com.kesho.datamart.repository.StudentsDAO;
+import com.kesho.datamart.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -36,12 +29,15 @@ public class StudentServiceImpl implements StudentService {
     private SchoolsDAO schoolsDao;
     @Inject
     private FamilyDAO familyDAO;
+    @Inject
+    private StudentHistoryDAO historyDAO;
 
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
 
     private StudentsAssembler assembler = new StudentsAssembler();
     private EducationAssembler educationAssembler = new EducationAssembler();
+    private StudentHistoryAssembler historyAssembler = new StudentHistoryAssembler();
 
     @Override
     public StudentDto get(Long id) {
@@ -106,17 +102,44 @@ public class StudentServiceImpl implements StudentService {
         return educationHistoryDAO.findLatestEducation(studentId);
     }
 
-    @Transactional
-    @Override
-    public void deleteStudent(Long id) {
-        educationHistoryDAO.deleteByStudentId(id);
-        studentsDao.deleteByStudentId(id);
-    }
+//    @Transactional
+//    @Override
+//    public void deleteStudent(Long id) {
+//        educationHistoryDAO.deleteByStudentId(id);
+//        studentsDao.deleteByStudentId(id);
+//    }
 
     @Override
     @Transactional
     public void deleteEducationHistory(Long id) {
         educationHistoryDAO.deleteById(id);
+    }
+
+    @Override
+    public EducationDto getLastYearEducationLog(Long studentId) {
+        List<EducationHistory> educations = educationHistoryDAO.getEducationSortedByDate(studentId);
+        if(educations.isEmpty()) {
+            return null;
+        }
+
+        return educationAssembler.toDto(educations.get(educations.size() == 1 ? 0 : 1));
+    }
+
+    @Override
+    public List<HistoryDto> getStudentHistory(Long studentId) {
+        return historyAssembler.toDto(historyDAO.findByStudentId(studentId));
+    }
+
+    @Override
+    @Transactional
+    public void deleteStudentHistory(Long id) {
+        historyDAO.delete(id);
+    }
+
+    @Override
+    public HistoryDto save(HistoryDto dto) {
+        StudentHistory history = historyDAO.save(historyAssembler.toStudentHistory(dto));
+        return historyAssembler.toDto(history);
     }
 
     private Page<StudentDto> toPageResult(final org.springframework.data.domain.Page<Student> page, final Request request) {

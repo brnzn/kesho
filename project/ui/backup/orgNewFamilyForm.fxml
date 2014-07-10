@@ -151,7 +151,7 @@
                               </GridPane.margin>
                             </Label>
                             <Label text="No of adults in the household:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                            <NumericTextField fx:id="numNonKeshoStudents" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <NumericTextField fx:id="numOfChildrenAtAddress" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <NumericTextField fx:id="numOfAdultsAtAddress" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                           </children>
                           <columnConstraints>

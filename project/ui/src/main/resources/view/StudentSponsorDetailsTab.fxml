@@ -18,7 +18,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <TableView fx:id="sponsorsTable" prefHeight="174.0" prefWidth="648.0" stylesheets="@../style/test_styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="sponsorsTable" prefHeight="174.0" prefWidth="648.0" stylesheets="@../style/main_styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
                                   <TableColumn fx:id="surnameCol" prefWidth="75.0" text="Surname" />

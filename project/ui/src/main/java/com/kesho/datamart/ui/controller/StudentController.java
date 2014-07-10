@@ -59,8 +59,8 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     private TextField email;
     @FXML
     private TextField facebook;
-    @FXML
-    private TextField alumniNumber; // numeric
+//    @FXML
+//    private TextField alumniNumber; // numeric
     @FXML
     private ComboBox<LeaverStatus> leaverStatus;
     @FXML
@@ -88,7 +88,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
     @FXML
     private void initialize() {
-        Util.decorateNumericInput(yearOfBirth, alumniNumber);
+        Util.decorateNumericInput(yearOfBirth);
 
         family.setUserData(null);
 
@@ -141,7 +141,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         email.setText(student.getEmail());
         facebook.setText(student.getFacebookAddress());
 
-        alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
+        //alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
 
         leaverStatus.getSelectionModel().select(student.getLeaverStatus());
     }
@@ -193,7 +193,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
                 .withGender((Gender) gender.getSelectedToggle().getUserData())
                 .withStartDate(Util.toJodaDate(startDate.getValue()))
-                .withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
+                //.withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
                 .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
         ;
 
@@ -214,7 +214,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         hasDisability.getToggles().get(0).setSelected(true);
         email.clear();
         facebook.clear();
-        alumniNumber.clear();
+        //alumniNumber.clear();
         leaverStatus.getSelectionModel().clearSelection();
     }
 

@@ -37,7 +37,8 @@ public class EducationAssembler {
                 .withEducationalStatus(log.getEducationStatus())
                 .withYear(log.getYear())
                 .withEducationDate(log.getStartDate())
-                .withComments(log.getComments());
+                .withComments(log.getComments())
+                .withPredictedEndDate(log.getPredictedEndDate());
         return dto;
     }
 
@@ -53,6 +54,7 @@ public class EducationAssembler {
         log.setSecondaryLevel2(dto.getSecondaryEducationStatus2());
         log.setYear(dto.getYear());
         log.setComments(dto.getComments());
+        log.setPredictedEndDate(dto.getPredictedEndDate());
         return log;
     }
 

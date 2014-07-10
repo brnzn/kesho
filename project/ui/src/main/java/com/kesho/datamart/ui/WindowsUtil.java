@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -65,13 +67,15 @@ public class WindowsUtil {
     }
 
     public boolean showWarningDialog(String title, String head, String message) {
-        Dialogs.create()
+        Action response = Dialogs.create()
                 .owner(primaryStage)
                 .title(title)
                 .masthead(head)
                 .message(message)
+                .actions(Dialog.Actions.YES, Dialog.Actions.NO)
                 .showWarning();
-        return false;
+
+        return Dialog.Actions.YES == response;
     }
 
     public void sponsors() {
@@ -84,7 +88,7 @@ public class WindowsUtil {
             AnchorPane overviewPage = (AnchorPane) loader.load();
             rootLayout.setCenter(overviewPage);
             primaryStage.sizeToScene();
-            primaryStage.getScene().getStylesheets().add(WindowsUtil.class.getResource("/style/test_styles.css").toExternalForm());
+            primaryStage.getScene().getStylesheets().add(WindowsUtil.class.getResource("/style/main_styles.css").toExternalForm());
 
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded

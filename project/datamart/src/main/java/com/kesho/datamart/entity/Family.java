@@ -39,8 +39,8 @@ public class Family {
     @Column(name="MARTIAL_STATUS", columnDefinition = "BIT", nullable=true)
     private Boolean isMarried;
 
-    @Column(name="NUM_NON_KESHO_STUDENTS_AT_ADDRS", columnDefinition = "BIT", nullable=true)
-    private Integer numNonKeshoStudents;
+    @Column(name="NUM_CHILDREN_AT_ADDRS", columnDefinition = "BIT", nullable=true)
+    private Integer numOfChildrenAtAddress;
 
     @Column(name="NUM_OF_WIVES", columnDefinition = "BIT", nullable=true)
     private Integer numOfWives;
@@ -125,12 +125,12 @@ public class Family {
         isMarried = married;
     }
 
-    public Integer getNumNonKeshoStudents() {
-        return numNonKeshoStudents;
+    public Integer getNumOfChildrenAtAddress() {
+        return numOfChildrenAtAddress;
     }
 
-    public void setNumNonKeshoStudents(Integer numNonKeshoStudents) {
-        this.numNonKeshoStudents = numNonKeshoStudents;
+    public void setNumOfChildrenAtAddress(Integer numOfChildrenAtAddress) {
+        this.numOfChildrenAtAddress = numOfChildrenAtAddress;
     }
 
     public Integer getNumOfWives() {

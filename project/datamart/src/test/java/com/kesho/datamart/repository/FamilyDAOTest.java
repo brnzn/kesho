@@ -3,7 +3,6 @@ package com.kesho.datamart.repository;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.entity.Family;
-import com.kesho.datamart.entity.Student;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +55,7 @@ public class FamilyDAOTest {
         family.setMainContactName("mainContact");
         family.setHomeLocation(Location.Ganze);
         family.setMobileNumber("01234556");
-        family.setNumNonKeshoStudents(3);
+        family.setNumOfChildrenAtAddress(3);
         family.setNumOfAdultsAtAddress(2);
         family.setNumOfWives(4);
         family.setPhoneOwnerName("phoneOwner");
@@ -86,7 +85,7 @@ public class FamilyDAOTest {
         assertThat(saved.getMainContactName(), is("mainContact"));
         assertThat(saved.getHomeLocation(), is(Location.Ganze));
         assertThat(saved.getMobileNumber(), is("01234556"));
-        assertThat(saved.getNumNonKeshoStudents(), is(3));
+        assertThat(saved.getNumOfChildrenAtAddress(), is(3));
         assertThat(saved.getNumOfAdultsAtAddress(), is(2));
         assertThat(saved.getNumOfWives(), is(4));
         assertThat(saved.getPhoneOwnerName(), is("phoneOwner"));

@@ -20,8 +20,6 @@
                   <children>
                     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" />
-                    <Label text="Alumni Number:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <TextField fx:id="alumniNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
                     <Label text="Gender:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                        <children>
@@ -111,7 +109,7 @@
         </TitledPane>
             <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0">
               <items>
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
+                <Button fx:id="saveButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
               </items>
             </ToolBar>
       </children>

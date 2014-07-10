@@ -59,7 +59,10 @@ public class StudentsController implements Selectable<StudentDto> {
     private EducationDetailsController educationDetailsController;
     @FXML
     private Tab educationTab;
-
+    @FXML
+    private Tab studentHistoryTab;
+    @FXML
+    private StudentHistoryController studentHistoryController;
 
     @FXML
     private Tab familyTab;
@@ -122,6 +125,9 @@ public class StudentsController implements Selectable<StudentDto> {
 
         studentSponsorController.setTab(studentSponsorTab);
         studentSponsorController.setSelectedProperty(selected);
+
+        studentHistoryController.setTab(studentHistoryTab);
+        studentHistoryController.setSelectedProperty(selected);
 
         refreshTable();
 

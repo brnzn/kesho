@@ -9,6 +9,7 @@ import java.util.EnumSet;
  * Time: 5:36 PM
  * To change this template use File | Settings | File Templates.
  */
+//TODO: provide display text
 public enum EducationStatus {
     Nursery {
         @Override

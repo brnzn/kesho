@@ -35,6 +35,10 @@ public class EducationHistory {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate startDate;
 
+    @Column(name = "PREDICTED_END_DATE")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate predictedEndDate;
+
     @Column(name = "COURSE")
 	private String course;
 
@@ -59,6 +63,14 @@ public class EducationHistory {
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
+    }
+
+    public LocalDate getPredictedEndDate() {
+        return predictedEndDate;
+    }
+
+    public void setPredictedEndDate(LocalDate predictedEndDate) {
+        this.predictedEndDate = predictedEndDate;
     }
 
     public String getCourse() {

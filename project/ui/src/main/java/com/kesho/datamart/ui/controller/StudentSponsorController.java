@@ -133,9 +133,9 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
                         if(item!=null){
                             if(!((StudentSponsorDto)getTableRow().getItem()).isActive()) {
-                                getTableRow().getStyleClass().add("row");
+                                getTableRow().getStyleClass().add("inactiverow");
                             } else {
-                                getTableRow().getStyleClass().remove("row");
+                                getTableRow().getStyleClass().remove("inactiverow");
                             }
                             Hyperlink link = new Hyperlink(item);
                             link.underlineProperty().setValue(true);

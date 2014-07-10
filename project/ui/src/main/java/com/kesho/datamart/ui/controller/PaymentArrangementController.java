@@ -109,11 +109,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     @Override
     public void refresh(SponsorDto dto) {
         refreshTable();
-    }
-
-    @FXML
-    private void openStudent() {
-        WindowsUtil.getInstance().students();
+        resetForm();
     }
 
     @FXML
@@ -216,7 +212,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         }
     }
 
-    private void clearForm() {
+    private void resetForm() {
         startDate.valueProperty().setValue(null);
         endDate.valueProperty().setValue(null);
         totalAllocated.clear();
@@ -230,7 +226,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     private void initializeForm(PaymentArrangementDto dto) {
         selectedPayment.set(dto);
         if(dto == null) {
-            clearForm();
+            resetForm();
             return;
         }
 

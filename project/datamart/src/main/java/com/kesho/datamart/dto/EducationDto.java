@@ -21,7 +21,6 @@ public class EducationDto {
     private LocalDate date;
     @NotNull(message = "Year is mandatory")
     private String year;
-    @NotBlank(message = "Course is mandatory")
     private String course;
     @NotNull(message = "Education Status is mandatory")
     private EducationStatus educationalStatus;
@@ -30,6 +29,7 @@ public class EducationDto {
     private Long id;
     private Long studentId;
     private String comments;
+    private LocalDate predictedEndDate;
 
     public EducationDto(){}
 
@@ -63,6 +63,10 @@ public class EducationDto {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public LocalDate getPredictedEndDate() {
+        return predictedEndDate;
     }
 
     public String getEducationLevel() {
@@ -144,6 +148,12 @@ public class EducationDto {
 
     public EducationDto withComments(String comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public EducationDto withPredictedEndDate(LocalDate endDate) {
+        this.predictedEndDate = endDate;
+
         return this;
     }
 }

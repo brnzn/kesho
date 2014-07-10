@@ -55,6 +55,11 @@
                                                         <fx:include fx:id="studentSponsor" source="../view/StudentSponsorDetailsTab.fxml" />
                                                     </content>
                                                 </Tab>
+                                                <Tab id="studentHistoryTab" fx:id="studentHistoryTab" disable="true" text="History">
+                                                    <content>
+                                                        <fx:include fx:id="studentHistory" source="../view/StudentHistoryTab.fxml" />
+                                                    </content>
+                                                </Tab>
                                                 <Tab text="Alumni">
                                                     <content>
                                                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

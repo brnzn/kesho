@@ -19,7 +19,7 @@ import javafx.scene.control.Tab;
 public abstract class AbstractChildController<T extends Dto> implements ChildController<T> {
     protected SimpleObjectProperty<T> selected;
     protected Tab tab;
-    public abstract void refresh(T dto);
+    public abstract void refresh(T dto);  //TODO: don't need to pass dto
 
 
     @Override

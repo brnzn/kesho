@@ -15,7 +15,6 @@ public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Lon
     @Query("select eh from EducationHistory eh left join fetch eh.school where eh.studentId = :studentId")
     List<EducationHistory> findByStudentId(@Param("studentId") Long studentId);
 
-    //@Query("select eh from EducationHistory eh where eh.studentId = :studentId and eh.startDate in(select max(eh1.startDate) from EducationHistory eh1 where eh1.studentId = :studentId)")
     @Query("select new com.kesho.datamart.dto.EducationDto(eh.educationStatus, eh.startDate) from EducationHistory eh where eh.studentId = :studentId and eh.startDate in(select max(eh1.startDate) from EducationHistory eh1 where eh1.studentId = :studentId)")
     EducationDto findLatestEducation(@Param("studentId") Long studentId);
 
@@ -33,4 +32,6 @@ public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Lon
     @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.id = :id")
     EducationHistory findByIdWithSchool(@Param("id")Long id);
 
+    @Query("select eh from EducationHistory eh LEFT JOIN fetch eh.school where eh.studentId = :studentId order by eh.startDate DESC")
+    List<EducationHistory> getEducationSortedByDate(@Param("studentId") Long studentId); //TODO: limit to 2, index start date
 }

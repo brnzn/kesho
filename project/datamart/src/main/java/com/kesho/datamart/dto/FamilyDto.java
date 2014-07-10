@@ -2,7 +2,6 @@ package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.Location;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,7 @@ public class FamilyDto implements Comparable {
     private Boolean isMarried;
     @NotNull(message = "Number of non Kesho students in the house is mandatory")
     @Min(value = 0, message = "Number of non Kesho students in the house cannot be negative")
-    private Integer numNonKeshoStudents;
+    private Integer numOfChildrenAtAddress;
     @Min(value = 0, message = "Number of wives cannot be negative")
     private Integer numOfWives;
     private String primaryCaretaker;
@@ -96,12 +95,12 @@ public class FamilyDto implements Comparable {
         isMarried = married;
     }
 
-    public Integer getNumNonKeshoStudents() {
-        return numNonKeshoStudents;
+    public Integer getNumOfChildrenAtAddress() {
+        return numOfChildrenAtAddress;
     }
 
-    public void setNumNonKeshoStudents(Integer numNonKeshoStudents) {
-        this.numNonKeshoStudents = numNonKeshoStudents;
+    public void setNumOfChildrenAtAddress(Integer numOfChildrenAtAddress) {
+        this.numOfChildrenAtAddress = numOfChildrenAtAddress;
     }
 
     public Integer getNumOfWives() {

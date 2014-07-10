@@ -38,6 +38,7 @@ public abstract class SelectorController<T> {
 
 	@FXML
 	protected void initialize() {
+        selected.set(null);
         okClicked = false;
         okButton.setDisable(true);
         binding = TextFields.bindAutoCompletion(textField, FXCollections.observableArrayList(getData()));

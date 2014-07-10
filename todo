@@ -31,18 +31,39 @@ done - Leaver status - delete option 'Sibling ...' + 'Alumni...'
 done - Move sponsorship section to new tab
 done - rename course to course name and move above comments
 done - education tab - add title to section
-
+done - add sponsor table to student details + links to sponsor
+       	Name/Surname, end of commitment (select where start dates is latest), anonymity, if not active show line in grey
+done- Course should be mandatory if education status is College or university
+done -cannot select same student after reopen student selector
+done - student selector trigger n+1 query on family
+done - Education start date calendar should default to 01/01/year
+done - payment arrangment tab is not reset after selecting another sponsor (looks like the same for all tabs)
+done - When clicking New on education status, default values to prev year
+done - Add predicted end date on education table - start date + 12 month
+done -Alumni number can be removed
+done - rename 'No Non-kesho students to' Num of children in household
+done -No of adults to Num of adults (> 18 years) in household
 ----------------------------------
-students details:
-add sponsor table to student details + links to sponsor
-	Name/Surname, end of commitment (select where start dates is latest), anonymity, if not active show line in grey
-Course should be mandatory if education status is College or university
-Education start date calendar should default to 01/01/year
-When clicking New on education status, default values to prev year
-Add predicted end date on education table - start date + 12 month
-Alumni number can be removed  
-Family tab - rename 'No Non-kesho students to' Num of children in household
-	No of adults to Num of adults (> 18 years) in household  
+all inputs all on forms should be disabled until clicking new
+save button on all forms should be default button and disabled until new or select
+all dtos should have length constraints
+
+getting this exception when clicking text area on family form:
+Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
+	at java.text.StringCharacterIterator.<init>(StringCharacterIterator.java:78)
+	at java.text.StringCharacterIterator.<init>(StringCharacterIterator.java:67)
+	at java.text.BreakIterator.setText(BreakIterator.java:420)
+	at com.sun.javafx.scene.control.skin.Utils.getHitInsertionIndex(Utils.java:752)
+	at com.sun.javafx.scene.control.behavior.TextAreaBehavior.mousePressed(TextAreaBehavior.java:341)
+	at com.sun.javafx.scene.control.skin.TextAreaSkin$ContentView$1.handle(TextAreaSkin.java:99)
+	at com.sun.javafx.scene.control.skin.TextAreaSkin$ContentView$1.handle(TextAreaSkin.java:97)
+	at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:218)
+	at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:238)
+	at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+
+
 New tab History - New table for history
 
 Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate 

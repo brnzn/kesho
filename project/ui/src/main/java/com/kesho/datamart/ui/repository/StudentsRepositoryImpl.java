@@ -1,11 +1,11 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.HistoryDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.StudentService;
-import javafx.scene.Node;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -64,14 +64,34 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.findLatestEducation(studentId);
     }
 
-    @Override
-    public void deleteStudent(Long id) {
-        studentsService.deleteStudent(id);
-    }
+//    @Override
+//    public void deleteStudent(Long id) {
+//        studentsService.deleteStudent(id);
+//    }
 
     @Override
     public void deleteEducationHistory(Long id) {
         studentsService.deleteEducationHistory(id);
+    }
+
+    @Override
+    public EducationDto getLastYearEducationLog(Long studentId) {
+        return studentsService.getLastYearEducationLog(studentId);
+    }
+
+    @Override
+    public List<HistoryDto> getStudentHistory(Long studentId) {
+        return studentsService.getStudentHistory(studentId);
+    }
+
+    @Override
+    public void deleteStudentHistory(Long id) {
+        studentsService.deleteStudentHistory(id);
+    }
+
+    @Override
+    public HistoryDto save(HistoryDto dto) {
+        return studentsService.save(dto);
     }
 
 }

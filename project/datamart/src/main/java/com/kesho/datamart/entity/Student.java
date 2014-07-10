@@ -83,8 +83,8 @@ public class Student {
     @Column(name = "SHORTFALL")
     private Integer shortfall;
 
-    @Column(name = "ALUMNI_MEMBER")
-    private Integer alumniNumber;
+//    @Column(name = "ALUMNI_MEMBER")
+//    private Integer alumniNumber;
 
     @Column(name = "TOTAL_SPONSORSHIP_REQUIRED")
     private Integer totalSRequired;
@@ -261,11 +261,11 @@ public class Student {
         this.shortfall = shortfall;
     }
 
-    public Integer getAlumniNumber() {
-        return alumniNumber;
-    }
-
-    public void setAlumniNumber(Integer alumniNumber) {
-        this.alumniNumber = alumniNumber;
-    }
+//    public Integer getAlumniNumber() {
+//        return alumniNumber;
+//    }
+//
+//    public void setAlumniNumber(Integer alumniNumber) {
+//        this.alumniNumber = alumniNumber;
+//    }
 }

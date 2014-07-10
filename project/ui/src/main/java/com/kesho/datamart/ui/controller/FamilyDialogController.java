@@ -48,7 +48,7 @@ public class FamilyDialogController {
     @FXML
     private ToggleGroup isMarried;
     @FXML
-    private TextField numNonKeshoStudents;
+    private TextField numOfChildrenAtAddress;
     @FXML
     private TextField numOfWives;
     @FXML
@@ -113,7 +113,7 @@ public class FamilyDialogController {
             }
         });
 
-        Util.decorateNumericInput(numOfWives, aliveParents, numOfAdultsAtAddress, numNonKeshoStudents);
+        Util.decorateNumericInput(numOfWives, aliveParents, numOfAdultsAtAddress, numOfChildrenAtAddress);
     }
 
     private void refreshForm(FamilyDto dto) {
@@ -129,7 +129,7 @@ public class FamilyDialogController {
         homeClusterId.setText(dto.getHomeClusterId());
         aliveParents.setText(Util.safeToStringValue(dto.getAliveParents(), null));
         Util.setYesNoToggleState(isMarried, dto.getMarried());
-        numNonKeshoStudents.setText(Util.safeToStringValue(dto.getNumNonKeshoStudents(), null));
+        numOfChildrenAtAddress.setText(Util.safeToStringValue(dto.getNumOfChildrenAtAddress(), null));
         numOfWives.setText(Util.safeToStringValue(dto.getNumOfWives(), null));
         primaryCaretaker.setText(dto.getPrimaryCaretaker());
         mainContactName.setText(dto.getMainContactName());
@@ -148,7 +148,7 @@ public class FamilyDialogController {
         homeSubLocation.clear();
         homeClusterId.clear();
         aliveParents.clear();
-        numNonKeshoStudents.clear();
+        numOfChildrenAtAddress.clear();
         numOfWives.clear();
         primaryCaretaker.clear();
         mainContactName.clear();
@@ -191,12 +191,12 @@ public class FamilyDialogController {
                 .withHomeClusterId(homeClusterId.getText())
                 .withAliveParents(Util.safeToIntegerValue(aliveParents.getText(), null))
                 .isMarried((Boolean)isMarried.getSelectedToggle().getUserData())
-                .withNumNonKeshoStudents(Util.safeToIntegerValue(numNonKeshoStudents.getText(), null))
+                .withNumNonKeshoStudents(Util.safeToIntegerValue(numOfChildrenAtAddress.getText(), null))
                 .withNumOfWives(Util.safeToIntegerValue(numOfWives.getText(), null))
                 .withPrimaryCaretaker(primaryCaretaker.getText())
                 .withMainContactName(mainContactName.getText())
                 .withMobileNumber(mobileNumber.getText())
-                .isPhoneOwner((Boolean)isPhoneOwner.getSelectedToggle().getUserData())
+                .isPhoneOwner((Boolean) isPhoneOwner.getSelectedToggle().getUserData())
                 .withPhoneOwnerName(phoneOwnerName.getText())
                 .withProfile(profile.getText())
                 .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
@@ -239,7 +239,7 @@ public class FamilyDialogController {
             validationFields.put("homeSubLocation", homeSubLocation);
             validationFields.put("homeClusterId", homeClusterId);
             validationFields.put("aliveParents", aliveParents);
-            validationFields.put("numNonKeshoStudents", numNonKeshoStudents);
+            validationFields.put("numOfChildrenAtAddress", numOfChildrenAtAddress);
             validationFields.put("numOfWives", numOfWives);
             validationFields.put("primaryCaretaker", primaryCaretaker);
             validationFields.put("mainContactName", mainContactName);
