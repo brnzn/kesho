@@ -89,6 +89,10 @@ public class Student {
     @Column(name = "TOTAL_SPONSORSHIP_REQUIRED")
     private Integer totalSRequired;
 
+    @Column(name = "END_DATE")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate endDate;
+
 
     public Boolean getEnrichmentSupport() {
         return enrichmentSupport;
@@ -259,6 +263,14 @@ public class Student {
 
     public void setShortfall(Integer shortfall) {
         this.shortfall = shortfall;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
 //    public Integer getAlumniNumber() {

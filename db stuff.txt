@@ -1,5 +1,4 @@
-Sally Crompton
-password
+dump schema - mysqldump -u root -p --no-data kesho > schema.sql
 
 need to create user for local host full access
 

@@ -16,7 +16,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefWidth="599.0">
               <children>
-                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="150.0" prefWidth="648.0" vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="100.0" prefWidth="648.0" vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <children>
                     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="firstName" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" />
@@ -35,7 +35,6 @@
                     <TextField fx:id="yearOfBirth" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                     <Label text="Year of Birth:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     <Label text="Family Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <Label text="Start Date:" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
                     <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                       <children>
                         <TextField fx:id="family" disable="true" editable="false" prefHeight="100.0" prefWidth="200.0" />
@@ -55,16 +54,14 @@
                          <RadioButton mnemonicParsing="false" text="Male" toggleGroup="$gender" />
                        </children>
                     </HBox>
-                              <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="227.0" minWidth="106.99999237060547" prefWidth="106.99999237060547" />
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="340.0" minWidth="120.0" prefWidth="185.0" />
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="101.0" />
-                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="202.0" />
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="172.0" />
                   </columnConstraints>
                   <rowConstraints>
-                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -74,7 +71,7 @@
             </AnchorPane>
           </content>
         </TitledPane>
-        <TitledPane animated="false" collapsible="false" text="Contact" VBox.vgrow="ALWAYS">
+        <TitledPane animated="false" collapsible="false" text="Student Contacts" VBox.vgrow="ALWAYS">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefWidth="598.0">
               <children>
@@ -84,12 +81,10 @@
                     <TextField fx:id="email" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <Label text="Facebook:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <TextField fx:id="facebook" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                    <Label text="Contact Number:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label text="Phone Number:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <TextField fx:id="contactNumber" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label text="Home Location:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     <TextField fx:id="homeLocation" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                    <Label text="Leaver Status:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="leaverStatus" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.FinancialSupportStatus;
 import com.kesho.datamart.domain.FinancialSupportStatusDetails;
+import com.kesho.datamart.domain.LeaverStatus;
 import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.PaymentArrangementDto;
@@ -50,6 +51,13 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
     @Autowired
     private SponsorsRepository sponsorsRepository;
+    @FXML
+    private ComboBox<LeaverStatus> leaverStatus;
+
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
 
     @FXML
     private ToggleGroup enrichmentSupport;
@@ -118,11 +126,12 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
     @FXML
     private void initialize() {
+        Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
+
         anonymityCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, Boolean>("anonymity"));
         endOfCommitCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, LocalDate>("endOfCommitment"));
         surnameCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, String>("surname"));
         nameCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, String>("name"));
-        //TODO: grey line if sponsor not active
         nameCol.setCellFactory(new Callback<TableColumn<StudentSponsorDto, String>, TableCell<StudentSponsorDto, String>>() {
             @Override
             public TableCell<StudentSponsorDto, String> call(TableColumn<StudentSponsorDto, String> sponsorName) {
@@ -193,6 +202,10 @@ public class StudentSponsorController extends AbstractEditableController<Student
             return;
         }
 
+        startDate.valueProperty().set(Util.toJavaDate(student.getStartDate()));
+        endDate.valueProperty().set(Util.toJavaDate(student.getEndDate()));
+        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
+
         Util.setYesNoToggleState(financialSupport, student.hasFinancialSupport());
         Util.setYesNoToggleState(enrichmentSupport, student.getEnrichmentSupport());
         Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
@@ -233,6 +246,9 @@ public class StudentSponsorController extends AbstractEditableController<Student
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
                 .withShortfall(Util.safeToIntegerValue(shortfall.getText(), null))
                 .withTotalSponsorshipRequired(Util.safeToIntegerValue(totalSRequired.getText(), null))
+                .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
+                .withStartDate(Util.toJodaDate(startDate.getValue()))
+                .withEndDate(Util.toJodaDate(endDate.getValue()))
         ;
 
         return dto;
@@ -246,6 +262,10 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
     }
     private void resetForm() {
+        startDate.valueProperty().setValue(null);
+        endDate.valueProperty().setValue(null);
+        leaverStatus.getSelectionModel().clearSelection();
+
         enrichmentSupport.getToggles().get(0).setSelected(true);
         financialSupport.getToggles().get(0).setSelected(true);
 

@@ -44,6 +44,8 @@ public class StudentDto implements Comparable, Dto {
     private Integer shortfall;
     private Integer alumniNumber;
     private Integer totalSRequired;
+    private LocalDate endDate;
+
     /**
 	 * Default constructor.
 	 */
@@ -132,6 +134,15 @@ public class StudentDto implements Comparable, Dto {
 
     public Boolean getEnrichmentSupport() {
         return enrichmentSupport;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public StudentDto withEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+        return this;
     }
 
     public StudentDto withId(Long id) {
@@ -287,5 +298,4 @@ public class StudentDto implements Comparable, Dto {
     private String getDisplay() {
         return firstName + " " + family.getFamilyName();
     }
-
 }

@@ -43,10 +43,20 @@ done - Add predicted end date on education table - start date + 12 month
 done -Alumni number can be removed
 done - rename 'No Non-kesho students to' Num of children in household
 done -No of adults to Num of adults (> 18 years) in household
+done - New tab History - New table for history
+not relevant any more - Contact section to move under sponsorship section
+done - Rename Contact sections to 'Student Contacts'
+done -Rename Contact Number to Phone Number
+done - Move these inputs to sponsorship section:
+       start date - rename to 'Start date with Kesho' (1 right)
+       Add end date field (2 right)
+       Leaver status move under (3 right)
+
 ----------------------------------
 all inputs all on forms should be disabled until clicking new
 save button on all forms should be default button and disabled until new or select
 all dtos should have length constraints
+refactor controllers (new abstract class for table/form with buttons)
 
 getting this exception when clicking text area on family form:
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
@@ -64,18 +74,10 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
 
 
-New tab History - New table for history
-
-Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate 
+email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 Home location on Students tab should come from Family details (view only)
-Contact section to move under sponsorship section
-Rename Contact sections to 'Student Contacts'
-Rename Contact Number to Phone Number
 
-Move these inputs to sponsorship section:
-start date - rename to 'Start date with Kesho' (1 right)
-Add end date field (2 right)
-Leaver status move under (3 right)
+
 
 If Sponsored = yes, then disable Sponsorship status dropdown 
 Sponsored - rename to Receiveing financial support?

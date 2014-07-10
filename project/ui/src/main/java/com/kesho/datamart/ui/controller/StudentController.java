@@ -54,15 +54,11 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     @FXML
     private ToggleGroup hasDisability;
     @FXML
-    private DatePicker startDate;
-    @FXML
     private TextField email;
     @FXML
     private TextField facebook;
 //    @FXML
 //    private TextField alumniNumber; // numeric
-    @FXML
-    private ComboBox<LeaverStatus> leaverStatus;
     @FXML
     private Button saveButton;
 
@@ -96,8 +92,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
         gender.getToggles().get(0).setUserData(Gender.F);
         gender.getToggles().get(1).setUserData(Gender.M);
-
-        Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
     }
 
     @Override
@@ -112,8 +106,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
             resetForm();
             return;
         }
-
-        startDate.valueProperty().set(Util.toJavaDate(student.getStartDate()));
 
         firstName.setText(student.getFirstName());
 
@@ -142,8 +134,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         facebook.setText(student.getFacebookAddress());
 
         //alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
-
-        leaverStatus.getSelectionModel().select(student.getLeaverStatus());
     }
 
     @Override
@@ -190,9 +180,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
-                .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
                 .withGender((Gender) gender.getSelectedToggle().getUserData())
-                .withStartDate(Util.toJodaDate(startDate.getValue()))
                 //.withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
                 .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
         ;
@@ -201,7 +189,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     }
 
     private void resetForm() {
-        startDate.valueProperty().setValue(null);
         firstName.clear();
         family.clear();
         family.setUserData(null);
@@ -215,7 +202,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         email.clear();
         facebook.clear();
         //alumniNumber.clear();
-        leaverStatus.getSelectionModel().clearSelection();
     }
 
     private boolean isInputValid(StudentDto dto) {
