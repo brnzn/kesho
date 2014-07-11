@@ -40,6 +40,12 @@ public enum FinancialSupportStatus {
                     FinancialSupportStatusDetails.SECONDARY, FinancialSupportStatusDetails.UNI);
         }
     },
+    RECENT_LEAVER("Recent College/University leaver") {
+        @Override
+        public EnumSet<FinancialSupportStatusDetails> getChildren() {
+            return EnumSet.noneOf(FinancialSupportStatusDetails.class);
+        }
+    },
     OTHER("Other") {
         @Override
         public EnumSet<FinancialSupportStatusDetails> getChildren() {

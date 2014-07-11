@@ -126,6 +126,15 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
     @FXML
     private void initialize() {
+
+        financialSupport.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                financialSupportStatus.setDisable((Boolean)newValue.getUserData());
+                financialSupportStatusDetails.disableProperty().bind(financialSupportStatus.disabledProperty());
+            }
+        });
+
         Util.initializeComboBoxValues(leaverStatus, EnumSet.allOf(LeaverStatus.class));
 
         anonymityCol.setCellValueFactory(new PropertyValueFactory<StudentSponsorDto, Boolean>("anonymity"));

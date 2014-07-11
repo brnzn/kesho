@@ -51,6 +51,10 @@ done - Move these inputs to sponsorship section:
        start date - rename to 'Start date with Kesho' (1 right)
        Add end date field (2 right)
        Leaver status move under (3 right)
+done -If Sponsored = yes, then disable Sponsorship status dropdown
+done - Sponsored - rename to Receiveing financial support?
+done -Sponsorship status - rename to Reason
+done - Add option to Sponsorship status "Recent College/University leaver"
 
 ----------------------------------
 all inputs all on forms should be disabled until clicking new
@@ -78,11 +82,6 @@ email kate - Class on education tab should be dropdown. see possible values for 
 Home location on Students tab should come from Family details (view only)
 
 
-
-If Sponsored = yes, then disable Sponsorship status dropdown 
-Sponsored - rename to Receiveing financial support?
-Sponsorship status - rename to Reason
-Add option to Sponsorship status "Recent College/University leaver"
 Add clear option to Sponsorship status (applicable to all dropdowns)
 Add input Other whic free text
 Delete 'Topup Needed'
