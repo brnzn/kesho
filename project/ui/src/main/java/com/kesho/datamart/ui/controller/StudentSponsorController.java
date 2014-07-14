@@ -78,8 +78,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
     @FXML
     private ComboBox<LevelOfSupport> levelOfSupport;
     @FXML
-    private ToggleGroup topupNeeded;
-    @FXML
     private TextField shortfall;    // numeric
     @FXML
     private TextField totalSRequired; // numeric
@@ -183,7 +181,7 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         Util.decorateNumericInput(shortfall, totalSRequired);
 
-        Util.initializeYesNoGroup(financialSupport, topupNeeded, enrichmentSupport);
+        Util.initializeYesNoGroup(financialSupport, enrichmentSupport);
         Util.initializeComboBoxValues(financialSupportStatus, EnumSet.allOf(FinancialSupportStatus.class));
 
         financialSupportStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FinancialSupportStatus>() {
@@ -235,8 +233,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         Util.setYesNoToggleState(financialSupport, student.hasFinancialSupport());
         Util.setYesNoToggleState(enrichmentSupport, student.getEnrichmentSupport());
-        Util.setYesNoToggleState(topupNeeded, student.isTopupNeeded());
-
 
         financialSupportStatus.getSelectionModel().select(student.getFinancialSupportStatus());
         if(student.getFinancialSupportStatus() != null && FinancialSupportStatus.OTHER != student.getFinancialSupportStatus()) {
@@ -271,7 +267,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         dto.withEnrichmentSupport((Boolean) enrichmentSupport.getSelectedToggle().getUserData())
                 .withFinancialSupport((Boolean) financialSupport.getSelectedToggle().getUserData())
-                .withTopupNeeded((Boolean) topupNeeded.getSelectedToggle().getUserData())
                 .withFinancialSupportStatus(financialSupportStatus.getSelectionModel().getSelectedItem())
                 .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
@@ -300,8 +295,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         enrichmentSupport.getToggles().get(0).setSelected(true);
         financialSupport.getToggles().get(0).setSelected(true);
-
-        topupNeeded.getToggles().get(0).setSelected(true);
 
         financialSupportStatus.getSelectionModel().clearSelection();
         levelOfSupport.getSelectionModel().clearSelection();

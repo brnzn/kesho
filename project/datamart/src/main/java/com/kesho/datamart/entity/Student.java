@@ -80,9 +80,6 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private LevelOfSupport levelOfSupport;
 
-    @Column(name = "TOPUP_NEEDED", columnDefinition = "BIT")
-    private Boolean topupNeeded;
-
     @Column(name = "SHORTFALL")
     private Integer shortfall;
 
@@ -259,14 +256,6 @@ public class Student {
 
     public void setLevelOfSupport(LevelOfSupport levelOfSupport) {
         this.levelOfSupport = levelOfSupport;
-    }
-
-    public Boolean isTopupNeeded() {
-        return topupNeeded;
-    }
-
-    public void setTopupNeeded(Boolean topupNeeded) {
-        this.topupNeeded = topupNeeded;
     }
 
     public Integer getShortfall() {

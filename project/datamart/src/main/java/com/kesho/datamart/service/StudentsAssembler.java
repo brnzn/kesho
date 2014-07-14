@@ -48,7 +48,6 @@ public class StudentsAssembler {
                 .withLeaverStatus(student.getLeaverStatus())
                 .withLevelOfSupport(student.getLevelOfSupport())
                 .withEnrichmentSupport(student.getEnrichmentSupport())
-                .withTopupNeeded(student.isTopupNeeded())
                 .withShortfall(student.getShortfall())
                 //.withAlumniNumber(student.getAlumniNumber())
                 .withTotalSponsorshipRequired(student.getTotalSponsorshipRequired())
@@ -89,10 +88,8 @@ public class StudentsAssembler {
             student.setFinancialSupportStatus(dto.getFinancialSupportStatus());
         }
         student.setLevelOfSupport(dto.getLevelOfSupport());
-        student.setTopupNeeded(dto.isTopupNeeded());
         student.setShortfall(dto.getShortfall());
         //student.setAlumniNumber(dto.getAlumniNumber());
-        student.setTopupNeeded(dto.isTopupNeeded());
         student.setEnrichmentSupport(dto.getEnrichmentSupport());
         student.setTotalSponsorshipRequired(dto.getTotalSponsorshipRequired());
         student.setEndDate(dto.getEndDate());

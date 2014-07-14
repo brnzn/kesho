@@ -50,21 +50,10 @@
                           </HBox>
                           <Label text="Reason for Not receiving Financial Support:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                           <ComboBox fx:id="financialSupportStatus" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                          <Label text="Topup Needed?" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                             <children>
-                               <RadioButton mnemonicParsing="false" text="Yes" HBox.hgrow="NEVER">
-                                 <toggleGroup>
-                                   <ToggleGroup fx:id="topupNeeded" />
-                                 </toggleGroup>
-                               </RadioButton>
-                               <RadioButton mnemonicParsing="false" text="No" toggleGroup="$topupNeeded" />
-                             </children>
-                          </HBox>
-                          <Label text="Level Of Support:" GridPane.rowIndex="8" />
-                          <ComboBox fx:id="levelOfSupport" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                          <Label text="Shortfall:" GridPane.rowIndex="9" />
-                          <TextField fx:id="shortfall" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                          <Label text="Level Of Support:" GridPane.rowIndex="7" />
+                          <ComboBox fx:id="levelOfSupport" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                          <Label text="Shortfall:" GridPane.rowIndex="8" />
+                          <TextField fx:id="shortfall" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                           <Label text="Receiving Enrichment / Other Support?" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                           <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                              <children>
@@ -78,14 +67,14 @@
                           </HBox>
                           <ComboBox fx:id="financialSupportStatusDetails" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                           <TextField fx:id="otherFinancialSupportStatusDetails" maxWidth="-Infinity" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Label text="Total sponsorship required (anual):" GridPane.rowIndex="10" />
-                                    <TextField fx:id="totalSRequired" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <Label text="Total sponsorship required (anual):" GridPane.rowIndex="9" />
+                                    <TextField fx:id="totalSRequired" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                     <Label text="Start date with Kesho:" />
                                     <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" />
                                     <Label text="End Date with Kesho:" GridPane.rowIndex="1" />
                                     <DatePicker fx:id="endDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Leaver Status:" GridPane.rowIndex="11" />
-                                    <ComboBox fx:id="leaverStatus" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                    <Label text="Leaver Status:" GridPane.rowIndex="10" />
+                                    <ComboBox fx:id="leaverStatus" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                     <TextField fx:id="financialSupportStatusSubDetails" maxWidth="-Infinity" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         </children>
                         <columnConstraints>
@@ -100,7 +89,6 @@
                           <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                           <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                           <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                           <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

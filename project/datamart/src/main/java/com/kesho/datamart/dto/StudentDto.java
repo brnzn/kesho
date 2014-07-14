@@ -40,7 +40,6 @@ public class StudentDto implements Comparable, Dto {
     private FinancialSupportStatus financialSupportStatus;
     private String financialSupportStatusDetails;
     private LevelOfSupport levelOfSupport;
-    private Boolean topupNeeded;
     private Integer shortfall;
     private Integer alumniNumber;
     private Integer totalSRequired;
@@ -119,10 +118,6 @@ public class StudentDto implements Comparable, Dto {
 
     public LevelOfSupport getLevelOfSupport() {
         return levelOfSupport;
-    }
-
-    public Boolean isTopupNeeded() {
-        return topupNeeded;
     }
 
     public Integer getShortfall() {
@@ -208,11 +203,6 @@ public class StudentDto implements Comparable, Dto {
 
     public StudentDto withLevelOfSupport(LevelOfSupport levelOfSupport) {
         this.levelOfSupport = levelOfSupport;
-        return this;
-    }
-
-    public StudentDto withTopupNeeded(Boolean topupNeeded) {
-        this.topupNeeded = topupNeeded;
         return this;
     }
 
