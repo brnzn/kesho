@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
@@ -126,8 +127,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         yearOfBirth.setText(Util.safeToStringValue(student.getYearOfBirth(), null));
 
         contactNumber.setText(student.getMobileNumber());
-        homeLocation.setText(student.getHomeLocation());
-
+        setHomeLocation();
         Util.setYesNoToggleState(hasDisability, student.hasDisability());
 
         email.setText(student.getEmail());
@@ -139,6 +139,23 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     @Override
     public void deleteFired(Long id) {
         //Student cannot be deleted
+    }
+
+    private void setHomeLocation() {
+        StudentDto dto = selected.get();
+        if(StringUtils.isBlank(dto.getHomeLocation()) && dto.getFamily() != null) {
+            homeLocation.setText(getFamilyHomeLocation(dto.getFamily()));
+        } else {
+            homeLocation.setText(dto.getHomeLocation());
+        }
+    }
+
+    private String getFamilyHomeLocation(FamilyDto family) {
+        if(family != null && family.getHomeLocation() != null) {
+            return family.getHomeLocation().name();
+        }
+
+        return null;
     }
 
     @FXML
@@ -176,7 +193,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         dto.withName(firstName.getText())
                 .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())
-                .withHomeLocation(homeLocation.getText())
                 .withHasDisability((Boolean) hasDisability.getSelectedToggle().getUserData())
                 .withEmail(email.getText())
                 .withFacebookAddress(facebook.getText())
@@ -184,6 +200,13 @@ public class StudentController extends AbstractEditableController<StudentDto> im
                 //.withAlumniNumber(Util.safeToIntegerValue(alumniNumber.getText(), null))
                 .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
         ;
+
+        if(!StringUtils.equals(getFamilyHomeLocation(dto.getFamily()), homeLocation.getText())) {
+            dto.withHomeLocation(homeLocation.getText());
+        } else if(!StringUtils.equals(dto.getHomeLocation(), homeLocation.getText()) && StringUtils.equals(getFamilyHomeLocation(dto.getFamily()), homeLocation.getText())) {
+            //home location changed and now match family home location, so no need to store it on student table
+            dto.withHomeLocation(null);
+        }
 
         return dto;
     }

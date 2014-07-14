@@ -42,7 +42,7 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
     @FXML
     private ToggleGroup isMarried;
     @FXML
-    private TextField numNonKeshoStudents;
+    private TextField numOfChildrenAtAddress;
     @FXML
     private TextField numOfWives;
     @FXML
@@ -142,7 +142,7 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         homeClusterId.setText(familyDto.getHomeClusterId());
         aliveParents.setText(Util.safeToStringValue(familyDto.getAliveParents(), null));
         Util.setYesNoToggleState(isMarried, familyDto.getMarried());
-        numNonKeshoStudents.setText(Util.safeToStringValue(familyDto.getNumOfChildrenAtAddress(), null));
+        numOfChildrenAtAddress.setText(Util.safeToStringValue(familyDto.getNumOfChildrenAtAddress(), null));
         numOfWives.setText(Util.safeToStringValue(familyDto.getNumOfWives(), null));
         primaryCaretaker.setText(familyDto.getPrimaryCaretaker());
         mainContactName.setText(familyDto.getMainContactName());
@@ -180,7 +180,7 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         homeSubLocation.clear();
         homeClusterId.clear();
         aliveParents.clear();
-        numNonKeshoStudents.clear();
+        numOfChildrenAtAddress.clear();
         numOfWives.clear();
         primaryCaretaker.clear();
         mainContactName.clear();

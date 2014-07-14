@@ -58,13 +58,15 @@ done - Add option to Sponsorship status "Recent College/University leaver"
 done - finish sub details - reset value when needed and hide field when needed
 done -selecting 'Reason for Not receiving Financial Support:' is not reseting the value in the details dropdown
 done - data migration studentDepartute - Other: [reason] should be saved as FINANCIAL_SUPPORT_STATUS_DETAILS = OTHER and FINANCIAL_SUPPORT_STATUS_SUB_DETAILS = reason
-
+done - Add clear option to Sponsorship status
+done - Home location on Students tab should default to Family home location
 ----------------------------------
 
 all inputs all on forms should be disabled until clicking new
 save button on all forms should be default button and disabled until new or select
 all dtos should have length constraints
 refactor controllers (new abstract class for table/form with buttons)
+add empty option to all dropdowns
 
 getting this exception when clicking text area on family form:
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
@@ -83,10 +85,8 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 
 
 email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
-Home location on Students tab should come from Family details (view only)
 
 
-Add clear option to Sponsorship status (applicable to all dropdowns)
 Add input Other whic free text
 Delete 'Topup Needed'
 Delete Shortfall
