@@ -12,8 +12,9 @@ class Student(val id: Long,
   @Column("FAMILY_ID") val familyId: Long,
   @Column("GENDER") val gender: String,
   @Column("HOME_LOCATION") val homeLocation: String,
-  @Column("YEAR_OF_BIRTH") val dob: Int) {
-  def this() = this(0, 0, null, 0, null, null, null, 0, null, null, 0)
+  @Column("YEAR_OF_BIRTH") val dob: Int,
+  @Column("FINANCIAL_SUPPORT_STATUS_SUB_DETAILS") val financialSupportStatusSubDetails: String) {
+  def this() = this(0, 0, null, 0, null, null, null, 0, null, null, 0, null)
 }
 
 

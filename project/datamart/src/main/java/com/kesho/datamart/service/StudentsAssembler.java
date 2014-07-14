@@ -1,7 +1,10 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.domain.FinancialSupportStatus;
+import com.kesho.datamart.domain.FinancialSupportStatusDetails;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +41,8 @@ public class StudentsAssembler {
                 .withMobileNumber(student.getContactNumber())
                 .withYearOfBirth(student.getYearOfBirth())
                 .withFinancialSupport(student.hasFinancialSupport())
-                .withFinancialSupportStatus(student.getFinancialSupportStatus())
-                .withFinancialSupportStatusDetails(student.getFinancialSupportStatusDetails())
+                .withFinancialSupportStatus(student.getFinancialSupportStatus() != null ? student.getFinancialSupportStatus() : FinancialSupportStatus.EMPTY)
+                .withFinancialSupportStatusDetails(student.getFinancialSupportStatusDetails() == null ? FinancialSupportStatusDetails.EMPTY.name() : student.getFinancialSupportStatusDetails())
                 .withEmail(student.getEmail())
                 .withFacebookAddress(student.getFacebookAddress())
                 .withLeaverStatus(student.getLeaverStatus())
@@ -50,6 +53,7 @@ public class StudentsAssembler {
                 //.withAlumniNumber(student.getAlumniNumber())
                 .withTotalSponsorshipRequired(student.getTotalSponsorshipRequired())
                 .withEndDate(student.getEndDate())
+                .withFinancialSupportStatusSubDetails(student.getFinancialSupportStatusSubDetails())
         ;
 
         return dto;
@@ -67,11 +71,23 @@ public class StudentsAssembler {
         student.setContactNumber(dto.getMobileNumber());
         student.setYearOfBirth(dto.getYearOfBirth());
         student.setFinancialSupport(dto.hasFinancialSupport());
-        student.setFinancialSupportStatusDetails(dto.getFinancialSupportStatusDetails());
+
+        if(FinancialSupportStatus.EMPTY.name().equals(dto.getFinancialSupportStatusDetails())) {
+            student.setFinancialSupportStatusDetails(null);
+        } else {
+            student.setFinancialSupportStatusDetails(dto.getFinancialSupportStatusDetails());
+        }
+
+        student.setFinancialSupportStatusSubDetails(StringUtils.isBlank(dto.getFinancialSupportStatusSubDetails()) ? null : dto.getFinancialSupportStatusSubDetails());
         student.setEmail(dto.getEmail());
         student.setFacebookAddress(dto.getFacebookAddress());
         student.setLeaverStatus(dto.getLeaverStatus());
-        student.setFinancialSupportStatus(dto.getFinancialSupportStatus());
+
+        if(FinancialSupportStatus.EMPTY == dto.getFinancialSupportStatus()) {
+            student.setFinancialSupportStatus(null);
+        } else {
+            student.setFinancialSupportStatus(dto.getFinancialSupportStatus());
+        }
         student.setLevelOfSupport(dto.getLevelOfSupport());
         student.setTopupNeeded(dto.isTopupNeeded());
         student.setShortfall(dto.getShortfall());

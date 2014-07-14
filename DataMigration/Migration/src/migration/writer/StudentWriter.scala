@@ -14,7 +14,7 @@ class StudentWriter extends DataWriter {
        //println(fam.size)
       //println("-- "+ fam.toList(0).id + "-" + fam.toList(0).name)
        //fam.toList(0).id, , toInt(values(2), "no"), , , values(4), 
-    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), null, toInt(values(3), "no"), toDepartureReason(values(4)),toDepartureReasonDetails(values(5)), values(6).trim, fam.toList(0).id, toGender(values(8)), null, 0));
+    	Schema.students.insert(new Student(new java.lang.Long(values(0).substring(1)), toInt(values(1), "no"), null, toInt(values(3), "no"), toDepartureReason(values(4)),toDepartureReasonDetails(values(5)), values(6).trim, fam.toList(0).id, toGender(values(8)), null, 0, toDepartureReasonSubDetails(values(5))));
     } 
     
     /*
@@ -104,6 +104,8 @@ class StudentWriter extends DataWriter {
       "DISHONESTY"
     } else if (value.trim().equalsIgnoreCase("Parents Decision")) {
       "PARENTS_DECISION"
+    } else if (value.trim().startsWith("Other")) {
+      "OTHER"
     } else if (value.trim().length() > 0) {
       value.trim
     } else {
@@ -111,8 +113,26 @@ class StudentWriter extends DataWriter {
     }
   }
   
+  
+  def toDepartureReasonSubDetails(value: String) :String = {
+    if(value.trim().startsWith("Other") ) {
+      value.split(":")(1).trim()
+    } else {
+      null
+    }
+
+  }
+
+//        
+//    if(value.trim().startsWith("Other")) {
+//      val values = value.split(":")
+//      val v = values(1).trim()
+//      v
+//    }
+//    null
+//  }
 }
-    
+    //Other: Poor Cooperation of Family
 /*
  * val id: Long,
   @Column("FAMILY_ID") val county: Long,

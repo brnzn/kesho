@@ -16,7 +16,7 @@ public interface StudentsDAO extends JpaRepository<Student, Long>, JpaSpecificat
 //    @Query("select st from Student st left join fetch st.educationHistory where st.id = :id")
 //    Student findwithJoin(@Param("id") Long id);
 
-    @Query(value="select st from Student st join fetch st.family" , countQuery = "select count(t) from Student t")
+    @Query(value="select st from Student st join fetch st.family order by st.firstName ASC" , countQuery = "select count(t) from Student t")
     Page<Student> findWithFamily(Pageable p);
 
     @Query(value="select st from Student st join fetch st.family")

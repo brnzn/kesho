@@ -45,6 +45,7 @@ public class StudentDto implements Comparable, Dto {
     private Integer alumniNumber;
     private Integer totalSRequired;
     private LocalDate endDate;
+    private String financialSupportStatusSubDetails;
 
     /**
 	 * Default constructor.
@@ -245,6 +246,11 @@ public class StudentDto implements Comparable, Dto {
         return this;
     }
 
+    public StudentDto withFinancialSupportStatusSubDetails(String details) {
+        this.financialSupportStatusSubDetails = details;
+        return this;
+    }
+
     public StudentDto withEnrichmentSupport(Boolean value) {
         this.enrichmentSupport = value;
         return this;
@@ -297,5 +303,9 @@ public class StudentDto implements Comparable, Dto {
 
     private String getDisplay() {
         return firstName + " " + family.getFamilyName();
+    }
+
+    public String getFinancialSupportStatusSubDetails() {
+        return financialSupportStatusSubDetails;
     }
 }

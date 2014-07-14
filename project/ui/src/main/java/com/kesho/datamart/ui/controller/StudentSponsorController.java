@@ -26,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -71,6 +72,8 @@ public class StudentSponsorController extends AbstractEditableController<Student
     private ComboBox<FinancialSupportStatusDetails> financialSupportStatusDetails;
     @FXML
     private TextField otherFinancialSupportStatusDetails;
+    @FXML
+    private TextField financialSupportStatusSubDetails;
 
     @FXML
     private ComboBox<LevelOfSupport> levelOfSupport;
@@ -187,6 +190,7 @@ public class StudentSponsorController extends AbstractEditableController<Student
             @Override
             public void changed(ObservableValue<? extends FinancialSupportStatus> observableValue, FinancialSupportStatus s, FinancialSupportStatus s2) {
                 financialSupportStatusDetails.getItems().clear();
+                financialSupportStatusDetails.getSelectionModel().clearSelection();
                 if (s2 != null) {
                     if (FinancialSupportStatus.OTHER != s2) {
                         financialSupportStatusDetails.getItems().addAll(s2.getChildren());
@@ -197,6 +201,20 @@ public class StudentSponsorController extends AbstractEditableController<Student
                         financialSupportStatusDetails.setVisible(false);
                         financialSupportStatusDetails.getSelectionModel().clearSelection();
                         otherFinancialSupportStatusDetails.setVisible(true);
+                    }
+                }
+            }
+        });
+
+        financialSupportStatusDetails.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FinancialSupportStatusDetails>() {
+            @Override
+            public void changed(ObservableValue<? extends FinancialSupportStatusDetails> observable, FinancialSupportStatusDetails oldValue, FinancialSupportStatusDetails newValue) {
+                if (newValue != null) {
+                    if (FinancialSupportStatusDetails.OTHER != newValue) {
+                        financialSupportStatusSubDetails.clear();
+                        financialSupportStatusSubDetails.setVisible(false);
+                    } else {
+                        financialSupportStatusSubDetails.setVisible(true);
                     }
                 }
             }
@@ -221,10 +239,14 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
 
         financialSupportStatus.getSelectionModel().select(student.getFinancialSupportStatus());
-        if(student.getFinancialSupportStatus() != null && FinancialSupportStatus.OTHER != student.getFinancialSupportStatus() && student.getFinancialSupportStatusDetails() != null) {
+        if(student.getFinancialSupportStatus() != null && FinancialSupportStatus.OTHER != student.getFinancialSupportStatus()) {
             financialSupportStatusDetails.getSelectionModel().select(FinancialSupportStatusDetails.valueOf(student.getFinancialSupportStatusDetails()));
         } else if (FinancialSupportStatus.OTHER == student.getFinancialSupportStatus()){
             otherFinancialSupportStatusDetails.setText(student.getFinancialSupportStatusDetails());
+        }
+
+        if(StringUtils.isNotBlank(student.getFinancialSupportStatusDetails())) {
+            financialSupportStatusSubDetails.setText(student.getFinancialSupportStatusSubDetails());
         }
 
         levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
@@ -258,6 +280,7 @@ public class StudentSponsorController extends AbstractEditableController<Student
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
                 .withStartDate(Util.toJodaDate(startDate.getValue()))
                 .withEndDate(Util.toJodaDate(endDate.getValue()))
+                .withFinancialSupportStatusSubDetails(financialSupportStatusSubDetails.getText())
         ;
 
         return dto;

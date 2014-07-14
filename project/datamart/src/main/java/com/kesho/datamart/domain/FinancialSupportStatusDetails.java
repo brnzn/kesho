@@ -8,6 +8,7 @@ package com.kesho.datamart.domain;
  * To change this template use File | Settings | File Templates.
  */
 public enum FinancialSupportStatusDetails {
+    EMPTY(""),
     POST_PRIMARY("Post Primary"),
     POST_SECONDARY("Post Secondary"),
     POST_COLLEGE("Post College"),
@@ -25,7 +26,9 @@ public enum FinancialSupportStatusDetails {
     ABLE_TO_PAY("Family able to pay"),
     PARENTS_DECISION("Parents Decision"),
     DISHONESTY("Dishonesty"),
-    PREGNANT("Pregnant / Married");
+    PREGNANT("Pregnant / Married"),
+    OTHER("Other")
+    ;
 
     private final String display;
 

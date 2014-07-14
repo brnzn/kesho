@@ -73,6 +73,9 @@ public class Student {
     @Column(name = "FINANCIAL_SUPPORT_STATUS_DETAILS")
     private String financialSupportStatusDetails;
 
+    @Column(name = "FINANCIAL_SUPPORT_STATUS_SUB_DETAILS")
+    private String financialSupportStatusSubDetails;
+
     @Column(name = "LEVEL_OF_SUPPORT")
     @Enumerated(EnumType.STRING)
     private LevelOfSupport levelOfSupport;
@@ -108,6 +111,15 @@ public class Student {
 
     public void setFinancialSupportStatusDetails(String financialSupportStatusDetails) {
         this.financialSupportStatusDetails = financialSupportStatusDetails;
+    }
+
+
+    public String getFinancialSupportStatusSubDetails() {
+        return financialSupportStatusSubDetails;
+    }
+
+    public void setFinancialSupportStatusSubDetails(String financialSupportStatusSubDetails) {
+        this.financialSupportStatusSubDetails = financialSupportStatusSubDetails;
     }
 
     public Long getId() {
