@@ -80,9 +80,6 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private LevelOfSupport levelOfSupport;
 
-    @Column(name = "SHORTFALL")
-    private Integer shortfall;
-
 //    @Column(name = "ALUMNI_MEMBER")
 //    private Integer alumniNumber;
 
@@ -256,14 +253,6 @@ public class Student {
 
     public void setLevelOfSupport(LevelOfSupport levelOfSupport) {
         this.levelOfSupport = levelOfSupport;
-    }
-
-    public Integer getShortfall() {
-        return shortfall;
-    }
-
-    public void setShortfall(Integer shortfall) {
-        this.shortfall = shortfall;
     }
 
     public LocalDate getEndDate() {

@@ -78,8 +78,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
     @FXML
     private ComboBox<LevelOfSupport> levelOfSupport;
     @FXML
-    private TextField shortfall;    // numeric
-    @FXML
     private TextField totalSRequired; // numeric
 
     @FXML
@@ -179,7 +177,7 @@ public class StudentSponsorController extends AbstractEditableController<Student
         sponsorsModel.clear();
         sponsorsTable.setItems(sponsorsModel);
 
-        Util.decorateNumericInput(shortfall, totalSRequired);
+        Util.decorateNumericInput(totalSRequired);
 
         Util.initializeYesNoGroup(financialSupport, enrichmentSupport);
         Util.initializeComboBoxValues(financialSupportStatus, EnumSet.allOf(FinancialSupportStatus.class));
@@ -247,8 +245,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         levelOfSupport.getSelectionModel().select(student.getLevelOfSupport());
 
-        shortfall.setText(Util.safeToStringValue(student.getShortfall(), null));
-
         totalSRequired.setText(Util.safeToStringValue(student.getTotalSponsorshipRequired(), null));
     }
 
@@ -270,7 +266,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
                 .withFinancialSupportStatus(financialSupportStatus.getSelectionModel().getSelectedItem())
                 .withFinancialSupportStatusDetails(getFinancialSupportStatusDetails())
                 .withLevelOfSupport(levelOfSupport.getSelectionModel().getSelectedItem())
-                .withShortfall(Util.safeToIntegerValue(shortfall.getText(), null))
                 .withTotalSponsorshipRequired(Util.safeToIntegerValue(totalSRequired.getText(), null))
                 .withLeaverStatus(leaverStatus.getSelectionModel().getSelectedItem())
                 .withStartDate(Util.toJodaDate(startDate.getValue()))
@@ -298,7 +293,6 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
         financialSupportStatus.getSelectionModel().clearSelection();
         levelOfSupport.getSelectionModel().clearSelection();
-        shortfall.clear();
         totalSRequired.clear();
     }
 

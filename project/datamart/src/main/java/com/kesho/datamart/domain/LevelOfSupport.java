@@ -10,7 +10,7 @@ package com.kesho.datamart.domain;
 public enum LevelOfSupport {
     FULL("Full"),
     PART("Part"),
-    ONE_OF("One of donation"),
+    ONE_OF("One off donation"),
     ON_HOLD("On hold"),
     NONE("None");
 

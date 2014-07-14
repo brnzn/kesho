@@ -62,14 +62,18 @@ done - Add input Other which is free text
 done - Add clear option to Sponsorship status
 done - Home location on Students tab should default to Family home location
 done - Delete 'Topup Needed'
+done - Delete Shortfall
 
 ----------------------------------
-
+add version column to all entities
+tests
+put all tables/forms in vertical split pane + check if scroll pane is needed
 all inputs all on forms should be disabled until clicking new
 save button on all forms should be default button and disabled until new or select
 all dtos should have length constraints
 refactor controllers (new abstract class for table/form with buttons)
 add empty option to all dropdowns
+
 
 getting this exception when clicking text area on family form:
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
@@ -90,7 +94,6 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 
 
-Delete Shortfall
 Level of Support - correct spelling of - 'One off donation'
 
 Kesho menu - student/ sponsor buttons instead of menu
@@ -112,7 +115,7 @@ New table for Sibiling - name, year of birth, gender, literacy support (yes/no) 
 Student table on of family table should show just sibiling
 
 Sponsors:
-An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (see new field on student table)  
+An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (TOTAL_SPONSORSHIP_REQUIRED on student table)
 
 Move end of education to education form as overall input (not per row) 
 

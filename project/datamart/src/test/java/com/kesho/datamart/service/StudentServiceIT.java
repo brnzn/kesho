@@ -166,7 +166,6 @@ public class StudentServiceIT {
         assertThat("student status s1s", s1.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
 //        assertThat("sponsor status sp1", s1.getFinancialSupportStatus(), is(FinancialSupportStatus.REVIEW));
         assertThat("level of support full", s1.getLevelOfSupport(), is(LevelOfSupport.FULL));
-        assertThat("shortfall 100", s1.getShortfall(), is(100));
         assertThat("alumni number 111", s1.getAlumniNumber(), is(111));
     }
 
@@ -186,7 +185,6 @@ public class StudentServiceIT {
                 .withLeaverStatus(LeaverStatus.DEPARTED_BEFORE_COMPLETE)
 //                .withSponsorStatus(FinancialSupportStatus.RECENT_SECONDARY_LEAVER)
                 .withLevelOfSupport(LevelOfSupport.ON_HOLD)
-                .withShortfall(1)
                 .withAlumniNumber(1)
                 .withMobileNumber("123");
         final StudentDto resultDto = studentService.save(dto);
@@ -208,7 +206,6 @@ public class StudentServiceIT {
         assertThat(saved.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
 //        assertThat(saved.getFinancialSupportStatus(), is(FinancialSupportStatus.RECENT_SECONDARY_LEAVER));
         assertThat(saved.getLevelOfSupport(), is(LevelOfSupport.ON_HOLD));
-        assertThat(saved.getShortfall(), is(1));
 //        assertThat(saved.getAlumniNumber(), is(1));
     }
 

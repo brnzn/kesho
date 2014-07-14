@@ -40,7 +40,6 @@ public class StudentDto implements Comparable, Dto {
     private FinancialSupportStatus financialSupportStatus;
     private String financialSupportStatusDetails;
     private LevelOfSupport levelOfSupport;
-    private Integer shortfall;
     private Integer alumniNumber;
     private Integer totalSRequired;
     private LocalDate endDate;
@@ -118,10 +117,6 @@ public class StudentDto implements Comparable, Dto {
 
     public LevelOfSupport getLevelOfSupport() {
         return levelOfSupport;
-    }
-
-    public Integer getShortfall() {
-        return shortfall;
     }
 
     public Integer getAlumniNumber() {
@@ -208,11 +203,6 @@ public class StudentDto implements Comparable, Dto {
 
     public StudentDto withFamily(FamilyDto family) {
         this.family = family;
-        return this;
-    }
-
-    public StudentDto withShortfall(Integer shortfall) {
-        this.shortfall = shortfall;
         return this;
     }
 
