@@ -63,6 +63,7 @@ done - Add clear option to Sponsorship status
 done - Home location on Students tab should default to Family home location
 done - Delete 'Topup Needed'
 done - Delete Shortfall
+done - Level of Support - correct spelling of - 'One off donation'
 
 ----------------------------------
 add version column to all entities
@@ -94,7 +95,6 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 
 
-Level of Support - correct spelling of - 'One off donation'
 
 Kesho menu - student/ sponsor buttons instead of menu
 System - rename to Data
