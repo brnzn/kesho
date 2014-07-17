@@ -31,9 +31,9 @@
                         <Button mnemonicParsing="false" onAction="#sponsors" text="Sponsors" />
                   <MenuBar>
                     <menus>
-                      <Menu mnemonicParsing="false" text="System">
+                      <Menu mnemonicParsing="false" text="Data">
                         <items>
-                          <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Manage Institutions" />
+                          <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Manage Schools" />
                           <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Manage Families" />
                         </items>
                       </Menu>

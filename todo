@@ -65,6 +65,8 @@ done - Delete 'Topup Needed'
 done - Delete Shortfall
 done - Level of Support - correct spelling of - 'One off donation'
 done - Kesho menu - student/ sponsor buttons instead of menu
+done - System - rename to Data
+done - Manage Institution rename to Schools
 
 ----------------------------------
 add version column to all entities
@@ -95,12 +97,7 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 
 email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 
-
-
-System - rename to Data
-Manage Institution rename to Schools
 Enable export to xls
-
 After updating familiy, family details on student details are not getting refreshed until reloading the page. Should always refresh when clicking on family tab
 All forms input should be disabled until pressing new or selecting row.
 
