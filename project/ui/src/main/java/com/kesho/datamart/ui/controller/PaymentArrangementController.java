@@ -76,8 +76,6 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     @FXML
     private TableColumn<PaymentArrangementDto, String> studentNameCol;
     @FXML
-    private TextField endOfEducation;  //TODO: how to work it out?
-    @FXML
     private TextField educationLevel;
 
     @FXML
@@ -218,7 +216,6 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         totalAllocated.clear();
         financialArrangement.getSelectionModel().clearSelection();
         financialArrangement.valueProperty().setValue(null);
-        endOfEducation.clear();
         educationLevel.clear();
         student.clear();
     }
@@ -234,7 +231,6 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         startDate.valueProperty().setValue(Util.toJavaDate(dto.getStartDate()));
 
         endDate.valueProperty().setValue(Util.toJavaDate(dto.getEndDate()));
-
 
         financialArrangement.setValue(dto.getFinancialArrangement());
         totalAllocated.setText(Util.safeToStringValue(dto.getAmount(), ""));

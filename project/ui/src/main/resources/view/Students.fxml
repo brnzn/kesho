@@ -79,7 +79,7 @@
                     <items>
                         <Button fx:id="newButton" mnemonicParsing="false" text="New Student..." />
                         <Button mnemonicParsing="false" text="Filter..." />
-                        <Button mnemonicParsing="false" onAction="#refreshTable" text="Show All" />
+                        <Button mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
                     </items>
                 </ToolBar>
             </top>

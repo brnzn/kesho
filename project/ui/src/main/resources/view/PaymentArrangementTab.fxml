@@ -29,11 +29,10 @@
                     <Label text="Education Level" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Label text="Start of commitment:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <Label text="End of commitment" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <Label text="End of Education:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <Label text="Financial Arrangement:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                    <Label text="Total Allocated:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Label text="Financial Arrangement:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <Label text="Total Allocated:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                     <TextField fx:id="educationLevel" editable="false" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                       <children>
                         <Button fx:id="newButton" mnemonicParsing="false" onAction="#add" text="New" />
                         <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
@@ -49,9 +48,8 @@
                         <Button mnemonicParsing="false" onAction="#selectStudent" text="..." />
                       </children>
                     </HBox>
-                    <ComboBox fx:id="financialArrangement" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <TextField fx:id="totalAllocated" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <TextField fx:id="endOfEducation" editable="false" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="financialArrangement" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <TextField fx:id="totalAllocated" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="endDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   </children>
@@ -64,7 +62,6 @@
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
