@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
@@ -23,24 +24,24 @@
               </children>
             </Pane>
           </center>
-          <top>
-            <MenuBar prefWidth="386.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="Kesho">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#students" text="Students" />
-                    <MenuItem mnemonicParsing="false" onAction="#sponsors" text="Sponsors" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="System">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Manage Institutions" />
-                    <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Manage Families" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-          </top>
+               <top>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                      <Button mnemonicParsing="false" onAction="#students" text="Students" />
+                        <Button mnemonicParsing="false" onAction="#sponsors" text="Sponsors" />
+                  <MenuBar>
+                    <menus>
+                      <Menu mnemonicParsing="false" text="System">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#openInstitutions" text="Manage Institutions" />
+                          <MenuItem mnemonicParsing="false" onAction="#openFamilyDialog" text="Manage Families" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                    </items>
+                  </ToolBar>
+               </top>
         </BorderPane>
       </children>
     </AnchorPane>

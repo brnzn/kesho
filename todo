@@ -64,6 +64,7 @@ done - Home location on Students tab should default to Family home location
 done - Delete 'Topup Needed'
 done - Delete Shortfall
 done - Level of Support - correct spelling of - 'One off donation'
+done - Kesho menu - student/ sponsor buttons instead of menu
 
 ----------------------------------
 add version column to all entities
@@ -96,7 +97,6 @@ email kate - Class on education tab should be dropdown. see possible values for 
 
 
 
-Kesho menu - student/ sponsor buttons instead of menu
 System - rename to Data
 Manage Institution rename to Schools
 Enable export to xls
