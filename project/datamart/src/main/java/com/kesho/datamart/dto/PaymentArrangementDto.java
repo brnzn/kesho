@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Currency;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,6 +35,8 @@ public class PaymentArrangementDto {
     private FinancialArrangement type;
     @NotNull(message = "Total allocated is mandatory")
     private BigDecimal amount;
+    @NotNull(message = "Currency is mandatory")
+    private Currency currency;
     private String studentName;
 
     public PaymentArrangementDto() {
@@ -41,8 +44,8 @@ public class PaymentArrangementDto {
     }
 
     public PaymentArrangementDto(Long id, Long studentId, Long sponsorId, LocalDate startDate, LocalDate endDate,
-                                 FinancialArrangement financialArrangement, BigDecimal amount, String name, String surname) {
-        this.studentName = name + surname;
+                                 FinancialArrangement financialArrangement, BigDecimal amount, String name, String surname, String currency) {
+        this.studentName = name.concat(" ").concat(surname);
         this.id = id;
         this.studentId = studentId;
         this.sponsorId = sponsorId;
@@ -50,6 +53,7 @@ public class PaymentArrangementDto {
         this.endDate = endDate;
         this.type = financialArrangement;
         this.amount = amount;
+        this.currency = Currency.getInstance(currency);
     }
 
     public Long getId() {
@@ -110,5 +114,13 @@ public class PaymentArrangementDto {
 
     public String getStudentName() {
         return studentName;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

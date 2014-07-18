@@ -3,6 +3,8 @@ package com.kesho.datamart.service;
 import com.kesho.datamart.dto.PaymentArrangementDto;
 import com.kesho.datamart.entity.PaymentArrangement;
 
+import java.util.Currency;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -20,6 +22,7 @@ public class PaymentArrangementAssembler {
         entity.setStudentId(dto.getStudentId());
         entity.setStartDate(dto.getStartDate());
         entity.setType(dto.getFinancialArrangement());
+        entity.setCurrency(dto.getCurrency().getCurrencyCode());
         return entity;
     }
 
@@ -32,6 +35,7 @@ public class PaymentArrangementAssembler {
         dto.setStudentId(entity.getStudentId());
         dto.setStartDate(entity.getStartDate());
         dto.setFinancialArrangement(entity.getType());
+        dto.setCurrency(Currency.getInstance(entity.getCurrency()));
         return  dto;
     }
 

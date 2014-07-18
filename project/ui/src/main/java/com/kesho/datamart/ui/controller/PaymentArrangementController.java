@@ -29,10 +29,7 @@ import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -77,11 +74,17 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     private TableColumn<PaymentArrangementDto, String> studentNameCol;
     @FXML
     private TextField educationLevel;
+    @FXML
+    private Label educationLevelLbl;
 
     @FXML
     private Button saveButton;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Button selectStudentButton;
+    @FXML
+    private ComboBox<Currency> currency;
 
     private SimpleObjectProperty<PaymentArrangementDto> selectedPayment = new SimpleObjectProperty<>();
 
@@ -99,6 +102,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
             validationFields.put("type", financialArrangement);
             validationFields.put("amount", totalAllocated);
             validationFields.put("studentId", student);
+            validationFields.put("currency", currency);
         }
 
         return validationFields;
@@ -107,7 +111,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     @Override
     public void refresh(SponsorDto dto) {
         refreshTable();
-        resetForm();
+//        resetForm();
     }
 
     @FXML
@@ -121,12 +125,24 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
     @FXML
     private void initialize() {
+        Util.decorateNumericInput(totalAllocated);
+
+        currency.getItems().addAll(Currency.getAvailableCurrencies());
+        educationLevelLbl.visibleProperty().bind(educationLevel.visibleProperty());
+
+        totalAllocated.disableProperty().bind(saveButton.disabledProperty());
+        startDate.disableProperty().bind(saveButton.disabledProperty());
+        endDate.disableProperty().bind(saveButton.disabledProperty());
+        financialArrangement.disableProperty().bind(saveButton.disabledProperty());
+        selectStudentButton.disableProperty().bind(saveButton.disabledProperty());
+        currency.disableProperty().bind(saveButton.disabledProperty());
 
         selectedPayment.addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
             public void changed(ObservableValue<? extends PaymentArrangementDto> observableValue, PaymentArrangementDto dto1, PaymentArrangementDto dto2) {
-                saveButton.setDisable(dto2 == null);
+                saveButton.disableProperty().setValue(dto2 == null);
                 deleteButton.setDisable(dto2 == null || dto2.getId() == null);
+
             }
         });
 
@@ -166,13 +182,6 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
         Util.initializeComboBoxValues(financialArrangement, EnumSet.allOf(FinancialArrangement.class));
 
-//        paymentArrangementTab.setOnSelectionChanged(new EventHandler<Event>() {
-//            @Override
-//            public void handle(javafx.event.Event event) {
-//                refreshTable();
-//            }
-//        });
-
         paymentArrangementTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PaymentArrangementDto>() {
             @Override
             public void changed(ObservableValue<? extends PaymentArrangementDto> observable,
@@ -200,6 +209,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     private void add() {
         PaymentArrangementDto dto = new PaymentArrangementDto();
         initializeForm(dto);
+        educationLevel.visibleProperty().setValue(false);
     }
 
     @FXML
@@ -218,6 +228,8 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         financialArrangement.valueProperty().setValue(null);
         educationLevel.clear();
         student.clear();
+        currency.getSelectionModel().clearSelection();
+        currency.valueProperty().setValue(null);
     }
 
     private void initializeForm(PaymentArrangementDto dto) {
@@ -227,6 +239,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
             return;
         }
 
+        student.setUserData(null);
         student.setText(dto.getStudentName());
         startDate.valueProperty().setValue(Util.toJavaDate(dto.getStartDate()));
 
@@ -234,6 +247,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
         financialArrangement.setValue(dto.getFinancialArrangement());
         totalAllocated.setText(Util.safeToStringValue(dto.getAmount(), ""));
+        currency.setValue(dto.getCurrency());
     }
 
     @FXML
@@ -242,11 +256,16 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
         List<String> validation = FormValidator.validate(dto, getValidateableFields());
 
+        if (endDate.getValue() != null && startDate.getValue() != null && endDate.getValue().isBefore(startDate.getValue())) {
+            validation.add("End date cannot be before Start date");
+        }
+
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", FormValidator.reduce(validation));
         } else {
             sponsorsRepository.save(dto);
             refreshTable();
+            educationLevel.visibleProperty().setValue(true);
         }
     }
 
@@ -266,7 +285,11 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
         if(student != null && student.getUserData() != null) {
             dto.setStudentId(((StudentDto)student.getUserData()).getId());
+        } else {
+            dto.setStudentId(selectedPayment.get().getStudentId());
         }
+
+        dto.setCurrency(currency.getSelectionModel().getSelectedItem());
 
         dto.setSponsorId(selected.get().getId());
 
