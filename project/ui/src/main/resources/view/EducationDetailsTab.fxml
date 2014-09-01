@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="554.0000999999975" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefWidth="554.0000999999975" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kesho.datamart.ui.controller.EducationDetailsController">
   <children>
-    <VBox minWidth="538.0" prefHeight="496.0" prefWidth="554.0000999999975" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox minWidth="538.0" prefWidth="554.0000999999975" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <TableView fx:id="educationTable" prefHeight="200.0" prefWidth="200.0">
           <columns>
@@ -23,16 +23,15 @@
         </TableView>
         <TitledPane animated="false" text="Education Details">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="276.0" prefWidth="537.9998779296875">
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefWidth="537.9998779296875">
               <children>
-                <GridPane prefHeight="273.0" prefWidth="553.0" vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <children>
                     <Label text="Start Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Label text="Institution name" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <Label text="Class / Year" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <Label text="Course Name" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                     <Label text="Educational Status" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <TextField fx:id="educationYear" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <TextField fx:id="course" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     <ComboBox fx:id="secondaryStatus1" maxWidth="-Infinity" minWidth="-1.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <ComboBox fx:id="educationalStatus" maxWidth="-Infinity" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -53,22 +52,23 @@
                               <DatePicker fx:id="startDate" prefWidth="200.0" GridPane.columnIndex="1" />
                               <DatePicker fx:id="predictedEndDate" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="Predicted End Date:" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="educationYear" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="80.0" prefWidth="132.0" />
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="169.0" />
                   </columnConstraints>
                   <rowConstraints>
-                    <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="21.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>

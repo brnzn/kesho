@@ -39,9 +39,9 @@ object Migration {
     //Source.fromFile("./src/data/sponsors.txt").getLines().foreach(line => new DBWriter(new SponsorWriter, line, 11).insert)  
 //    Source.fromFile("./src/data/SponsorsContactsDetails-only.txt").getLines().foreach(line => new DBWriter(new SponsorContactWriter, line, 4).insert)  
 
-    //Source.fromFile("./src/data/Families.txt").getLines().foreach(line => new DBWriter(new FamilyWriter, line, 1).insert)  
-    Source.fromFile("./src/data/studentsKN.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
-    //Source.fromFile("./src/data/educationKN.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
+//    Source.fromFile("./src/data/Families.txt").getLines().foreach(line => new DBWriter(new FamilyWriter, line, 1).insert)  
+//    Source.fromFile("./src/data/studentsKN.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
+    Source.fromFile("./src/data/educationKN.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
 //    Source.fromFile("./src/data/homeLocation.txt").getLines().foreach(line => new DBWriter(new HomeLocationWriter, line, 2).insert)
     //Source.fromFile("./src/data/dob.txt").getLines().foreach(line => new DBWriter(new DOBWriter, line, 2).insert)
 //    Source.fromFile("./src/data/studentHistory.txt").getLines().foreach(line => new DBWriter(new StudentHistoryWriter, line, 3).insert)

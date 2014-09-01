@@ -1,6 +1,7 @@
 package com.kesho.datamart.entity;
 
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.EducationYear;
 import com.kesho.datamart.domain.SubEducationStatus;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
@@ -29,7 +30,8 @@ public class EducationHistory {
     private EducationStatus educationStatus;
 
     @Column(name = "CLASS")
-	private String year;
+    @Enumerated(EnumType.STRING)
+	private EducationYear year;
 
     @Column(name = "START_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -97,11 +99,11 @@ public class EducationHistory {
 		return educationStatus;
 	}
 
-	public String getYear() {
+	public EducationYear getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(EducationYear year) {
 		this.year = year;
 	}
 

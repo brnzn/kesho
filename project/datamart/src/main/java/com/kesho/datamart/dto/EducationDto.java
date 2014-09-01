@@ -1,6 +1,7 @@
 package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.EducationYear;
 import com.kesho.datamart.domain.SubEducationStatus;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,7 +21,7 @@ public class EducationDto {
     @NotNull(message = "Date is mandatory")
     private LocalDate date;
     @NotNull(message = "Year is mandatory")
-    private String year;
+    private EducationYear year;
     private String course;
     @NotNull(message = "Education Status is mandatory")
     private EducationStatus educationalStatus;
@@ -52,7 +53,7 @@ public class EducationDto {
         return this;
     }
 
-    public EducationDto withYear(String year) {
+    public EducationDto withYear(EducationYear year) {
         this.year = year;
         return this;
     }
@@ -84,7 +85,7 @@ public class EducationDto {
         return "";
     }
 
-    public String getYear() {
+    public EducationYear getYear() {
         return year;
     }
 

@@ -8,8 +8,10 @@ class Education (
   @Column("SCHOOL_ID") val schoolId: Option[java.lang.Long],
   @Column("LEVEL") val level: String,
   @Column("START_DATE") val startDate: Date,
-  @Column("CLASS") val startClass: String) extends BaseEntity {
-  def this() = this(0, Some(Long.MinValue), "", null, "")
+  @Column("CLASS") val startClass: Option[String],
+  @Column("SECONDARY_LEVEL_1") val secLevel1: String,
+  @Column("SECONDARY_LEVEL_2") val secLevel2: String) extends BaseEntity {
+  def this() = this(0, Some(Long.MinValue), "", null, Some(""), null, null)
 }
 
 /**

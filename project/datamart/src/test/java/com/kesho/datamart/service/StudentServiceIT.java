@@ -114,7 +114,7 @@ public class StudentServiceIT {
     public void shouldAddEducationHistory() {
         LocalDate date = LocalDate.now();
         EducationDto dto = new EducationDto()
-                .withYear("1")
+                //.withYear("1")
                 .withInstitution(new InstitutionDto(1L, "school"))
                 .withCourse("course")
                 .withEducationDate(date)
@@ -133,7 +133,7 @@ public class StudentServiceIT {
         assertThat(result.getSecondaryEducationStatus2(), is(SubEducationStatus.Day));
         assertThat(result.getId(), notNullValue());
         assertThat(result.getCourse(), is("course"));
-        assertThat(result.getYear(), is("1"));
+        //assertThat(result.getYear(), is("1"));
         assertThat(result.getDate(), is(date));
         assertThat(result.getEducationLevel(), is("Secondary (National)"));
         assertThat(result.getStudentId(), is(1L));

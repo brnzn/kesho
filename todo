@@ -1,8 +1,11 @@
+app for simone to test db connection
+new version for kate + data migrated
+
+
 http://fxexperience.com/controlsfx/features/#decorationvalidation
 search forms
 students profile
 family history/profile
-add jpa version
 validations on all dtos + length settings on inputs
 replace auto complete with controlsfx
 replace dialogs with controlsfx
@@ -80,6 +83,7 @@ done - Reason for Departure changes (see email from kate) - departure reason + d
 done - Add Currency to payment arrangment - should it be dropdown? If so what are the values?
 
 ----------------------------------
+home location on student details should be drop down (like family)
 add version column to all entities
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
@@ -121,7 +125,8 @@ Sponsors:
 An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (TOTAL_SPONSORSHIP_REQUIRED on student table)
 
 Move end of education to education form as overall input (not per row) 
-
+schools + contacts api
+pager not showing 2 digits - need to be wider
 
 
 

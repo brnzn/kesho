@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.EducationStatus;
+import com.kesho.datamart.domain.EducationYear;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.InstitutionDto;
@@ -47,7 +48,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     @FXML
     private ComboBox<InstitutionDto> institutions;
     @FXML
-    private TextField educationYear;
+    private ComboBox<EducationYear> educationYear;
     @FXML
     private TextField course;
     @FXML
@@ -105,7 +106,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     public Map<String, Node> getValidateableFields() {
         if(validationFields.isEmpty()) {
             validationFields.put("date", startDate);
-            validationFields.put("year", educationYear);
+            validationFields.put("year", educationYear);   // TODO: should be conditional - see valid options in enum
             validationFields.put("educationalStatus", educationalStatus);
         }
 
@@ -133,7 +134,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         dto.withId(selectedEducation.get().getId());
 
         dto.withStudentId(selected.get().getId()).
-            withYear(educationYear.getText())
+            withYear(educationYear.getSelectionModel().getSelectedItem())
             .withEducationalStatus(educationalStatus.getSelectionModel().getSelectedItem())
             .withCourse(course.getText())
             .withSecondaryStatus1(secondaryStatus1.getSelectionModel().getSelectedItem())
@@ -249,9 +250,12 @@ public class EducationDetailsController extends AbstractEditableController<Stude
                 secondaryStatus1.getItems().clear();
                 secondaryStatus2.getSelectionModel().clearSelection();
                 secondaryStatus1.getSelectionModel().clearSelection();
+                educationYear.getItems().clear();
+                educationYear.getSelectionModel().clearSelection();
 
                 if(s2 != null) {
                     secondaryStatus1.getItems().addAll(s2.getChildren());
+                    educationYear.getItems().addAll(s2.getClasses());
                 }
             }
         });
@@ -276,7 +280,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             return;
         }
 
-        educationYear.setText(Util.safeToStringValue(dto.getYear(), ""));
+        educationYear.getSelectionModel().select(dto.getYear());
         course.setText(dto.getCourse());
         educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
         startDate.valueProperty().setValue(Util.toJavaDate(dto.getDate()));
@@ -289,7 +293,8 @@ public class EducationDetailsController extends AbstractEditableController<Stude
 
 
     private void resetForm() {
-        educationYear.clear();
+        educationYear.setValue(null);
+        educationYear.getSelectionModel().clearSelection();
         course.clear();
         educationalStatus.getSelectionModel().clearSelection();
         educationalStatus.valueProperty().setValue(null);
