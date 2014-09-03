@@ -47,7 +47,7 @@ public class StudentsDAOTest {
         student.setFamily(f);
         student.setGender(Gender.M);
         student.setHasDisability(true);
-        student.setHomeLocation("s1home");
+        //student.setHomeLocation("s1home");
         student.setContactNumber("12345");
         student.setStartDate(startDate);
         student.setFinancialSupport(true);
@@ -74,7 +74,7 @@ public class StudentsDAOTest {
         assertThat(saved.getFamily().getName(), is("a"));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));
-        assertThat(saved.getHomeLocation(), is("s1home"));
+        //assertThat(saved.getHomeLocation(), is("s1home"));
         assertThat(saved.getContactNumber(), is("12345"));
         assertThat(saved.getStartDate(), is(startDate));
         assertThat(saved.getYearOfBirth(), is(2000));

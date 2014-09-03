@@ -122,7 +122,7 @@ public class StudentServiceImpl implements StudentService {
             return null;
         }
 
-        return educationAssembler.toDto(educations.get(educations.size() == 1 ? 0 : 1));
+        return educationAssembler.toDto(educations.get(0));
     }
 
     @Override

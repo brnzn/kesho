@@ -81,7 +81,7 @@ done - payment arrangment:
        education level should be hidden for 'New'
 done - Reason for Departure changes (see email from kate) - departure reason + details dropdows of enums with dependencies
 done - Add Currency to payment arrangment - should it be dropdown? If so what are the values?
-
+done - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 ----------------------------------
 home location on student details should be drop down (like family)
 add version column to all entities
@@ -110,11 +110,9 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 	at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
 
 
-email kate - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 
 Enable export to xls
 All forms input should be disabled until pressing new or selecting row.
-
 
 New concern coulmns for student (see email from kate)
 
@@ -124,8 +122,8 @@ Student table on of family table should show just sibiling
 Sponsors:
 An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (TOTAL_SPONSORSHIP_REQUIRED on student table)
 
-Move end of education to education form as overall input (not per row) 
-schools + contacts api
+Move end of education to education form as overall input (not per row) ?
+schools + contacts ui
 pager not showing 2 digits - need to be wider
 
 

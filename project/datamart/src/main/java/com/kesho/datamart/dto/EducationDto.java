@@ -20,7 +20,6 @@ public class EducationDto {
     private InstitutionDto institution;
     @NotNull(message = "Date is mandatory")
     private LocalDate date;
-    @NotNull(message = "Year is mandatory")
     private EducationYear year;
     private String course;
     @NotNull(message = "Education Status is mandatory")

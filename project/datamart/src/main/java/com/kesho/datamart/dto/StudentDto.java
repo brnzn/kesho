@@ -1,9 +1,6 @@
 package com.kesho.datamart.dto;
 
-import com.kesho.datamart.domain.FinancialSupportStatus;
-import com.kesho.datamart.domain.Gender;
-import com.kesho.datamart.domain.LeaverStatus;
-import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.*;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 
@@ -29,7 +26,7 @@ public class StudentDto implements Comparable, Dto {
     @Min(value = 1980, message = "Year of Birth cannot be less than 1980") // TODO: what should be the min year?? convert to date to we can validate past/future
     private Integer yearOfBirth;
     private String mobileNumber;
-    private String homeLocation;
+    private Location homeLocation;
     private Boolean hasDisability;
     private Boolean financialSupport;
     private Boolean enrichmentSupport;
@@ -79,7 +76,7 @@ public class StudentDto implements Comparable, Dto {
         return mobileNumber;
     }
 
-    public String getHomeLocation() {
+    public Location getHomeLocation() {
         return homeLocation;
     }
 
@@ -161,7 +158,7 @@ public class StudentDto implements Comparable, Dto {
         return this;
     }
 
-    public StudentDto withHomeLocation(String homeLocation) {
+    public StudentDto withHomeLocation(Location homeLocation) {
         this.homeLocation = homeLocation;
         return this;
     }

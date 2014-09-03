@@ -157,7 +157,7 @@ public class StudentServiceIT {
         assertThat("family name should be sn1", s1.getFamily().getFamilyName(), is("sn1"));
         assertThat("gender should be M", s1.getGender(), is(Gender.M));
         assertThat("has disability true", s1.hasDisability(), is(true));
-        assertThat("home location h1", s1.getHomeLocation(), is("h1"));
+        //assertThat("home location h1", s1.getHomeLocation(), is("h1"));
         assertThat("contact number 11111", s1.getMobileNumber(), is("11111"));
         assertThat("start date " + startDate.toString(), s1.getStartDate(), is(startDate));
         assertThat("year of birth 2000", s1.getYearOfBirth(), is(2000));
@@ -177,7 +177,7 @@ public class StudentServiceIT {
                 .withFamily(new FamilyDto(1L, "sn1"))
                 .withGender(Gender.M)
                 .withHasDisability(true)
-                .withHomeLocation("hl")
+                //s.withHomeLocation("hl")
                 .withStartDate(startDate)
                 .withYearOfBirth(2000)
                 .withEmail("email")
@@ -198,7 +198,7 @@ public class StudentServiceIT {
         assertThat(saved.getFamily().getName(), is("sn1"));
         assertThat(saved.getGender(), is(Gender.M));
         assertThat(saved.hasDisability(), is(true));
-        assertThat(saved.getHomeLocation(), is("hl"));
+        //sassertThat(saved.getHomeLocation(), is("hl"));
         assertThat(saved.getStartDate(), is(startDate));
         assertThat(saved.getYearOfBirth(), is(2000));
         assertThat(saved.getEmail(), is("email"));

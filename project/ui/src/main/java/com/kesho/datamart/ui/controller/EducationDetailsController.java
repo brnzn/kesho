@@ -106,7 +106,6 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     public Map<String, Node> getValidateableFields() {
         if(validationFields.isEmpty()) {
             validationFields.put("date", startDate);
-            validationFields.put("year", educationYear);   // TODO: should be conditional - see valid options in enum
             validationFields.put("educationalStatus", educationalStatus);
         }
 
@@ -167,6 +166,11 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         if(StringUtils.isBlank(course.getText()) && isCourseRequired()) {
             validation.add("Course is required");
             FormValidator.renderInvalid(course);
+        }
+
+        if(educationYear.getSelectionModel() == null && isSchoolRequired()) {
+            validation.add("Class / Year is required");
+            FormValidator.renderInvalid(educationYear);
         }
 
         if(validation.size() > 0) {
@@ -246,6 +250,10 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         educationalStatus.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EducationStatus>() {
             @Override
             public void changed(ObservableValue<? extends EducationStatus> observableValue, EducationStatus s, EducationStatus s2) {
+                secondaryStatus2.valueProperty().setValue(null);
+                secondaryStatus1.valueProperty().setValue(null);
+                educationYear.valueProperty().setValue(null);
+
                 secondaryStatus2.getItems().clear();
                 secondaryStatus1.getItems().clear();
                 secondaryStatus2.getSelectionModel().clearSelection();
@@ -280,7 +288,6 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             return;
         }
 
-        educationYear.getSelectionModel().select(dto.getYear());
         course.setText(dto.getCourse());
         educationalStatus.getSelectionModel().select(dto.getEducationalStatus());
         startDate.valueProperty().setValue(Util.toJavaDate(dto.getDate()));
@@ -288,6 +295,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
         institutions.getSelectionModel().select(dto.getInstitution());
         secondaryStatus1.getSelectionModel().select(dto.getSecondaryEducationStatus1());
         secondaryStatus2.getSelectionModel().select(dto.getSecondaryEducationStatus2());
+        educationYear.getSelectionModel().select(dto.getYear());
         comments.setText(dto.getComments());
     }
 

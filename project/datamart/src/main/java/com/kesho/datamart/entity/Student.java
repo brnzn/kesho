@@ -1,9 +1,6 @@
 package com.kesho.datamart.entity;
 
-import com.kesho.datamart.domain.FinancialSupportStatus;
-import com.kesho.datamart.domain.Gender;
-import com.kesho.datamart.domain.LeaverStatus;
-import com.kesho.datamart.domain.LevelOfSupport;
+import com.kesho.datamart.domain.*;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -32,8 +29,9 @@ public class Student {
     private Gender gender;
     @Column(name = "DISABILITY", columnDefinition = "BIT")
     private Boolean hasDisability;
-    @Column(name = "HOME_LOCATION")
-    private String homeLocation;
+    @Column(name = "HOME_LOCATION", nullable=true)
+    @Enumerated(EnumType.STRING)
+    private Location homeLocation;
     @Column(name = "CONTACT_NUMBER")
     private String contactNumber;
     @Column(name = "START_DATE")
@@ -174,11 +172,11 @@ public class Student {
         return hasDisability;
     }
 
-    public void setHomeLocation(String homeLocation) {
+    public void setHomeLocation(Location homeLocation) {
         this.homeLocation = homeLocation;
     }
 
-    public String getHomeLocation() {
+    public Location getHomeLocation() {
         return homeLocation;
     }
 

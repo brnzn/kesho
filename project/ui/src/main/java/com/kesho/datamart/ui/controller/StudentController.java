@@ -2,6 +2,7 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.LeaverStatus;
+import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.FormActionListener;
@@ -51,7 +52,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     @FXML
     private TextField contactNumber;
     @FXML
-    private TextField homeLocation;
+    private ComboBox<Location> homeLocation;
     @FXML
     private ToggleGroup hasDisability;
     @FXML
@@ -93,6 +94,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
         gender.getToggles().get(0).setUserData(Gender.F);
         gender.getToggles().get(1).setUserData(Gender.M);
+        Util.initializeComboBoxValues(homeLocation, EnumSet.allOf(Location.class));
     }
 
     @Override
@@ -143,20 +145,20 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
     private void setHomeLocation() {
         StudentDto dto = selected.get();
-        if(StringUtils.isBlank(dto.getHomeLocation()) && dto.getFamily() != null) {
-            homeLocation.setText(getFamilyHomeLocation(dto.getFamily()));
+        if(dto.getHomeLocation() == null && dto.getFamily() != null) {
+            homeLocation.setValue(dto.getFamily().getHomeLocation());
         } else {
-            homeLocation.setText(dto.getHomeLocation());
+            homeLocation.setValue(dto.getHomeLocation());
         }
     }
 
-    private String getFamilyHomeLocation(FamilyDto family) {
-        if(family != null && family.getHomeLocation() != null) {
-            return family.getHomeLocation().name();
-        }
-
-        return null;
-    }
+//    private String getFamilyHomeLocation(FamilyDto family) {
+//        if(family != null && family.getHomeLocation() != null) {
+//            return family.getHomeLocation().name();
+//        }
+//
+//        return null;
+//    }
 
     @FXML
     private void selectFamily() {
@@ -201,9 +203,9 @@ public class StudentController extends AbstractEditableController<StudentDto> im
                 .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
         ;
 
-        if(!StringUtils.equals(getFamilyHomeLocation(dto.getFamily()), homeLocation.getText())) {
-            dto.withHomeLocation(homeLocation.getText());
-        } else if(!StringUtils.equals(dto.getHomeLocation(), homeLocation.getText()) && StringUtils.equals(getFamilyHomeLocation(dto.getFamily()), homeLocation.getText())) {
+        if(dto.getFamily().getHomeLocation() != homeLocation.getValue()) {
+            dto.withHomeLocation(homeLocation.getValue());
+        } else if(dto.getHomeLocation() != homeLocation.getValue() && dto.getFamily().getHomeLocation() == homeLocation.getValue()) {
             //home location changed and now match family home location, so no need to store it on student table
             dto.withHomeLocation(null);
         }
@@ -219,7 +221,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
         yearOfBirth.clear();
         contactNumber.clear();
-        homeLocation.clear();
+        homeLocation.setValue(null);
 
         hasDisability.getToggles().get(0).setSelected(true);
         email.clear();
