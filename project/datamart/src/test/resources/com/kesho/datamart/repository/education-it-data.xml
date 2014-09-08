@@ -2,25 +2,7 @@
     <SCHOOLS ID="1" NAME="school"/>
     <FAMILY ID="1" FAMILY_NAME="a"/>
 
-    <STUDENTS ID="2"
-              NAME="fn2"
-              FAMILY_ID="1"
-              GENDER="F"
-              YEAR_OF_BIRTH="2002"
-              DISABILITY="1"
-              CONTACT_NUMBER="2222"
-              EMAIL="email2"
-              FACEBOOK="fb2"
-              HOME_LOCATION="h2"
-              CURRENT_STUDENT="1"
-              STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
-              SPONSORED="1"
-              SPONSORSHIP_STATUS="REVIEW"
-              START_DATE="2013-03-28 00:00:00.0"
-              LEVEL_OF_SUPPORT="PART"
-              TOPUP_NEEDED="1"
-              SHORTFALL="200"
-              ALUMNI_MEMBER="222" />
+    <STUDENTS ID="2" NAME="fn" FAMILY_ID="1"/>
 
     <EDUCATION_HISTORY
             ID="1"

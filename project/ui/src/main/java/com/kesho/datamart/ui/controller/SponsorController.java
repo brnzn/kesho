@@ -104,8 +104,7 @@ public class SponsorController extends AbstractEditableController<SponsorDto> {
         Util.initializeComboBoxValues(payeeType, EnumSet.allOf(PayeeType.class));
     }
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         SponsorDto dto = buildDto();
 
         List<String> validation = FormValidator.validate(dto, getValidateableFields());

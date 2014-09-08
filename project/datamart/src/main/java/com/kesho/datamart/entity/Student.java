@@ -42,11 +42,11 @@ public class Student {
     private Integer yearOfBirth;
 //
 // unidirectional
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name="STUDENT_ID", referencedColumnName="ID", updatable = false, insertable = false)
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+//    @JoinColumn(name="STUDENT_ID", referencedColumnName="ID", updatable = false, insertable = false)
     //// bidirectional
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="student")
-    private List<EducationHistory> educationHistory = new ArrayList<>();  //TODO: need to do batch delete instead of one by one
+//    private List<EducationHistory> educationHistory = new ArrayList<>();  //TODO: need to do batch delete instead of one by one
 
     @Column(name= "EMAIL")
     private String email;
@@ -87,6 +87,10 @@ public class Student {
     @Column(name = "END_DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate endDate;
+
+    @Column(name="VERSION")
+    @Version
+    private Integer version;
 
 
     public Boolean getEnrichmentSupport() {
@@ -144,9 +148,9 @@ public class Student {
 //		this.educationHistory.add(educationHistory);
 //	}
 	
-	public List<EducationHistory> getEducationHistory() {
-		return Collections.unmodifiableList(educationHistory);
-	}
+//	public List<EducationHistory> getEducationHistory() {
+//		return Collections.unmodifiableList(educationHistory);
+//	}
 
     public void setFamily(Family family) {
         this.family = family;
@@ -261,6 +265,13 @@ public class Student {
         this.endDate = endDate;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 //    public Integer getAlumniNumber() {
 //        return alumniNumber;
 //    }

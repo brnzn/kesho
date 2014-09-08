@@ -13,6 +13,7 @@ public class KeshoApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+        //setUserAgentStylesheet(STYLESHEET_CASPIAN);
 		primaryStage.setTitle("Kesho StS");
 
 		WindowsUtil.getInstance().showRoot(primaryStage);

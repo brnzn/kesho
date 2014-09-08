@@ -13,16 +13,11 @@
               CONTACT_NUMBER="11111"
               EMAIL="email1"
               FACEBOOK="fb1"
-              HOME_LOCATION="h1"
-              CURRENT_STUDENT="1"
-              STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
-              SPONSORED="1"
-              SPONSORSHIP_STATUS="REVIEW"
+              HOME_LOCATION="Kilifi"
               START_DATE="2013-03-28 00:00:00.0"
               LEVEL_OF_SUPPORT="FULL"
-              TOPUP_NEEDED="1"
-              SHORTFALL="100"
-              ALUMNI_MEMBER="111" />
+              LEAVER_STATUS="DEPARTED_BEFORE_COMPLETE"
+              VERSION="0"  />
 
     <STUDENTS ID="2"
               NAME="fn2"
@@ -33,16 +28,11 @@
               CONTACT_NUMBER="2222"
               EMAIL="email2"
               FACEBOOK="fb2"
-              HOME_LOCATION="h2"
-              CURRENT_STUDENT="1"
-              STUDENT_STATUS="DEPARTED_BEFORE_COMPLETE"
-              SPONSORED="1"
-              SPONSORSHIP_STATUS="REVIEW"
+              HOME_LOCATION="Kilifi"
               START_DATE="2013-03-28 00:00:00.0"
               LEVEL_OF_SUPPORT="PART"
-              TOPUP_NEEDED="1"
-              SHORTFALL="200"
-              ALUMNI_MEMBER="222" />
+              LEAVER_STATUS="DEPARTED_BEFORE_COMPLETE"
+              VERSION="0"/>
 
     <EDUCATION_HISTORY
             ID="1"

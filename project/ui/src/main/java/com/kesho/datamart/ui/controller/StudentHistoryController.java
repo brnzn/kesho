@@ -100,8 +100,7 @@ public class StudentHistoryController extends AbstractEditableController<Student
     }
 
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         HistoryDto dto = getDto();
 
         if (isInputValid(dto)) {

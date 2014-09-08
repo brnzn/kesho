@@ -69,6 +69,10 @@ public class Family {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "family")
     private List<Student> students;
 
+    @Column(name="VERSION")
+    @Version
+    private Integer version;
+
     public Long getId() {
         return id;
     }

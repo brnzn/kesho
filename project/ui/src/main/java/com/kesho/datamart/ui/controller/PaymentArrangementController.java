@@ -250,8 +250,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         currency.setValue(dto.getCurrency());
     }
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         PaymentArrangementDto dto = buildDto();
 
         List<String> validation = FormValidator.validate(dto, getValidateableFields());

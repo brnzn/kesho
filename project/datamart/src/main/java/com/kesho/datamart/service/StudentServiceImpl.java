@@ -61,12 +61,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     //TODO: validate
-    @Transactional(readOnly = false)
     @Override
     public StudentDto save(StudentDto dto) {
+        return assembler.toDto(doSave(dto));
+    }
+
+    //This method is needed for version property, which get updated only after the transaction commit
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public Student doSave(StudentDto dto) {
         Student student = assembler.toStudent(dto);
         student.setFamily(familyDAO.findOne(dto.getFamily().getId()));
-        return assembler.toDto(studentsDao.save(student));
+        return studentsDao.save(student);
     }
 
     @Override

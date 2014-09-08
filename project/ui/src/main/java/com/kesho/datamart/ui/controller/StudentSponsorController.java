@@ -248,8 +248,7 @@ public class StudentSponsorController extends AbstractEditableController<Student
         totalSRequired.setText(Util.safeToStringValue(student.getTotalSponsorshipRequired(), null));
     }
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         StudentDto dto = buildDto();
         if (isInputValid(dto)) {
             boolean isNew = dto.getId() == null;

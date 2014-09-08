@@ -6,6 +6,7 @@ import com.kesho.datamart.entity.Family;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -43,6 +44,28 @@ public class FamilyDAOTest {
     public void shouldLoadFamily() {
         Family family = dao.loadFamily(2L);
         assertThat(family.getStudents(), hasSize(2));
+    }
+
+    @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleEntity() {
+        Family f = dao.loadFamily(1L);
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<Family> callback = new TransactionCallback<Family>() {
+            @Override
+            public Family doInTransaction(TransactionStatus status) {
+                Family f1 = dao.loadFamily(1L);
+                f1.setProfile("test");
+                return dao.save(f1);
+            }
+        };
+
+        txTemplate.execute(callback);
+
+        f.setName("test");
+        dao.save(f);
     }
 
     @Test

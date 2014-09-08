@@ -12,6 +12,7 @@ import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//TODO: After New and Update need to refresh table, but leave form as is
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -72,17 +72,16 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
     private Map<String, Node> validationFields = new HashMap<>();
 
-
     public StudentController() {
         WindowsUtil.getInstance().autowire(this);
     }
-
 
     @Override
     public void refresh(StudentDto dto) {
         saveButton.setDisable(dto == null);
         itemSelected(dto);
     }
+
 
     @FXML
     private void initialize() {
@@ -152,14 +151,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         }
     }
 
-//    private String getFamilyHomeLocation(FamilyDto family) {
-//        if(family != null && family.getHomeLocation() != null) {
-//            return family.getHomeLocation().name();
-//        }
-//
-//        return null;
-//    }
-
     @FXML
     private void selectFamily() {
         FamilyDto dto = WindowsUtil.getInstance().familySelector();
@@ -169,16 +160,17 @@ public class StudentController extends AbstractEditableController<StudentDto> im
         }
     }
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         StudentDto dto = buildDto();
         if (isInputValid(dto)) {
             boolean isNew = dto.getId() == null;
 
             dto = studentsRepository.save(dto);  //looks like it generate too many sqls
+
             //refresh the table
             selected.get().withName(firstName.getText());
             selected.get().setFamily(dto.getFamily());
+            selected.get().withVersion(dto.getVersion());
 
             if(isNew) { // fire event so table can be reloaded
                 WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
@@ -203,11 +195,13 @@ public class StudentController extends AbstractEditableController<StudentDto> im
                 .withYearOfBirth(Util.safeToIntegerValue(yearOfBirth.getText(), null))
         ;
 
-        if(dto.getFamily().getHomeLocation() != homeLocation.getValue()) {
-            dto.withHomeLocation(homeLocation.getValue());
-        } else if(dto.getHomeLocation() != homeLocation.getValue() && dto.getFamily().getHomeLocation() == homeLocation.getValue()) {
-            //home location changed and now match family home location, so no need to store it on student table
-            dto.withHomeLocation(null);
+        if(dto.getFamily() != null) {
+            if(dto.getFamily().getHomeLocation() != homeLocation.getValue()) {
+                dto.withHomeLocation(homeLocation.getValue());
+            } else if(dto.getHomeLocation() != homeLocation.getValue() && dto.getFamily().getHomeLocation() == homeLocation.getValue()) {
+                //home location changed and now match family home location, so no need to store it on student table
+                dto.withHomeLocation(null);
+            }
         }
 
         return dto;
@@ -241,7 +235,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
     }
 
-    public Map<String, Node> getValidateableFields() {
+    protected Map<String, Node> getValidateableFields() {
 
         if(validationFields.isEmpty()) {
             validationFields.put("firstName", firstName);

@@ -1,6 +1,7 @@
 app for simone to test db connection
 new version for kate + data migrated
 
+why alive parents on family table is 9 for all?
 
 http://fxexperience.com/controlsfx/features/#decorationvalidation
 search forms
@@ -82,8 +83,9 @@ done - payment arrangment:
 done - Reason for Departure changes (see email from kate) - departure reason + details dropdows of enums with dependencies
 done - Add Currency to payment arrangment - should it be dropdown? If so what are the values?
 done - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
+done - home location on student details should be drop down (like family)
+
 ----------------------------------
-home location on student details should be drop down (like family)
 add version column to all entities
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
@@ -91,10 +93,10 @@ all inputs all on forms should be disabled until clicking new
 save button on all forms should be default button and disabled until new or select
 all dtos should have length constraints
 refactor controllers (new abstract class for table/form with buttons)
-add empty option to all dropdowns
+add empty option to all non mandatory dropdowns
 
 
-getting this exception when clicking text area on family form:
+getting this exception when clicking text area on family form (looks like it only happen if value is null): 
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 	at java.text.StringCharacterIterator.<init>(StringCharacterIterator.java:78)
 	at java.text.StringCharacterIterator.<init>(StringCharacterIterator.java:67)

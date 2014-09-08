@@ -1,7 +1,6 @@
 package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.dto.Dto;
-import com.kesho.datamart.dto.StudentDto;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

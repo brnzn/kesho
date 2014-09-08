@@ -37,10 +37,11 @@ public class StudentDto implements Comparable, Dto {
     private FinancialSupportStatus financialSupportStatus;
     private String financialSupportStatusDetails;
     private LevelOfSupport levelOfSupport;
-    private Integer alumniNumber;
+//    private Integer alumniNumber;
     private Integer totalSRequired;
     private LocalDate endDate;
     private String financialSupportStatusSubDetails;
+    private Integer version;
 
     /**
 	 * Default constructor.
@@ -116,9 +117,9 @@ public class StudentDto implements Comparable, Dto {
         return levelOfSupport;
     }
 
-    public Integer getAlumniNumber() {
-        return alumniNumber;
-    }
+//    public Integer getAlumniNumber() {
+//        return alumniNumber;
+//    }
 
     public Boolean getEnrichmentSupport() {
         return enrichmentSupport;
@@ -203,10 +204,10 @@ public class StudentDto implements Comparable, Dto {
         return this;
     }
 
-    public StudentDto withAlumniNumber(Integer alumniNumber) {
-        this.alumniNumber = alumniNumber;
-        return this;
-    }
+//    public StudentDto withAlumniNumber(Integer alumniNumber) {
+//        this.alumniNumber = alumniNumber;
+//        return this;
+//    }
 
     public StudentDto withTotalSponsorshipRequired(Integer amount) {
         this.totalSRequired = amount;
@@ -284,5 +285,14 @@ public class StudentDto implements Comparable, Dto {
 
     public String getFinancialSupportStatusSubDetails() {
         return financialSupportStatusSubDetails;
+    }
+
+    public StudentDto withVersion(Integer version) {
+        this.version = version;
+        return this;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 }

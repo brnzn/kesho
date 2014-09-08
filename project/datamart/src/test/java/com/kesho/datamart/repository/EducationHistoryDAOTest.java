@@ -4,11 +4,18 @@ import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.entity.EducationHistory;
+import com.kesho.datamart.entity.Student;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -32,6 +39,31 @@ public class EducationHistoryDAOTest {
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
 
+    @Inject
+    private JpaTransactionManager transactionManager;
+
+    @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleEntity() {
+        EducationHistory entity = educationHistoryDAO.findOne(2L);
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<EducationHistory> callback = new TransactionCallback<EducationHistory>() {
+            @Override
+            public EducationHistory doInTransaction(TransactionStatus status) {
+                EducationHistory e1 = educationHistoryDAO.findOne(2L);
+                e1.setCourse("dummy");
+                return educationHistoryDAO.save(e1);
+            }
+        };
+
+        txTemplate.execute(callback);
+
+        entity.setComments("test");
+        educationHistoryDAO.save(entity);
+    }
+
     @Test
     public void shouldFindLatestEducation() {
         EducationDto dto = educationHistoryDAO.findLatestEducation(2L);
@@ -42,10 +74,8 @@ public class EducationHistoryDAOTest {
     }
     @Test
     public void shouldGetEducationHistory() {
-//        educationHistoryDAO.findOne(1L);
-//        List<EducationHistory> h = educationHistoryDAO.findByStudentId(2L);
-//        System.out.println(h.get(0).getSchool().getFamilyName());
-
+        List<EducationHistory> result = educationHistoryDAO.findByStudentId(2L);
+        assertThat("Unexpected number of education history", result.size(), is(2));
     }
 
 

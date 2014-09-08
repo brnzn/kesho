@@ -59,6 +59,10 @@ public class EducationHistory {
     @Column(name = "COMMENTS")
     private String comments;
 
+    @Column(name="VERSION")
+    @Version
+    private Integer version;
+
     public Long getStudentId() {
         return studentId;
     }

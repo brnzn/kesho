@@ -127,8 +127,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     }
 
 
-    @FXML
-    private void save() {
+    protected void doSave() {
         EducationDto dto = new EducationDto();
         dto.withId(selectedEducation.get().getId());
 

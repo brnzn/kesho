@@ -69,20 +69,6 @@ public class StudentServiceIT {
         assertThat(items.get(0).getId(), is(2L));
     }
 
-//    @Test
-//    public void shouldCascadeDeleteEducationOnly() {
-//        StudentDto dto = studentService.get(2L);
-//
-//        Long familyId =  dto.getFamily().getId();
-//
-//        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(2));
-//
-//        studentService.deleteStudent(2L);
-//
-//        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(0));
-//        assertThat(familyDAO.findOne(familyId), notNullValue());
-//    }
-
     @Test
     public void shouldUpdateFamily() {
         StudentDto dto = studentService.get(1L);
@@ -166,7 +152,6 @@ public class StudentServiceIT {
         assertThat("student status s1s", s1.getLeaverStatus(), is(LeaverStatus.DEPARTED_BEFORE_COMPLETE));
 //        assertThat("sponsor status sp1", s1.getFinancialSupportStatus(), is(FinancialSupportStatus.REVIEW));
         assertThat("level of support full", s1.getLevelOfSupport(), is(LevelOfSupport.FULL));
-        assertThat("alumni number 111", s1.getAlumniNumber(), is(111));
     }
 
     @Test
@@ -185,7 +170,6 @@ public class StudentServiceIT {
                 .withLeaverStatus(LeaverStatus.DEPARTED_BEFORE_COMPLETE)
 //                .withSponsorStatus(FinancialSupportStatus.RECENT_SECONDARY_LEAVER)
                 .withLevelOfSupport(LevelOfSupport.ON_HOLD)
-                .withAlumniNumber(1)
                 .withMobileNumber("123");
         final StudentDto resultDto = studentService.save(dto);
 

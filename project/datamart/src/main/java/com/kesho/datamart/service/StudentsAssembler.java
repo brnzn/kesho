@@ -52,6 +52,7 @@ public class StudentsAssembler {
                 .withTotalSponsorshipRequired(student.getTotalSponsorshipRequired())
                 .withEndDate(student.getEndDate())
                 .withFinancialSupportStatusSubDetails(student.getFinancialSupportStatusSubDetails())
+                .withVersion(student.getVersion())
         ;
 
         return dto;
@@ -60,6 +61,7 @@ public class StudentsAssembler {
     //TODO: properties names should be the same
     public Student toStudent(StudentDto dto) {
         Student student = new Student();
+        student.setVersion(dto.getVersion());
         student.setId(dto.getId());
         student.setFirstName(dto.getFirstName());
         student.setGender(dto.getGender());
