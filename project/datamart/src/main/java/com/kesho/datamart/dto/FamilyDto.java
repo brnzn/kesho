@@ -41,6 +41,7 @@ public class FamilyDto implements Comparable {
     @NotNull(message = "Number of adults in the house is mandatory")
     @Min(value = 0, message = "Number of adults in the house cannot be negative")
     private Integer numOfAdultsAtAddress;
+    private Integer version;
 
     public FamilyDto(Long id, String name) {
         this.id = id;
@@ -195,5 +196,13 @@ public class FamilyDto implements Comparable {
     @Override
     public String toString() {
         return familyName;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

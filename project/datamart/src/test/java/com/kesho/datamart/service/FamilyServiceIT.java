@@ -5,14 +5,20 @@ import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.inject.Inject;
 
@@ -41,6 +47,33 @@ public class FamilyServiceIT {
     @Inject
     private FamilyDAO dao;
 
+    @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleEntity() {
+        FamilyDto family = new FamilyDto(null, "name");
+
+        final FamilyDto result = familyService.save(family);
+        assertThat(result.getId(), notNullValue());
+        assertThat(result.getVersion(), is(0));
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<Family> callback = new TransactionCallback<Family>() {
+            @Override
+            public Family doInTransaction(TransactionStatus status) {
+                Family s1 = dao.findOne(result.getId());
+                s1.setName("dummy");
+                return dao.save(s1);
+            }
+        };
+
+        txTemplate.execute(callback);
+
+        result.setAliveParents(10);
+
+        familyService.save(result);
+
+    }
 
     @Test
     public void shouldCreateFamily() {

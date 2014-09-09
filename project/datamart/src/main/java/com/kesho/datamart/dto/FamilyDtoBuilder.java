@@ -2,6 +2,8 @@ package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.Location;
 
+import java.util.Locale;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -27,6 +29,7 @@ public class FamilyDtoBuilder {
     private Integer numOfStudentsAtAddress;
     private String profile;
     private Integer numOfAdultsAtAddress;
+    private Integer version;
 
     public FamilyDtoBuilder(Long id, String name) {
         this.id = id;
@@ -49,7 +52,7 @@ public class FamilyDtoBuilder {
         dto.setPhoneOwnerName(phoneOwnerName);
         dto.setProfile(profile);
         dto.setNumOfAdultsAtAddress(numOfAdultsAtAddress);
-
+        dto.setVersion(version);
         return dto;
     }
 
@@ -115,6 +118,11 @@ public class FamilyDtoBuilder {
     }
     public FamilyDtoBuilder withNumOfAdultsAtAddress(Integer numOfAdultsAtAddress) {
         this.numOfAdultsAtAddress = numOfAdultsAtAddress;
+        return this;
+    }
+
+    public FamilyDtoBuilder withVersion(Integer version) {
+        this.version = version;
         return this;
     }
 }

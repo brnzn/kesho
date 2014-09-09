@@ -208,4 +208,12 @@ public class Family {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }

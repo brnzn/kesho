@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,6 +68,8 @@ public class FamilyDialogController {
     private TextField numOfAdultsAtAddress;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Button saveButton;
 
     private ObservableList<FamilyDto> familiesModel = FXCollections.observableArrayList();
     private Map<String, Node> validationFields = new HashMap<>();
@@ -105,8 +108,10 @@ public class FamilyDialogController {
             public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto dto1, FamilyDto dto2) {
                 if(dto2 != null) {
                     deleteButton.setDisable(false);
+                    saveButton.setDisable(false);
                 } else {
                     deleteButton.setDisable(true);
+                    saveButton.setDisable(true);
                 }
 
                 refreshForm(dto2);
@@ -161,6 +166,7 @@ public class FamilyDialogController {
     @FXML
     private void doNew() {
         reset();
+        saveButton.setDisable(false);
     }
 
     @FXML
@@ -178,19 +184,21 @@ public class FamilyDialogController {
 	private void save() {
         FamilyDto family = buildDto();
         if (isInputValid(family)) {
-            repository.save(family);
-            WindowsUtil.getInstance().getEventBus().fireEvent(Event.FAMILY_ADDED);
-			dialogStage.close();
+            try {
+                repository.save(family);
+            } catch(OptimisticLockingFailureException e) {
+                WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save", "The record has been modified or deleted by someone else! Please refresh the table and re-select to update.");
+            }
 		}
 	}
 
     private FamilyDto buildDto() {
         FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
-        return builder.withHomeLocation(homeLocation.getValue())
+        FamilyDto dto = builder.withHomeLocation(homeLocation.getValue())
                 .withHomeSubLocation(homeSubLocation.getText())
                 .withHomeClusterId(homeClusterId.getText())
                 .withAliveParents(Util.safeToIntegerValue(aliveParents.getText(), null))
-                .isMarried((Boolean)isMarried.getSelectedToggle().getUserData())
+                .isMarried((Boolean) isMarried.getSelectedToggle().getUserData())
                 .withNumNonKeshoStudents(Util.safeToIntegerValue(numOfChildrenAtAddress.getText(), null))
                 .withNumOfWives(Util.safeToIntegerValue(numOfWives.getText(), null))
                 .withPrimaryCaretaker(primaryCaretaker.getText())
@@ -201,6 +209,12 @@ public class FamilyDialogController {
                 .withProfile(profile.getText())
                 .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
                 .build();
+
+        if(familiesTable.getSelectionModel().getSelectedItem() != null) {
+            dto.setVersion(familiesTable.getSelectionModel().selectedItemProperty().getValue().getVersion());
+        }
+
+        return dto;
     }
 
     /**
@@ -256,6 +270,7 @@ public class FamilyDialogController {
         familiesTable.setItems(familiesModel);
     }
 
+    @FXML
     private void refreshTable() {
         initTable();
         PagingUtil.initPagination(repository, familiesModel, pagination);

@@ -16,6 +16,7 @@ import java.util.List;
 public class FamilyAssembler {
     FamilyDto toDto(Family family) {
         FamilyDto dto = new FamilyDto(family.getId(), family.getName());
+        dto.setVersion(family.getVersion());
         dto.setHomeLocation(family.getHomeLocation());
         dto.setHomeSubLocation(family.getHomeSubLocation());
         dto.setHomeClusterId(family.getHomeClusterId());
@@ -35,6 +36,7 @@ public class FamilyAssembler {
 
     Family toFamily(FamilyDto dto) {
         Family family = new Family();
+        family.setVersion(dto.getVersion());
         family.setId(dto.getId());
         family.setName(dto.getFamilyName());
         family.setHomeLocation(dto.getHomeLocation());
