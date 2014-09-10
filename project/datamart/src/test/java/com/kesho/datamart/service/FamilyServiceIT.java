@@ -88,10 +88,12 @@ public class FamilyServiceIT {
 
     @Test
     public void shouldUpdateFamily() {
-        FamilyDto family = new FamilyDto().withId(1L).withFamilyName("newname");
+        FamilyDto family = new FamilyAssembler().toDto(dao.findOne(1L));
 
+        family.withFamilyName("newname");
         FamilyDto result = familyService.save(family);
         assertThat(result.getId(), notNullValue());
+        assertThat(result.getVersion(), is(1));
 
         Family saved = DBUtil.findOne(transactionManager, Family.class, dao, result.getId());
         assertThat(saved.getName(), is("newname"));

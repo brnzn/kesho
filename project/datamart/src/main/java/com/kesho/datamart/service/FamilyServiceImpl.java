@@ -5,10 +5,12 @@ import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.PageImpl;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,11 +30,18 @@ public class FamilyServiceImpl implements FamilyService {
     private FamilyAssembler assembler = new FamilyAssembler();
     private StudentsAssembler studentsAssembler = new StudentsAssembler();
 
+    @Override
     public FamilyDto save(FamilyDto family) {
-        return assembler.toDto(dao.save(assembler.toFamily(family)));
+        return assembler.toDto(doSave(family));
     }
 
-    @Override
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public Family doSave(FamilyDto dto) {
+        return dao.save(assembler.toFamily(dto));
+    }
+
+        @Override
     public List<FamilyDto> getFamilies() {
         return assembler.toDto(dao.findAll());
     }
@@ -51,6 +60,7 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void delete(Long id) {
         dao.delete(id);
     }
