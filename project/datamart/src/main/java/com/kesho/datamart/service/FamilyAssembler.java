@@ -15,22 +15,25 @@ import java.util.List;
  */
 public class FamilyAssembler {
     FamilyDto toDto(Family family) {
-        FamilyDto dto = new FamilyDto(family.getId(), family.getName());
-        dto.setVersion(family.getVersion());
-        dto.setHomeLocation(family.getHomeLocation());
-        dto.setHomeSubLocation(family.getHomeSubLocation());
-        dto.setHomeClusterId(family.getHomeClusterId());
-        dto.setAliveParents(family.getAliveParents());
-        dto.setMarried(family.isMarried());
-        dto.setNumOfChildrenAtAddress(family.getNumOfChildrenAtAddress());
-        dto.setNumOfWives(family.getNumOfWives());
-        dto.setPrimaryCaretaker(family.getPrimaryCaretaker());
-        dto.setMainContactName(family.getMainContactName());
-        dto.setMobileNumber(family.getMobileNumber());
-        dto.setPhoneOwner(family.isPhoneOwner());
-        dto.setPhoneOwnerName(family.getPhoneOwnerName());
-        dto.setProfile(family.getProfile());
-        dto.setNumOfAdultsAtAddress(family.getNumOfAdultsAtAddress());
+        FamilyDto dto = new FamilyDto();
+        dto.withId(family.getId())
+            .withFamilyName(family.getName())
+            .withVersion(family.getVersion())
+            .withHomeLocation(family.getHomeLocation())
+            .withHomeSubLocation(family.getHomeSubLocation())
+            .withHomeClusterId(family.getHomeClusterId())
+            .withAliveParents(family.getAliveParents())
+            .isMarried(family.isMarried())
+            .withNumOfChildrenAtAddress(family.getNumOfChildrenAtAddress())
+            .withNumOfWives(family.getNumOfWives())
+            .withPrimaryCaretaker(family.getPrimaryCaretaker())
+            .withMainContactName(family.getMainContactName())
+            .withMobileNumber(family.getMobileNumber())
+            .isPhoneOwner(family.isPhoneOwner())
+            .withPhoneOwnerName(family.getPhoneOwnerName())
+            .withProfile(family.getProfile())
+            .withNumOfAdultsAtAddress(family.getNumOfAdultsAtAddress());
+
         return dto;
     }
 

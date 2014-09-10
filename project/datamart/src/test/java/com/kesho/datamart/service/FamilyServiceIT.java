@@ -49,7 +49,7 @@ public class FamilyServiceIT {
 
     @Test(expected = OptimisticLockingFailureException.class)
     public void shouldFailToSaveStaleEntity() {
-        FamilyDto family = new FamilyDto(null, "name");
+        FamilyDto family = new FamilyDto().withFamilyName("name");
 
         final FamilyDto result = familyService.save(family);
         assertThat(result.getId(), notNullValue());
@@ -69,7 +69,7 @@ public class FamilyServiceIT {
 
         txTemplate.execute(callback);
 
-        result.setAliveParents(10);
+        result.withAliveParents(10);
 
         familyService.save(result);
 
@@ -77,7 +77,7 @@ public class FamilyServiceIT {
 
     @Test
     public void shouldCreateFamily() {
-        FamilyDto family = new FamilyDto(null, "name");
+        FamilyDto family = new FamilyDto().withFamilyName("name");
 
         FamilyDto result = familyService.save(family);
         assertThat(result.getId(), notNullValue());
@@ -88,7 +88,7 @@ public class FamilyServiceIT {
 
     @Test
     public void shouldUpdateFamily() {
-        FamilyDto family = new FamilyDto(1L, "newname");
+        FamilyDto family = new FamilyDto().withId(1L).withFamilyName("newname");
 
         FamilyDto result = familyService.save(family);
         assertThat(result.getId(), notNullValue());

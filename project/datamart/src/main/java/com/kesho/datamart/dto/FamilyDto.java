@@ -14,9 +14,9 @@ import javax.validation.constraints.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 public class FamilyDto implements Comparable {
-    private final Long id;
+    private Long id;
     @NotBlank(message = "Name is mandatory")
-    private final String familyName;
+    private String familyName;
     @NotNull(message = "Home location is mandatory")
     private Location homeLocation;
     @NotBlank(message = "Home sub location is mandatory")
@@ -43,11 +43,6 @@ public class FamilyDto implements Comparable {
     private Integer numOfAdultsAtAddress;
     private Integer version;
 
-    public FamilyDto(Long id, String name) {
-        this.id = id;
-        this.familyName = name;
-    }
-
     public Long getId() {
         return id;
     }
@@ -60,112 +55,69 @@ public class FamilyDto implements Comparable {
         return homeLocation;
     }
 
-    public void setHomeLocation(Location homeLocation) {
-        this.homeLocation = homeLocation;
-    }
-
     public String getHomeSubLocation() {
         return homeSubLocation;
-    }
-
-    public void setHomeSubLocation(String homeSubLocation) {
-        this.homeSubLocation = homeSubLocation;
     }
 
     public String getHomeClusterId() {
         return homeClusterId;
     }
 
-    public void setHomeClusterId(String homeClusterId) {
-        this.homeClusterId = homeClusterId;
-    }
-
     public Integer getAliveParents() {
         return aliveParents;
-    }
-
-    public void setAliveParents(Integer aliveParents) {
-        this.aliveParents = aliveParents;
     }
 
     public Boolean getMarried() {
         return isMarried;
     }
 
-    public void setMarried(Boolean married) {
-        isMarried = married;
-    }
-
     public Integer getNumOfChildrenAtAddress() {
         return numOfChildrenAtAddress;
-    }
-
-    public void setNumOfChildrenAtAddress(Integer numOfChildrenAtAddress) {
-        this.numOfChildrenAtAddress = numOfChildrenAtAddress;
     }
 
     public Integer getNumOfWives() {
         return numOfWives;
     }
 
-    public void setNumOfWives(Integer numOfWives) {
-        this.numOfWives = numOfWives;
-    }
-
     public String getPrimaryCaretaker() {
         return primaryCaretaker;
-    }
-
-    public void setPrimaryCaretaker(String primaryCaretaker) {
-        this.primaryCaretaker = primaryCaretaker;
     }
 
     public String getMainContactName() {
         return mainContactName;
     }
 
-    public void setMainContactName(String mainContactName) {
-        this.mainContactName = mainContactName;
-    }
-
     public String getMobileNumber() {
         return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
     }
 
     public Boolean getPhoneOwner() {
         return isPhoneOwner;
     }
 
-    public void setPhoneOwner(Boolean phoneOwner) {
-        isPhoneOwner = phoneOwner;
-    }
-
     public String getPhoneOwnerName() {
         return phoneOwnerName;
-    }
-
-    public void setPhoneOwnerName(String phoneOwnerName) {
-        this.phoneOwnerName = phoneOwnerName;
     }
 
     public String getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
     public Integer getNumOfAdultsAtAddress() {
         return numOfAdultsAtAddress;
     }
 
-    public void setNumOfAdultsAtAddress(Integer numOfAdultsAtAddress) {
-        this.numOfAdultsAtAddress = numOfAdultsAtAddress;
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public FamilyDto withFamilyName(String familyName) {
+        this.familyName = familyName;
+        return this;
     }
 
     @Override
@@ -198,11 +150,83 @@ public class FamilyDto implements Comparable {
         return familyName;
     }
 
-    public Integer getVersion() {
-        return version;
+    public FamilyDto withHomeLocation(Location location) {
+        this.homeLocation = location;
+        return  this;
     }
 
-    public void setVersion(Integer version) {
+    public FamilyDto withHomeSubLocation(String homeSubLocation) {
+        this.homeSubLocation = homeSubLocation;
+        return this;
+    }
+
+    public FamilyDto withHomeClusterId(String homeClusterId) {
+        this.homeClusterId = homeClusterId;
+        return this;
+    }
+
+    public FamilyDto withAliveParents(Integer aliveParents) {
+        this.aliveParents = aliveParents;
+        return this;
+    }
+
+    public FamilyDto isMarried(Boolean isMarried) {
+        this.isMarried = isMarried;
+        return this;
+    }
+
+    public FamilyDto withNumOfChildrenAtAddress(Integer numOfChildren) {
+        this.numOfChildrenAtAddress = numOfChildren;
+        return this;
+    }
+
+    public FamilyDto withNumOfWives(Integer numOfWives) {
+        this.numOfWives = numOfWives;
+        return this;
+    }
+
+    public FamilyDto withPrimaryCaretaker(String primaryCaretaker) {
+        this.primaryCaretaker = primaryCaretaker;
+        return this;
+    }
+
+    public FamilyDto withMainContactName(String mainContactName) {
+        this.mainContactName = mainContactName;
+        return this;
+    }
+
+    public FamilyDto withMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+        return this;
+    }
+
+    public FamilyDto isPhoneOwner(Boolean isPhoneOwner) {
+        this.isPhoneOwner = isPhoneOwner;
+        return this;
+    }
+
+    public FamilyDto withPhoneOwnerName(String phoneOwnerName) {
+        this.phoneOwnerName = phoneOwnerName;
+        return this;
+    }
+
+    public FamilyDto withProfile(String profile) {
+        this.profile = profile;
+        return this;
+    }
+
+    public FamilyDto withNumOfAdultsAtAddress(Integer numOfAdultsAtAddress) {
+        this.numOfAdultsAtAddress = numOfAdultsAtAddress;
+        return this;
+    }
+
+    public FamilyDto withVersion(Integer version) {
         this.version = version;
+        return this;
+    }
+
+    public FamilyDto withId(Long id) {
+        this.id = id;
+        return this;
     }
 }

@@ -2,13 +2,12 @@ package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.FamilyDtoBuilder;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
-import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.PagingUtil;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,7 +33,6 @@ import java.util.Map;
 public class FamilyDialogController {
     @Inject
     private FamilyRepository repository;
-    private Long id;
 
     @FXML
     private TextField familyName;
@@ -80,6 +78,7 @@ public class FamilyDialogController {
     private TableColumn<FamilyDto, String> familyNameColumn;
     @FXML
     private Pagination pagination;
+    private SimpleObjectProperty<FamilyDto> selected = new SimpleObjectProperty();
 
     private Stage dialogStage;
 
@@ -103,31 +102,32 @@ public class FamilyDialogController {
         Util.initializeYesNoGroup(isMarried, isPhoneOwner);
         Util.initializeComboBoxValues(homeLocation, EnumSet.allOf(Location.class));
 
+        selected.addListener(new ChangeListener<FamilyDto>() {
+            @Override
+            public void changed(ObservableValue<? extends FamilyDto> observable, FamilyDto oldValue, FamilyDto newValue) {
+                saveButton.setDisable(newValue == null);
+                deleteButton.setDisable(newValue == null);
+            }
+        });
+
         familiesTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FamilyDto>() {
             @Override
             public void changed(ObservableValue<? extends FamilyDto> observableValue, FamilyDto dto1, FamilyDto dto2) {
-                if(dto2 != null) {
-                    deleteButton.setDisable(false);
-                    saveButton.setDisable(false);
-                } else {
-                    deleteButton.setDisable(true);
-                    saveButton.setDisable(true);
-                }
-
-                refreshForm(dto2);
+                selected.set(dto2);
+                refreshForm();
             }
         });
 
         Util.decorateNumericInput(numOfWives, aliveParents, numOfAdultsAtAddress, numOfChildrenAtAddress);
     }
 
-    private void refreshForm(FamilyDto dto) {
+    private void refreshForm() {
+        FamilyDto dto = selected.getValue();
         if(dto == null) {
             reset();
             return;
         }
 
-        this.id = dto.getId();
         familyName.setText(dto.getFamilyName());
         homeLocation.setValue(dto.getHomeLocation());
         homeSubLocation.setText(dto.getHomeSubLocation());
@@ -147,7 +147,6 @@ public class FamilyDialogController {
 
     private void reset() {
         familiesTable.getSelectionModel().clearSelection();
-        this.id = null;
         familyName.clear();
         homeLocation.setValue(null);
         homeSubLocation.clear();
@@ -165,16 +164,16 @@ public class FamilyDialogController {
 
     @FXML
     private void doNew() {
+        selected.set(new FamilyDto());
         reset();
         saveButton.setDisable(false);
     }
 
+    //TODO: delete with version (entity)
     @FXML
     private void delete() {
-        if(id != null) {
-            repository.delete(id);
-            refreshTable();
-        }
+        repository.delete(selected.get().getId());
+        refreshTable();
     }
 
 	/**
@@ -185,7 +184,9 @@ public class FamilyDialogController {
         FamilyDto family = buildDto();
         if (isInputValid(family)) {
             try {
-                repository.save(family);
+                FamilyDto dto = repository.save(family);
+                selected.get().withVersion(dto.getVersion());
+                refreshTable();
             } catch(OptimisticLockingFailureException e) {
                 WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save", "The record has been modified or deleted by someone else! Please refresh the table and re-select to update.");
             }
@@ -193,26 +194,24 @@ public class FamilyDialogController {
 	}
 
     private FamilyDto buildDto() {
-        FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
-        FamilyDto dto = builder.withHomeLocation(homeLocation.getValue())
-                .withHomeSubLocation(homeSubLocation.getText())
-                .withHomeClusterId(homeClusterId.getText())
-                .withAliveParents(Util.safeToIntegerValue(aliveParents.getText(), null))
-                .isMarried((Boolean) isMarried.getSelectedToggle().getUserData())
-                .withNumNonKeshoStudents(Util.safeToIntegerValue(numOfChildrenAtAddress.getText(), null))
-                .withNumOfWives(Util.safeToIntegerValue(numOfWives.getText(), null))
-                .withPrimaryCaretaker(primaryCaretaker.getText())
-                .withMainContactName(mainContactName.getText())
-                .withMobileNumber(mobileNumber.getText())
-                .isPhoneOwner((Boolean) isPhoneOwner.getSelectedToggle().getUserData())
-                .withPhoneOwnerName(phoneOwnerName.getText())
-                .withProfile(profile.getText())
-                .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
-                .build();
-
-        if(familiesTable.getSelectionModel().getSelectedItem() != null) {
-            dto.setVersion(familiesTable.getSelectionModel().selectedItemProperty().getValue().getVersion());
-        }
+        //FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
+        FamilyDto dto = selected.get();
+        dto.withFamilyName(familyName.getText())
+            .withHomeLocation(homeLocation.getValue())
+            .withHomeSubLocation(homeSubLocation.getText())
+            .withHomeClusterId(homeClusterId.getText())
+            .withAliveParents(Util.safeToIntegerValue(aliveParents.getText(), null))
+            .isMarried((Boolean) isMarried.getSelectedToggle().getUserData())
+            .withNumOfChildrenAtAddress(Util.safeToIntegerValue(numOfChildrenAtAddress.getText(), null))
+            .withNumOfWives(Util.safeToIntegerValue(numOfWives.getText(), null))
+            .withPrimaryCaretaker(primaryCaretaker.getText())
+            .withMainContactName(mainContactName.getText())
+            .withMobileNumber(mobileNumber.getText())
+            .isPhoneOwner((Boolean) isPhoneOwner.getSelectedToggle().getUserData())
+            .withPhoneOwnerName(phoneOwnerName.getText())
+            .withProfile(profile.getText())
+            .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
+            ;
 
         return dto;
     }
@@ -272,6 +271,7 @@ public class FamilyDialogController {
 
     @FXML
     private void refreshTable() {
+        selected.set(null);
         initTable();
         PagingUtil.initPagination(repository, familiesModel, pagination);
     }

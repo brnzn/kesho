@@ -74,7 +74,7 @@ public class StudentServiceIT {
         StudentDto dto = studentService.get(1L);
         assertThat(dto.getFamily().getFamilyName(), is("sn1"));
 
-        StudentDto newFamily = dto.withFamily(new FamilyDto(2L, "sn2"));
+        StudentDto newFamily = dto.withFamily(new FamilyDto().withId(2L).withFamilyName("sn2"));
         studentService.save(newFamily);
 
         Student saved = DBUtil.findOne(transactionManager, Student.class, dao, 1L);
@@ -159,7 +159,7 @@ public class StudentServiceIT {
         LocalDate startDate = LocalDate.now();
         StudentDto dto = new StudentDto();
         dto.withName("name")
-                .withFamily(new FamilyDto(1L, "sn1"))
+                .withFamily(new FamilyDto().withId(1L).withFamilyName("sn1"))
                 .withGender(Gender.M)
                 .withHasDisability(true)
                 //s.withHomeLocation("hl")
