@@ -113,13 +113,13 @@ public class SponsorController extends AbstractEditableController<SponsorDto> {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Sponsor details", FormValidator.reduce(validation));
         } else {
             dto = sponsorsRepository.save(dto);
+            selected.get().setVersion(dto.getVersion());
             parentController.valueChanged();
         }
     }
 
     private SponsorDto buildDto() {
-        SponsorDto current = new SponsorDto();
-        current.setId(selected.get().getId());
+        SponsorDto current = selected.get();
         current.setName(firstName.getText());
         current.setSurname(surname.getText());
         current.setStartDate(Util.toJodaDate(startDate.getValue()));

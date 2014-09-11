@@ -57,10 +57,10 @@
       <top>
         <ToolBar id="toptoolbar" fx:id="tb">
           <items>
-            <Button fx:id="newSponsorBtn" mnemonicParsing="false" onAction="#add" text="New..." />
-            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#delete" text="Delete" />
+            <Button fx:id="newSponsorBtn" mnemonicParsing="false" onAction="#add" text="New Sponsor" />
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#delete" text="Delete Sponsor" />
             <Button mnemonicParsing="false" text="Filter..." />
-            <Button mnemonicParsing="false" onAction="#refreshTable" text="Show All" />
+            <Button mnemonicParsing="false" onAction="#refreshTable" text="Refresh Sponsors" />
           </items>
         </ToolBar>
       </top>

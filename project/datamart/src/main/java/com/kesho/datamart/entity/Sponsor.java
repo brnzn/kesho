@@ -79,6 +79,10 @@ public class Sponsor {
     @Enumerated(EnumType.STRING)
     private LevelOfParticipation levelOfParticipation;
 
+    @Version
+    @Column(name = "VERSION")
+    private Integer version;
+
     public Long getId() {
         return id;
     }
@@ -221,5 +225,13 @@ public class Sponsor {
 
     public void setLevelOfParticipation(LevelOfParticipation levelOfParticipation) {
         this.levelOfParticipation = levelOfParticipation;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

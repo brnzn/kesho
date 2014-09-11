@@ -87,6 +87,7 @@ done - home location on student details should be drop down (like family)
 
 ----------------------------------
 add version column to all entities - done student, family, education
+delete with entity and not id, so it is using version
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
 all inputs all on forms should be disabled until clicking new

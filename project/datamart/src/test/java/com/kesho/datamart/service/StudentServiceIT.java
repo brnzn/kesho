@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.*;
  * Time: 10:23 PM
  * To change this template use File | Settings | File Templates.
  */
-@ContextConfiguration(locations = { "classpath:datamart-service-context.xml" })
+@ContextConfiguration(locations = {"classpath:datamart-service-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class StudentServiceIT {
     @Rule
@@ -87,7 +87,7 @@ public class StudentServiceIT {
         studentService.save(history.get(0));
     }
 
-        @Test(expected = OptimisticLockingFailureException.class)
+    @Test(expected = OptimisticLockingFailureException.class)
     public void shouldFailToSaveStaleStudent() {
         StudentDto studentDto = studentService.get(1L);
         assertThat(studentDto.getVersion(), is(0));
@@ -162,8 +162,7 @@ public class StudentServiceIT {
                 .withSecondaryStatus1(SubEducationStatus.National)
                 .withSecondaryStatus2(SubEducationStatus.Day)
                 .withStudentId(1L)
-                .withComments("comments")
-                ;
+                .withComments("comments");
 
 
         EducationDto result = studentService.save(dto);
@@ -216,7 +215,7 @@ public class StudentServiceIT {
                 .withFamily(new FamilyDto().withId(1L).withFamilyName("sn1"))
                 .withGender(Gender.M)
                 .withHasDisability(true)
-                //s.withHomeLocation("hl")
+                        //s.withHomeLocation("hl")
                 .withStartDate(startDate)
                 .withYearOfBirth(2000)
                 .withEmail("email")

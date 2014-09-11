@@ -181,9 +181,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     }
 
     private StudentDto buildDto() {
-        StudentDto dto = selected.get();//new StudentDto();
-        //dto.withId(selected.get().getId());
-
+        StudentDto dto = selected.get();
         dto.withName(firstName.getText())
                 .withFamily((FamilyDto) family.getUserData())
                 .withMobileNumber(contactNumber.getText())

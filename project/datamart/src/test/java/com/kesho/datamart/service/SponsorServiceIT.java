@@ -4,8 +4,10 @@ import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.FoundUs;
 import com.kesho.datamart.domain.LevelOfParticipation;
 import com.kesho.datamart.domain.PayeeType;
+import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.repository.FamilyDAO;
@@ -15,11 +17,18 @@ import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.inject.Inject;
+
+import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
@@ -49,6 +58,31 @@ public class SponsorServiceIT {
     private SponsorsDAO dao;
     @Inject
     private PaymentArrangementDao paymentArrangementDao;
+
+    @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleEducation() {
+        final SponsorDto sponsor = service.findOne(1L);
+        assertThat(sponsor.getVersion(), is(0));
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<Sponsor> callback = new TransactionCallback<Sponsor>() {
+            @Override
+            public Sponsor doInTransaction(TransactionStatus status) {
+                Sponsor s1 = dao.findOne(1L);
+                s1.setSurname("dummy");
+                return dao.save(s1);
+            }
+        };
+
+        Sponsor modified = txTemplate.execute(callback);
+        assertThat(modified.getVersion(), is(1));
+
+        sponsor.setSurname("newname");
+
+        service.save(sponsor);
+    }
 
     @Test
     public void shouldDeleteSponsorAndPaymentArrangement() {

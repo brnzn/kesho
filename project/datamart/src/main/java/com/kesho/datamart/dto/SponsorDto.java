@@ -35,6 +35,7 @@ public class SponsorDto implements Dto {
     private LocalDate startDate;
     private LocalDate endDate;
     private LevelOfParticipation levelOfParticipation;
+    private Integer version;
 
     public SponsorDto() {}
     
@@ -57,6 +58,7 @@ public class SponsorDto implements Dto {
         surname = sponsor.getSurname();
         email1 = sponsor.getEmail1();
         email2 = sponsor.getEmail2();
+        version = sponsor.getVersion();
     }
 
     public Long getId() {
@@ -201,5 +203,13 @@ public class SponsorDto implements Dto {
 
     public void setLevelOfParticipation(LevelOfParticipation levelOfParticipation) {
         this.levelOfParticipation = levelOfParticipation;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

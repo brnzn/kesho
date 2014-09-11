@@ -31,6 +31,7 @@ public class SponsorAssembler {
     public Sponsor toEntity(SponsorDto dto) {
         Sponsor sponsor = new Sponsor();
         sponsor.setId(dto.getId());
+        sponsor.setVersion(dto.getVersion());
         sponsor.setName(dto.getName());
         sponsor.setStartDate(dto.getStartDate())       ;
         sponsor.setActive(dto.getActive());

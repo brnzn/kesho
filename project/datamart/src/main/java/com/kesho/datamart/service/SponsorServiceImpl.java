@@ -1,10 +1,8 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.PageImpl;
-import com.kesho.datamart.dto.SponsorDto;
-import com.kesho.datamart.dto.StudentSponsorDto;
+import com.kesho.datamart.dto.*;
 import com.kesho.datamart.entity.Sponsor;
+import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.PaymentArrangementDao;
 import com.kesho.datamart.repository.SponsorsDAO;
@@ -32,8 +30,16 @@ public class SponsorServiceImpl implements SponsorService {
 
     private SponsorAssembler assembler = new SponsorAssembler();
 
+    @Override
     public SponsorDto save(SponsorDto sponsor) {
-        return assembler.toDto(dao.save(assembler.toEntity(sponsor)));
+        return assembler.toDto(doSave(sponsor));
+    }
+
+    //This method is needed for version property, which get updated only after the transaction commit
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public Sponsor doSave(SponsorDto dto) {
+        return dao.save(assembler.toEntity(dto));
     }
 
     @Override
