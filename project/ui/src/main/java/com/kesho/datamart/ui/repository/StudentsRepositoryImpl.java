@@ -34,11 +34,6 @@ public class StudentsRepositoryImpl implements StudentsRepository {
     }
 
     @Override
-    public EducationDto addEducationHistory(EducationDto dto) {
-        return studentsService.addEducationHistory(dto);
-    }
-
-    @Override
     public List<EducationDto> getEducationHistory(Long studentId) {
         return studentsService.getEducationHistory(studentId);
     }

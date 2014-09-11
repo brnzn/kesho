@@ -30,12 +30,17 @@ public class EducationDto {
     private Long studentId;
     private String comments;
     private LocalDate predictedEndDate;
+    private Integer version;
 
     public EducationDto(){}
 
     public EducationDto(EducationStatus status, LocalDate date) {
         this.educationalStatus = status;
         this.date = date;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 
     public Long getStudentId() {
@@ -154,6 +159,11 @@ public class EducationDto {
     public EducationDto withPredictedEndDate(LocalDate endDate) {
         this.predictedEndDate = endDate;
 
+        return this;
+    }
+
+    public EducationDto withVersion(Integer version) {
+        this.version = version;
         return this;
     }
 }

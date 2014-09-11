@@ -76,27 +76,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @Transactional
-    public EducationDto addEducationHistory(EducationDto dto) {
-        EducationHistory log = educationAssembler.toLog(dto);
-        if(dto.getInstitution() != null) {
-            log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
-        }
-
-        log = educationHistoryDAO.save(log);
-        return educationAssembler.toDto(log);
-    }
-
-    @Override
     public List<EducationDto> getEducationHistory(Long studentId) {
         return educationAssembler.toDto(educationHistoryDAO.findByStudentId(studentId));
     }
 
     @Override
-    @Transactional
     public EducationDto save(EducationDto dto) {
-        //TODO: should it be find one??
-        return addEducationHistory(dto);
+        return educationAssembler.toDto(doSave(dto));
+    }
+
+    //This method is needed for version property, which get updated only after the transaction commit
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public EducationHistory doSave(EducationDto dto) {
+        EducationHistory log = educationAssembler.toLog(dto);
+        if(dto.getInstitution() != null) {
+            log.setSchool(schoolsDao.findOne(dto.getInstitution().getId()));
+        }
+
+        return educationHistoryDAO.save(log);
     }
 
     @Override
@@ -107,13 +105,6 @@ public class StudentServiceImpl implements StudentService {
     public EducationDto findLatestEducation(Long studentId) {
         return educationHistoryDAO.findLatestEducation(studentId);
     }
-
-//    @Transactional
-//    @Override
-//    public void deleteStudent(Long id) {
-//        educationHistoryDAO.deleteByStudentId(id);
-//        studentsDao.deleteByStudentId(id);
-//    }
 
     @Override
     @Transactional
@@ -136,6 +127,7 @@ public class StudentServiceImpl implements StudentService {
         return historyAssembler.toDto(historyDAO.findByStudentId(studentId));
     }
 
+    //TODO: pass dto for version check
     @Override
     @Transactional
     public void deleteStudentHistory(Long id) {

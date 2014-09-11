@@ -8,14 +8,17 @@ import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.InstitutionDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.EducationHistory;
+import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.repository.EducationHistoryDAO;
 import com.kesho.datamart.repository.FamilyDAO;
 import com.kesho.datamart.repository.StudentsDAO;
+import org.apache.commons.lang.NotImplementedException;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
@@ -58,6 +61,57 @@ public class StudentServiceIT {
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+    @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleEducation() {
+        final List<EducationDto> history = studentService.getEducationHistory(2L);
+        assertThat(history.get(0).getVersion(), is(0));
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<EducationHistory> callback = new TransactionCallback<EducationHistory>() {
+            @Override
+            public EducationHistory doInTransaction(TransactionStatus status) {
+                EducationHistory s1 = educationHistoryDAO.findOne(history.get(0).getId());
+                s1.setCourse("dummy");
+                return educationHistoryDAO.save(s1);
+            }
+        };
+
+        EducationHistory modified = txTemplate.execute(callback);
+        assertThat(modified.getVersion(), is(1));
+
+        history.get(0).withComments("dummy");
+
+        studentService.save(history.get(0));
+    }
+
+        @Test(expected = OptimisticLockingFailureException.class)
+    public void shouldFailToSaveStaleStudent() {
+        StudentDto studentDto = studentService.get(1L);
+        assertThat(studentDto.getVersion(), is(0));
+
+        TransactionTemplate txTemplate = new TransactionTemplate(transactionManager);
+        txTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+
+        TransactionCallback<Student> callback = new TransactionCallback<Student>() {
+            @Override
+            public Student doInTransaction(TransactionStatus status) {
+                Student s1 = dao.findOne(1L);
+                s1.setFirstName("dummy");
+                return dao.save(s1);
+            }
+        };
+
+        Student modified = txTemplate.execute(callback);
+        assertThat(modified.getVersion(), is(1));
+
+        studentDto.withEmail("dummy");
+
+        studentService.save(studentDto);
+
+    }
 
     @Test
     public void shouldDeleteEducationHistory() {
@@ -112,7 +166,7 @@ public class StudentServiceIT {
                 ;
 
 
-        EducationDto result = studentService.addEducationHistory(dto);
+        EducationDto result = studentService.save(dto);
         assertThat(result.getInstitution().getName(), is("school"));
         assertThat(result.getEducationalStatus(), is(EducationStatus.Secondary));
         assertThat(result.getSecondaryEducationStatus1(), is(SubEducationStatus.National));

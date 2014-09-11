@@ -82,9 +82,9 @@ public class StudentsRepositoryTest {
         EducationDto dto = mock(EducationDto.class);
         EducationDto returnDto = mock(EducationDto.class);
         when(returnDto.getId()).thenReturn(1L);
-        when(studentService.addEducationHistory(dto)).thenReturn(returnDto);
+        when(studentService.save(dto)).thenReturn(returnDto);
 
-        EducationDto result = studentsRepository.addEducationHistory(dto);
+        EducationDto result = studentsRepository.save(dto);
         assertThat(result.getId(), is(1L));
     }
 

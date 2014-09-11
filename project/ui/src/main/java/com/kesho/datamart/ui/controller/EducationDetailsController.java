@@ -27,7 +27,6 @@ import org.joda.time.LocalDate;
 
 import javax.inject.Inject;
 import java.time.Month;
-import java.time.MonthDay;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +99,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     public void refresh(StudentDto dto) {
         loadInstitutions();
         refreshEducationTable();
-        resetForm();
+        clearForm();
     }
 
     public Map<String, Node> getValidateableFields() {
@@ -128,7 +127,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
 
 
     protected void doSave() {
-        EducationDto dto = new EducationDto();
+        EducationDto dto = selectedEducation.get();
         dto.withId(selectedEducation.get().getId());
 
         dto.withStudentId(selected.get().getId()).
@@ -143,7 +142,8 @@ public class EducationDetailsController extends AbstractEditableController<Stude
             .withPredictedEndDate(Util.toJodaDate(predictedEndDate.getValue()));
 
         if (isInputValid(dto)) {
-            studentsRepository.save(dto);
+            dto = studentsRepository.save(dto);
+            selectedEducation.get().withVersion(dto.getVersion());
             refreshEducationTable();
         }
     }
@@ -283,7 +283,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
 
     private void updateEducationForm(EducationDto dto) {
         if(dto == null) {
-            resetForm();
+            clearForm();
             return;
         }
 
@@ -299,7 +299,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     }
 
 
-    private void resetForm() {
+    private void clearForm() {
         educationYear.setValue(null);
         educationYear.getSelectionModel().clearSelection();
         course.clear();
@@ -317,8 +317,13 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     }
 
     @FXML
+    private void refreshEducation() {
+        refreshEducationTable();
+    }
+
+    @FXML
     private void newFired() {
-        resetForm();
+        clearForm();
         selectedEducation.set(getDefaultDto());
         java.time.LocalDate date = java.time.LocalDate.now().withMonth(Month.JANUARY.getValue()).withDayOfMonth(1);
         startDate.setValue(date);
@@ -328,7 +333,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     @FXML
     private void deleteFired() {
         if(WindowsUtil.getInstance().showWarningDialog("Delete Education History", "Are you sure you want to delete the selected education history row?", null)) {
-            studentsRepository.deleteEducationHistory(selected.get().getId());
+            studentsRepository.deleteEducationHistory(selectedEducation.get().getId());
             refreshEducationTable();
         }
     }

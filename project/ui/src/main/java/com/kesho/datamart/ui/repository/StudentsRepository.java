@@ -21,8 +21,6 @@ public interface StudentsRepository {
 
     StudentDto save(StudentDto dto);
 
-    EducationDto addEducationHistory(EducationDto dto);
-
     List<EducationDto> getEducationHistory(Long studentId);
 
     StudentDto findOne(Long id);

@@ -29,6 +29,7 @@ public class EducationAssembler {
     public EducationDto toDto(EducationHistory log) {
         EducationDto dto = new EducationDto()
                 .withId(log.getId())
+                .withVersion(log.getVersion())
                 .withCourse(log.getCourse())
                 .withSecondaryStatus1(log.getSecondaryLevel1())
                 .withSecondaryStatus2(log.getSecondaryLevel2())
@@ -44,10 +45,10 @@ public class EducationAssembler {
 
     public EducationHistory toLog(EducationDto dto) {
         EducationHistory log = new EducationHistory();
+        log.setVersion(dto.getVersion());
         log.setId(dto.getId());
         log.setCourse(dto.getCourse());
         log.setEducationStatus(dto.getEducationalStatus());
-//        log.setSchool(new School(dto.getInstitution().getId(), dto.getInstitution().getFamilyName()));
         log.setStartDate(dto.getDate());
         log.setStudentId(dto.getStudentId());
         log.setSecondaryLevel1(dto.getSecondaryEducationStatus1());

@@ -135,10 +135,6 @@ public class EducationHistory {
         this.secondaryLevel2 = secondaryLevel2;
     }
 
-    //	public void setStudent(Student student) {
-//		this.student = student;
-//	}
-
 	public void setSchool(School school) {
 		this.school = school;
 	}
@@ -153,5 +149,13 @@ public class EducationHistory {
 
     public String getComments() {
         return comments;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

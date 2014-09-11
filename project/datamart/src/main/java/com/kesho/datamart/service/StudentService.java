@@ -22,8 +22,6 @@ public interface StudentService {
 
     StudentDto save(StudentDto dto);
 
-    EducationDto addEducationHistory(EducationDto dto);
-
     List<EducationDto> getEducationHistory(Long studentId);
 
     EducationDto save(EducationDto dto);
