@@ -1,6 +1,9 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.PaymentArrangementDto;
+import com.kesho.datamart.dto.SponsorDto;
+import com.kesho.datamart.entity.PaymentArrangement;
+import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.repository.PaymentArrangementDao;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +26,15 @@ public class PaymentArrangementServiceImpl implements PaymentArrangementService 
     private PaymentArrangementAssembler assembler = new PaymentArrangementAssembler();
 
     @Override
-    @Transactional
     public PaymentArrangementDto save(PaymentArrangementDto dto) {
-        return assembler.toDto(paymentArrangementDao.save(assembler.toEntity(dto)));
+        return assembler.toDto(doSave(dto));
+    }
+
+    //This method is needed for version property, which get updated only after the transaction commit
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public PaymentArrangement doSave(PaymentArrangementDto dto) {
+        return paymentArrangementDao.save(assembler.toEntity(dto));
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface PaymentArrangementDao extends JpaRepository<PaymentArrangement, Long> {
-    @Query("select NEW com.kesho.datamart.dto.PaymentArrangementDto(pa.id, pa.studentId, pa.sponsorId, pa.startDate, pa.endDate, pa.type, pa.amount, st.firstName, st.family.name, pa.currency) "
+    @Query("select NEW com.kesho.datamart.dto.PaymentArrangementDto(pa.id, pa.studentId, pa.sponsorId, pa.startDate, pa.endDate, pa.type, pa.amount, st.firstName, st.family.name, pa.currency, pa.version) "
             + "from PaymentArrangement pa, Student st JOIN st.family f "
             + "where pa.sponsorId = :sponsorId and pa.studentId = st.id" +
             " order by pa.endDate ASC")

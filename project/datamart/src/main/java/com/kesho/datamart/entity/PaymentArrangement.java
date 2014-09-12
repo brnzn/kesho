@@ -46,6 +46,10 @@ public class PaymentArrangement {
     @Column(name = "CURRENCY")
     private String currency;
 
+    @Version
+    @Column(name= "VERSION")
+    private Integer version;
+
     public Long getId() {
         return id;
     }
@@ -108,5 +112,13 @@ public class PaymentArrangement {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

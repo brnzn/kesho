@@ -110,8 +110,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
 
     @Override
     public void refresh(SponsorDto dto) {
-        refreshTable();
-//        resetForm();
+        refreshTable(true);
     }
 
     @FXML
@@ -155,11 +154,9 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
             @Override
             public TableCell<PaymentArrangementDto, String> call(TableColumn<PaymentArrangementDto, String> institutionDtoStringTableColumn) {
                 TableCell<PaymentArrangementDto, String> cell = new TableCell<PaymentArrangementDto, String>() {
-
                     @Override
                     public void updateItem(String item, boolean empty) {
-
-                        if(item!=null){
+                        if(item!=null && !empty){
                             //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
                             Hyperlink link = new Hyperlink(item);
                             link.underlineProperty().setValue(true);
@@ -172,7 +169,10 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
                                 }
                             });
                             setGraphic(link);
+                        } else { // reset cell value
+                            setGraphic(null);
                         }
+
                     }
                 };
 
@@ -216,7 +216,8 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     private void delete () {
         if(WindowsUtil.getInstance().showWarningDialog("Delete Financial Arrangement", "Are you sure you want to delete the selected Financial Arrangement row?", null)) {
             sponsorsRepository.deletePaymentArrangement(selectedPayment.get().getId());
-            refreshTable();
+            student.setUserData(null);
+            refreshTable(false);
         }
     }
 
@@ -262,16 +263,16 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         if(validation.size() > 0) {
             WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Payment Arrangement details", FormValidator.reduce(validation));
         } else {
-            sponsorsRepository.save(dto);
-            refreshTable();
+            dto = sponsorsRepository.save(dto);
+            selectedPayment.get().setVersion(dto.getVersion());
+            refreshTable(dto.getVersion() > 0); // reelect if update
             educationLevel.visibleProperty().setValue(true);
         }
     }
 
     private PaymentArrangementDto buildDto() {
-        PaymentArrangementDto dto = new PaymentArrangementDto();
+        PaymentArrangementDto dto = selectedPayment.get();
 
-        dto.setId(selectedPayment.get().getId());
         dto.setEndDate(Util.toJodaDate(endDate.getValue()));
 
         dto.setStartDate(Util.toJodaDate(startDate.getValue()));
@@ -282,10 +283,8 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
             dto.setAmount(new BigDecimal(totalAllocated.getText()));
         }
 
-        if(student != null && student.getUserData() != null) {
+        if(student.getUserData() != null) {
             dto.setStudentId(((StudentDto)student.getUserData()).getId());
-        } else {
-            dto.setStudentId(selectedPayment.get().getStudentId());
         }
 
         dto.setCurrency(currency.getSelectionModel().getSelectedItem());
@@ -295,17 +294,25 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
         return dto;
     }
 
-    void refreshTable() {
+    void refreshTable(boolean reselect) {
+        int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
         tableModel.clear();
         if(selected.get() != null) {
             List<PaymentArrangementDto> dtos = sponsorsRepository.getPaymentArrangements(selected.get().getId());
             tableModel.addAll(dtos);
-            int selectedIndex = paymentArrangementTable.getSelectionModel().getSelectedIndex();
             paymentArrangementTable.setItems(null);
             paymentArrangementTable.layout();
             paymentArrangementTable.setItems(tableModel);
-            // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
-            paymentArrangementTable.getSelectionModel().select(selectedIndex);
+
+            if(reselect) {
+                // Must set the selected index again (see http://javafx-jira.kenai.com/browse/RT-26291)
+                paymentArrangementTable.getSelectionModel().select(selectedIndex);
+            }
         }
+    }
+
+    @FXML
+    private void refreshPayments() {
+        refreshTable(true);
     }
 }

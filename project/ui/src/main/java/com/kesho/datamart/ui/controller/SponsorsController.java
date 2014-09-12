@@ -114,7 +114,7 @@ public class SponsorsController {
             @Override
             public void handle(javafx.event.Event event) {
                 if (paymentArrangementTab.isSelected()) {
-                    paymentArrangementController.refreshTable();
+                    paymentArrangementController.refreshTable(false);
                 }
             }
         });

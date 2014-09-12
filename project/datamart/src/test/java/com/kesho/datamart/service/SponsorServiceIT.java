@@ -60,7 +60,7 @@ public class SponsorServiceIT {
     private PaymentArrangementDao paymentArrangementDao;
 
     @Test(expected = OptimisticLockingFailureException.class)
-    public void shouldFailToSaveStaleEducation() {
+    public void shouldFailToSaveStaleEntity() {
         final SponsorDto sponsor = service.findOne(1L);
         assertThat(sponsor.getVersion(), is(0));
 

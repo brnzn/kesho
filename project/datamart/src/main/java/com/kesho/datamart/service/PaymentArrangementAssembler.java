@@ -16,6 +16,7 @@ public class PaymentArrangementAssembler {
     public PaymentArrangement toEntity(PaymentArrangementDto dto) {
         PaymentArrangement entity = new PaymentArrangement();
         entity.setId(dto.getId());
+        entity.setVersion(dto.getVersion());
         entity.setEndDate(dto.getEndDate());
         entity.setAmount(dto.getAmount());
         entity.setSponsorId(dto.getSponsorId());
@@ -29,6 +30,7 @@ public class PaymentArrangementAssembler {
     public PaymentArrangementDto toDto(PaymentArrangement entity) {
         PaymentArrangementDto dto = new PaymentArrangementDto();
         dto.setId(entity.getId());
+        dto.setVersion(entity.getVersion());
         dto.setEndDate(entity.getEndDate());
         dto.setAmount(entity.getAmount());
         dto.setSponsorId(entity.getSponsorId());

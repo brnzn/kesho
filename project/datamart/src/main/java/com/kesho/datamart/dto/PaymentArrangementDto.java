@@ -38,13 +38,14 @@ public class PaymentArrangementDto {
     @NotNull(message = "Currency is mandatory")
     private Currency currency;
     private String studentName;
+    private Integer version;
 
     public PaymentArrangementDto() {
 
     }
 
     public PaymentArrangementDto(Long id, Long studentId, Long sponsorId, LocalDate startDate, LocalDate endDate,
-                                 FinancialArrangement financialArrangement, BigDecimal amount, String name, String surname, String currency) {
+                                 FinancialArrangement financialArrangement, BigDecimal amount, String name, String surname, String currency, Integer version) {
         this.studentName = name.concat(" ").concat(surname);
         this.id = id;
         this.studentId = studentId;
@@ -54,6 +55,7 @@ public class PaymentArrangementDto {
         this.type = financialArrangement;
         this.amount = amount;
         this.currency = Currency.getInstance(currency);
+        this.version = version;
     }
 
     public Long getId() {
@@ -122,5 +124,13 @@ public class PaymentArrangementDto {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }
