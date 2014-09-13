@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * Time: 6:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FamilyDto implements Comparable {
+public class FamilyDto implements Dto, Comparable {
     private Long id;
     @NotBlank(message = "Name is mandatory")
     private String familyName;

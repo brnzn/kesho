@@ -15,7 +15,7 @@ public interface Selectable<T> {
      * @deprecated
       * @return
      */
-    T getSelectedItem();
+ //   T getSelectedItem();
 
     /**
      * @deprecated

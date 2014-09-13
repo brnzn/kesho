@@ -47,7 +47,7 @@
                                                 </Tab>
                                                 <Tab id="familyTab" fx:id="familyTab" disable="true" text="Family">
                                                     <content>
-                                                        <fx:include fx:id="familyDetails" source="../view/FamilyDetailsTab.fxml" />
+                                                        <fx:include fx:id="familyDetails" source="StudentFamilyDetailsTab.fxml" />
                                                     </content>
                                                 </Tab>
                                                 <Tab id="studentSponsorTab" fx:id="studentSponsorTab" disable="true" text="Sponsors">
@@ -58,11 +58,6 @@
                                                 <Tab id="studentHistoryTab" fx:id="studentHistoryTab" disable="true" text="History">
                                                     <content>
                                                         <fx:include fx:id="studentHistory" source="../view/StudentHistoryTab.fxml" />
-                                                    </content>
-                                                </Tab>
-                                                <Tab text="Alumni">
-                                                    <content>
-                                                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                                     </content>
                                                 </Tab>
                                             </tabs>

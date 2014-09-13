@@ -1,25 +1,23 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.domain.LevelOfSupport;
 import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.util.Util;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.kesho.datamart.ui.validation.FormValidator;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import org.controlsfx.dialog.Dialogs;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,114 +26,73 @@ import java.util.List;
  * Time: 12:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FamilyDetailsController extends AbstractChildController<StudentDto> {
+public class FamilyDetailsController extends AbstractFamilyDetailsController<FamilyDto> implements FormActionListener {
     @FXML
-    private TextField familyName;
+    protected TextField familyName;
     @FXML
-    private ComboBox<Location> homeLocation;
+    protected ComboBox<Location> homeLocation;
     @FXML
-    private TextField homeSubLocation;
+    protected TextField homeSubLocation;
     @FXML
-    private TextField homeClusterId;
+    protected TextField homeClusterId;
     @FXML
-    private TextField aliveParents;
+    protected TextField aliveParents;
     @FXML
-    private ToggleGroup isMarried;
+    protected ToggleGroup isMarried;
     @FXML
-    private TextField numOfChildrenAtAddress;
+    protected TextField numOfChildrenAtAddress;
     @FXML
-    private TextField numOfWives;
+    protected TextField numOfWives;
     @FXML
-    private TextField primaryCaretaker;
+    protected TextField primaryCaretaker;
     @FXML
-    private TextField mainContactName;
+    protected TextField mainContactName;
     @FXML
-    private TextField mobileNumber;
+    protected TextField mobileNumber;
     @FXML
-    private ToggleGroup isPhoneOwner;
+    protected ToggleGroup isPhoneOwner;
     @FXML
-    private TextField phoneOwnerName;
+    protected TextField phoneOwnerName;
     @FXML
-    private TextArea profile;
+    protected TextArea profile;
     @FXML
-    private TextField numOfAdultsAtAddress;
+    protected TextField numOfAdultsAtAddress;
+    @FXML
+    private Button saveButton;
 
-    private ObservableList<StudentDto> studentsModel = FXCollections.observableArrayList();
+    private Map<String, Node> validationFields = new HashMap<>();
 
-    private SimpleObjectProperty<StudentDto> selected = new SimpleObjectProperty<>();
-
-
-    @FXML
-    private TableView<StudentDto> studentsTable;
-
-    @FXML
-    private TableColumn<StudentDto, String> studentNameCol;
-    @FXML
-    private TableColumn<StudentDto, LevelOfSupport> levelOfSupportCol;
 
     @Inject
-    private StudentsController parentController;
+    protected FamiliesController parentController;
     @Inject
-    private FamilyRepository repository;
-
-    private Tab familyTab;
+    protected FamilyRepository repository;
 
     public FamilyDetailsController() {
         WindowsUtil.getInstance().autowire(this);
     }
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
-    @FXML
-    private void initialize() {
-        studentNameCol.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("firstName"));
-        levelOfSupportCol.setCellValueFactory(new PropertyValueFactory<StudentDto, LevelOfSupport>("levelOfSupport"));
-
-        studentsModel.clear();
-        studentsTable.setItems(studentsModel);
-
-        studentNameCol.setCellFactory(new Callback<TableColumn<StudentDto, String>, TableCell<StudentDto, String>>() {
-            @Override
-            public TableCell<StudentDto, String> call(TableColumn<StudentDto, String> studentNamne) {
-                TableCell<StudentDto, String> cell = new TableCell<StudentDto, String>() {
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-
-                        if(item!=null){
-                            //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
-                            Hyperlink link = new Hyperlink(item);
-                            link.setUserData(((StudentDto)getTableRow().getItem()).getId());
-                            //link.setUserData();
-                            link.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent e) {
-                                    WindowsUtil.getInstance().students((Long) ((Hyperlink) e.getSource()).getUserData());
-                                }
-                            });
-                            setGraphic(link);
-                        }
-                    }
-                };
-
-                return cell;
-            }
-        });
-
+    @Override
+    public void newFired() {
+        resetForm();
+        selected.unbind();
+        selected.set(new FamilyDto());
     }
 
     @Override
-    public void refresh(StudentDto dto) {
+    public void deleteFired(Long id) {
+    }
+
+    @Override
+    public void refresh(FamilyDto dto) {
+        saveButton.setDisable(dto == null);
+
         if (dto == null) {
             resetForm();
             return;
         }
 
-        FamilyDto familyDto = dto.getFamily();
-        loadStudents(familyDto.getId());
-
+        FamilyDto familyDto = dto;//dto.getFamily();
         familyName.setText(familyDto.getFamilyName());
         homeLocation.setValue(familyDto.getHomeLocation());
         homeSubLocation.setText(familyDto.getHomeSubLocation());
@@ -153,27 +110,6 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         numOfAdultsAtAddress.setText(Util.safeToStringValue(familyDto.getNumOfAdultsAtAddress(), null));
     }
 
-    private void loadStudents(final Long familyId) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshStudentsTable(repository.getFamilyStudents(familyId));
-            }
-        });
-    }
-
-    private void refreshStudentsTable(List<StudentDto> students) {
-        if (students == null) {
-            return;
-        }
-
-        studentsModel.clear();
-        studentsModel.addAll(students);
-        studentsTable.setItems(null);
-        studentsTable.layout();
-        studentsTable.setItems(studentsModel);
-    }
-
     private void resetForm() {
         familyName.clear();
         homeLocation.setValue(null);
@@ -188,5 +124,70 @@ public class FamilyDetailsController extends AbstractChildController<StudentDto>
         phoneOwnerName.clear();
         profile.clear();
         numOfAdultsAtAddress.clear();
+    }
+
+    @Override
+    protected Map<String, Node> getValidateableFields() {
+        if(validationFields.isEmpty()) {
+            validationFields.put("familyName", familyName);
+            validationFields.put("homeLocation", homeLocation);
+            validationFields.put("homeSubLocation", homeSubLocation);
+            validationFields.put("homeClusterId", homeClusterId);
+            validationFields.put("aliveParents", aliveParents);
+            validationFields.put("numOfChildrenAtAddress", numOfChildrenAtAddress);
+            validationFields.put("numOfWives", numOfWives);
+            validationFields.put("primaryCaretaker", primaryCaretaker);
+            validationFields.put("mainContactName", mainContactName);
+            validationFields.put("mobileNumber", mobileNumber);
+            validationFields.put("phoneOwnerName", phoneOwnerName);
+            validationFields.put("numOfAdultsAtAddress", numOfAdultsAtAddress);
+            validationFields.put("profile", profile);
+        }
+        return validationFields;
+    }
+
+    @Override
+    protected void doSave() {
+        FamilyDto family = buildDto();
+        if (isInputValid(family)) {
+            FamilyDto dto = repository.save(family);
+            selected.get().withVersion(dto.getVersion());
+            parentController.refresh();
+        }
+    }
+
+    private FamilyDto buildDto() {
+        //FamilyDtoBuilder builder = new FamilyDtoBuilder(id, this.familyName.getText());
+        FamilyDto dto = selected.get();
+        dto.withFamilyName(familyName.getText())
+                .withHomeLocation(homeLocation.getValue())
+                .withHomeSubLocation(homeSubLocation.getText())
+                .withHomeClusterId(homeClusterId.getText())
+                .withAliveParents(Util.safeToIntegerValue(aliveParents.getText(), null))
+                .isMarried((Boolean) isMarried.getSelectedToggle().getUserData())
+                .withNumOfChildrenAtAddress(Util.safeToIntegerValue(numOfChildrenAtAddress.getText(), null))
+                .withNumOfWives(Util.safeToIntegerValue(numOfWives.getText(), null))
+                .withPrimaryCaretaker(primaryCaretaker.getText())
+                .withMainContactName(mainContactName.getText())
+                .withMobileNumber(mobileNumber.getText())
+                .isPhoneOwner((Boolean) isPhoneOwner.getSelectedToggle().getUserData())
+                .withPhoneOwnerName(phoneOwnerName.getText())
+                .withProfile(profile.getText())
+                .withNumOfAdultsAtAddress(Util.safeToIntegerValue(numOfAdultsAtAddress.getText(), null))
+        ;
+
+        return dto;
+    }
+
+    private boolean isInputValid(FamilyDto dto) {
+        List<String> validation = FormValidator.validate(dto, getValidateableFields());
+
+        if(validation.size() > 0) {
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save Family details", FormValidator.reduce(validation));
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }

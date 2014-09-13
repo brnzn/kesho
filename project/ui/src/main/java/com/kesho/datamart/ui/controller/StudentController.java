@@ -59,8 +59,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     private TextField email;
     @FXML
     private TextField facebook;
-//    @FXML
-//    private TextField alumniNumber; // numeric
     @FXML
     private Button saveButton;
 
@@ -133,8 +131,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
         email.setText(student.getEmail());
         facebook.setText(student.getFacebookAddress());
-
-        //alumniNumber.setText(Util.safeToStringValue(student.getAlumniNumber(), null));
     }
 
     @Override
@@ -167,9 +163,6 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
             dto = studentsRepository.save(dto);  //looks like it generate too many sqls
 
-            //refresh the table
-            selected.get().withName(firstName.getText());
-            selected.get().setFamily(dto.getFamily());
             selected.get().withVersion(dto.getVersion());
 
             if(isNew) { // fire event so table can be reloaded

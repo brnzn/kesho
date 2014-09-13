@@ -87,6 +87,11 @@ done - home location on student details should be drop down (like family)
 
 ----------------------------------
 add version column to all entities - done student, family, education, sponsor, payments
+schools + contacts ui
+student copntacts ui
+family contact ui
+family profile ui
+
 delete with entity and not id, so it is using version
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
@@ -126,9 +131,7 @@ Sponsors:
 An arrangment can be split to one or more students, so need new table for that. When splitting the payment, validate that total (from split) is correct, and warn if student get more than what they need (TOTAL_SPONSORSHIP_REQUIRED on student table)
 
 Move end of education to education form as overall input (not per row) ?
-schools + contacts ui
 pager not showing 2 digits - need to be wider
-
 
 
 
