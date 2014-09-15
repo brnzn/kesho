@@ -39,6 +39,11 @@
                                                         <fx:include fx:id="familyDetails" source="FamilyDetailsTab.fxml" />
                                                     </content>
                                                 </Tab>
+                                                <Tab id="familyProfileTab" fx:id="familyProfileTab" disable="true" text="History">
+                                                    <content>
+                                                        <fx:include fx:id="familyProfile" source="../view/FamilyProfileTab.fxml" />
+                                                    </content>
+                                                </Tab>
                                             </tabs>
                                         </TabPane>
                                     </children>

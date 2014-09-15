@@ -44,14 +44,17 @@ public class FamiliesController implements Selectable<StudentDto> {
     private TableColumn<FamilyDto, String> familyNameColumn;
     @FXML
     private Pagination pagination;
-
-
-    @FXML
-    private Tab familyDetailsTab;
     @FXML
     private FamilyDetailsController familyDetailsController;
     @FXML
+    private FamilyProfileController familyProfileController;
+
+    @FXML
     private TabPane familyTabs;
+    @FXML
+    private Tab familyProfileTab;
+    @FXML
+    private Tab familyDetailsTab;
 
 //    private Stage dialogStage;
 
@@ -103,6 +106,9 @@ public class FamiliesController implements Selectable<StudentDto> {
 
         familyDetailsController.setTab(familyDetailsTab);
         familyDetailsController.setSelectedProperty(selected);
+
+        familyProfileController.setTab(familyProfileTab);
+        familyProfileController.setSelectedProperty(selected);
 
         refreshTable();
 

@@ -1,13 +1,13 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.PageImpl;
-import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.dto.*;
 import com.kesho.datamart.entity.Family;
+import com.kesho.datamart.entity.FamilyProfile;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.repository.FamilyDAO;
+import com.kesho.datamart.repository.FamilyProfileDAO;
+import org.apache.commons.lang.NotImplementedException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,11 @@ import java.util.List;
 public class FamilyServiceImpl implements FamilyService {
     @Inject
     private FamilyDAO dao;
+    @Inject
+    private FamilyProfileDAO profileDao;
+
     private FamilyAssembler assembler = new FamilyAssembler();
+    private StudentHistoryAssembler historyAssembler = new StudentHistoryAssembler();
     private StudentsAssembler studentsAssembler = new StudentsAssembler();
 
     @Override
@@ -71,6 +75,17 @@ public class FamilyServiceImpl implements FamilyService {
         return family != null ? studentsAssembler.toDto(family.getStudents()) : null;
     }
 
+    @Override
+    public HistoryDto save(HistoryDto dto) {
+        return historyAssembler.toDto(doSave(dto));
+    }
+
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public FamilyProfile doSave(HistoryDto dto) {
+        return profileDao.save(historyAssembler.toFamilyProfile(dto));
+    }
+
     private Page<FamilyDto> toPageResult(final org.springframework.data.domain.Page<Family> page, final Request request) {
         if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {
             return new PageImpl<FamilyDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());
@@ -80,4 +95,14 @@ public class FamilyServiceImpl implements FamilyService {
         return result;
     }
 
+    @Override
+    public List<HistoryDto> getFamilyProfile(Long familyId) {
+        return historyAssembler.profilesToDto(profileDao.findByFamilyId(familyId));
+    }
+
+    @Override
+    @Transactional
+    public void deleteHistory(Long id) {
+        profileDao.deleteById(id);
+    }
 }

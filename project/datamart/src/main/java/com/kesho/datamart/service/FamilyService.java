@@ -1,6 +1,7 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.HistoryDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
@@ -24,4 +25,10 @@ public interface FamilyService {
     void delete(Long id);
 
     List<StudentDto> getFamilyStudents(Long familyId);
+
+    HistoryDto save(HistoryDto dto);
+
+    List<HistoryDto> getFamilyProfile(Long familyId);
+
+    void deleteHistory(Long id);
 }

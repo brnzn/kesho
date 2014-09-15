@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,5 +44,4 @@ public class StudentsServiceTest {
         assertThat(result.getTotalPages(), is(0));
         assertThat("Should not be error", result.isError(), is(false));
     }
-
 }

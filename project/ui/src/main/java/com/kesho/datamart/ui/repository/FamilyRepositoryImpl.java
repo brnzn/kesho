@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.HistoryDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
@@ -45,5 +46,20 @@ public class FamilyRepositoryImpl implements FamilyRepository {
     @Override
     public List<StudentDto> getFamilyStudents(Long familyId) {
         return familyService.getFamilyStudents(familyId);
+    }
+
+    @Override
+    public List<HistoryDto> getFamilyProfile(Long ownerId) {
+        return familyService.getFamilyProfile(ownerId);
+    }
+
+    @Override
+    public HistoryDto save(HistoryDto dto) {
+        return familyService.save(dto);
+    }
+
+    @Override
+    public void deleteHistory(Long id) {
+        familyService.deleteHistory(id);
     }
 }

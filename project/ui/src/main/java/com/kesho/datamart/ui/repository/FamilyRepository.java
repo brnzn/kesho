@@ -1,6 +1,7 @@
 package com.kesho.datamart.ui.repository;
 
 import com.kesho.datamart.dto.FamilyDto;
+import com.kesho.datamart.dto.HistoryDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.StudentDto;
 
@@ -23,4 +24,10 @@ public interface FamilyRepository extends Paging {
     void delete(Long id);
 
     List<StudentDto> getFamilyStudents(Long familyId);
+
+    List<HistoryDto> getFamilyProfile(Long ownerId);
+
+    HistoryDto save(HistoryDto dto);
+
+    void deleteHistory(Long id);
 }

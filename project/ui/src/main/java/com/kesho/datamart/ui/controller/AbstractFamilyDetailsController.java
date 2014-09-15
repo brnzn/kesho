@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -64,7 +65,7 @@ public abstract class AbstractFamilyDetailsController<T extends Dto> extends Abs
     public abstract void refresh(T dto);
 
     protected Map<String, Node> getValidateableFields() {
-        return null;
+        return Collections.emptyMap();
     };
 
     protected  void doSave(){};

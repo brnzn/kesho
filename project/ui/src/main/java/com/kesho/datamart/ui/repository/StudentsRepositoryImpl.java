@@ -59,11 +59,6 @@ public class StudentsRepositoryImpl implements StudentsRepository {
         return studentsService.findLatestEducation(studentId);
     }
 
-//    @Override
-//    public void deleteStudent(Long id) {
-//        studentsService.deleteStudent(id);
-//    }
-
     @Override
     public void deleteEducationHistory(Long id) {
         studentsService.deleteEducationHistory(id);
