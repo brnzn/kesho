@@ -50,7 +50,6 @@ public abstract class AbstractChildController<T extends Dto> implements ChildCon
 
     protected void selectedChanged(T dto) {
         tab.disableProperty().set(dto == null || dto.getId() == null);
-        System.out.println("=============== " + tab.getId() + " ============= " + tab.isSelected() + "============== " + dto);
         if (tab.isSelected()) {
             refresh(dto);
         }

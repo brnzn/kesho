@@ -99,21 +99,6 @@ public class StudentsController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
-        familyDetailsController.setTab(familyTab);
-        familyDetailsController.setSelectedProperty(selected);
-
-        educationDetailsController.setTab(educationTab);
-        educationDetailsController.setSelectedProperty(selected);
-
-        studentController.setTab(studentDetailsTab);
-        studentController.setSelectedProperty(selected);
-
-        studentSponsorController.setTab(studentSponsorTab);
-        studentSponsorController.setSelectedProperty(selected);
-
-        studentHistoryController.setTab(studentHistoryTab);
-        studentHistoryController.setSelectedProperty(selected);
-
         firstNameColumn.setSortType(TableColumn.SortType.DESCENDING);
         studentsTable.getSelectionModel().select(0);
         studentsTable.focusModelProperty().get().focus(0, firstNameColumn);
@@ -128,6 +113,21 @@ public class StudentsController implements Selectable<StudentDto> {
         });
 
         initTabButtons();
+
+        familyDetailsController.setTab(familyTab);
+        familyDetailsController.setSelectedProperty(selected);
+
+        educationDetailsController.setTab(educationTab);
+        educationDetailsController.setSelectedProperty(selected);
+
+        studentController.setTab(studentDetailsTab);
+        studentController.setSelectedProperty(selected);
+
+        studentSponsorController.setTab(studentSponsorTab);
+        studentSponsorController.setSelectedProperty(selected);
+
+        studentHistoryController.setTab(studentHistoryTab);
+        studentHistoryController.setSelectedProperty(selected);
 
 
         refreshTable();

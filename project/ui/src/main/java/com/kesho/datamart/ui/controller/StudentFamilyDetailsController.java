@@ -1,24 +1,23 @@
 package com.kesho.datamart.ui.controller;
 
 import com.kesho.datamart.domain.LevelOfSupport;
-import com.kesho.datamart.domain.Location;
 import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
-import com.kesho.datamart.ui.repository.FamilyRepository;
 import com.kesho.datamart.ui.util.Util;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -70,7 +69,7 @@ public class StudentFamilyDetailsController extends AbstractFamilyDetailsControl
                             link.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent e) {
-                                    tab.getTabPane().getSelectionModel().selectFirst();
+                                    tab.getTabPane().getSelectionModel().selectFirst(); // so refresh is not getting called on this tab
                                     WindowsUtil.getInstance().students((Long) ((Hyperlink) e.getSource()).getUserData());
                                 }
                             });
@@ -87,7 +86,6 @@ public class StudentFamilyDetailsController extends AbstractFamilyDetailsControl
 
     @Override
     public void refresh(StudentDto dto) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!");
         if (dto == null) {
             resetForm();
             return;

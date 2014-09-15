@@ -221,7 +221,7 @@ public class WindowsUtil {
     }
 
     public void familyForm() throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/FamilyForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Families.fxml"));
         FamiliesController controller = getController(FamiliesController.class);
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
