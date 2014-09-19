@@ -39,9 +39,14 @@
                                                         <fx:include fx:id="familyDetails" source="FamilyDetailsTab.fxml" />
                                                     </content>
                                                 </Tab>
-                                                <Tab id="familyProfileTab" fx:id="familyProfileTab" disable="true" text="History">
+                                                <Tab id="familyProfileTab" fx:id="familyProfileTab" disable="true" text="Profile">
                                                     <content>
                                                         <fx:include fx:id="familyProfile" source="../view/FamilyProfileTab.fxml" />
+                                                    </content>
+                                                </Tab>
+                                                <Tab id="contactsTab" fx:id="contactsTab" disable="true" text="Contacts">
+                                                    <content>
+                                                        <fx:include fx:id="contacts" source="../view/FamilyContactsTab.fxml" />
                                                     </content>
                                                 </Tab>
                                             </tabs>

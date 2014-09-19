@@ -50,7 +50,6 @@
             />
 
     <STUDENT_CONTACT ID="1" OWNER_ID="1" TYPE="S" VALUE="val" COMMENTS="comm" />
-    <STUDENT_CONTACT ID="2" OWNER_ID="1" TYPE="F" VALUE="val" COMMENTS="comm" />
 
 </dataset>
 

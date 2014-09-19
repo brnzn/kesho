@@ -16,9 +16,12 @@ import java.util.List;
  * Time: 6:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface StudentContactDAO extends JpaRepository<ContactDetail, Long> {
+public interface ContactDetailsDAO extends JpaRepository<ContactDetail, Long> {
     @Query("select c from ContactDetail c where c.ownerId = :ownerId and c.type = :type")
     List<ContactDetail> findByIdAndType(@Param("ownerId") Long ownerId, @Param("type") ContactType type);
+
+    @Query("select c from ContactDetail c where c.ownerId = :ownerId")
+    List<ContactDetail> findById(@Param("ownerId") Long ownerId);
 
     @Modifying
     @Query("delete from ContactDetail c where c.id = :id")

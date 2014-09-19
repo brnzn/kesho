@@ -1,13 +1,14 @@
 package com.kesho.datamart.ui.repository;
 
-import com.kesho.datamart.domain.ContactType;
-import com.kesho.datamart.dto.*;
+import com.kesho.datamart.dto.EducationDto;
+import com.kesho.datamart.dto.HistoryDto;
+import com.kesho.datamart.dto.Page;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
 import com.kesho.datamart.service.StudentService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -82,24 +83,4 @@ public class StudentsRepositoryImpl implements StudentsRepository {
     public HistoryDto save(HistoryDto dto) {
         return studentsService.save(dto);
     }
-
-    @Override
-    public List<ContactDetailDto> getContacts(Long ownerId, ContactType type) {
-        switch(type) {
-            case S:
-                return studentsService.getStudentContacts(ownerId);
-            default: return Collections.emptyList();
-        }
-    }
-
-    @Override
-    public void deleteContactDetail(Long id) {
-        studentsService.deleteContact(id);
-    }
-
-    @Override
-    public ContactDetailDto save(ContactDetailDto dto) {
-        return studentsService.save(dto);
-    }
-
 }

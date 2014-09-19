@@ -85,10 +85,11 @@ done - Add Currency to payment arrangment - should it be dropdown? If so what ar
 done - Class on education tab should be dropdown. see possible values for each in general notes on education tab spreadsheet from kate
 done - home location on student details should be drop down (like family)
 done - family profile ui
+done - student copntacts ui
+
 ----------------------------------
 add version column to all entities - done student, family, education, sponsor, payments
 schools + contacts ui
-student copntacts ui
 family contact ui
 
 delete with entity and not id, so it is using version

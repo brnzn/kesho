@@ -1,6 +1,5 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.domain.ContactType;
 import com.kesho.datamart.dto.*;
 import com.kesho.datamart.entity.ContactDetail;
 import com.kesho.datamart.entity.EducationHistory;
@@ -38,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
     private EducationHistoryDAO educationHistoryDAO;
 
     @Inject
-    private StudentContactDAO contactDAO;
+    private ContactDetailsDAO contactDAO;
 
     private StudentsAssembler assembler = new StudentsAssembler();
     private EducationAssembler educationAssembler = new EducationAssembler();
@@ -144,22 +143,6 @@ public class StudentServiceImpl implements StudentService {
     public HistoryDto save(HistoryDto dto) {
         StudentHistory history = historyDAO.save(historyAssembler.toStudentHistory(dto));
         return historyAssembler.toDto(history);
-    }
-
-    @Override
-    public List<ContactDetailDto> getStudentContacts(Long ownerId) {
-        return contactAssembler.toDto(contactDAO.findByIdAndType(ownerId, ContactType.S));
-    }
-
-    @Override
-    @Transactional
-    public void deleteContact(Long id) {
-        contactDAO.deleteById(id);
-    }
-
-    @Override
-    public ContactDetailDto save(ContactDetailDto dto) {
-        return contactAssembler.toDto(doSave(dto));
     }
 
     //This method is needed for version property, which get updated only after the transaction commit

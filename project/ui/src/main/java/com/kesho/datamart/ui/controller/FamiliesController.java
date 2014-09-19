@@ -48,6 +48,8 @@ public class FamiliesController implements Selectable<StudentDto> {
     private FamilyDetailsController familyDetailsController;
     @FXML
     private FamilyProfileController familyProfileController;
+    @FXML
+    private FamilyContactsController contactsController;
 
     @FXML
     private TabPane familyTabs;
@@ -55,6 +57,8 @@ public class FamiliesController implements Selectable<StudentDto> {
     private Tab familyProfileTab;
     @FXML
     private Tab familyDetailsTab;
+    @FXML
+    private Tab contactsTab;
 
 //    private Stage dialogStage;
 
@@ -116,6 +120,9 @@ public class FamiliesController implements Selectable<StudentDto> {
 
         familyProfileController.setTab(familyProfileTab);
         familyProfileController.setSelectedProperty(selected);
+
+        contactsController.setTab(contactsTab);
+        contactsController.setSelectedProperty(selected);
 
         refreshTable();
 
