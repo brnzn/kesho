@@ -86,11 +86,12 @@ done - Class on education tab should be dropdown. see possible values for each i
 done - home location on student details should be drop down (like family)
 done - family profile ui
 done - student copntacts ui
-
+done - family contact ui
 ----------------------------------
 add version column to all entities - done student, family, education, sponsor, payments
 schools + contacts ui
-family contact ui
+
+use only contant_deatils table 
 
 delete with entity and not id, so it is using version
 tests
