@@ -3,10 +3,7 @@ package com.kesho.datamart.service;
 import com.google.common.base.Predicate;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.*;
-import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.dto.*;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Family;
 import com.kesho.datamart.entity.Student;
@@ -33,6 +30,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -61,6 +59,38 @@ public class StudentServiceIT {
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+    @Test
+    public void shouldGetContactDetail() {
+        List<ContactDetailDto> contacts = studentService.getStudentContacts(1L);
+        assertThat(contacts, hasSize(1));
+        assertThat(contacts.get(0).getType(), is(ContactType.S));
+        assertThat(contacts.get(0).getValue(), is("val"));
+        assertThat(contacts.get(0).getComments(), is("comm"));
+        assertThat(contacts.get(0).getOwnerId(), is(1L));
+    }
+
+    @Test
+    public void shouldDeleteContactDetail() {
+        assertThat(studentService.getStudentContacts(1L), hasSize(1));
+        studentService.deleteContact(1L);
+
+        assertThat(studentService.getStudentContacts(1L), hasSize(0));
+    }
+
+
+    @Test
+    public void shouldSaveStudentContact() {
+        ContactDetailDto dto = new ContactDetailDto().withOwnerId(1L)
+                .withType(ContactType.S)
+                .withValue("val")
+                .withComments("comm");
+
+        assertNull(dto.getId());
+
+        dto = studentService.save(dto);
+        assertNotNull(dto.getId());
+    }
 
     @Test(expected = OptimisticLockingFailureException.class)
     public void shouldFailToSaveStaleEducation() {

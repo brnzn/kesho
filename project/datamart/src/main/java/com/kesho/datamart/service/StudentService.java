@@ -1,9 +1,6 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.HistoryDto;
-import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.dto.*;
 import com.kesho.datamart.paging.Request;
 
 import java.util.List;
@@ -39,4 +36,10 @@ public interface StudentService {
     void deleteStudentHistory(Long id);
 
     HistoryDto save(HistoryDto dto);
+
+    List<ContactDetailDto> getStudentContacts(Long ownerId);
+
+    void deleteContact(Long id);
+
+    ContactDetailDto save(ContactDetailDto dto);
 }

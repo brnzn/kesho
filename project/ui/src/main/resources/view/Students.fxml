@@ -60,6 +60,11 @@
                                                         <fx:include fx:id="studentHistory" source="../view/StudentHistoryTab.fxml" />
                                                     </content>
                                                 </Tab>
+                                                <Tab id="studentContactsTab" fx:id="studentContactsTab" disable="true" text="Contacts">
+                                                    <content>
+                                                        <fx:include fx:id="studentContacts" source="../view/StudentContactsTab.fxml" />
+                                                    </content>
+                                                </Tab>
                                             </tabs>
                                         </TabPane>
                                     </children>

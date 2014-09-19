@@ -91,6 +91,13 @@ public class FamiliesController implements Selectable<StudentDto> {
      */
     @FXML
     private void initialize() {
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.FAMILY_ADDED, new SystemEventListener() {
+            @Override
+            public void handle() {
+                refreshTable();
+            }
+        });
+
         refreshTable();
 //        familiesTable.getSelectionModel().select(0);
 //        familiesTable.focusModelProperty().get().focus(0, familyNameColumn);

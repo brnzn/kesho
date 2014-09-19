@@ -1,6 +1,8 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.domain.ContactType;
 import com.kesho.datamart.dto.*;
+import com.kesho.datamart.entity.ContactDetail;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
 import com.kesho.datamart.entity.StudentHistory;
@@ -35,9 +37,13 @@ public class StudentServiceImpl implements StudentService {
     @Inject
     private EducationHistoryDAO educationHistoryDAO;
 
+    @Inject
+    private StudentContactDAO contactDAO;
+
     private StudentsAssembler assembler = new StudentsAssembler();
     private EducationAssembler educationAssembler = new EducationAssembler();
     private StudentHistoryAssembler historyAssembler = new StudentHistoryAssembler();
+    private StudentContactAssembler contactAssembler = new StudentContactAssembler();
 
     @Override
     public StudentDto get(Long id) {
@@ -140,6 +146,28 @@ public class StudentServiceImpl implements StudentService {
         return historyAssembler.toDto(history);
     }
 
+    @Override
+    public List<ContactDetailDto> getStudentContacts(Long ownerId) {
+        return contactAssembler.toDto(contactDAO.findByIdAndType(ownerId, ContactType.S));
+    }
+
+    @Override
+    @Transactional
+    public void deleteContact(Long id) {
+        contactDAO.deleteById(id);
+    }
+
+    @Override
+    public ContactDetailDto save(ContactDetailDto dto) {
+        return contactAssembler.toDto(doSave(dto));
+    }
+
+    //This method is needed for version property, which get updated only after the transaction commit
+    //TODO: use aspectj so the method don't need to be public
+    @Transactional(readOnly = false)
+    public ContactDetail doSave(ContactDetailDto dto) {
+        return contactDAO.save(contactAssembler.toEntity(dto));
+    }
     private Page<StudentDto> toPageResult(final org.springframework.data.domain.Page<Student> page, final Request request) {
         if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {
             return new PageImpl<StudentDto>().withError(String.format("Max pages is [%s]", page.getTotalPages())).withTotalPages(page.getTotalPages());

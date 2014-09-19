@@ -6,15 +6,20 @@ import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.FormActionListener;
 import com.kesho.datamart.ui.WindowsUtil;
 import com.kesho.datamart.ui.repository.FamilyRepository;
+import com.kesho.datamart.ui.util.Event;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import javax.inject.Inject;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,36 +32,36 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class FamilyDetailsController extends AbstractFamilyDetailsController<FamilyDto> implements FormActionListener {
-    @FXML
-    protected TextField familyName;
-    @FXML
-    protected ComboBox<Location> homeLocation;
-    @FXML
-    protected TextField homeSubLocation;
-    @FXML
-    protected TextField homeClusterId;
-    @FXML
-    protected TextField aliveParents;
-    @FXML
-    protected ToggleGroup isMarried;
-    @FXML
-    protected TextField numOfChildrenAtAddress;
-    @FXML
-    protected TextField numOfWives;
-    @FXML
-    protected TextField primaryCaretaker;
-    @FXML
-    protected TextField mainContactName;
-    @FXML
-    protected TextField mobileNumber;
-    @FXML
-    protected ToggleGroup isPhoneOwner;
-    @FXML
-    protected TextField phoneOwnerName;
-    @FXML
-    protected TextArea profile;
-    @FXML
-    protected TextField numOfAdultsAtAddress;
+//    @FXML
+//    protected TextField familyName;
+//    @FXML
+//    protected ComboBox<Location> homeLocation;
+//    @FXML
+//    protected TextField homeSubLocation;
+//    @FXML
+//    protected TextField homeClusterId;
+//    @FXML
+//    protected TextField aliveParents;
+//    @FXML
+//    protected ToggleGroup isMarried;
+//    @FXML
+//    protected TextField numOfChildrenAtAddress;
+//    @FXML
+//    protected TextField numOfWives;
+//    @FXML
+//    protected TextField primaryCaretaker;
+//    @FXML
+//    protected TextField mainContactName;
+//    @FXML
+//    protected TextField mobileNumber;
+//    @FXML
+//    protected ToggleGroup isPhoneOwner;
+//    @FXML
+//    protected TextField phoneOwnerName;
+//    @FXML
+//    protected TextArea profile;
+//    @FXML
+//    protected TextField numOfAdultsAtAddress;
     @FXML
     private Button saveButton;
 
@@ -70,6 +75,13 @@ public class FamilyDetailsController extends AbstractFamilyDetailsController<Fam
 
     public FamilyDetailsController() {
         WindowsUtil.getInstance().autowire(this);
+    }
+
+    @FXML
+    private void initialize() {
+        Util.initializeYesNoGroup(isMarried, isPhoneOwner);
+        Util.initializeComboBoxValues(homeLocation, EnumSet.allOf(Location.class));
+        Util.decorateNumericInput(numOfWives, aliveParents, numOfAdultsAtAddress, numOfChildrenAtAddress);
     }
 
     @Override
@@ -150,8 +162,15 @@ public class FamilyDetailsController extends AbstractFamilyDetailsController<Fam
     protected void doSave() {
         FamilyDto family = buildDto();
         if (isInputValid(family)) {
+            boolean isNew = family.getId() == null;
+
             FamilyDto dto = repository.save(family);
             selected.get().withVersion(dto.getVersion());
+
+            if(isNew) { // fire event so childrenTable can be reloaded
+                WindowsUtil.getInstance().getEventBus().fireEvent(Event.FAMILY_ADDED);
+            }
+
             parentController.refresh();
         }
     }

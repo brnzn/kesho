@@ -37,7 +37,7 @@ public abstract class AbstractEditableController<T extends Dto> extends Abstract
         try {
             doSave();
         } catch(OptimisticLockingFailureException e) {
-            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save", "The record has been modified by someone else! Please refresh the table and re-select to update.");
+            WindowsUtil.getInstance().showErrorDialog("Saving Error", "Failed to save", "The record has been modified by someone else! Please refresh the childrenTable and re-select to update.");
         }
     }
 

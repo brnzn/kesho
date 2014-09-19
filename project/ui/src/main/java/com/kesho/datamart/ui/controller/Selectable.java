@@ -19,6 +19,7 @@ public interface Selectable<T> {
 
     /**
      * @deprecated
+     * should use event listner for that
      */
     void refresh();
 }

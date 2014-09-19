@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.inject.Named;
 
 /**
- * The controller for the overview with address table and details view.
+ * The controller for the overview with address childrenTable and details view.
  *
  */
 @Named
@@ -102,7 +102,7 @@ public class StudentsController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("name"));
         familyNameColumn.setCellValueFactory(new PropertyValueFactory<StudentDto, String>("familyName"));
 
-//		//update form when selecting table row
+//		//update form when selecting childrenTable row
         studentsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudentDto>() {
             @Override
             public void changed(ObservableValue<? extends StudentDto> observable,

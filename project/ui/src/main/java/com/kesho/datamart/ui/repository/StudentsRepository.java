@@ -1,9 +1,7 @@
 package com.kesho.datamart.ui.repository;
 
-import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.HistoryDto;
-import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.StudentDto;
+import com.kesho.datamart.domain.ContactType;
+import com.kesho.datamart.dto.*;
 import javafx.beans.Observable;
 import javafx.util.Callback;
 
@@ -42,4 +40,10 @@ public interface StudentsRepository {
     void deleteStudentHistory(Long id);
 
     HistoryDto save(HistoryDto dto);
+
+    List<ContactDetailDto> getContacts(Long ownerId, ContactType type);
+
+    void deleteContactDetail(Long id);
+
+    ContactDetailDto save(ContactDetailDto dto);
 }

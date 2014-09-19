@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//TODO: After New and Update need to refresh table, but leave form as is
+//TODO: After New and Update need to refresh childrenTable, but leave form as is
 
 /**
  * Created with IntelliJ IDEA.

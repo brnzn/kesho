@@ -165,7 +165,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
 
             selected.get().withVersion(dto.getVersion());
 
-            if(isNew) { // fire event so table can be reloaded
+            if(isNew) { // fire event so childrenTable can be reloaded
                 WindowsUtil.getInstance().getEventBus().fireEvent(Event.STUDENT_ADDED);
             }
 
@@ -190,7 +190,7 @@ public class StudentController extends AbstractEditableController<StudentDto> im
             if(dto.getFamily().getHomeLocation() != homeLocation.getValue()) {
                 dto.withHomeLocation(homeLocation.getValue());
             } else if(dto.getHomeLocation() != homeLocation.getValue() && dto.getFamily().getHomeLocation() == homeLocation.getValue()) {
-                //home location changed and now match family home location, so no need to store it on student table
+                //home location changed and now match family home location, so no need to store it on student childrenTable
                 dto.withHomeLocation(null);
             }
         }
