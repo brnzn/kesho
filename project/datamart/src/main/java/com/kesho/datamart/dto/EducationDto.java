@@ -3,8 +3,6 @@ package com.kesho.datamart.dto;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.EducationYear;
 import com.kesho.datamart.domain.SubEducationStatus;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 public class EducationDto {
-    private InstitutionDto institution;
+    private SchoolDto institution;
     @NotNull(message = "Date is mandatory")
     private LocalDate date;
     private EducationYear year;
@@ -52,7 +50,7 @@ public class EducationDto {
         return this;
     }
 
-    public EducationDto withInstitution(InstitutionDto institution) {
+    public EducationDto withInstitution(SchoolDto institution) {
         this.institution = institution;
         return this;
     }
@@ -109,7 +107,7 @@ public class EducationDto {
         return secondaryEducationStatus2;
     }
 
-    public InstitutionDto getInstitution() {
+    public SchoolDto getInstitution() {
         return institution;
     }
 

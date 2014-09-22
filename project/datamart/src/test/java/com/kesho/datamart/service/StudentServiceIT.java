@@ -5,7 +5,7 @@ import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.*;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.dto.FamilyDto;
-import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.SchoolDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.Student;
@@ -153,7 +153,7 @@ public class StudentServiceIT {
         LocalDate date = LocalDate.now();
         EducationDto dto = new EducationDto()
                 //.withYear("1")
-                .withInstitution(new InstitutionDto(1L, "school"))
+                .withInstitution(new SchoolDto(1L, "school"))
                 .withCourse("course")
                 .withEducationDate(date)
                 .withEducationalStatus(EducationStatus.Secondary)

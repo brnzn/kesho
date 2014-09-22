@@ -12,7 +12,7 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name = "STUDENT_CONTACT")
+@Table(name = "CONTACT_DETAIL")
 public class ContactDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

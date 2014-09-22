@@ -4,8 +4,8 @@ import com.kesho.ui.control.calendar.FXCalendar;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.ui.repository.InstitutionRepository;
+import com.kesho.datamart.dto.SchoolDto;
+import com.kesho.datamart.ui.repository.SchoolRepository;
 import com.kesho.datamart.ui.util.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,7 +32,7 @@ public class EducationDialogController {
     private HBox dateControlBox;
     private final FXCalendar calendar = new FXCalendar();
     @FXML
-    private ComboBox<InstitutionDto> institutions;
+    private ComboBox<SchoolDto> institutions;
     @FXML
     private TextField educationYear;
     @FXML
@@ -51,7 +51,7 @@ public class EducationDialogController {
 	private boolean okClicked = false;
 
     @Inject
-    private InstitutionRepository institutionRepository;
+    private SchoolRepository schoolRepository;
 
     public EducationDialogController() {
         calendar.setDateTextWidth(Double.valueOf(100));
@@ -108,7 +108,7 @@ public class EducationDialogController {
                     @Override
                     protected Void call() throws Exception {
                         institutions.getItems().clear();
-                        institutions.getItems().addAll(institutionRepository.getInstitutions());
+                        institutions.getItems().addAll(schoolRepository.getInstitutions());
                         institutions.getSelectionModel().select(dto.getInstitution());
                         return null;
                     }

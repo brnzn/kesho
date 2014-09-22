@@ -1,7 +1,7 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.SchoolDto;
 import com.kesho.datamart.entity.EducationHistory;
 import com.kesho.datamart.entity.School;
 
@@ -59,10 +59,10 @@ public class EducationAssembler {
         return log;
     }
 
-    private InstitutionDto createSchool(final EducationHistory log) {
+    private SchoolDto createSchool(final EducationHistory log) {
         School school = log.getSchool();
         if(school != null) {
-            return new InstitutionDto(school.getId(), school.getName());
+            return new SchoolDto(school.getId(), school.getName());
         } else {
             return null;
         }

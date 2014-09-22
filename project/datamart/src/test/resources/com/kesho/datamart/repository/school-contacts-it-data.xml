@@ -1,6 +1,5 @@
 <dataset>
     <SCHOOLS ID="1" NAME="school1"/>
-    <SCHOOLS ID="2" NAME="school2"/>
 
     <CONTACT ID="1" SCHOOL_ID="1" NAME="name" SURNAME="sn" TITLE="mr" JOB_TITLE="job" />
     <CONTACT ID="2" SCHOOL_ID="1" NAME="name" SURNAME="sn" TITLE="mr" JOB_TITLE="job" />
@@ -10,6 +9,7 @@
     <CONTACT_DETAIL ID="3" OWNER_ID="1" TYPE="I" VALUE="val2" COMMENTS="comm2" />
 
     <CONTACT_DETAIL ID="4" OWNER_ID="2" TYPE="I" VALUE="val" COMMENTS="comm" />
+
 </dataset>
 
 

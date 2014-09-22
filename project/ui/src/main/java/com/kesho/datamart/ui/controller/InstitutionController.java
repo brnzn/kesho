@@ -1,8 +1,7 @@
 package com.kesho.datamart.ui.controller;
 
-import com.kesho.datamart.dto.InstitutionDto;
-import com.kesho.datamart.ui.WindowsUtil;
-import com.kesho.datamart.ui.repository.InstitutionRepository;
+import com.kesho.datamart.dto.SchoolDto;
+import com.kesho.datamart.ui.repository.SchoolRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -21,17 +20,17 @@ import javax.inject.Named;
 @Named
 public class InstitutionController {
     @Inject
-    private InstitutionRepository institutionRepository;
+    private SchoolRepository schoolRepository;
 
     @FXML
     private TextField institutionName;
     @FXML
-    private TableColumn<InstitutionDto, String> institutionNameCol;
+    private TableColumn<SchoolDto, String> institutionNameCol;
 
     @FXML
-    private TableView<InstitutionDto> institutionsTable;
+    private TableView<SchoolDto> institutionsTable;
 
-    private ObservableList<InstitutionDto> institutionsModel = FXCollections.observableArrayList();
+    private ObservableList<SchoolDto> institutionsModel = FXCollections.observableArrayList();
 
     private Stage dialogStage;
 
@@ -49,8 +48,8 @@ public class InstitutionController {
 
     private void initTable() {
         institutionsModel.clear();
-        institutionNameCol.setCellValueFactory(new PropertyValueFactory<InstitutionDto, String>("name"));
-        institutionsModel.addAll(institutionRepository.getInstitutions());
+        institutionNameCol.setCellValueFactory(new PropertyValueFactory<SchoolDto, String>("name"));
+        institutionsModel.addAll(schoolRepository.getAllSchools());
         institutionsTable.setItems(institutionsModel);
     }
 	/**
@@ -67,7 +66,7 @@ public class InstitutionController {
 	@FXML
 	private void addInstitution() {
         if (isInputValid()) {
-            institutionRepository.create(new InstitutionDto(null, institutionName.getText()));
+            schoolRepository.create(new SchoolDto(null, institutionName.getText()));
             new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {

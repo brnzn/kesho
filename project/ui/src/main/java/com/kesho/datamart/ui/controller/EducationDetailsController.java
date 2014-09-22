@@ -4,10 +4,10 @@ import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.domain.EducationYear;
 import com.kesho.datamart.domain.SubEducationStatus;
 import com.kesho.datamart.dto.EducationDto;
-import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.SchoolDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.ui.WindowsUtil;
-import com.kesho.datamart.ui.repository.InstitutionRepository;
+import com.kesho.datamart.ui.repository.SchoolRepository;
 import com.kesho.datamart.ui.repository.StudentsRepository;
 import com.kesho.datamart.ui.util.Util;
 import com.kesho.datamart.ui.validation.FormValidator;
@@ -45,7 +45,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     @FXML
     private DatePicker predictedEndDate;
     @FXML
-    private ComboBox<InstitutionDto> institutions;
+    private ComboBox<SchoolDto> institutions;
     @FXML
     private ComboBox<EducationYear> educationYear;
     @FXML
@@ -80,7 +80,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     private Button deleteButton;
 
     @Inject
-    private InstitutionRepository institutionRepository;
+    private SchoolRepository schoolRepository;
     @Inject
     private StudentsRepository studentsRepository;
 
@@ -199,7 +199,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        institutions.getItems().addAll(FXCollections.observableArrayList(institutionRepository.getInstitutions()));
+                        institutions.getItems().addAll(FXCollections.observableArrayList(schoolRepository.getAllSchools()));
                         return null;
                     }
                 };

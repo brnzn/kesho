@@ -1,10 +1,8 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dto.Page;
-import com.kesho.datamart.dto.SchoolDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.paging.Request;
-import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -22,7 +20,7 @@ import static org.hamcrest.Matchers.is;
  * To change this template use File | Settings | File Templates.
  */
 @RunWith(Theories.class)
-public class StudentServicePagingTest {
+public class SchoolServicePagingTest {
     @DataPoints
     public static Scenario[] scenarios = {
         new Scenario(new Request(0, -1), "Page size must be greater than zero"),
@@ -45,8 +43,8 @@ public class StudentServicePagingTest {
 
     @Theory
     public void testScenario(Scenario scenario) {
-        SchoolService service = new SchoolServiceImpl();
-        Page<SchoolDto> page = service.getPage(scenario.request);
+        StudentService service = new StudentServiceImpl();
+        Page<StudentDto> page = service.getPage(scenario.request);
         assertThat(page.isError(), is(true));
         assertThat(page.getErrors(), containsInAnyOrder(scenario.expectedMsgs));
     }

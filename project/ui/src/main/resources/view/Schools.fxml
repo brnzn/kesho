@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane prefHeight="720.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <AnchorPane>
+                    <children>
+                        <SplitPane dividerPositions="0.28" focusTraversable="true" prefHeight="669.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <VBox prefHeight="667.0" prefWidth="242.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <TableView fx:id="familiesTable" prefHeight="547.0" prefWidth="148.0">
+                                                    <columns>
+                                                        <TableColumn fx:id="familyNameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="146.0" text="Family Name" />
+                                                    </columns>
+                                                </TableView>
+                                                <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="6" prefHeight="65.0" prefWidth="334.0" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <TabPane fx:id="familyTabs" prefHeight="700.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <tabs>
+                                                <Tab id="familyDetailsTab" fx:id="familyDetailsTab" disable="true" text="Family">
+                                                    <content>
+                                                        <fx:include fx:id="familyDetails" source="FamilyDetailsTab.fxml" />
+                                                    </content>
+                                                </Tab>
+                                            </tabs>
+                                        </TabPane>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </center>
+            <top>
+                <ToolBar id="toptoolbar" fx:id="tb">
+                    <items>
+                        <Button mnemonicParsing="false" onAction="#doNew" text="New" />
+                        <Button mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
+                    </items>
+                </ToolBar>
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>

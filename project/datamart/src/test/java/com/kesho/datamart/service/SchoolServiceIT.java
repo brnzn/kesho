@@ -1,11 +1,10 @@
 package com.kesho.datamart.service;
 
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
-import com.kesho.datamart.dto.InstitutionDto;
+import com.kesho.datamart.dto.ContactDto;
+import com.kesho.datamart.dto.SchoolDto;
 import com.kesho.datamart.entity.School;
 import com.kesho.datamart.repository.SchoolsDAO;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +30,9 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @ContextConfiguration(locations = { "classpath:datamart-service-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class InstitutionServiceIT {
+public class SchoolServiceIT {
     @Inject
-    private InstitutionService service;
+    private SchoolService service;
     @Inject
     private JpaTransactionManager transactionManager;
     @Inject
@@ -44,22 +43,18 @@ public class InstitutionServiceIT {
 
 
     @Test
+    public void shouldGetContacts() {
+        List<ContactDto> contacts = service.getContacts(1L);
+    }
+
+
+    @Test
     public void shouldCreateInstitution() {
-        InstitutionDto dto = service.create(new InstitutionDto(null, "s1"));
+        SchoolDto dto = service.save(new SchoolDto(null, "s1"));
         assertThat(dto.getName(), is("s1"));
         assertThat(dto.getId(), notNullValue());
 
         School school = DBUtil.findOne(transactionManager, School.class, dao, dto.getId());
         assertThat(school.getName(), is("s1"));
-    }
-
-    @Test
-    public void shouldReturnInstitutions() {
-        List<InstitutionDto> institutions = service.getInstitutions();
-        assertThat(institutions.size(), is(2));
-        assertThat(institutions.get(0).getId(), is(1L));
-        assertThat(institutions.get(0).getName(), is("school1"));
-        assertThat(institutions.get(1).getId(), is(2L));
-        assertThat(institutions.get(1).getName(), is("school2"));
     }
 }

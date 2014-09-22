@@ -14,17 +14,67 @@ public class School {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
-
     @Column(name="NAME", nullable=false)
     private String name;
+    @Column(name="ADDRESS_LINE1", nullable=false)
+    private String addressLine1;
+    @Column(name="ADDRESS_LINE2", nullable=false)
+    private String addressLine2;
+    @Column(name="ADDRESS_LINE3", nullable=false)
+    private String addressLine3;
+    @Column(name="COUNTY", nullable=false)
+    private String county;
+    @Column(name="COUNTRY", nullable=false)
+    private String country;
+    @Column(name="POSTCODE", nullable=false)
+    private String postcode;
 
-    public School() {
-        this(null, null);
+    public String getPostcode() {
+        return postcode;
     }
 
-    public School(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getAddressLine1() {
+        return addressLine1;
+    }
+
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    public String getAddressLine2() {
+        return addressLine2;
+    }
+
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    public String getAddressLine3() {
+        return addressLine3;
+    }
+
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Long getId() {
@@ -42,21 +92,4 @@ public class School {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        School school = (School) o;
-
-        if (name != null ? !name.equals(school.name) : school.name != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
-    }
 }
