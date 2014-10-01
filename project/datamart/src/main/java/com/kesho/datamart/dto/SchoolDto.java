@@ -9,7 +9,7 @@ package com.kesho.datamart.dto;
  */
 public class SchoolDto implements Dto {
     private final Long id;
-    private final String name;
+    private String name;
     private String county;
     private String country;
     private String addressLine1;
@@ -17,9 +17,8 @@ public class SchoolDto implements Dto {
     private String addressLine3;
     private String postcode;
 
-    public SchoolDto(Long id, String name) {
+    public SchoolDto(Long id) {
         this.id = id;
-        this.name = name;
     }
 
     public String getName() {
@@ -30,14 +29,14 @@ public class SchoolDto implements Dto {
         return id;
     }
 
-    public SchoolDto withCounty(String county) {
-        this.county = county;
+    public SchoolDto withName(String name) {
+        this.name = name;
         return this;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public SchoolDto withCounty(String county) {
+        this.county = county;
+        return this;
     }
 
     public SchoolDto withCountry(String country) {
@@ -88,4 +87,11 @@ public class SchoolDto implements Dto {
     public String getPostcode() {
         return postcode;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
 }

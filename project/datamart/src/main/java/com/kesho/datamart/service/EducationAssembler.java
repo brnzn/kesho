@@ -62,7 +62,7 @@ public class EducationAssembler {
     private SchoolDto createSchool(final EducationHistory log) {
         School school = log.getSchool();
         if(school != null) {
-            return new SchoolDto(school.getId(), school.getName());
+            return new SchoolDto(school.getId()).withName(school.getName());
         } else {
             return null;
         }

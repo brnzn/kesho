@@ -25,7 +25,7 @@ public class SchoolAssembler {
     }
 
     public SchoolDto toDto(School school) {
-        return new SchoolDto(school.getId(), school.getName())
+        return new SchoolDto(school.getId()).withName(school.getName())
                 .withCounty(school.getCounty())
                 .withCountry(school.getCountry())
                 .withAddressLine1(school.getAddressLine1())
@@ -44,15 +44,5 @@ public class SchoolAssembler {
         school.setAddressLine3(dto.getAddressLine3());
         school.setPostcode(dto.getPostcode());
         return school;
-    }
-
-    private SchoolDto createSchool(final EducationHistory log) {
-        School school = log.getSchool();
-        if(school != null) {
-            return new SchoolDto(school.getId(), school.getName());
-        } else {
-            return null;
-        }
-
     }
 }

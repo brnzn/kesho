@@ -11,5 +11,6 @@ public enum Event {
     STUDENT_ADDED,
     SPONSOR_ADDED,
     SPONSOR_SELECTED,
-    FAMILY_ADDED;
+    FAMILY_ADDED,
+    SCHOOL_ADDED;
 }

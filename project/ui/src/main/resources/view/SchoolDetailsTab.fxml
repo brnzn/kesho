@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kesho.datamart.ui.controller.SchoolController">
+  <children>
+    <VBox minWidth="601.0000999999975" prefWidth="601.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <TitledPane animated="false" collapsible="false" text="Details" VBox.vgrow="ALWAYS">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefWidth="599.0">
+              <children>
+                <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="name" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" />
+                    <TextField fx:id="addressLine2" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                    <Label text="Address Line 2:" GridPane.rowIndex="2" />
+                    <Label text="Address Line 1:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                              <Label text="Address Line 3:" GridPane.rowIndex="3" />
+                              <TextField fx:id="addressLine3" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="county" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="County" GridPane.rowIndex="4" />
+                              <Label text="Postcode:" GridPane.rowIndex="5" />
+                              <TextField fx:id="postcode" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="country" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label text="Country:" GridPane.rowIndex="6" />
+                              <TextField fx:id="addressLine1" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="227.0" minWidth="106.99999237060547" prefWidth="122.99999237060547" />
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="444.00000762939453" minWidth="120.0" prefWidth="444.00000762939453" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0">
+              <items>
+                <Button fx:id="saveButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
+              </items>
+            </ToolBar>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

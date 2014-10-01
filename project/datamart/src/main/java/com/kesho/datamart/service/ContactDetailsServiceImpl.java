@@ -1,6 +1,5 @@
 package com.kesho.datamart.service;
 
-import com.kesho.datamart.domain.ContactType;
 import com.kesho.datamart.dto.ContactDetailDto;
 import com.kesho.datamart.entity.ContactDetail;
 import com.kesho.datamart.repository.ContactDetailsDAO;
@@ -22,7 +21,7 @@ public class ContactDetailsServiceImpl implements ContactDetailsService {
     @Inject
     private ContactDetailsDAO contactDAO;
 
-    private StudentContactAssembler contactAssembler = new StudentContactAssembler();
+    private ContactDetailAssembler contactAssembler = new ContactDetailAssembler();
 
     @Override
     public List<ContactDetailDto> getContactsOf(Long ownerId) {

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
  * To change this template use File | Settings | File Templates.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class InstitutionRepositoryTest {
+public class SchoolRepositoryTest {
     @InjectMocks
     private SchoolRepositoryImpl repo;
     @Mock
@@ -40,10 +40,10 @@ public class InstitutionRepositoryTest {
 
     @Test
     public void shouldCreateInstitution() {
-        SchoolDto dto = new SchoolDto(null, "school");
-        when(schoolService.save(dto)).thenReturn(new SchoolDto(1L, "school"));
+        SchoolDto dto = new SchoolDto(null).withName("school");
+        when(schoolService.save(dto)).thenReturn(new SchoolDto(1L).withName("school"));
 
-        SchoolDto result = repo.create(dto);
+        SchoolDto result = repo.save(dto);
         assertThat(result.getId(), is(1L));
         assertThat(result.getName(), is("school"));
     }

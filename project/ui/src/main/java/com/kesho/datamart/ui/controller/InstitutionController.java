@@ -66,7 +66,7 @@ public class InstitutionController {
 	@FXML
 	private void addInstitution() {
         if (isInputValid()) {
-            schoolRepository.create(new SchoolDto(null, institutionName.getText()));
+            //schoolRepository.create(new SchoolDto(null, institutionName.getText()));
             new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {

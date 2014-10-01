@@ -5,6 +5,7 @@ import com.kesho.datamart.entity.School;
 import com.kesho.datamart.entity.SchoolContact;
 import com.kesho.datamart.entity.Sponsor;
 import com.kesho.datamart.paging.Request;
+import com.kesho.datamart.repository.ContactDetailsDAO;
 import com.kesho.datamart.repository.SchoolContactsDAO;
 import com.kesho.datamart.repository.SchoolsDAO;
 import org.springframework.data.domain.PageRequest;
@@ -30,8 +31,12 @@ public class SchoolServiceImpl implements SchoolService {
     @Inject
     private SchoolContactsDAO contactsDAO;
 
+    @Inject
+    private ContactDetailsDAO contactDetailsDAO;
+
     private SchoolAssembler assembler = new SchoolAssembler();
     private ContactAssembler contactAssembler = new ContactAssembler();
+    private ContactDetailAssembler contactDetailsAssembler = new ContactDetailAssembler();
 
 
     @Override
@@ -61,11 +66,27 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     @Transactional(readOnly = true)
     public List<ContactDto> getContacts(Long schoolId) {
-        List<SchoolContact> contacts = contactsDAO.findBySchoolId(schoolId);
-        System.out.println(contacts.get(0).getContactDetails().get(0).getComments());
-        return null;
+        return contactAssembler.toDto(contactsDAO.findBySchoolId(schoolId));
     }
 
+    @Override
+    @Transactional
+    public ContactDto save(ContactDto dto) {
+        return contactAssembler.toDto(contactsDAO.save(contactAssembler.toEntity(dto)));
+    }
+
+    @Override
+    @Transactional
+    public ContactDetailDto save(ContactDetailDto cd) {
+        return contactDetailsAssembler.toDto(contactDetailsDAO.save(contactDetailsAssembler.toEntity(cd)));
+    }
+
+    @Override
+    @Transactional
+    public void deleteContact(Long contactId) {
+        contactsDAO.delete(contactId);
+        contactDetailsDAO.deleteByOwner(contactId);
+    }
 
     private Page<SchoolDto> toPageResult(final org.springframework.data.domain.Page<School> page, final Request request) {
         if(page.getTotalElements() > 0 && page.getTotalPages() <= request.getPageNumber()) {

@@ -153,7 +153,7 @@ public class StudentServiceIT {
         LocalDate date = LocalDate.now();
         EducationDto dto = new EducationDto()
                 //.withYear("1")
-                .withInstitution(new SchoolDto(1L, "school"))
+                .withInstitution(new SchoolDto(1L).withName("school"))
                 .withCourse("course")
                 .withEducationDate(date)
                 .withEducationalStatus(EducationStatus.Secondary)

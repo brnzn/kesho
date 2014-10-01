@@ -1,10 +1,6 @@
 package com.kesho.datamart.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,18 +29,18 @@ public class SchoolContact {
     @Column(name = "JOB_TITLE", nullable = false)
     private String jobTitle;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name="OWNER_ID" )
-    @Fetch(FetchMode.SUBSELECT)// if we need eager fetch for loading list of contacts then we can use subselect to prevent n+1
-    private List<ContactDetail> contactDetails;
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true )
+//    @JoinColumn(name="OWNER_ID",nullable = false, updatable = false)
+//    @Fetch(FetchMode.SUBSELECT)
+//    private List<ContactDetail> contactDetails;
 
-    public List<ContactDetail> getContactDetails() {
-        return contactDetails;
-    }
-
-    public void setContactDetails(List<ContactDetail> contactDetails) {
-        this.contactDetails = contactDetails;
-    }
+//    public List<ContactDetail> getContactDetails() {
+//        return contactDetails;
+//    }
+//
+//    public void setContactDetails(List<ContactDetail> contactDetails) {
+//        this.contactDetails = contactDetails;
+//    }
 
 
     public Long getId() {

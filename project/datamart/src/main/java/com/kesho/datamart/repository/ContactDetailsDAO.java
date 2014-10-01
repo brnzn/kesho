@@ -17,8 +17,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface ContactDetailsDAO extends JpaRepository<ContactDetail, Long> {
-    @Query("select c from ContactDetail c where c.ownerId = :ownerId and c.type = :type")
-    List<ContactDetail> findByIdAndType(@Param("ownerId") Long ownerId, @Param("type") ContactType type);
+//    @Query("select c from ContactDetail c where c.ownerId = :ownerId and c.type = :type")
+//    List<ContactDetail> findByIdAndType(@Param("ownerId") Long ownerId, @Param("type") ContactType type);
 
     @Query("select c from ContactDetail c where c.ownerId = :ownerId")
     List<ContactDetail> findById(@Param("ownerId") Long ownerId);
@@ -26,4 +26,8 @@ public interface ContactDetailsDAO extends JpaRepository<ContactDetail, Long> {
     @Modifying
     @Query("delete from ContactDetail c where c.id = :id")
     void deleteById(@Param("id") Long id);
+
+    @Modifying
+    @Query("delete from ContactDetail c where c.ownerId = :ownerId")
+    void deleteByOwner(@Param("ownerId") Long ownerId);
 }

@@ -239,8 +239,8 @@ public class WindowsUtil {
     }
 
     public void institutionsForm() throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/InstitutionForm.fxml"));
-        InstitutionController controller = getController(InstitutionController.class);//controllers.getInstitutionController();
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Schools.fxml"));
+        SchoolsController controller = getController(SchoolsController.class);//controllers.getInstitutionController();
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
@@ -251,7 +251,7 @@ public class WindowsUtil {
         dialogStage.setScene(scene);
 
         // Set the person into the controller
-        controller.setDialogStage(dialogStage);
+        //controller.setDialogStage(dialogStage);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();

@@ -7,7 +7,6 @@
 
     <CONTACT_DETAIL ID="1" OWNER_ID="1" TYPE="I" VALUE="val" COMMENTS="comm" />
     <CONTACT_DETAIL ID="2" OWNER_ID="1" TYPE="I" VALUE="val1" COMMENTS="comm1" />
-    <CONTACT_DETAIL ID="3" OWNER_ID="1" TYPE="I" VALUE="val2" COMMENTS="comm2" />
 
     <CONTACT_DETAIL ID="4" OWNER_ID="2" TYPE="I" VALUE="val" COMMENTS="comm" />
 </dataset>

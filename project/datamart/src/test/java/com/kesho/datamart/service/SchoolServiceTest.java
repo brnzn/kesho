@@ -57,7 +57,8 @@ public class SchoolServiceTest {
         school.setAddressLine3("add3");
         school.setPostcode("postcode");
 
-        SchoolDto dto = new SchoolDto(null, "school")
+        SchoolDto dto = new SchoolDto(null)
+                .withName("school")
                 .withCounty("county")
                 .withCountry("country")
                 .withAddressLine1("add1")

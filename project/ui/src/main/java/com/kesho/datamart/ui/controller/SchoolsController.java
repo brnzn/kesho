@@ -16,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.inject.Named;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Time: 11:23 PM
  * To change this template use File | Settings | File Templates.
  */
+@Named("SchoolsController")
 public class SchoolsController {
     @Autowired
     private SchoolRepository schoolRepository;
@@ -41,6 +44,12 @@ public class SchoolsController {
     @FXML
     private Tab contactsTab;
 
+    @FXML
+    private SchoolController schoolController;
+    @FXML
+    private Tab schoolDetailsTab;
+
+
     private ObservableList<SchoolDto> schoolsModel = FXCollections.observableArrayList();
     private SimpleObjectProperty<SchoolDto> selected = new SimpleObjectProperty<>();
 
@@ -50,7 +59,7 @@ public class SchoolsController {
      */
     @FXML
     private void initialize() {
-        WindowsUtil.getInstance().getEventBus().registerListener(Event.STUDENT_ADDED, new SystemEventListener() {
+        WindowsUtil.getInstance().getEventBus().registerListener(Event.SCHOOL_ADDED, new SystemEventListener() {
             @Override
             public void handle() {
                 refreshTable();
@@ -59,6 +68,9 @@ public class SchoolsController {
 
         contactsController.setTab(contactsTab);
         contactsController.setSelectedProperty(selected);
+
+        schoolController.setTab(schoolDetailsTab);
+        schoolController.setSelectedProperty(selected);
 
         refreshTable();
 
@@ -130,9 +142,9 @@ public class SchoolsController {
 //    }
 
     @FXML
-    private void newFired() {
-        contactsController.newFired();
-//        schoolsTabs.getSelectionModel().select(studentDetailsTab); only needed if there is more than one tab
+    private void doNew() {
+        schoolController.newFired();
+        schoolsTabs.getSelectionModel().select(schoolDetailsTab);
     }
 
 }

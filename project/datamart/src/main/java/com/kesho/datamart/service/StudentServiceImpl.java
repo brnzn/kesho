@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentsAssembler assembler = new StudentsAssembler();
     private EducationAssembler educationAssembler = new EducationAssembler();
     private StudentHistoryAssembler historyAssembler = new StudentHistoryAssembler();
-    private StudentContactAssembler contactAssembler = new StudentContactAssembler();
+    private ContactDetailAssembler contactAssembler = new ContactDetailAssembler();
 
     @Override
     public StudentDto get(Long id) {

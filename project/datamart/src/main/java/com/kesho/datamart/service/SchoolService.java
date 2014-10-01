@@ -1,5 +1,6 @@
 package com.kesho.datamart.service;
 
+import com.kesho.datamart.dto.ContactDetailDto;
 import com.kesho.datamart.dto.ContactDto;
 import com.kesho.datamart.dto.Page;
 import com.kesho.datamart.dto.SchoolDto;
@@ -22,4 +23,10 @@ public interface SchoolService {
     SchoolDto save(SchoolDto institution);
 
     List<ContactDto> getContacts(Long schoolId);
+
+    ContactDto save(ContactDto dto);
+
+    ContactDetailDto save(ContactDetailDto cd);
+
+    void deleteContact(Long contactId);
 }
