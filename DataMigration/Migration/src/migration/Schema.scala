@@ -23,14 +23,14 @@ object Schema extends Schema {
   val contacts = table[Contact]("CONTACT")
   val contactDetails = table[ContactDetails]("CONTACT_DETAIL")
   val sponsors = table[Sponsor]("SPONSORS")
-  val studentContacts = table[StudentContact]("STUDENT_CONTACT")
+//  val studentContacts = table[StudentContact]("STUDENT_CONTACT")
   val familyProfile = table[FamilyProfile]("FAMILY_PROFILE")
 
   on(familyProfile)(detail => declare(
     detail.id is (autoIncremented)))
 
-  on(studentContacts)(detail => declare(
-    detail.id is (autoIncremented)))
+//  on(studentContacts)(detail => declare(
+//    detail.id is (autoIncremented)))
 
   on(studentHistory)(detail => declare(
     detail.id is (autoIncremented)))
