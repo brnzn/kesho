@@ -231,20 +231,16 @@ public class WindowsUtil {
         dialogStage.initOwner(primaryStage);
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-
-        // Set the person into the controller
-//        controller.setDialogStage(dialogStage);
-        // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
     }
 
-    public void institutionsForm() throws IOException {
+    public void schoolsForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/Schools.fxml"));
-        SchoolsController controller = getController(SchoolsController.class);//controllers.getInstitutionController();
+        SchoolsController controller = getController(SchoolsController.class);
         loader.setController(controller);
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Institutions List");
+        dialogStage.setTitle("Schools");
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(primaryStage);
         Scene scene = new Scene(page);

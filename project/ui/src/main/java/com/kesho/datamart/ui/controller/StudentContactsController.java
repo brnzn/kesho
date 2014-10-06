@@ -19,6 +19,6 @@ public class StudentContactsController extends AbstractContactsController<Studen
 
     @Override
     protected ContactType getContactType() {
-        return ContactType.S;
+        return ContactType.P;
     }
 }

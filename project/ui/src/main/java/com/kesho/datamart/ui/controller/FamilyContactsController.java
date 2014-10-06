@@ -20,7 +20,7 @@ public class FamilyContactsController extends AbstractContactsController<FamilyD
 
     @Override
     protected ContactType getContactType() {
-        return ContactType.F;
+        return ContactType.P;
     }
 
 }

@@ -38,7 +38,7 @@ public class ContactDetailsServiceIT {
     public void shouldGetContactDetail() {
         List<ContactDetailDto> contacts = contactDetailsService.getContactsOf(1L);
         assertThat(contacts, hasSize(1));
-        assertThat(contacts.get(0).getType(), is(ContactType.S));
+        assertThat(contacts.get(0).getType(), is(ContactType.P));
         assertThat(contacts.get(0).getValue(), is("val"));
         assertThat(contacts.get(0).getComments(), is("comm"));
         assertThat(contacts.get(0).getOwnerId(), is(1L));
@@ -56,7 +56,7 @@ public class ContactDetailsServiceIT {
     @Test
     public void shouldSaveStudentContact() {
         ContactDetailDto dto = new ContactDetailDto().withOwnerId(1L)
-                .withType(ContactType.S)
+                .withType(ContactType.P)
                 .withValue("val")
                 .withComments("comm");
 

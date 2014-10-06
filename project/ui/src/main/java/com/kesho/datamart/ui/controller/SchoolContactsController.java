@@ -17,8 +17,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.HashSet;
@@ -32,6 +35,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class SchoolContactsController extends AbstractChildController<SchoolDto> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchoolContactsController.class);
     @Inject
     private SchoolRepository schoolRepository;
 
@@ -42,13 +46,15 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
     @FXML
     private TableColumn<ContactDetailDto, String> valueCol;
     @FXML
+    private TableColumn<ContactDetailDto, String> typeCol;
+    @FXML
     private TableColumn<ContactDetailDto, String> commentsCol;
     @FXML
     private TableColumn<ContactDto, String> nameCol;
     @FXML
     private TableColumn<ContactDto, String> surnameCol;
     @FXML
-    private TableColumn<ContactDto, String> titleCol;    // TODO: dropdown
+    private TableColumn<ContactDto, String> titleCol;
     @FXML
     private TableColumn<ContactDto, String> jobTitleCol;
 
@@ -87,7 +93,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
         newContactButton.disableProperty().bind(selected.isNull());
     }
 
-        @FXML
+    @FXML
     private void initialize() {
         newDetailsButton.disableProperty().bind(selectedContact.isNull());
         saveButton.disableProperty().bind(dirtyContacts.isEqualTo(false));
@@ -118,12 +124,18 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
             }
         });
 
+
+        typeCol.setCellValueFactory(new PropertyValueFactory<ContactDetailDto, String>("type"));
+        typeCol.setCellFactory(ComboBoxTableCell.forTableColumn(ContactType.E.toString(), ContactType.P.toString()));
+
         nameCol.setCellValueFactory(new PropertyValueFactory<ContactDto, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setCellValueFactory(new PropertyValueFactory<ContactDto, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
         titleCol.setCellValueFactory(new PropertyValueFactory<ContactDto, String>("title"));
-        titleCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        titleCol.setCellFactory(ComboBoxTableCell.forTableColumn("Br","Mr", "Miss", "Mrs"));
+
         jobTitleCol.setCellValueFactory(new PropertyValueFactory<ContactDto, String>("jobTitle"));
         jobTitleCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -138,6 +150,25 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
 
     private void attachEditCommitHandler() {
 //        BiConsumer<ContactDto, String> c = (ContactDto cd, String value) -> cd.setName(value);
+
+        typeCol.setOnEditCommit(new EditCommitHandler<>(modifiedContactDetails, dirtyContactDetails, new Consumer<ContactDetailDto>() {
+            @Override
+            public void accept(ContactDetailDto dto, String value) {
+                dto.withType(toEnum(value));
+            }
+
+            public ContactType toEnum(String value) {
+                if("Phone".equals(value)) {
+                    return ContactType.P;
+                } else if("Email".equals(value)) {
+                    return ContactType.E;
+                } else {
+                    LOGGER.error("Cannot convert {} to ContactType", value);
+                    return null;
+                }
+            }
+
+        }));
 
         nameCol.setOnEditCommit(new EditCommitHandler<>(modifiedContacts, dirtyContacts, new Consumer<ContactDto>() {
             @Override
@@ -202,7 +233,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
 
     @FXML
     private void saveContact() {
-        for(Integer index: modifiedContacts) {  //TODO: batch update
+        for (Integer index : modifiedContacts) {  //TODO: batch update
             ContactDto dto = contactsModel.get(index);
             ContactDto result = schoolRepository.save(dto);
             dto.setId(result.getId());
@@ -216,7 +247,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
         dirtyContactDetails.set(true);
         ContactDetailDto dto = new ContactDetailDto()
                 .withOwnerId(selectedContact.get().getId())
-                .withType(ContactType.I);
+                .withType(ContactType.P);
 
         contactDetailsModel.add(dto);
         contactDetailsTable.requestFocus();
@@ -233,7 +264,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
 
     @FXML
     private void saveDetails() {
-        for(Integer index: modifiedContactDetails) {  //TODO: batch update
+        for (Integer index : modifiedContactDetails) {  //TODO: batch update
             ContactDetailDto dto = contactDetailsModel.get(index);
             dto = schoolRepository.save(dto);
         }
@@ -284,7 +315,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
     }
 
     private class EditCommitHandler<T extends Dto> implements EventHandler<TableColumn.CellEditEvent<T, String>> {
-  //      private BiConsumer<ContactDto, String> consumer;
+        //      private BiConsumer<ContactDto, String> consumer;
         private final Consumer<T> consumer;
         private final Set<Integer> modified;
         private final SimpleObjectProperty<Boolean> dirtyFlag;

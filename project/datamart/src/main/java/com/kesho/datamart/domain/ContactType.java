@@ -8,7 +8,17 @@ package com.kesho.datamart.domain;
  * To change this template use File | Settings | File Templates.
  */
 public enum ContactType {
-    S,
-    F,
-    I
+    P("Phone"),
+    E("Email");
+
+    private final String display;
+
+    private ContactType(String display) {
+        this.display = display;
+    }
+
+    @Override
+    public String toString() {
+        return display;
+    }
 }

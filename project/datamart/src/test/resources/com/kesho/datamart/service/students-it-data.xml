@@ -49,7 +49,7 @@
             VERSION="0"
             />
 
-    <CONTACT_DETAIL ID="1" OWNER_ID="1" TYPE="S" VALUE="val" COMMENTS="comm" />
+    <CONTACT_DETAIL ID="1" OWNER_ID="1" TYPE="P" VALUE="val" COMMENTS="comm" />
 
 </dataset>
 

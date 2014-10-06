@@ -38,7 +38,7 @@ public class ContactDetailsServiceTest {
         ContactDetail contact = new ContactDetail();
         contact.setId(1L);
         contact.setOwner(1L);
-        contact.setType(ContactType.S);
+        contact.setType(ContactType.P);
         contact.setValue("1234");
         contact.setComments("comments");
 
@@ -50,7 +50,7 @@ public class ContactDetailsServiceTest {
         assertThat(contacts, hasSize(1));
         assertThat(contacts.get(0).getId(), is(1L));
         assertThat(contacts.get(0).getOwnerId(), is(1L));
-        assertThat(contacts.get(0).getType(), is(ContactType.S));
+        assertThat(contacts.get(0).getType(), is(ContactType.P));
         assertThat(contacts.get(0).getValue(), is("1234"));
         assertThat(contacts.get(0).getComments(), is("comments"));
 

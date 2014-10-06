@@ -32,8 +32,8 @@ object Migration {
 //    	println(line.length +" "+ line)
  
 
-//    Source.fromFile("./src/data/Schools-only-final.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
-//    Source.fromFile("./src/data/Schools-contacts-only-final.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
+    Source.fromFile("./src/data/Schools-only-final.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
+    Source.fromFile("./src/data/Schools-contacts-only-final.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
 //    Source.fromFile("./src/data/Schools-contacts-details-final.txt").getLines().foreach(line => new DBWriter(new ContactDetailsWriter, line, 5).insert)  
 
     //Source.fromFile("./src/data/sponsors.txt").getLines().foreach(line => new DBWriter(new SponsorWriter, line, 11).insert)  
@@ -45,7 +45,7 @@ object Migration {
 //    Source.fromFile("./src/data/homeLocation.txt").getLines().foreach(line => new DBWriter(new HomeLocationWriter, line, 2).insert)
     //Source.fromFile("./src/data/dob.txt").getLines().foreach(line => new DBWriter(new DOBWriter, line, 2).insert)
 //    Source.fromFile("./src/data/studentHistory.txt").getLines().foreach(line => new DBWriter(new StudentHistoryWriter, line, 3).insert)
-    Source.fromFile("./src/data/studentContact.txt").getLines().foreach(line => new DBWriter(new StudentContactWriter, line, 4).insert)
+    //Source.fromFile("./src/data/studentContact.txt").getLines().foreach(line => new DBWriter(new StudentContactWriter, line, 4).insert)
 //    Source.fromFile("./src/data/familyContact.txt").getLines().foreach(line => new DBWriter(new FamilyContactWriter, line, 5).insert)
 //    Source.fromFile("./src/data/familyProfile.txt").getLines().foreach(line => new DBWriter(new FamilyProfileWriter, line, 3).insert)
 //    Source.fromFile("./src/data/numParents.txt").getLines().foreach(line => new DBWriter(new NumParentsWriter, line, 2).insert)
