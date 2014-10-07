@@ -36,13 +36,10 @@ public class SchoolContactsDAOTest {
 
     @Inject
     private SchoolContactsDAO repo;
-
-//    @Test
-//    public void shouldGetContactWithDetails() {
-//        SchoolContact contact = repo.get(1L);
-//        assertThat(contact.getContactDetails(), hasSize(3));
-//    }
-
+    @Test
+    public void shouldFindBySchoolId() {
+        assertThat(repo.findBySchoolId(1L), hasSize(2));
+    }
     @Test
     public void shouldSaveContact() {
         SchoolContact contact = new SchoolContact();
@@ -54,43 +51,5 @@ public class SchoolContactsDAOTest {
 
         contact = repo.save(contact);
         assertThat(contact.getId(), notNullValue());
-
-//        List<ContactDetail> details = new ArrayList<>();
-//        ContactDetail detail = new ContactDetail();
-//        detail.setType(ContactType.I);
-//        detail.setValue("val");
-//        detail.setOwner(contact.getId());
-//        details.add(detail);
-//        contact.setContactDetails(details);
-
-//        contact = repo.save(contact);
-
-//        contact.getContactDetails().get(0).setValue("aaaaaaaaaaaa");
-
-//        ContactDetail detail1 = new ContactDetail();
-//        detail1.setType(ContactType.I);
-//        detail1.setValue("val");
-//        detail1.setOwner(contact.getId());
-//        contact.getContactDetails().add(detail1);
-//
-//        contact = repo.save(contact);
-//        System.out.println(contact.getContactDetails().get(0).getValue());
     }
-//    @Test
-//    public void test() {
-//        List<SchoolContact> l = repo.findBySchoolId(1L);
-//        System.out.println("==========" + l.size());
-//
-//    }
-//    @Test
-//    public void shouldGetSchoolContactsWithDetails() {
-//        List<SchoolContact> l = repo.findBySchoolId(1L);
-//        System.out.println(l.get(0).getContactDetails().get(0).getComments());
-//        assertThat(contacts, hasSize(2));
-//        assertThat(contacts.get(0).getContactDetails(), hasSize(3));
-//        assertThat(contacts.get(1).getContactDetails(), hasSize(1));
-
-
-//    }
-
 }

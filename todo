@@ -87,21 +87,22 @@ done - home location on student details should be drop down (like family)
 done - family profile ui
 done - student copntacts ui
 done - family contact ui
+done - schools + contacts ui
+done - use only contant_deatils table 
+
 ----------------------------------
 add version column to all entities - done student, family, education, sponsor, payments
-schools + contacts ui
 
-use only contant_deatils table 
 
 delete with entity and not id, so it is using version
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
 all inputs all on forms should be disabled until clicking new
+All forms input should be disabled until pressing new or selecting row.
 save button on all forms should be default button and disabled until new or select
 all dtos should have length constraints
 refactor controllers (new abstract class for table/form with buttons)
 add empty option to all non mandatory dropdowns
-
 
 getting this exception when clicking text area on family form (looks like it only happen if value is null): 
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
@@ -121,7 +122,6 @@ Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 
 
 Enable export to xls
-All forms input should be disabled until pressing new or selecting row.
 
 New concern coulmns for student (see email from kate)
 

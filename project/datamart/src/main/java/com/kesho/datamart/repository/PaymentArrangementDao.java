@@ -25,10 +25,12 @@ public interface PaymentArrangementDao extends JpaRepository<PaymentArrangement,
     List<PaymentArrangementDto> findBySponsorId(@Param("sponsorId") Long sponsorId);
 
     @Modifying
+    @Transactional
     @Query("delete from PaymentArrangement pa where pa.sponsorId = :sponsorId")
     void deleteBySponsorId(@Param("sponsorId") Long id);
 
     @Modifying
+    @Transactional
     @Query("delete from PaymentArrangement pa where pa.id = :id")
     void deleteById(@Param("id") Long id);
 }

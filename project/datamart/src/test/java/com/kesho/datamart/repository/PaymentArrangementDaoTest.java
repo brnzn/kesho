@@ -34,7 +34,21 @@ public class PaymentArrangementDaoTest {
     public final DatabaseSetupRule dbSetup = DatabaseSetupRule.setUpDataFor("kesho", "payment-it-data.xml");
 
     @Test
-    public void shouldFindPaymentArrangements() {
+    public void shouldDeleteBySponsorId() {
+        assertThat(dao.findBySponsorId(1L), hasSize(2));
+        dao.deleteBySponsorId(1L);
+        assertThat(dao.findBySponsorId(1L), hasSize(0));
+    }
+
+    @Test
+    public void shouldDeleteById() {
+        assertThat(dao.findBySponsorId(1L), hasSize(2));
+        dao.deleteById(1L);
+        assertThat(dao.findBySponsorId(1L), hasSize(1));
+    }
+
+    @Test
+    public void shouldFindPaymentArrangementsBySponsorId() {
         List<PaymentArrangementDto> list = dao.findBySponsorId(1L);
         assertThat(list, hasSize(2));
 
@@ -63,19 +77,5 @@ public class PaymentArrangementDaoTest {
         assertThat(dto.getEndDate().getYear(), is(2014));
         assertThat(dto.getEndDate().getMonthOfYear(), is(3));
         assertThat(dto.getEndDate().getDayOfMonth(), is(28));
-
-/*
-            <FAMILY ID="1" FAMILY_NAME="a"/>
-
-    <STUDENTS ID="1" NAME="s1" FAMILY_ID="1"/>
-    <STUDENTS ID="2" NAME="s2" FAMILY_ID="1"/>
-
-    <SPONSORS ID="1" NAME="fn" SURNAME="surname" ADDRESS_LINE_1="addline1" ADDRESS_LINE_2="addline2" ADDRESS_LINE_3="addline3" COUNTY="county" POSTCODE="postcode"
-              COUNTRY="country" PHONE="phone" EMAIL1="email"/>
-
-    <PAYMENT_ARRANGEMENTS ID="1" STUDENT_ID="1" SPONSOR_ID="1" START_DATE="2013-03-28 00:00:00.0" END_DATE="2014-03-28 00:00:00.0" TYPE="StandingOrder" AMOUNT="1"/>
-    <PAYMENT_ARRANGEMENTS ID="2" STUDENT_ID="2" SPONSOR_ID="1" START_DATE="2013-03-28 00:00:00.0" END_DATE="2014-02-28 00:00:00.0" TYPE="Annual" AMOUNT="12" />
-
-         */
     }
 }

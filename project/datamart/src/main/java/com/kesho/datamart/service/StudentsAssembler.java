@@ -2,8 +2,10 @@ package com.kesho.datamart.service;
 
 import com.kesho.datamart.domain.FinancialSupportStatus;
 import com.kesho.datamart.domain.FinancialSupportStatusDetails;
+import com.kesho.datamart.dto.FamilyDto;
 import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.Student;
+import com.kesho.datamart.repository.StudentVO;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -94,5 +96,18 @@ public class StudentsAssembler {
         student.setTotalSponsorshipRequired(dto.getTotalSponsorshipRequired());
         student.setEndDate(dto.getEndDate());
         return student;
+    }
+
+    public List<StudentDto> mapToDto(List<StudentVO> vos) {
+        List<StudentDto> students = new ArrayList<>();
+        for (StudentVO vo:vos) {
+            StudentDto dto = new StudentDto()
+                    .withId(vo.getId())
+                    .withName(vo.getFirstName())
+                    .withFamily(new FamilyDto().withFamilyName(vo.getSurname()));
+            students.add(dto);
+        }
+
+        return students;
     }
 }

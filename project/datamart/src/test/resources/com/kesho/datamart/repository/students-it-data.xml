@@ -1,9 +1,14 @@
 <dataset>
     <FAMILY ID="1" FAMILY_NAME="a"/>
 
-    <STUDENTS ID="2" NAME="fn" FAMILY_ID="1"/>
+    <STUDENTS ID="2" NAME="n2" FAMILY_ID="1"/>
+    <STUDENTS ID="3" NAME="n1" FAMILY_ID="1"/>
 
-    <SCHOOLS ID="1" NAME="school1"/>
+    <FAMILY ID="2" FAMILY_NAME="b"/>
+
+    <STUDENTS ID="4" NAME="n2" FAMILY_ID="2"/>
+    <STUDENTS ID="5" NAME="n1" FAMILY_ID="2"/>
+
 </dataset>
 
 

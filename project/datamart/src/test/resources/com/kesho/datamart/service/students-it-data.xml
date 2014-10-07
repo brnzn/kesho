@@ -34,6 +34,21 @@
               LEAVER_STATUS="DEPARTED_BEFORE_COMPLETE"
               VERSION="0"/>
 
+    <STUDENTS ID="3"
+              NAME="fn3"
+              FAMILY_ID="2"
+              GENDER="F"
+              YEAR_OF_BIRTH="2002"
+              DISABILITY="1"
+              CONTACT_NUMBER="2222"
+              EMAIL="email2"
+              FACEBOOK="fb2"
+              HOME_LOCATION="Kilifi"
+              START_DATE="2013-03-28 00:00:00.0"
+              LEVEL_OF_SUPPORT="PART"
+              LEAVER_STATUS="DEPARTED_BEFORE_COMPLETE"
+              VERSION="0"/>
+
     <EDUCATION_HISTORY
             ID="1"
             STUDENT_ID="2"

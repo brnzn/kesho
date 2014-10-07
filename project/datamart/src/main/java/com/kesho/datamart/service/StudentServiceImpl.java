@@ -104,7 +104,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> getStudents() {
-        return assembler.toDto(studentsDao.findAll());
+        return assembler.mapToDto(studentsDao.all());
     }
 
     public EducationDto findLatestEducation(Long studentId) {

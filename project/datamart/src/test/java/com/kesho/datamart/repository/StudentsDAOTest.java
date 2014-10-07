@@ -3,6 +3,7 @@ package com.kesho.datamart.repository;
 import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.Gender;
 import com.kesho.datamart.domain.Location;
+import com.kesho.datamart.dto.StudentDto;
 import com.kesho.datamart.entity.*;
 import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
@@ -20,9 +21,12 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 
 @ContextConfiguration(locations = {
@@ -39,6 +43,18 @@ public class StudentsDAOTest {
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+    @Test
+    public void testFindAll() {
+        List<StudentVO> students = repo.all();
+        assertThat(students, hasSize(4));
+
+        for (StudentVO student:students) {
+            assertThat(student.getId(), notNullValue());
+            assertThat(student.getFirstName(), notNullValue());
+            assertThat(student.getSurname(), notNullValue());
+        }
+    }
 
     @Test(expected = OptimisticLockingFailureException.class)
     public void shouldFailToSaveStaleEntity() {

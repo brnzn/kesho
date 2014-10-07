@@ -4,7 +4,6 @@ import com.kesho.datamart.dbtest.DatabaseSetupRule;
 import com.kesho.datamart.domain.EducationStatus;
 import com.kesho.datamart.dto.EducationDto;
 import com.kesho.datamart.entity.EducationHistory;
-import com.kesho.datamart.entity.Student;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +40,21 @@ public class EducationHistoryDAOTest {
 
     @Inject
     private JpaTransactionManager transactionManager;
+
+    @Test
+    public void shouldDeleteByStudent() {
+        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(2));
+        educationHistoryDAO.deleteByStudentId(2L);
+        assertThat(educationHistoryDAO.findByStudentId(2L), hasSize(0));
+    }
+
+    @Test
+    public void shouldDeleteOneEntity() {
+        assertThat(educationHistoryDAO.findOne(1L), notNullValue());
+        educationHistoryDAO.deleteById(1L);
+        assertThat(educationHistoryDAO.findOne(1L), nullValue());
+    }
+
 
     @Test(expected = OptimisticLockingFailureException.class)
     public void shouldFailToSaveStaleEntity() {

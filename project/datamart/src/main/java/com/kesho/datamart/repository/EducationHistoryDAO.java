@@ -29,8 +29,8 @@ public interface EducationHistoryDAO extends JpaRepository<EducationHistory, Lon
     void deleteById(@Param("id") Long id);
 
 
-    @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.id = :id")
-    EducationHistory findByIdWithSchool(@Param("id")Long id);
+//    @Query("select eh from EducationHistory eh JOIN fetch eh.school where eh.id = :id")
+//    EducationHistory findByIdWithSchool(@Param("id")Long id);
 
     @Query("select eh from EducationHistory eh LEFT JOIN fetch eh.school where eh.studentId = :studentId order by eh.startDate DESC")
     List<EducationHistory> getEducationSortedByDate(@Param("studentId") Long studentId); //TODO: limit to 2, index start date

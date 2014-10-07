@@ -112,6 +112,12 @@ public class StudentServiceIT {
     }
 
     @Test
+    public void testFindAll() {
+        List<StudentDto> students = studentService.getStudents();
+        assertThat(students, hasSize(3));
+    }
+
+    @Test
     public void shouldDeleteEducationHistory() {
         assertThat(studentService.getEducationHistory(2L), hasSize(2));
         studentService.deleteEducationHistory(1L);
@@ -178,9 +184,11 @@ public class StudentServiceIT {
         assertThat(result.getComments(), is("comments"));
 
         EducationHistory saved = findOne(EducationHistory.class, educationHistoryDAO, result.getId());
+        assertThat(saved, notNullValue());
 
-        ;
-        assertThat(educationHistoryDAO.findByIdWithSchool(result.getId()).getSchool().getId(), is(1L));
+        List<EducationHistory> educations = educationHistoryDAO.getEducationSortedByDate(1L);
+        assertThat(educations, hasSize(1));
+        assertThat(educations.get(0).getSchool().getId(), is(1L));
     }
 
     @Test
