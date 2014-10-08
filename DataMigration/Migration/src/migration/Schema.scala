@@ -13,6 +13,7 @@ import migration.entity.StudentHistory
 import migration.entity.Student
 import migration.entity.StudentContact
 import migration.entity.FamilyProfile
+import migration.entity.SponsorArrangement
 
 object Schema extends Schema {
   val schools = table[School]("SCHOOLS")
@@ -23,14 +24,14 @@ object Schema extends Schema {
   val contacts = table[Contact]("CONTACT")
   val contactDetails = table[ContactDetails]("CONTACT_DETAIL")
   val sponsors = table[Sponsor]("SPONSORS")
-//  val studentContacts = table[StudentContact]("STUDENT_CONTACT")
+  val payments = table[SponsorArrangement]("PAYMENT_ARRANGEMENTS")
   val familyProfile = table[FamilyProfile]("FAMILY_PROFILE")
 
+   on(payments)(detail => declare(
+    detail.id is (autoIncremented)))
+    
   on(familyProfile)(detail => declare(
     detail.id is (autoIncremented)))
-
-//  on(studentContacts)(detail => declare(
-//    detail.id is (autoIncremented)))
 
   on(studentHistory)(detail => declare(
     detail.id is (autoIncremented)))

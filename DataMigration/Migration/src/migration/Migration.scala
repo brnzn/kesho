@@ -19,6 +19,7 @@ import migration.writer.StudentContactWriter
 import migration.writer.FamilyContactWriter
 import migration.writer.FamilyProfileWriter
 import migration.writer.NumParentsWriter
+import migration.writer.SponsorArrangementWriter
 
 object Migration {
   val databaseUsername = "oren"
@@ -32,15 +33,14 @@ object Migration {
 //    	println(line.length +" "+ line)
  
 
-    Source.fromFile("./src/data/Schools-only-final.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
+    
+//    Source.fromFile("./src/data/Schools-only-final.txt").getLines().foreach(line => new DBWriter(new SchoolWriter, line, 8).insert)  
     //Source.fromFile("./src/data/Schools-contacts-only-final.txt").getLines().foreach(line => new DBWriter(new ContactWriter, line, 6).insert)  
 //    Source.fromFile("./src/data/Schools-contacts-details-final.txt").getLines().foreach(line => new DBWriter(new ContactDetailsWriter, line, 5).insert)  
 
-    Source.fromFile("./src/data/sponsors.txt").getLines().foreach(line => new DBWriter(new SponsorWriter, line, 11).insert)  
-//what happen to this one?    Source.fromFile("./src/data/SponsorsContactsDetails-only.txt").getLines().foreach(line => new DBWriter(new SponsorContactWriter, line, 4).insert)  
-
-    Source.fromFile("./src/data/Families.txt").getLines().foreach(line => new DBWriter(new FamilyWriter, line, 1).insert)  
-    Source.fromFile("./src/data/studentsKN.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
+//    Source.fromFile("./src/data/sponsors.txt").getLines().foreach(line => new DBWriter(new SponsorWriter, line, 11).insert)  
+//    Source.fromFile("./src/data/Families.txt").getLines().foreach(line => new DBWriter(new FamilyWriter, line, 1).insert)  
+//    Source.fromFile("./src/data/studentsKN.txt").getLines().foreach(line => new DBWriter(new StudentWriter, line, 9).insert)
 //    Source.fromFile("./src/data/educationKN.txt").getLines().foreach(line => new DBWriter(new EducationWriter, line, 5).insert)
 //    Source.fromFile("./src/data/homeLocation.txt").getLines().foreach(line => new DBWriter(new HomeLocationWriter, line, 2).insert)
     //Source.fromFile("./src/data/dob.txt").getLines().foreach(line => new DBWriter(new DOBWriter, line, 2).insert)
@@ -49,6 +49,8 @@ object Migration {
 //    Source.fromFile("./src/data/familyContact.txt").getLines().foreach(line => new DBWriter(new FamilyContactWriter, line, 5).insert)
 //    Source.fromFile("./src/data/familyProfile.txt").getLines().foreach(line => new DBWriter(new FamilyProfileWriter, line, 3).insert)
 //    Source.fromFile("./src/data/numParents.txt").getLines().foreach(line => new DBWriter(new NumParentsWriter, line, 2).insert)
+
+    Source.fromFile("./src/data/SponsorArrangements.txt").getLines().foreach(line => new DBWriter(new SponsorArrangementWriter, line, 7).insert)
 
   }
 
