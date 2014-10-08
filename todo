@@ -91,10 +91,9 @@ done - schools + contacts ui
 done - use only contant_deatils table 
 
 ----------------------------------
+kate needs to sort payment arrangements 
 add version column to all entities - done student, family, education, sponsor, payments
-
-
-delete with entity and not id, so it is using version
+delete with entity and not id, so it is using version (is it really needed??)
 tests
 put all tables/forms in vertical split pane + check if scroll pane is needed
 all inputs all on forms should be disabled until clicking new

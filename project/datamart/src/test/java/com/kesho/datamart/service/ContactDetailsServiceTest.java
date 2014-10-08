@@ -7,6 +7,7 @@ import com.kesho.datamart.entity.ContactDetail;
 import com.kesho.datamart.repository.ContactDetailsDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -16,6 +17,8 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -32,6 +35,41 @@ public class ContactDetailsServiceTest {
 
     @Mock
     private ContactDetailsDAO contactDao;
+
+    @Test
+    public void shouldDeleteContact() {
+        service.delete(1L);
+        verify(contactDao).deleteById(1L);
+    }
+
+    @Test
+    public void shouldSaveNewContact() {
+        ContactDetail detail = new ContactDetail();
+        detail.setType(ContactType.E);
+        detail.setOwner(1L);
+        detail.setComments("comments");
+        detail.setValue("value");
+
+        when(contactDao.save(eq(detail))).thenReturn(detail);
+
+        ContactDetailDto dto = new ContactDetailDto()
+                .withType(ContactType.E)
+                .withOwnerId(1L)
+                .withComments("comments")
+                .withValue("value")
+                ;
+
+        service.save(dto);
+
+        ArgumentCaptor<ContactDetail> capture = ArgumentCaptor.forClass(ContactDetail.class);
+        verify(contactDao).save(capture.capture());
+
+        ContactDetail saved = capture.getValue();
+        assertThat(saved.getComments(), is("comments"));
+        assertThat(saved.getOwner(), is(1L));
+        assertThat(saved.getType(), is(ContactType.E));
+        assertThat(saved.getValue(), is("value"));
+    }
 
     @Test
     public void shouldGetStudentContacts() {
