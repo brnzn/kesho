@@ -83,8 +83,8 @@ public class FormValidator {
 //        });
 
         for (Map.Entry<String, String> violation:validations.values()) {
-            errs.add(violation.getKey());
-            targetFields.get(violation.getValue().toString()).setEffect(invalidEffect);
+            errs.add(violation.getValue());
+            targetFields.get(violation.getKey()).setEffect(invalidEffect);
         }
 
         return errs;

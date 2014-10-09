@@ -13,8 +13,8 @@ import java.util.Set;
  */
 public class ValidationResult {
     Map<String, String> violations = new HashMap<String, String>();
-    public void add(String message, String fieldPath) {
-        violations.put(message, fieldPath);
+    public void add(String fieldPath, String message) {
+        violations.put(fieldPath, message);
     }
 
     public Map<String, String> getViolations() {

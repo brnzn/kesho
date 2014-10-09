@@ -155,12 +155,9 @@ public class SchoolController extends AbstractEditableController<SchoolDto> impl
 
     protected Map<String, Node> getValidateableFields() {
 
-//        if(validationFields.isEmpty()) {
-//            validationFields.put("firstName", firstName);
-//            validationFields.put("family", family);
-//            validationFields.put("gender", genderBox);
-//            validationFields.put("yearOfBirth", yearOfBirth);
-//        }
+        if(validationFields.isEmpty()) {
+            validationFields.put("name", name);
+        }
 
         return validationFields;
     }

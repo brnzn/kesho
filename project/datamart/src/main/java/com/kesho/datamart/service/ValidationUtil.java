@@ -37,7 +37,7 @@ public class ValidationUtil {
 
         ValidationResult result = new ValidationResult();
         for (ConstraintViolation<T> violation:violations) {
-            result.add(violation.getMessage(), violation.getPropertyPath().toString());
+            result.add(violation.getPropertyPath().toString(), violation.getMessage());
         }
 
         return result;

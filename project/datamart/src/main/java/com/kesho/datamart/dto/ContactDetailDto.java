@@ -2,6 +2,9 @@ package com.kesho.datamart.dto;
 
 import com.kesho.datamart.domain.ContactType;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -11,9 +14,15 @@ import com.kesho.datamart.domain.ContactType;
  */
 public class ContactDetailDto implements Dto {
     private Long id;
+    @NotNull(message = "Owner Id is mandatory")
     private Long ownerId;
+    @NotNull(message = "Contact type is mandatory")
     private ContactType type;
+    @NotNull(message = "Value is mandatory")
+    @Size(max=40, message = "Value cannot be more than 40 characters")
     private String value;
+    @NotNull(message = "Comments is mandatory")
+    @Size(max=45, message = "Comments cannot be more than 45 characters")
     private String comments;
 
     public Long getId() {

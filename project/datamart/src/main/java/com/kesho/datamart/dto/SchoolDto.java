@@ -1,5 +1,7 @@
 package com.kesho.datamart.dto;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: orenberenson
@@ -9,6 +11,7 @@ package com.kesho.datamart.dto;
  */
 public class SchoolDto implements Dto {
     private final Long id;
+    @NotNull(message = "Name is mandatory")
     private String name;
     private String county;
     private String country;
