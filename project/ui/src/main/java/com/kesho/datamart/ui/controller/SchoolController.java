@@ -66,9 +66,9 @@ public class SchoolController extends AbstractEditableController<SchoolDto> impl
     }
 
     @Override
-    public void refresh(SchoolDto dto) {
-        saveButton.setDisable(dto == null);
-        itemSelected(dto);
+    public void refresh() {
+        saveButton.setDisable(selected.get() == null);
+        itemSelected(selected.get());
     }
 
 

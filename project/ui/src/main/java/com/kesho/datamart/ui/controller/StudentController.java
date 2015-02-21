@@ -75,9 +75,9 @@ public class StudentController extends AbstractEditableController<StudentDto> im
     }
 
     @Override
-    public void refresh(StudentDto dto) {
-        saveButton.setDisable(dto == null);
-        itemSelected(dto);
+    public void refresh() {
+        saveButton.setDisable(selected.getValue() == null);
+        itemSelected(selected.get());
     }
 
 

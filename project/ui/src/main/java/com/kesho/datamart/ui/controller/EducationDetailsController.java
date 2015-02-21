@@ -96,7 +96,7 @@ public class EducationDetailsController extends AbstractEditableController<Stude
     }
 
     @Override
-    public void refresh(StudentDto dto) {
+    public void refresh() {
         loadInstitutions();
         refreshEducationTable();
         clearForm();

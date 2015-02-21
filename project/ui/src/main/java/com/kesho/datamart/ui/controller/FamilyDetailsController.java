@@ -60,15 +60,15 @@ public class FamilyDetailsController extends AbstractFamilyDetailsController<Fam
     }
 
     @Override
-    public void refresh(FamilyDto dto) {
-        saveButton.setDisable(dto == null);
+    public void refresh() {
+        saveButton.setDisable(selected.get() == null);
 
-        if (dto == null) {
+        if (selected.get() == null) {
             resetForm();
             return;
         }
 
-        FamilyDto familyDto = dto;//dto.getFamily();
+        FamilyDto familyDto = selected.get();//dto.getFamily();
         familyName.setText(familyDto.getFamilyName());
         homeLocation.setValue(familyDto.getHomeLocation());
         homeSubLocation.setText(familyDto.getHomeSubLocation());

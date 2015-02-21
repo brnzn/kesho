@@ -88,9 +88,9 @@ public class SponsorController extends AbstractEditableController<SponsorDto> {
     }
 
     @Override
-    public void refresh(SponsorDto dto) {
+    public void refresh() {
         initializeForm();
-        saveButton.setDisable(dto == null);
+        saveButton.setDisable(selected.getValue() == null);
     }
 
 

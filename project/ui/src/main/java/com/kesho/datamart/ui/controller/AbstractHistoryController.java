@@ -50,8 +50,8 @@ public abstract class AbstractHistoryController<T extends Dto> extends AbstractE
     private SimpleObjectProperty<HistoryDto> selectedHistory = new SimpleObjectProperty<>();
     private Map<String, Node> validationFields = new HashMap<>();
 
-    @Override
-    public void refresh(T dto) {
+  @Override
+    public void refresh() {
         refreshTable();
     }
 

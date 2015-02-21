@@ -125,6 +125,6 @@ public class StudentsDAOTest {
 	public void shouldFindStudent() {
 		Student student = repo.findOne(2L);
 		assertNotNull(student);
-		assertThat("Should match first name", student.getFirstName(), is("fn"));
+		assertThat("Should match first name", student.getFirstName(), is("n2"));
 	}
 }

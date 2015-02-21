@@ -278,7 +278,7 @@ public class SchoolContactsController extends AbstractChildController<SchoolDto>
     }
 
     @Override
-    public void refresh(SchoolDto dto) {
+    public void refresh() {
         resetContactFlags();
         resetContactDetailsFlags();
         refreshContactsTable();

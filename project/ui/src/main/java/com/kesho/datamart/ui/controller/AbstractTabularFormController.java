@@ -40,7 +40,7 @@ public abstract class AbstractTabularFormController<H extends Dto, T extends Dto
     protected abstract H getDto();
 
     @Override
-    public void refresh(T dto) {
+    public void refresh() {
         refreshTable();
     }
 

@@ -85,13 +85,13 @@ public class StudentFamilyDetailsController extends AbstractFamilyDetailsControl
     }
 
     @Override
-    public void refresh(StudentDto dto) {
-        if (dto == null) {
+    public void refresh() {
+        if (selected.get() == null) {
             resetForm();
             return;
         }
 
-        FamilyDto familyDto = dto.getFamily();
+        FamilyDto familyDto = selected.get().getFamily();
         loadStudents(familyDto.getId());
 
         familyName.setText(familyDto.getFamilyName());

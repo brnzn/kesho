@@ -18,7 +18,7 @@ import javafx.scene.control.Tab;
 public abstract class AbstractChildController<T extends Dto> implements ChildController<T> {
     protected SimpleObjectProperty<T> selected;
     protected Tab tab;
-    public abstract void refresh(T dto);  //TODO: don't need to pass dto
+    public abstract void refresh();
 
 
     @Override
@@ -42,7 +42,7 @@ public abstract class AbstractChildController<T extends Dto> implements ChildCon
             @Override
             public void handle(javafx.event.Event event) {
                 if (tab.isSelected()) {
-                    refresh(selected.getValue());
+                    refresh();
                 }
             }
         });
@@ -51,7 +51,7 @@ public abstract class AbstractChildController<T extends Dto> implements ChildCon
     protected void selectedChanged(T dto) {
         tab.disableProperty().set(dto == null || dto.getId() == null);
         if (tab.isSelected()) {
-            refresh(dto);
+            refresh();
         }
     }
 }

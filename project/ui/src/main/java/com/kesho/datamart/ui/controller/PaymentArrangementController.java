@@ -109,7 +109,7 @@ public class PaymentArrangementController extends AbstractEditableController<Spo
     }
 
     @Override
-    public void refresh(SponsorDto dto) {
+    public void refresh() {
         refreshTable(true);
     }
 

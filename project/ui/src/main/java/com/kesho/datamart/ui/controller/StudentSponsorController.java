@@ -113,10 +113,10 @@ public class StudentSponsorController extends AbstractEditableController<Student
 
 
     @Override
-    public void refresh(StudentDto dto) {
-        saveButton.setDisable(dto == null);
+    public void refresh() {
+        saveButton.setDisable(selected.get() == null);
         refreshEducationTable();
-        itemSelected(dto);
+        itemSelected(selected.get());
     }
 
     public Map<String, Node> getValidateableFields() {

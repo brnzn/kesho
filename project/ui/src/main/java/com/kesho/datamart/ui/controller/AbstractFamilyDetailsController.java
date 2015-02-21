@@ -62,7 +62,7 @@ public abstract class AbstractFamilyDetailsController<T extends Dto> extends Abs
 
     protected Tab familyTab;
 
-    public abstract void refresh(T dto);
+    public abstract void refresh();
 
     protected Map<String, Node> getValidateableFields() {
         return Collections.emptyMap();
